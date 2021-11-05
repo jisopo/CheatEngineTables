@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="34">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>4</ID>
+      <Description>"activate table"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Suvivors Viy
+  Version: 1.2
+  Date   : 04.11.2021
+  Author : jisopo
+  github:  github.com/jisopo/CheatEngineTables
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(super_speed, D9 40 34 DF F1 DD D8)
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+
+cmp byte ptr [super_speed_flag], 1
+jne normal_speed
+// run speed
+ mov [eax+34],(float)20
+// walk speed
+mov [eax+38],(float)20
+jmp originalcode
+
+normal_speed:
+mov [eax+34],(float)10
+mov [eax+38],(float)3
+
+originalcode:
+fld dword ptr [eax+34]
+fcomip st(0),st(1)
+
+exit:
+jmp returnhere
+
+super_speed_flag:
+db 0
+
+//CharControl2:MoveForward+24e:
+super_speed:
+jmp newmem
+returnhere:
+
+
+registerSymbol(super_speed)
+registerSymbol(super_speed_flag)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+//CharControl2:MoveForward+24e:
+super_speed:
+fld dword ptr [eax+34]
+fcomip st(0),st(1)
+unregisterSymbol(super_speed)
+unregisterSymbol(super_speed_flag)
+dealloc(newmem)
+//Alt: db D9 40 34 DF F1
+{
+// ORIGINAL CODE - INJECTION POINT: CharControl2:MoveForward+24e
+
+CharControl2:MoveForward+239: 3B 05 00 00 1D 01  - cmp eax,[011D0000]
+CharControl2:MoveForward+23f: 90                 - nop
+CharControl2:MoveForward+240: 90                 - nop
+CharControl2:MoveForward+241: 90                 - nop
+CharControl2:MoveForward+242: 90                 - nop
+CharControl2:MoveForward+243: 90                 - nop
+CharControl2:MoveForward+244: 90                 - nop
+CharControl2:MoveForward+245: 8B 45 08           - mov eax,[ebp+08]
+CharControl2:MoveForward+248: D9 40 64           - fld dword ptr [eax+64]
+CharControl2:MoveForward+24b: 8B 45 08           - mov eax,[ebp+08]
+// ---------- INJECTING HERE ----------
+CharControl2:MoveForward+24e: D9 40 34           - fld dword ptr [eax+34]
+// ---------- DONE INJECTING  ----------
+CharControl2:MoveForward+251: DF F1              - fcomip st(0),st(1)
+CharControl2:MoveForward+253: DD D8              - fstp st(0)
+CharControl2:MoveForward+255: 7A 19              - jp CharControl2:MoveForward+270
+CharControl2:MoveForward+257: 73 17              - jae CharControl2:MoveForward+270
+CharControl2:MoveForward+259: 3B 05 00 00 1D 01  - cmp eax,[011D0000]
+CharControl2:MoveForward+25f: 90                 - nop
+CharControl2:MoveForward+260: 90                 - nop
+CharControl2:MoveForward+261: 90                 - nop
+CharControl2:MoveForward+262: 90                 - nop
+CharControl2:MoveForward+263: 90                 - nop
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>9</ID>
+          <Description>"super speed"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Byte</VariableType>
+          <Address>super_speed_flag</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"inf. stamina"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Suvivors Viy
+  Version: 1.2
+  Date   : 04.11.2021
+  Author : jisopo
+  github:  github.com/jisopo/CheatEngineTables
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(inf_stamina, 8B 45 08 89 45 FC 8B 45 FC 89 45 EC D9 40 4C)
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+fstp dword ptr [full_stamina]
+cmp eax,[011C0000]
+jmp returnhere
+
+originalcode:
+fstp dword ptr [eax+4C]
+cmp eax,[011C0000]
+
+exit:
+jmp returnhere
+
+full_stamina:
+db (float)100
+
+//CharControl2:MoveForward+30b:
+inf_stamina+33:
+jmp newmem
+nop 4
+returnhere:
+
+registerSymbol(inf_stamina)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+//CharControl2:MoveForward+30b:
+inf_stamina+33:
+fstp dword ptr [eax+4C]
+cmp eax,[011C0000]
+//Alt: db D9 58 4C 3B 05 00 00 1C 01
+unregisterSymbol(inf_stamina)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: CharControl2:MoveForward+30b
+
+CharControl2:MoveForward+2f8: 90                 - nop
+CharControl2:MoveForward+2f9: 90                 - nop
+CharControl2:MoveForward+2fa: 90                 - nop
+CharControl2:MoveForward+2fb: 8B 4D 08           - mov ecx,[ebp+08]
+CharControl2:MoveForward+2fe: D9 41 50           - fld dword ptr [ecx+50]
+CharControl2:MoveForward+301: D9 CA              - fxch st(2)
+CharControl2:MoveForward+303: D9 C9              - fxch st(1)
+CharControl2:MoveForward+305: D9 CA              - fxch st(2)
+CharControl2:MoveForward+307: DE C9              - fmulp st(1),st(0)
+CharControl2:MoveForward+309: DE E9              - fsubp st(1),st(0)
+// ---------- INJECTING HERE ----------
+CharControl2:MoveForward+30b: D9 58 4C           - fstp dword ptr [eax+4C]
+// ---------- DONE INJECTING  ----------
+CharControl2:MoveForward+30e: 3B 05 00 00 95 00  - cmp eax,[00950000]
+CharControl2:MoveForward+314: 90                 - nop
+CharControl2:MoveForward+315: 90                 - nop
+CharControl2:MoveForward+316: 90                 - nop
+CharControl2:MoveForward+317: 90                 - nop
+CharControl2:MoveForward+318: 90                 - nop
+CharControl2:MoveForward+319: 90                 - nop
+CharControl2:MoveForward+31a: 8B 45 08           - mov eax,[ebp+08]
+CharControl2:MoveForward+31d: D9 40 4C           - fld dword ptr [eax+4C]
+CharControl2:MoveForward+320: D9 05 40 92 FE 0A  - fld dword ptr [0AFE9240]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>6</ID>
+      <Description>"godmode"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Suvivors Viy
+  Version: 1.2
+  Date   : 04.11.2021
+  Author : jisopo
+  github:  github.com/jisopo/CheatEngieTables
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(godmode, 8B 45 08 0F B6 40 74)
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+
+mov byte ptr [eax+74], 0
+
+mov eax,0
+test eax,eax
+jmp returnhere
+
+originalcode:
+movzx eax,byte ptr [eax+74]
+test eax,eax
+
+exit:
+jmp returnhere
+
+//CharControl2:Dead+1b:
+godmode+3:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(godmode)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+godmode+3:
+//CharControl2:Dead+1b:
+movzx eax,byte ptr [eax+74]
+test eax,eax
+unregisterSymbol(godmode)
+dealloc(newmem)
+//Alt: db 0F B6 40 74 85 C0
+{
+// ORIGINAL CODE - INJECTION POINT: CharControl2:Dead+1b
+
+CharControl2:Dead+a: 90                 - nop
+CharControl2:Dead+b: 90                 - nop
+CharControl2:Dead+c: 3B 05 00 00 1D 01  - cmp eax,[011D0000]
+CharControl2:Dead+12: 90                 - nop
+CharControl2:Dead+13: 90                 - nop
+CharControl2:Dead+14: 90                 - nop
+CharControl2:Dead+15: 90                 - nop
+CharControl2:Dead+16: 90                 - nop
+CharControl2:Dead+17: 90                 - nop
+CharControl2:Dead+18: 8B 45 08           - mov eax,[ebp+08]
+// ---------- INJECTING HERE ----------
+CharControl2:Dead+1b: 0F B6 40 74        - movzx eax,byte ptr [eax+74]
+// ---------- DONE INJECTING  ----------
+CharControl2:Dead+1f: 85 C0              - test eax,eax
+CharControl2:Dead+21: 0F 84 05 02 00 00  - je CharControl2:Dead+22c
+CharControl2:Dead+27: 3B 05 00 00 1D 01  - cmp eax,[011D0000]
+CharControl2:Dead+2d: 90                 - nop
+CharControl2:Dead+2e: 90                 - nop
+CharControl2:Dead+2f: 90                 - nop
+CharControl2:Dead+30: 90                 - nop
+CharControl2:Dead+31: 90                 - nop
+CharControl2:Dead+32: 90                 - nop
+CharControl2:Dead+33: 8B 45 08           - mov eax,[ebp+08]
+}
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
