@@ -327,6 +327,64 @@ Circle_Control:OnTriggerExit+e6: 8B 40 10           - mov eax,[eax+10]
 }
 </AssemblerScript>
     </CheatEntry>
+    <CheatEntry>
+      <ID>11</ID>
+      <Description>"Disable witch teleport"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Viy new One English Multiplayer 2.exe
+  Version: 1.2
+  Date   : 08.11.2021
+  Author : jisopo
+  github:  github.com/jisopo/CheatEngineTables
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(disable_witch_teleport, 83 EC 0C 50 E8 BC 00 00 00) // should be unique
+
+disable_witch_teleport+4:
+db 90 90 90 90 90
+
+registersymbol(disable_witch_teleport)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+disable_witch_teleport+4:
+db E8 BC 00 00 00
+
+unregistersymbol(disable_witch_teleport)
+{
+// ORIGINAL CODE - INJECTION POINT: Witch_Control:FMethod+1f
+
+Witch_Control:FMethod+c: 3B 05 00 00 8C 00  - cmp eax,[008C0000]
+Witch_Control:FMethod+12: 90                 - nop 
+Witch_Control:FMethod+13: 90                 - nop 
+Witch_Control:FMethod+14: 90                 - nop 
+Witch_Control:FMethod+15: 90                 - nop 
+Witch_Control:FMethod+16: 90                 - nop 
+Witch_Control:FMethod+17: 90                 - nop 
+Witch_Control:FMethod+18: 8B 45 08           - mov eax,[ebp+08]
+Witch_Control:FMethod+1b: 83 EC 0C           - sub esp,0C
+Witch_Control:FMethod+1e: 50                 - push eax
+// ---------- INJECTING HERE ----------
+Witch_Control:FMethod+1f: E8 BC 00 00 00     - call Witch_Control:Teleport
+// ---------- DONE INJECTING  ----------
+Witch_Control:FMethod+24: 83 C4 10           - add esp,10
+Witch_Control:FMethod+27: 3B 05 00 00 8C 00  - cmp eax,[008C0000]
+Witch_Control:FMethod+2d: 90                 - nop 
+Witch_Control:FMethod+2e: 90                 - nop 
+Witch_Control:FMethod+2f: 90                 - nop 
+Witch_Control:FMethod+30: 90                 - nop 
+Witch_Control:FMethod+31: 90                 - nop 
+Witch_Control:FMethod+32: 90                 - nop 
+Witch_Control:FMethod+33: 8B 45 08           - mov eax,[ebp+08]
+Witch_Control:FMethod+36: 83 EC 0C           - sub esp,0C
+}
+</AssemblerScript>
+    </CheatEntry>
   </CheatEntries>
   <UserdefinedSymbols/>
 </CheatTable>
