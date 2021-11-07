@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="29">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>8</ID>
+      <Description>"Activate table"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : RIP-Win64-Shipping.exe
+  Version:
+  Date   : 22.02.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(gm,"RIP-Win64-Shipping.exe",4C 8B 0F 4C 8D 44 24 68 48 8B D0)
+alloc(newmem,$1024,gm)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [playerPointer],rdi
+cmp byte ptr [gmEnabled],1
+je godmode
+cmp byte ptr [ammoEnabled],1
+je ammo
+jmp originalcode
+godmode:
+mov byte ptr [rdi+978],1 // gm flag
+mov [rdi+718],(float)999 // hp
+mov [rdi+720],(float)999 // armor
+
+cmp byte ptr [ammoEnabled],1
+jne originalcode
+
+ammo:
+mov byte ptr [rdi+988],1 // inf. ammo flag
+
+originalcode:
+mov r9,[rdi]
+lea r8,[rsp+68]
+
+exit:
+jmp returnhere
+
+gmEnabled:
+db 0
+
+ammoEnabled:
+db 0
+
+playerPointer:
+dq 0
+
+gm:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+
+registerSymbol(gm)
+registerSymbol(gmEnabled)
+registerSymbol(ammoEnabled)
+registerSymbol(playerPointer)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+gm:
+db 4C 8B 0F 4C 8D 44 24 68
+unregisterSymbol(gm)
+unregisterSymbol(gmEnabled)
+unregisterSymbol(ammoEnabled)
+unregisterSymbol(playerPointer)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "RIP-Win64-Shipping.exe"+1990A24
+
+"RIP-Win64-Shipping.exe"+19909FF: 84 C0                 -  test al,al
+"RIP-Win64-Shipping.exe"+1990A01: 74 36                 -  je RIP-Win64-Shipping.exe+1990A39
+"RIP-Win64-Shipping.exe"+1990A03: 48 8B 5E 10           -  mov rbx,[rsi+10]
+"RIP-Win64-Shipping.exe"+1990A07: 48 8B CB              -  mov rcx,rbx
+"RIP-Win64-Shipping.exe"+1990A0A: F3 0F 11 74 24 68     -  movss [rsp+68],xmm6
+"RIP-Win64-Shipping.exe"+1990A10: E8 AB 7B E2 FE        -  call RIP-Win64-Shipping.exe+7B85C0
+"RIP-Win64-Shipping.exe"+1990A15: 48 8B 53 08           -  mov rdx,[rbx+08]
+"RIP-Win64-Shipping.exe"+1990A19: 48 8B C8              -  mov rcx,rax
+"RIP-Win64-Shipping.exe"+1990A1C: 48 8B F8              -  mov rdi,rax
+"RIP-Win64-Shipping.exe"+1990A1F: E8 2C B7 E0 FE        -  call RIP-Win64-Shipping.exe+79C150
+// ---------- INJECTING HERE ----------
+"RIP-Win64-Shipping.exe"+1990A24: 4C 8B 0F              -  mov r9,[rdi]
+"RIP-Win64-Shipping.exe"+1990A27: 4C 8D 44 24 68        -  lea r8,[rsp+68]
+// ---------- DONE INJECTING  ----------
+"RIP-Win64-Shipping.exe"+1990A2C: 48 8B D0              -  mov rdx,rax
+"RIP-Win64-Shipping.exe"+1990A2F: 48 8B CF              -  mov rcx,rdi
+"RIP-Win64-Shipping.exe"+1990A32: 41 FF 91 10 02 00 00  -  call qword ptr [r9+00000210]
+"RIP-Win64-Shipping.exe"+1990A39: 48 83 C6 28           -  add rsi,28
+"RIP-Win64-Shipping.exe"+1990A3D: 49 3B F6              -  cmp rsi,r14
+"RIP-Win64-Shipping.exe"+1990A40: 0F 85 22 FF FF FF     -  jne RIP-Win64-Shipping.exe+1990968
+"RIP-Win64-Shipping.exe"+1990A46: 48 8B 35 0B BD 59 01  -  mov rsi,[RIP-Win64-Shipping.exe+2F2C758]
+"RIP-Win64-Shipping.exe"+1990A4D: 48 63 05 0C BD 59 01  -  movsxd  rax,dword ptr [RIP-Win64-Shipping.exe+2F2C760]
+"RIP-Win64-Shipping.exe"+1990A54: 4C 8D 34 40           -  lea r14,[rax+rax*2]
+"RIP-Win64-Shipping.exe"+1990A58: 49 C1 E6 04           -  shl r14,04
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>24</ID>
+      <Description>"godmode"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+gmEnabled:
+db 1
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+gmEnabled:
+db 0
+[playerPointer]+978:
+db 0
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>25</ID>
+      <Description>"inf. Ammo"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+ammoEnabled:
+db 1
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+ammoEnabled:
+db 0
+[playerPointer]+988:
+db 0
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

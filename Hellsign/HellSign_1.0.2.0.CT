@@ -1,0 +1,1072 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="29">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>2</ID>
+      <Description>"no Reload"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : HellSign.exe
+  Version: Steam Early Access v1.0.0.7c
+  Date   : 2019-01-04
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(noReload,8B 47 1C 85 C0 0F9F C0 0FB6 C0)
+alloc(newmem,$1000,noReload)
+label(originalcode)
+label(returnhere)
+
+newmem:
+mov [edi+1C],#50
+
+originalcode:
+mov eax,[edi+1C]
+test eax,eax
+jmp returnhere
+
+noReload:
+jmp newmem
+returnhere:
+
+registerSymbol(noReload)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+noReload:
+mov eax,[edi+1C]
+test eax,eax
+//Alt: db 8B 47 1C 85 C0
+unregisterSymbol(noReload)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: 193799BB
+
+""+1937999D: 8B 75 08              -  mov esi,[ebp+08]
+""+193799A0: 8B 7D 0C              -  mov edi,[ebp+0C]
+""+193799A3: 83 EC 0C              -  sub esp,0C
+""+193799A6: 57                    -  push edi
+""+193799A7: 39 3F                 -  cmp [edi],edi
+""+193799A9: E8 42 99 FF FF        -  call 193732F0
+""+193799AE: 83 C4 10              -  add esp,10
+""+193799B1: 85 C0                 -  test eax,eax
+""+193799B3: 0F 84 8E 01 00 00     -  je 19379B47
+""+193799B9: 39 3F                 -  cmp [edi],edi
+// ---------- INJECTING HERE ----------
+""+193799BB: 8B 47 1C              -  mov eax,[edi+1C]
+""+193799BE: 85 C0                 -  test eax,eax
+// ---------- DONE INJECTING  ----------
+""+193799C0: 0F 9F C0              -  setg al
+""+193799C3: 0F B6 C0              -  movzx eax,al
+""+193799C6: 85 C0                 -  test eax,eax
+""+193799C8: 0F 94 C0              -  sete al
+""+193799CB: 0F B6 C0              -  movzx eax,al
+""+193799CE: 85 C0                 -  test eax,eax
+""+193799D0: 0F 85 71 01 00 00     -  jne 19379B47
+""+193799D6: 83 EC 0C              -  sub esp,0C
+""+193799D9: 57                    -  push edi
+""+193799DA: 39 3F                 -  cmp [edi],edi
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>69</ID>
+      <Description>"Rapid Fire"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+{$lua}
+prev_address = allocateSharedMemory("prev_address",3)
+aobresult = AOBScan("8B 45 CC 8B 4B 08 8B 49 08 D9 81 98000000 DEC1 D9 58 30")
+writeBytes(prev_address, readBytes(aobresult[0].."+11", 3, true),3)
+writeBytes(aobresult[0].."+11", 0x90, 0x90, 0x90)
+{$asm}
+
+
+[DISABLE]
+{$lua}
+prev_address = allocateSharedMemory("prev_address",3)
+aobresult = AOBScan("8B 45 CC 8B 4B 08 8B 49 08 D9 81 98000000 DEC1 90 90 90")
+writeBytes(aobresult[0].."+11", readBytes(prev_address, 3, true), 3)
+{$asm}
+{
+// ORIGINAL CODE - INJECTION POINT: 199E165A
+
+199E1637: 8B 49 08           -  mov ecx,[ecx+08]
+199E163A: D9 81 BC 00 00 00  -  fld dword ptr [ecx+000000BC]
+199E1640: DE C1              -  faddp
+199E1642: D9 05 B8 59 D5 39  -  fld dword ptr [39D559B8]
+199E1648: DE C1              -  faddp
+199E164A: D9 58 30           -  fstp dword ptr [eax+30]
+199E164D: EB 1F              -  jmp 199E166E
+199E164F: 8B 43 08           -  mov eax,[ebx+08]
+199E1652: 89 45 CC           -  mov [ebp-34],eax
+199E1655: E8 7E 4C 0A EC     -  call 05A862D8
+// ---------- INJECTING HERE ----------
+199E165A: 8B 45 CC           -  mov eax,[ebp-34]
+199E165D: 8B 4B 08           -  mov ecx,[ebx+08]
+// ---------- DONE INJECTING  ----------
+199E1660: 8B 49 08           -  mov ecx,[ecx+08]
+199E1663: D9 81 98 00 00 00  -  fld dword ptr [ecx+00000098]
+199E1669: DE C1              -  faddp
+199E166B: D9 58 30           -  fstp dword ptr [eax+30]
+199E166E: 8B 43 08           -  mov eax,[ebx+08]
+199E1671: 8B 40 08           -  mov eax,[eax+08]
+199E1674: 83 EC 08           -  sub esp,08
+199E1677: 50                 -  push eax
+199E1678: FF 75 08           -  push [ebp+08]
+199E167B: E8 48 4E 00 00     -  call 199E64C8
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>72</ID>
+      <Description>"Rapid Fire(pistol)"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+{$lua}
+prev_address = allocateSharedMemory("prev_address",3)
+aobresult = AOBScan("D9 81 98000000 DEC1 D9 58 30 8B 43 08 8B 40 08")
+writeBytes(prev_address, readBytes(aobresult[0].."+8", 3, true),3)
+writeBytes(aobresult[1].."+8", 0x90, 0x90, 0x90)
+{$asm}
+
+
+[DISABLE]
+{$lua}
+prev_address = allocateSharedMemory("prev_address",3)
+aobresult = AOBScan("D9 81 98000000 DEC1 90 90 90 8B 43 08 8B 40 08")
+writeBytes(aobresult[0].."+8", readBytes(prev_address, 3, true), 3)
+{$asm}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>71</ID>
+      <Description>"Rapid Fire(shootgun)"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+{$lua}
+prev_address = allocateSharedMemory("prev_address",3)
+aobresult = AOBScan("D9 81 BC000000 DEC1 D9 05 ******** DEC1 D9 58 30","*W-C+X")
+writeBytes(prev_address, readBytes(aobresult[0].."+10", 3, true),3)
+writeBytes(aobresult[0].."+10", 0x90, 0x90, 0x90)
+{$asm}
+
+
+[DISABLE]
+{$lua}
+prev_address = allocateSharedMemory("prev_address",3)
+aobresult = AOBScan("D9 81 BC000000 DEC1 D9 05 ******** DEC1 90 90 90","*W-C+X")
+writeBytes(aobresult[0].."+10", readBytes(prev_address, 3, true), 3)
+{$asm}
+{
+// ORIGINAL CODE - INJECTION POINT: 288E74F2
+
+288E74D0: 8B 43 08           -  mov eax,[ebx+08]
+288E74D3: 89 45 CC           -  mov [ebp-34],eax
+288E74D6: E8 FD ED 15 DD     -  call 05A462D8
+288E74DB: 8B 45 CC           -  mov eax,[ebp-34]
+288E74DE: 8B 4B 08           -  mov ecx,[ebx+08]
+288E74E1: 8B 49 08           -  mov ecx,[ecx+08]
+288E74E4: D9 81 98 00 00 00  -  fld dword ptr [ecx+00000098]
+288E74EA: DE C1              -  faddp
+288E74EC: 8B 4B 08           -  mov ecx,[ebx+08]
+288E74EF: 8B 49 08           -  mov ecx,[ecx+08]
+// ---------- INJECTING HERE ----------
+288E74F2: D9 81 BC 00 00 00  -  fld dword ptr [ecx+000000BC]
+// ---------- DONE INJECTING  ----------
+288E74F8: DE C1              -  faddp
+288E74FA: D9 05 88 57 8C 39  -  fld dword ptr [398C5788]
+288E7500: DE C1              -  faddp
+288E7502: D9 58 30           -  fstp dword ptr [eax+30]
+288E7505: EB 1F              -  jmp 288E7526
+288E7507: 8B 43 08           -  mov eax,[ebx+08]
+288E750A: 89 45 CC           -  mov [ebp-34],eax
+288E750D: E8 C6 ED 15 DD     -  call 05A462D8
+288E7512: 8B 45 CC           -  mov eax,[ebp-34]
+288E7515: 8B 4B 08           -  mov ecx,[ebx+08]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>11</ID>
+      <Description>"inf. Health"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : HellSign.exe
+  Version: Steam Early Access v1.0.0.7c
+  Date   : 2019-01-04
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(health,D9 5F 3C D9 47 3C DD 5D F0 D9EE DD 5D E8 83 EC 0C 57)
+alloc(newmem,$1000,health)
+label(returnhere)
+label(originalcode)
+
+newmem: //this is allocated memory, you have read,write,execute access
+fld dword ptr [edi+40]
+
+originalcode:
+fstp dword ptr [edi+3C]
+fld dword ptr [edi+3C]
+jmp returnhere
+
+health:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(health)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+health:
+fstp dword ptr [edi+3C]
+fld dword ptr [edi+3C]
+//Alt: db D9 5F 3C D9 47 3C
+unregisterSymbol(health)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: 365DDB1A
+
+""+365DDB04: 00 00                 -  add [eax],al
+""+365DDB06: 00 00                 -  add [eax],al
+""+365DDB08: 55                    -  push ebp
+""+365DDB09: 8B EC                 -  mov ebp,esp
+""+365DDB0B: 57                    -  push edi
+""+365DDB0C: 83 EC 14              -  sub esp,14
+""+365DDB0F: 8B 7D 08              -  mov edi,[ebp+08]
+""+365DDB12: D9 47 3C              -  fld dword ptr [edi+3C]
+""+365DDB15: D9 45 0C              -  fld dword ptr [ebp+0C]
+""+365DDB18: DE C1                 -  faddp
+// ---------- INJECTING HERE ----------
+""+365DDB1A: D9 5F 3C              -  fstp dword ptr [edi+3C]
+""+365DDB1D: D9 47 3C              -  fld dword ptr [edi+3C]
+// ---------- DONE INJECTING  ----------
+""+365DDB20: DD 5D F0              -  fstp qword ptr [ebp-10]
+""+365DDB23: D9 EE                 -  fldz
+""+365DDB25: DD 5D E8              -  fstp qword ptr [ebp-18]
+""+365DDB28: 83 EC 0C              -  sub esp,0C
+""+365DDB2B: 57                    -  push edi
+""+365DDB2C: E8 AF B2 D7 E2        -  call 19358DE0
+""+365DDB31: 83 C4 10              -  add esp,10
+""+365DDB34: DD 45 F0              -  fld qword ptr [ebp-10]
+""+365DDB37: DD 45 E8              -  fld qword ptr [ebp-18]
+""+365DDB3A: 83 EC 04              -  sub esp,04
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>5</ID>
+      <Description>"inf. Ammo"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : HellSign.exe
+  Version: Steam Early Access v1.0.0.7c
+  Date   : 2019-01-04
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(ammo,2B CA 89 48 18 8B 47 08 8B C8 8B 49 0C 8B 49 18 89 48 20)
+alloc(newmem,$1000,ammo)
+label(returnhere)
+label(originalcode)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [eax+18],#9999
+jmp returnhere
+
+originalcode:
+sub ecx,edx
+mov [eax+18],ecx
+
+ammo:
+jmp newmem
+returnhere:
+
+registerSymbol(ammo)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+ammo:
+sub ecx,edx
+mov [eax+18],ecx
+//Alt: db 2B CA 89 48 18
+unregisterSymbol(ammo)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: 19390DD9
+
+""+19390DBD: 3B C1              -  cmp eax,ecx
+""+19390DBF: 7D 0C              -  jnl 19390DCD
+""+19390DC1: 8B 47 08           -  mov eax,[edi+08]
+""+19390DC4: 8B 40 0C           -  mov eax,[eax+0C]
+""+19390DC7: 8B 40 18           -  mov eax,[eax+18]
+""+19390DCA: 89 47 18           -  mov [edi+18],eax
+""+19390DCD: 8B 47 08           -  mov eax,[edi+08]
+""+19390DD0: 8B 40 0C           -  mov eax,[eax+0C]
+""+19390DD3: 8B 48 18           -  mov ecx,[eax+18]
+""+19390DD6: 8B 57 18           -  mov edx,[edi+18]
+// ---------- INJECTING HERE ----------
+""+19390DD9: 29 D1              -  sub ecx,edx
+""+19390DDB: 89 48 18           -  mov [eax+18],ecx
+// ---------- DONE INJECTING  ----------
+""+19390DDE: 8B 47 08           -  mov eax,[edi+08]
+""+19390DE1: 8B C8              -  mov ecx,eax
+""+19390DE3: 8B 49 0C           -  mov ecx,[ecx+0C]
+""+19390DE6: 8B 49 18           -  mov ecx,[ecx+18]
+""+19390DE9: 89 48 20           -  mov [eax+20],ecx
+""+19390DEC: 8B 47 08           -  mov eax,[edi+08]
+""+19390DEF: 8B 48 1C           -  mov ecx,[eax+1C]
+""+19390DF2: 8B 57 18           -  mov edx,[edi+18]
+""+19390DF5: 03 CA              -  add ecx,edx
+""+19390DF7: 89 48 1C           -  mov [eax+1C],ecx
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>27</ID>
+      <Description>"inf. Traps"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : HellSign.exe
+  Version: Steam Early Access v1.0.0.7c
+  Date   : 2019-01-05
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(traps,49 89 48 18 8B 47 10 8B 40 14 8B 40 5C 3D 01000000)
+alloc(newmem,$1000,traps)
+label(returnhere)
+label(originalcode)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [eax+18],#999
+mov eax,[edi+10]
+jmp returnhere
+
+originalcode:
+dec ecx
+mov [eax+18],ecx
+mov eax,[edi+10]
+
+traps:
+jmp newmem
+nop
+nop
+returnhere:
+
+registerSymbol(traps)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+traps:
+dec ecx
+mov [eax+18],ecx
+mov eax,[edi+10]
+//Alt: db 49 89 48 18 8B 47 10
+unregisterSymbol(traps)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: 1939E08F
+
+""+1939E074: 8B 4F 0C              -  mov ecx,[edi+0C]
+""+1939E077: 83 EC 08              -  sub esp,08
+""+1939E07A: 51                    -  push ecx
+""+1939E07B: 50                    -  push eax
+""+1939E07C: 39 00                 -  cmp [eax],eax
+""+1939E07E: E8 55 A1 D9 EB        -  call 051381D8
+""+1939E083: 83 C4 10              -  add esp,10
+""+1939E086: 8B 47 10              -  mov eax,[edi+10]
+""+1939E089: 8B 40 0C              -  mov eax,[eax+0C]
+""+1939E08C: 8B 48 18              -  mov ecx,[eax+18]
+// ---------- INJECTING HERE ----------
+""+1939E08F: 49                    -  dec ecx
+""+1939E090: 89 48 18              -  mov [eax+18],ecx
+""+1939E093: 8B 47 10              -  mov eax,[edi+10]
+// ---------- DONE INJECTING  ----------
+""+1939E096: 8B 40 14              -  mov eax,[eax+14]
+""+1939E099: 8B 40 5C              -  mov eax,[eax+5C]
+""+1939E09C: 3D 01 00 00 00        -  cmp eax,00000001
+""+1939E0A1: 0F 94 C0              -  sete al
+""+1939E0A4: 0F B6 C0              -  movzx eax,al
+""+1939E0A7: 85 C0                 -  test eax,eax
+""+1939E0A9: 74 11                 -  je 1939E0BC
+""+1939E0AB: 8B 47 0C              -  mov eax,[edi+0C]
+""+1939E0AE: 83 EC 0C              -  sub esp,0C
+""+1939E0B1: 50                    -  push eax
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>25</ID>
+      <Description>"inf. Throwables"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : HellSign.exe
+  Version: Steam Early Access v1.0.0.7c
+  Date   : 2019-01-05
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(Throwables,49 89 48 18 8B 47 14 8B 40 0C 8B 40 18 85 C0)
+alloc(newmem,$1000,Throwables)
+label(returnhere)
+label(originalcode)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov ecx,[eax+1C]
+mov [eax+18],ecx
+mov eax,[edi+14]
+jmp returnhere
+
+originalcode:
+dec ecx
+mov [eax+18],ecx
+mov eax,[edi+14]
+jmp returnhere
+
+Throwables:
+jmp newmem
+nop
+nop
+returnhere:
+
+registerSymbol(Throwables)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+Throwables:
+dec ecx
+mov [eax+18],ecx
+mov eax,[edi+14]
+//Alt: db 49 89 48 18 8B 47 14
+unregisterSymbol(Throwables)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: 350FFC38
+
+""+350FFC19: 89 4C 24 04           -  mov [esp+04],ecx
+""+350FFC1D: 8B 4D C0              -  mov ecx,[ebp-40]
+""+350FFC20: 89 4C 24 08           -  mov [esp+08],ecx
+""+350FFC24: 50                    -  push eax
+""+350FFC25: 39 00                 -  cmp [eax],eax
+""+350FFC27: E8 D4 03 F0 CA        -  call 00000000
+""+350FFC2C: 83 C4 20              -  add esp,20
+""+350FFC2F: 8B 47 14              -  mov eax,[edi+14]
+""+350FFC32: 8B 40 0C              -  mov eax,[eax+0C]
+""+350FFC35: 8B 48 18              -  mov ecx,[eax+18]
+// ---------- INJECTING HERE ----------
+""+350FFC38: 49                    -  dec ecx
+""+350FFC39: 89 48 18              -  mov [eax+18],ecx
+""+350FFC3C: 8B 47 14              -  mov eax,[edi+14]
+// ---------- DONE INJECTING  ----------
+""+350FFC3F: 8B 40 0C              -  mov eax,[eax+0C]
+""+350FFC42: 8B 40 18              -  mov eax,[eax+18]
+""+350FFC45: 85 C0                 -  test eax,eax
+""+350FFC47: 7E 00                 -  jle 350FFC49
+""+350FFC49: 8B 47 14              -  mov eax,[edi+14]
+""+350FFC4C: 8B 40 0C              -  mov eax,[eax+0C]
+""+350FFC4F: 8B C8                 -  mov ecx,eax
+""+350FFC51: 39 09                 -  cmp [ecx],ecx
+""+350FFC53: 8B 40 10              -  mov eax,[eax+10]
+""+350FFC56: 83 EC 0C              -  sub esp,0C
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>32</ID>
+      <Description>"inf. Skillpoints"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : HellSign.exe
+  Version: v1.0.1.6
+  Date   : 2019-06-29
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(points,8B 40 14 8B 40 08 8B 40 38 89 45 E8 83 EC 0C)
+alloc(newmem,$1000,points)
+label(returnhere)
+label(originalcode)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [eax+38],#999
+mov eax,[eax+38]
+mov [ebp-18],eax
+jmp returnhere
+
+originalcode:
+mov eax,[eax+38]
+mov [ebp-18],eax
+jmp returnhere
+
+points+6:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(points)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+points+6:
+mov eax,[eax+38]
+mov [ebp-14],eax
+//Alt: db 8B 40 38 89 45 EC
+unregisterSymbol(points)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: 05C5CC83
+
+05C5CC62: 83 EC 0C           -  sub esp,0C
+05C5CC65: 50                 -  push eax
+05C5CC66: 39 00              -  cmp [eax],eax
+05C5CC68: E8 5B 01 00 00     -  call 05C5CDC8
+05C5CC6D: 83 C4 10           -  add esp,10
+05C5CC70: 89 45 EC           -  mov [ebp-14],eax
+05C5CC73: BA 28 5E 3C 1A     -  mov edx,1A3C5E28
+05C5CC78: E8 7B A3 F8 FF     -  call 05BE6FF8
+05C5CC7D: 8B 40 14           -  mov eax,[eax+14]
+05C5CC80: 8B 40 08           -  mov eax,[eax+08]
+// ---------- INJECTING HERE ----------
+05C5CC83: 8B 40 38           -  mov eax,[eax+38]
+05C5CC86: 89 45 E8           -  mov [ebp-18],eax
+// ---------- DONE INJECTING  ----------
+05C5CC89: 83 EC 0C           -  sub esp,0C
+05C5CC8C: 68 84 0B 7E 05     -  push 057E0B84
+05C5CC91: E8 FA 48 F1 FF     -  call 05B71590
+05C5CC96: 83 C4 10           -  add esp,10
+05C5CC99: 8B C8              -  mov ecx,eax
+05C5CC9B: 8B 45 EC           -  mov eax,[ebp-14]
+05C5CC9E: 8B 55 E8           -  mov edx,[ebp-18]
+05C5CCA1: 89 51 08           -  mov [ecx+08],edx
+05C5CCA4: 83 EC 04           -  sub esp,04
+05C5CCA7: 51                 -  push ecx
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>20</ID>
+      <Description>"no level required"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : HellSign.exe
+  Version: Steam Early Access v1.0.0.7c
+  Date   : 2019-01-04
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(level_required,3BC1 0F9C C0 0FB6 C0 85 C0 0F94 C0 0FB6 C0 8B D8)
+alloc(newmem,$1000,level_required)
+label(returnhere)
+label(originalcode)
+
+newmem: //this is allocated memory, you have read,write,execute access
+cmp eax,#0
+setl al
+jmp returnhere
+
+originalcode:
+cmp eax,ecx
+setl al
+
+level_required:
+jmp newmem
+returnhere:
+
+registerSymbol(level_required)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+level_required:
+db 3B C1 0F 9C C0
+//Alt: db 3B C1 0F 9C C0
+unregisterSymbol(level_required)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: 04FE0B2A
+
+""+4FE0B04: C7 45 C0 01 00 00 00  -  mov [ebp-40],00000001
+""+4FE0B0B: 8B 45 C0              -  mov eax,[ebp-40]
+""+4FE0B0E: 88 45 EB              -  mov [ebp-15],al
+""+4FE0B11: BA D0 BA 47 19        -  mov edx,1947BAD0
+""+4FE0B16: E8 DD 64 F8 FF        -  call 04F66FF8
+""+4FE0B1B: 8B 40 14              -  mov eax,[eax+14]
+""+4FE0B1E: 8B 40 08              -  mov eax,[eax+08]
+""+4FE0B21: 8B 40 30              -  mov eax,[eax+30]
+""+4FE0B24: 8B 4F 10              -  mov ecx,[edi+10]
+""+4FE0B27: 8B 49 20              -  mov ecx,[ecx+20]
+// ---------- INJECTING HERE ----------
+""+4FE0B2A: 3B C1                 -  cmp eax,ecx
+""+4FE0B2C: 0F 9C C0              -  setl al
+// ---------- DONE INJECTING  ----------
+""+4FE0B2F: 0F B6 C0              -  movzx eax,al
+""+4FE0B32: 85 C0                 -  test eax,eax
+""+4FE0B34: 0F 94 C0              -  sete al
+""+4FE0B37: 0F B6 C0              -  movzx eax,al
+""+4FE0B3A: 8B D8                 -  mov ebx,eax
+""+4FE0B3C: BA D0 BA 47 19        -  mov edx,1947BAD0
+""+4FE0B41: E8 B2 64 F8 FF        -  call 04F66FF8
+""+4FE0B46: 8B 4F 10              -  mov ecx,[edi+10]
+""+4FE0B49: 83 EC 08              -  sub esp,08
+""+4FE0B4C: 51                    -  push ecx
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>13</ID>
+      <Description>"inf. Money"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : HellSign.exe
+  Version: Steam Early Access v1.0.0.7c
+  Date   : 2019-01-04
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(money,83 C4 10 89 46 3C 8B 05 ******** 8B 4E 3C 83 EC 08 51 50)
+alloc(newmem,$1000,money)
+label(returnhere)
+label(originalcode)
+
+newmem: //this is allocated memory, you have read,write,execute access
+add esp,10
+mov [esi+3C],#999999
+jmp returnhere
+
+originalcode:
+add esp,10
+mov [esi+3C],eax
+
+money:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(money)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+money:
+add esp,10
+mov [esi+3C],eax
+//Alt: db 83 C4 10 89 46 3C
+unregisterSymbol(money)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: 06CC2E1D
+
+""+6CC2E00: 8B 46 4C           -  mov eax,[esi+4C]
+""+6CC2E03: 03 45 0C           -  add eax,[ebp+0C]
+""+6CC2E06: 89 46 4C           -  mov [esi+4C],eax
+""+6CC2E09: 8B 46 3C           -  mov eax,[esi+3C]
+""+6CC2E0C: 03 45 0C           -  add eax,[ebp+0C]
+""+6CC2E0F: 89 46 3C           -  mov [esi+3C],eax
+""+6CC2E12: 83 EC 08           -  sub esp,08
+""+6CC2E15: 50                 -  push eax
+""+6CC2E16: 6A 00              -  push 00
+""+6CC2E18: E8 EB E4 2C FE     -  call 04F91308
+// ---------- INJECTING HERE ----------
+""+6CC2E1D: 83 C4 10           -  add esp,10
+""+6CC2E20: 89 46 3C           -  mov [esi+3C],eax
+// ---------- DONE INJECTING  ----------
+""+6CC2E23: 8B 05 48 4D C4 1A  -  mov eax,[1AC44D48]
+""+6CC2E29: 8B 4E 3C           -  mov ecx,[esi+3C]
+""+6CC2E2C: 83 EC 08           -  sub esp,08
+""+6CC2E2F: 51                 -  push ecx
+""+6CC2E30: 50                 -  push eax
+""+6CC2E31: 90                 -  nop
+""+6CC2E32: 90                 -  nop
+""+6CC2E33: 90                 -  nop
+""+6CC2E34: FF 50 0C           -  call dword ptr [eax+0C]
+""+6CC2E37: 83 C4 10           -  add esp,10
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>31</ID>
+      <Description>"inf. Medicine(medkit)"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : HellSign.exe
+  Version: Steam Early Access v1.0.0.7c
+  Date   : 2019-01-05
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(medkit,D9 98 80 00 00 00 BA ******** E8 ******** 39 00)
+alloc(newmem,$1000,medkit)
+label(returnhere)
+label(originalcode)
+
+newmem: //this is allocated memory, you have read,write,execute access
+fld dword ptr [full]
+
+originalcode:
+fstp dword ptr [eax+00000080]
+jmp returnhere
+
+full:
+dd (float)999
+
+medkit:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(medkit)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+medkit:
+db D9 98 80 00 00 00
+unregisterSymbol(medkit)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: 351048D8
+
+""+351048B9: 83 EC 04           -  sub esp,04
+""+351048BC: D9 1C 24           -  fstp dword ptr [esp]
+""+351048BF: 50                 -  push eax
+""+351048C0: 39 00              -  cmp [eax],eax
+""+351048C2: E8 39 B7 EF CA     -  call 00000000
+""+351048C7: 83 C4 10           -  add esp,10
+""+351048CA: 8B 47 14           -  mov eax,[edi+14]
+""+351048CD: D9 80 80 00 00 00  -  fld dword ptr [eax+00000080]
+""+351048D3: D9 45 EC           -  fld dword ptr [ebp-14]
+""+351048D6: DE E9              -  fsubp st(1),st(0)
+// ---------- INJECTING HERE ----------
+""+351048D8: D9 98 80 00 00 00  -  fstp dword ptr [eax+00000080]
+// ---------- DONE INJECTING  ----------
+""+351048DE: BA 10 BC 57 1A     -  mov edx,1A57BC10
+""+351048E3: E8 18 B7 EF CA     -  call 00000000
+""+351048E8: 39 00              -  cmp [eax],eax
+""+351048EA: BA 90 84 DF 34     -  mov edx,34DF8490
+""+351048EF: 83 EC 0C           -  sub esp,0C
+""+351048F2: 50                 -  push eax
+""+351048F3: E8 08 B7 EF CA     -  call 00000000
+""+351048F8: 83 C4 10           -  add esp,10
+""+351048FB: 8B 4F 0C           -  mov ecx,[edi+0C]
+""+351048FE: 83 EC 08           -  sub esp,08
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>22</ID>
+      <Description>"inf. Medicine(injector)"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : HellSign.exe
+  Version: Steam Early Access v1.0.0.7c
+  Date   : 2019-01-05
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+aobscan(injector,D9 98 80000000 8B 47 08 8B 40 14 D9 80 80000000 D9EE)
+alloc(newmem1,$1000,injector)
+label(returnhere1)
+label(originalcode1)
+label(full1)
+
+newmem1: //this is allocated memory, you have read,write,execute access
+fld dword ptr [full1]
+
+originalcode1:
+fstp dword ptr [eax+00000080]
+jmp returnhere1
+
+full1:
+dd (float)999
+
+injector:
+jmp newmem1
+nop
+returnhere1:
+registerSymbol(injector)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+injector:
+fstp dword ptr [eax+00000080]
+//Alt: db D9 98 80 00 00 00
+unregisterSymbol(injector)
+dealloc(newmem1)
+{
+// ORIGINAL CODE - INJECTION POINT: 365E0A93
+
+""+365E0A75: D9 1C 24           -  fstp dword ptr [esp]
+""+365E0A78: 50                 -  push eax
+""+365E0A79: 39 00              -  cmp [eax],eax
+""+365E0A7B: E8 10 11 00 00     -  call 365E1B90
+""+365E0A80: 83 C4 10           -  add esp,10
+""+365E0A83: 8B 47 08           -  mov eax,[edi+08]
+""+365E0A86: 8B 40 14           -  mov eax,[eax+14]
+""+365E0A89: D9 80 80 00 00 00  -  fld dword ptr [eax+00000080]
+""+365E0A8F: D9 E8              -  fld1
+""+365E0A91: DE E9              -  fsubp st(1),st(0)
+// ---------- INJECTING HERE ----------
+""+365E0A93: D9 98 80 00 00 00  -  fstp dword ptr [eax+00000080]
+// ---------- DONE INJECTING  ----------
+""+365E0A99: 8B 47 08           -  mov eax,[edi+08]
+""+365E0A9C: 8B 40 14           -  mov eax,[eax+14]
+""+365E0A9F: D9 80 80 00 00 00  -  fld dword ptr [eax+00000080]
+""+365E0AA5: D9 EE              -  fldz
+""+365E0AA7: DF F1              -  fcomip st(0),st(1)
+""+365E0AA9: DD D8              -  fstp st(0)
+""+365E0AAB: 0F 82 37 00 00 00  -  jb 365E0AE8
+""+365E0AB1: BA 20 BB 6C 1A     -  mov edx,1A6CBB20
+""+365E0AB6: E8 AD 5F CE E2     -  call 192C6A68
+""+365E0ABB: 83 EC 08           -  sub esp,08
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>59</ID>
+      <Description>"Teleport"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(teleport, HellSign.exe, 66 0FD6 83 98010000 F3 0F7E 46 10 66 0FD6 83 A0010000 F3 0F7E 46 18 66 0FD6 83 A8010000  85 C9)
+alloc(newmem,$1024)
+label(returnhere)
+label(originalcode)
+label(tflag)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+cmp byte ptr [tflag],0
+je originalcode
+cmp byte ptr [tflag],1
+jne @F
+movsd xmm6, [ebx+00000198]
+movq [coords],xmm6
+movsd xmm6, [ebx+000001A0]
+movq [coords+8],xmm6
+movsd xmm6, [ebx+000001A8]
+movq [coords+10],xmm6
+xorps xmm6, xmm6
+mov byte ptr[tflag],0
+jmp originalcode
+
+@@:
+   cmp byte ptr [tflag],2
+   jne originalcode
+   movsd xmm6, [coords]
+   movq [esi+08],xmm6
+   // это чтобы не телепортировало туда где уже был
+   // можно или так и сделать инъекцию там где пишет в
+   // movq xmm0,[esi+08]
+   movsd xmm0, [esi+08]
+   //
+   movsd xmm6, [coords+8]
+   movq [esi+10],xmm6
+   movsd xmm6, [coords+10]
+   movq [esi+18],xmm6
+   xorps xmm6, xmm6
+   mov byte ptr [tflag],0
+   jmp originalcode
+
+originalcode:
+
+mov eax, [ebx+00000198]
+mov [current_pos],ebx
+add [current_pos],198
+mov [current_pos+4],ebx
+add [current_pos+4],1A0
+mov [current_pos+8],ebx
+add [current_pos+8],1A8
+
+movq [ebx+00000198],xmm0
+
+exit:
+jmp returnhere
+
+tflag:
+db 0
+
+coords:
+db 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+
+current_pos:
+db 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+
+teleport:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+registerSymbol(teleport)
+registerSymbol(tFlag)
+registerSymbol(coords)
+registerSymbol(current_pos)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+teleport:
+db 66 0F D6 83 98 01 00 00
+unregisterSymbol(teleport)
+unregisterSymbol(tFlag)
+unregisterSymbol(coords)
+unregisterSymbol(current_pos)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "HellSign.exe"+8B8174
+
+"HellSign.exe"+8B814D: 50                       -  push eax
+"HellSign.exe"+8B814E: 8D 4B 58                 -  lea ecx,[ebx+58]
+"HellSign.exe"+8B8151: E8 FA E9 FF FF           -  call HellSign.exe+8B6B50
+"HellSign.exe"+8B8156: 8A 08                    -  mov cl,[eax]
+"HellSign.exe"+8B8158: 83 A3 8C 01 00 00 FD     -  and dword ptr [ebx+0000018C],-03
+"HellSign.exe"+8B815F: 88 0F                    -  mov [edi],cl
+"HellSign.exe"+8B8161: 8A 17                    -  mov dl,[edi]
+"HellSign.exe"+8B8163: 88 93 E4 01 00 00        -  mov [ebx+000001E4],dl
+"HellSign.exe"+8B8169: F3 0F 7E 46 08           -  movq xmm0,[esi+08]
+"HellSign.exe"+8B816E: 8B 8B 90 01 00 00        -  mov ecx,[ebx+00000190]
+// ---------- INJECTING HERE ----------
+"HellSign.exe"+8B8174: 66 0F D6 83 98 01 00 00  -  movq [ebx+00000198],xmm0
+// ---------- DONE INJECTING  ----------
+"HellSign.exe"+8B817C: F3 0F 7E 46 10           -  movq xmm0,[esi+10]
+"HellSign.exe"+8B8181: 66 0F D6 83 A0 01 00 00  -  movq [ebx+000001A0],xmm0
+"HellSign.exe"+8B8189: F3 0F 7E 46 18           -  movq xmm0,[esi+18]
+"HellSign.exe"+8B818E: 66 0F D6 83 A8 01 00 00  -  movq [ebx+000001A8],xmm0
+"HellSign.exe"+8B8196: 85 C9                    -  test ecx,ecx
+"HellSign.exe"+8B8198: 0F 84 D2 00 00 00        -  je HellSign.exe+8B8270
+"HellSign.exe"+8B819E: F2 0F 10 85 F8 FE FF FF  -  movsd xmm0,[ebp-00000108]
+"HellSign.exe"+8B81A6: F2 0F 5C 46 08           -  subsd xmm0,[esi+08]
+"HellSign.exe"+8B81AB: F2 0F 10 8D 00 FF FF FF  -  movsd xmm1,[ebp-00000100]
+"HellSign.exe"+8B81B3: F2 0F 5C 4E 10           -  subsd xmm1,[esi+10]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>60</ID>
+      <Description>"tFlag"</Description>
+      <LastState Value="0" RealAddress="087F00E4"/>
+      <VariableType>Byte</VariableType>
+      <Address>tflag</Address>
+      <Hotkeys>
+        <Hotkey>
+          <Action>Set Value</Action>
+          <Keys>
+            <Key>97</Key>
+          </Keys>
+          <Value>1</Value>
+          <ID>0</ID>
+        </Hotkey>
+        <Hotkey>
+          <Action>Set Value</Action>
+          <Keys>
+            <Key>98</Key>
+          </Keys>
+          <Value>2</Value>
+          <ID>1</ID>
+        </Hotkey>
+      </Hotkeys>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>67</ID>
+      <Description>"SavedPos"</Description>
+      <LastState Value="" RealAddress="00000000"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>61</ID>
+          <Description>"No description"</Description>
+          <LastState Value="15.5786611670628" RealAddress="087F00E5"/>
+          <VariableType>Double</VariableType>
+          <Address>coords</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>63</ID>
+          <Description>"No description"</Description>
+          <LastState Value="-1.09499985259024" RealAddress="087F00ED"/>
+          <VariableType>Double</VariableType>
+          <Address>coords+8</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>62</ID>
+          <Description>"No description"</Description>
+          <LastState Value="-7.60314173232746" RealAddress="087F00F5"/>
+          <VariableType>Double</VariableType>
+          <Address>coords+10</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>68</ID>
+      <Description>"MyPos"</Description>
+      <LastState Value="" RealAddress="00000000"/>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>64</ID>
+          <Description>"No description"</Description>
+          <LastState Value="9.34266782366876" RealAddress="42C21360"/>
+          <VariableType>Double</VariableType>
+          <Address>current_pos</Address>
+          <Offsets>
+            <Offset>0</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>65</ID>
+          <Description>"No description"</Description>
+          <LastState Value="0.906326171839018" RealAddress="42C21368"/>
+          <VariableType>Double</VariableType>
+          <Address>current_pos+4</Address>
+          <Offsets>
+            <Offset>0</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>66</ID>
+          <Description>"No description"</Description>
+          <LastState Value="16.4185885262314" RealAddress="42C21370"/>
+          <VariableType>Double</VariableType>
+          <Address>current_pos+8</Address>
+          <Offsets>
+            <Offset>0</Offset>
+          </Offsets>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

@@ -1,0 +1,690 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="29">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>74</ID>
+      <Description>"inf. Energy"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : WTF.exe
+  Version: v1.10
+  Date   : 2019-06-29
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(energy, F3 0F11 68 20 48 8B CF 48 83 EC 20 49 BB ****************** FF D3 48 83 C4 20 85 C0)
+alloc(newmem,$1000,energy)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+fld [rax+1C]
+fstp [rax+20]
+jmp returnhere
+
+originalcode:
+movss [rax+20],xmm5
+
+exit:
+jmp returnhere
+
+energy:
+jmp newmem
+returnhere:
+
+registerSymbol(energy)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+energy:
+db F3 0F 11 68 20
+unregisterSymbol(energy)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: 28A02C96
+
+28A02C5F: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+28A02C63: F2 0F 5A E8                    -  cvtsd2ss xmm5,xmm0
+28A02C67: F3 0F 11 AD 58 FF FF FF        -  movss [rbp-000000A8],xmm5
+28A02C6F: 48 8D 87 90 01 00 00           -  lea rax,[rdi+00000190]
+28A02C76: F3 0F 10 87 B0 01 00 00        -  movss xmm0,[rdi+000001B0]
+28A02C7E: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+28A02C82: F3 0F 10 8E A8 01 00 00        -  movss xmm1,[rsi+000001A8]
+28A02C8A: F3 0F 5A C9                    -  cvtss2sd xmm1,xmm1
+28A02C8E: F2 0F 5C C1                    -  subsd xmm0,xmm1
+28A02C92: F2 0F 5A E8                    -  cvtsd2ss xmm5,xmm0
+// ---------- INJECTING HERE ----------
+28A02C96: F3 0F 11 68 20                 -  movss [rax+20],xmm5
+// ---------- DONE INJECTING  ----------
+28A02C9B: 48 8B CF                       -  mov rcx,rdi
+28A02C9E: 48 83 EC 20                    -  sub rsp,20
+28A02CA2: 49 BB 20 95 A5 05 00 00 00 00  -  mov r11,0000000005A59520
+28A02CAC: 41 FF D3                       -  call r11
+28A02CAF: 48 83 C4 20                    -  add rsp,20
+28A02CB3: 85 C0                          -  test eax,eax
+28A02CB5: 0F 84 9D 00 00 00              -  je 28A02D58
+28A02CBB: 48 8B 04 25 B8 4E 34 05        -  mov rax,[05344EB8]
+28A02CC3: C6 80 D4 03 00 00 00           -  mov byte ptr [rax+000003D4],00
+28A02CCA: 48 8B CF                       -  mov rcx,rdi
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>274</ID>
+      <Description>"inf. Energy(energy mine)"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : WTF.exe
+  Version: v1.10
+  Date   : 2019-06-29
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(energy_mine_damage, F3 0F11 68 20 B8 01000000 E9 ******** 48 8B CE 48 83 EC 20)
+ 
+energy_mine_damage:
+db 90 90 90 90 90
+
+registerSymbol(energy_mine_damage)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+energy_mine_damage:
+db F3 0F 11 68 20
+unregisterSymbol(energy_mine_damage)
+{
+// ORIGINAL CODE - INJECTION POINT: 9DE6469BFC
+
+9DE6469BCF: F2 0F 5A D2                    -  cvtsd2ss xmm2,xmm2
+9DE6469BD3: F2 0F 5A C9                    -  cvtsd2ss xmm1,xmm1
+9DE6469BD7: F2 0F 5A C0                    -  cvtsd2ss xmm0,xmm0
+9DE6469BDB: 48 83 EC 20                    -  sub rsp,20
+9DE6469BDF: 49 BB 70 CD 99 92 9D 00 00 00  -  mov r11,0000009D9299CD70
+9DE6469BE9: 41 FF D3                       -  call r11
+9DE6469BEC: 48 83 C4 20                    -  add rsp,20
+9DE6469BF0: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+9DE6469BF4: 48 8B 45 B0                    -  mov rax,[rbp-50]
+9DE6469BF8: F2 0F 5A E8                    -  cvtsd2ss xmm5,xmm0
+// ---------- INJECTING HERE ----------
+9DE6469BFC: F3 0F 11 68 20                 -  movss [rax+20],xmm5
+// ---------- DONE INJECTING  ----------
+9DE6469C01: B8 01 00 00 00                 -  mov eax,00000001
+9DE6469C06: E9 44 02 00 00                 -  jmp 9DE6469E4F
+9DE6469C0B: 48 8B CE                       -  mov rcx,rsi
+9DE6469C0E: 48 83 EC 20                    -  sub rsp,20
+9DE6469C12: 49 BB 10 C2 44 E6 9D 00 00 00  -  mov r11,0000009DE644C210
+9DE6469C1C: 41 FF D3                       -  call r11
+9DE6469C1F: 48 83 C4 20                    -  add rsp,20
+9DE6469C23: 85 C0                          -  test eax,eax
+9DE6469C25: 74 18                          -  je 9DE6469C3F
+9DE6469C27: 48 B8 E0 FA 3F A0 9D 00 00 00  -  mov rax,0000009DA03FFAE0
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>195</ID>
+      <Description>"inf. Energy(boost)"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : WTF.exe
+  Version: v1.10
+  Date   : 2019-06-29
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(boost,F3 0F10 91 94000000  F3 0F5A D2 F2 0F59 CA F3 0F10 96 14010000  F3 0F5A D2 F2 0F59 CA F2 0F5C C1 F2 0F5A E8 F3 0F11 68 20)
+
+boost+28:
+db 90 90 90 90 90
+
+registerSymbol(boost)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+boost+28:
+db F3 0F 11 68 20
+unregisterSymbol(boost)
+{
+// ORIGINAL CODE - INJECTION POINT: 63043CB4FA
+
+63043CB4C4: F3 0F 5A C9                    -  cvtss2sd xmm1,xmm1
+63043CB4C8: 48 B9 C0 FD 89 E7 62 00 00 00  -  mov rcx,00000062E789FDC0
+63043CB4D2: F3 0F 10 91 94 00 00 00        -  movss xmm2,[rcx+00000094]
+63043CB4DA: F3 0F 5A D2                    -  cvtss2sd xmm2,xmm2
+63043CB4DE: F2 0F 59 CA                    -  mulsd xmm1,xmm2
+63043CB4E2: F3 0F 10 96 14 01 00 00        -  movss xmm2,[rsi+00000114]
+63043CB4EA: F3 0F 5A D2                    -  cvtss2sd xmm2,xmm2
+63043CB4EE: F2 0F 59 CA                    -  mulsd xmm1,xmm2
+63043CB4F2: F2 0F 5C C1                    -  subsd xmm0,xmm1
+63043CB4F6: F2 0F 5A E8                    -  cvtsd2ss xmm5,xmm0
+// ---------- INJECTING HERE ----------
+63043CB4FA: F3 0F 11 68 20                 -  movss [rax+20],xmm5
+// ---------- DONE INJECTING  ----------
+63043CB4FF: 48 85 F6                       -  test rsi,rsi
+63043CB502: 0F 84 71 16 00 00              -  je 63043CCB79
+63043CB508: 48 8D 8E 70 07 00 00           -  lea rcx,[rsi+00000770]
+63043CB50F: 48 85 F6                       -  test rsi,rsi
+63043CB512: 0F 84 57 16 00 00              -  je 63043CCB6F
+63043CB518: F3 0F 10 86 A0 07 00 00        -  movss xmm0,[rsi+000007A0]
+63043CB520: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+63043CB524: 0F B6 86 60 0A 00 00           -  movzx eax,byte ptr [rsi+00000A60]
+63043CB52B: 48 8B D9                       -  mov rbx,rcx
+63043CB52E: F2 0F 11 85 20 FE FF FF        -  movsd [rbp-000001E0],xmm0
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>269</ID>
+      <Description>"get Player Pointer"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : WTF.exe
+  Version: v1.10
+  Date   : 2019-06-29
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(playerHealth,F3 0F10 80 DC010000  F3 0F5A C0 F2 0F11 85 08FFFFFF  48 8B 86 28040000 48 85 C0 0F84 ******** 48 05 ******** 48 8B 00)
+alloc(newmem1,$1000,playerHealth)
+label(returnhere1)
+
+newmem1: //this is allocated memory, you have read,write,execute access
+mov [playerHealthPointer],rax
+
+mov rax,[rax]
+mov [rbp-000000D8],rax
+jmp returnhere1
+
+playerHealthPointer:
+dd 0
+
+playerHealth+2A:
+jmp newmem1
+nop
+nop
+nop
+nop
+nop
+returnhere1:
+
+registerSymbol(playerHealthPointer)
+registerSymbol(playerHealth)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+playerHealth+2A:
+db 48 8B 00 48 89 85 28 FF FF FF
+unregisterSymbol(playerHealth)
+unregisterSymbol(playerHealthPointer)
+dealloc(newmem1)
+{
+// ORIGINAL CODE - INJECTION POINT: C68E148CB5
+
+C68E148C7B: 48 8B 86 28 04 00 00           -  mov rax,[rsi+00000428]
+C68E148C82: 48 85 C0                       -  test rax,rax
+C68E148C85: 0F 84 C3 07 00 00              -  je C68E14944E
+C68E148C8B: F3 0F 10 80 DC 01 00 00        -  movss xmm0,[rax+000001DC]
+C68E148C93: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+C68E148C97: F2 0F 11 85 08 FF FF FF        -  movsd [rbp-000000F8],xmm0
+C68E148C9F: 48 8B 86 28 04 00 00           -  mov rax,[rsi+00000428]
+C68E148CA6: 48 85 C0                       -  test rax,rax
+C68E148CA9: 0F 84 98 07 00 00              -  je C68E149447
+C68E148CAF: 48 05 D4 01 00 00              -  add rax,000001D4
+// ---------- INJECTING HERE ----------
+C68E148CB5: 48 8B 00                       -  mov rax,[rax]
+C68E148CB8: 48 89 85 28 FF FF FF           -  mov [rbp-000000D8],rax
+// ---------- DONE INJECTING  ----------
+C68E148CBF: 48 83 EC 08                    -  sub rsp,08
+C68E148CC3: FF B5 28 FF FF FF              -  push [rbp-000000D8]
+C68E148CC9: 48 83 EC 20                    -  sub rsp,20
+C68E148CCD: 49 BB E0 76 13 8E C6 00 00 00  -  mov r11,000000C68E1376E0
+C68E148CD7: 41 FF D3                       -  call r11
+C68E148CDA: 48 83 C4 30                    -  add rsp,30
+C68E148CDE: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+C68E148CE2: F2 0F 11 85 00 FF FF FF        -  movsd [rbp-00000100],xmm0
+C68E148CEA: F3 0F 10 05 DE 07 00 00        -  movss xmm0,[C68E1494D0]
+C68E148CF2: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>184</ID>
+      <Description>"godmode/fastKill"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : WTF.exe
+  Version: v1.10
+  Date   : 2019-06-29
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(gm,48 89 08 41 0FB6 86 34030000  85 C0 0F84 ******** 4D 85 F6)
+alloc(newmem,$1000,gm)
+label(returnhere)
+label(originalcode)
+
+newmem: //this is allocated memory, you have read,write,execute access
+cmp [playerHealthPointer],0
+je originalcode
+cmp rax,[playerHealthPointer]
+jne m_code
+jmp returnhere
+
+originalcode:
+mov [rax],rcx
+movzx eax,byte ptr [r14+00000334]
+jmp returnhere
+
+m_code:
+cmp byte ptr [fastKillFlag],#1
+jne originalcode
+push rcx
+mov rcx,(float)0
+mov [rax],rcx
+pop rcx
+movzx eax,byte ptr [r14+00000334]
+jmp returnhere
+
+fastKillFlag:
+db 0
+
+gm:
+jmp newmem
+nop
+nop
+nop
+nop
+nop
+nop
+returnhere:
+
+registerSymbol(gm)
+registerSymbol(fastKillFlag)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+gm:
+db 48 89 08 41 0F B6 86 34 03 00 00
+unregisterSymbol(gm)
+unregisterSymbol(fastKillFlag)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: C68E1A753B
+
+C68E1A7506: F2 0F 10 C8                    -  movsd xmm1,xmm0
+C68E1A750A: F2 0F 5A C9                    -  cvtsd2ss xmm1,xmm1
+C68E1A750E: FF B5 68 FF FF FF              -  push [rbp-00000098]
+C68E1A7514: 48 83 EC 20                    -  sub rsp,20
+C68E1A7518: 49 BB 00 95 14 8E C6 00 00 00  -  mov r11,000000C68E149500
+C68E1A7522: 41 FF D3                       -  call r11
+C68E1A7525: 48 83 C4 30                    -  add rsp,30
+C68E1A7529: 48 8B 85 F8 FE FF FF           -  mov rax,[rbp-00000108]
+C68E1A7530: 48 83 C0 44                    -  add rax,44
+C68E1A7534: 48 8B 8D 70 FF FF FF           -  mov rcx,[rbp-00000090]
+// ---------- INJECTING HERE ----------
+C68E1A753B: 48 89 08                       -  mov [rax],rcx
+C68E1A753E: 41 0F B6 86 34 03 00 00        -  movzx eax,byte ptr [r14+00000334]
+// ---------- DONE INJECTING  ----------
+C68E1A7546: 85 C0                          -  test eax,eax
+C68E1A7548: 0F 84 BE 00 00 00              -  je C68E1A760C
+C68E1A754E: 4D 85 F6                       -  test r14,r14
+C68E1A7551: 0F 84 62 02 00 00              -  je C68E1A77B9
+C68E1A7557: 49 8D 86 D4 01 00 00           -  lea rax,[r14+000001D4]
+C68E1A755E: 48 8B 00                       -  mov rax,[rax]
+C68E1A7561: 48 89 85 78 FF FF FF           -  mov [rbp-00000088],rax
+C68E1A7568: F3 0F 10 05 D0 02 00 00        -  movss xmm0,[C68E1A7840]
+C68E1A7570: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+C68E1A7574: 48 83 EC 08                    -  sub rsp,08
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>265</ID>
+      <Description>"stealth mode"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : WTF.exe
+  Version: v1.10
+  Date   : 2019-06-29
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(alarm, F2 0F5E CA F2 0F58 C1 F2 0F5A E8 F3 0F11 AE ******** E9)
+
+alarm+C:
+db 90 90 90 90 90 90 90 90
+
+registerSymbol(alarm)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+alarm+C:
+db F3 0F 11 AE D8 00 00 00
+unregisterSymbol(alarm)
+{
+// ORIGINAL CODE - INJECTION POINT: 63043D4AD6
+
+63043D4AA7: 48 83 EC 20                    -  sub rsp,20
+63043D4AAB: 49 BB 40 81 44 04 63 00 00 00  -  mov r11,0000006304448140
+63043D4AB5: 41 FF D3                       -  call r11
+63043D4AB8: 48 83 C4 20                    -  add rsp,20
+63043D4ABC: F3 0F 5A D0                    -  cvtss2sd xmm2,xmm0
+63043D4AC0: F2 0F 10 45 C8                 -  movsd xmm0,[rbp-38]
+63043D4AC5: F2 0F 10 4D C0                 -  movsd xmm1,[rbp-40]
+63043D4ACA: F2 0F 5E CA                    -  divsd xmm1,xmm2
+63043D4ACE: F2 0F 58 C1                    -  addsd xmm0,xmm1
+63043D4AD2: F2 0F 5A E8                    -  cvtsd2ss xmm5,xmm0
+// ---------- INJECTING HERE ----------
+63043D4AD6: F3 0F 11 AE D8 00 00 00        -  movss [rsi+000000D8],xmm5
+// ---------- DONE INJECTING  ----------
+63043D4ADE: E9 4F 00 00 00                 -  jmp 63043D4B32
+63043D4AE3: F3 0F 10 86 D8 00 00 00        -  movss xmm0,[rsi+000000D8]
+63043D4AEB: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+63043D4AEF: F2 0F 11 45 C8                 -  movsd [rbp-38],xmm0
+63043D4AF4: 48 83 EC 20                    -  sub rsp,20
+63043D4AF8: 49 BB C0 3D F3 D2 62 00 00 00  -  mov r11,00000062D2F33DC0
+63043D4B02: 41 FF D3                       -  call r11
+63043D4B05: 48 83 C4 20                    -  add rsp,20
+63043D4B09: F3 0F 5A C8                    -  cvtss2sd xmm1,xmm0
+63043D4B0D: F2 0F 10 45 C8                 -  movsd xmm0,[rbp-38]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>267</ID>
+      <Description>"stealth mode(mines)"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : WTF.exe
+  Version: v1.10
+  Date   : 2019-06-29
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(stealth_mode_mines, F3 0F11 A8 D8000000 C9)
+
+stealth_mode_mines:
+db 90 90 90 90 90 90 90 90
+
+registerSymbol(stealth_mode_mines)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+stealth_mode_mines:
+db F3 0F 11 A8 D8 00 00 00
+unregisterSymbol(stealth_mode_mines)
+{
+// ORIGINAL CODE - INJECTION POINT: C6FD7FB4C7
+
+C6FD7FB496: 85 C0                          -  test eax,eax
+C6FD7FB498: 74 35                          -  je C6FD7FB4CF
+C6FD7FB49A: 48 B8 50 4D 27 FD C6 00 00 00  -  mov rax,000000C6FD274D50
+C6FD7FB4A4: 48 8B 00                       -  mov rax,[rax]
+C6FD7FB4A7: F3 0F 10 80 D8 00 00 00        -  movss xmm0,[rax+000000D8]
+C6FD7FB4AF: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+C6FD7FB4B3: F3 0F 10 0D 25 00 00 00        -  movss xmm1,[C6FD7FB4E0]
+C6FD7FB4BB: F3 0F 5A C9                    -  cvtss2sd xmm1,xmm1
+C6FD7FB4BF: F2 0F 58 C1                    -  addsd xmm0,xmm1
+C6FD7FB4C3: F2 0F 5A E8                    -  cvtsd2ss xmm5,xmm0
+// ---------- INJECTING HERE ----------
+C6FD7FB4C7: F3 0F 11 A8 D8 00 00 00        -  movss [rax+000000D8],xmm5
+// ---------- DONE INJECTING  ----------
+C6FD7FB4CF: C9                             -  leave
+C6FD7FB4D0: C3                             -  ret
+C6FD7FB4D1: F2 0F 5A C0                    -  cvtsd2ss xmm0,xmm0
+C6FD7FB4D5: 48 83 C4 18                    -  add rsp,18
+C6FD7FB4D9: C3                             -  ret
+C6FD7FB4DA: C0 F2 0F                       -  rol dl,0F
+C6FD7FB4DD: 5A                             -  pop rdx
+C6FD7FB4DE: C0 48 CD CC                    -  ror byte ptr [rax-33],-34
+C6FD7FB4E2: 4C 3F                          -  aas
+C6FD7FB4E4: 00 00                          -  add [rax],al
+}
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>271</ID>
+      <Description>"stealth mode(at fire)"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : WTF.exe
+  Version: v1.10
+  Date   : 2019-06-29
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(stealth_at_fire, F3 0F11 A8 D8000000 49 8B 86 88010000 48 8B C8 48 8B D7 48 83 EC 20)
+
+stealth_at_fire:
+db 90 90 90 90 90 90 90 90
+registerSymbol(stealth_at_fire)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+stealth_at_fire:
+db F3 0F 11 A8 D8 00 00 00
+unregisterSymbol(stealth_at_fire)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>280</ID>
+      <Description>"money"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : WTF.exe
+  Version: 1.10
+  Date   : 27.01.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(moneyFunc,55 48 8B EC 48 83 EC 20 48 89 4D F8 48 89 55 E0 33 C0 48 89 45 E8)
+aobscan(buyUpgradePart,48 89 08 48 8B 46 20 48 89 45 A8 48 89 45 A0 48 85 C0)
+alloc(newmem,$1024,buyUpgradePart)
+label(returnhere)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [moneyAddr],rax
+push edx
+push rax
+push rcx
+mov rcx,rbp
+add rcx,-68
+mov edx,FFFFF
+sub rsp,20
+mov r11,moneyFunc
+call r11
+add rsp,20
+pop edx
+push rbx
+mov rbx,rax
+pop rax
+pop rcx
+
+push rcx
+mov rcx,[moneyAddr]
+mov [rcx],rbx
+pop rcx
+pop rbx
+mov rax,[rsi+20]
+
+exit:
+jmp returnhere
+
+moneyAddr:
+dq 0
+
+buyUpgradePart:
+jmp newmem
+nop
+nop
+returnhere:
+
+registerSymbol(moneyFunc)
+registerSymbol(buyUpgradePart)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+buyUpgradePart:
+db 48 89 08 48 8B 46 20
+unregisterSymbol(moneyFunc)
+unregisterSymbol(buyUpgradePart)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: 788167614B
+
+788167611A: 48 8B CD                       -  mov rcx,rbp
+788167611D: 48 83 C1 C0                    -  add rcx,-40
+7881676121: 48 83 EC 08                    -  sub rsp,08
+7881676125: FF 75 B8                       -  push [rbp-48]
+7881676128: 48 83 EC 20                    -  sub rsp,20
+788167612C: 49 BB 80 B1 69 81 78 00 00 00  -  mov r11,000000788169B180
+7881676136: 41 FF D3                       -  call r11
+7881676139: 48 83 C4 30                    -  add rsp,30
+788167613D: 48 B8 18 FF 21 EB 78 00 00 00  -  mov rax,00000078EB21FF18
+7881676147: 48 8B 4D C0                    -  mov rcx,[rbp-40]
+// ---------- INJECTING HERE ----------
+788167614B: 48 89 08                       -  mov [rax],rcx
+788167614E: 48 8B 46 20                    -  mov rax,[rsi+20]
+// ---------- DONE INJECTING  ----------
+7881676152: 48 89 45 A8                    -  mov [rbp-58],rax
+7881676156: 48 89 45 A0                    -  mov [rbp-60],rax
+788167615A: 48 85 C0                       -  test rax,rax
+788167615D: 0F 84 3B 00 00 00              -  je 788167619E
+7881676163: 48 8B 45 A8                    -  mov rax,[rbp-58]
+7881676167: 48 8B 00                       -  mov rax,[rax]
+788167616A: 48 8B 00                       -  mov rax,[rax]
+788167616D: 48 89 45 A8                    -  mov [rbp-58],rax
+7881676171: 0F B7 40 18                    -  movzx eax,word ptr [rax+18]
+7881676175: 48 83 F8 07                    -  cmp rax,07
+}
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>185</ID>
+      <Description>"fastKillFlag"</Description>
+      <VariableType>Byte</VariableType>
+      <Address>fastKillFlag</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>192</ID>
+      <Description>"playerHealthPointer"</Description>
+      <VariableType>Float</VariableType>
+      <Address>playerHealthPointer</Address>
+      <Offsets>
+        <Offset>0</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>273</ID>
+      <Description>"playerEnergy"</Description>
+      <VariableType>Float</VariableType>
+      <Address>playerHealthPointer</Address>
+      <Offsets>
+        <Offset>-24</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>282</ID>
+      <Description>"extra Cash At Startup"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : WTF.exe
+  Version: 1.10
+  Date   : 27.01.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(extraCashAtStartup,55 48 8B EC 56 48 83 EC 68 48 8B F1 48 8B CD 48 83 C1 98)
+alloc(newmem,256)
+newmem:
+cashValue:
+dd 7A120
+extraCashAtStartup+13:
+mov edx,[cashValue]
+
+registerSymbol(cashValue)
+registerSymbol(extraCashAtStartup)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+extraCashAtStartup+13:
+db BA F4 01 00 00
+unregisterSymbol(cashValue)
+unregisterSymbol(extraCashAtStartup)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: E685ADC6E3
+
+E685ADC6C9: 00 00                          -  add [rax],al
+E685ADC6CB: 00 00                          -  add [rax],al
+E685ADC6CD: 00 00                          -  add [rax],al
+E685ADC6CF: 00 55 48                       -  add [rbp+48],dl
+E685ADC6D2: 8B EC                          -  mov ebp,esp
+E685ADC6D4: 56                             -  push rsi
+E685ADC6D5: 48 83 EC 68                    -  sub rsp,68
+E685ADC6D9: 48 8B F1                       -  mov rsi,rcx
+E685ADC6DC: 48 8B CD                       -  mov rcx,rbp
+E685ADC6DF: 48 83 C1 98                    -  add rcx,-68
+// ---------- INJECTING HERE ----------
+E685ADC6E3: BA F4 01 00 00                 -  mov edx,000001F4
+// ---------- DONE INJECTING  ----------
+E685ADC6E8: 48 83 EC 20                    -  sub rsp,20
+E685ADC6EC: 49 BB 26 37 49 AF E6 00 00 00  -  mov r11,000000E6AF493726
+E685ADC6F6: 41 FF D3                       -  call r11
+E685ADC6F9: 48 83 C4 20                    -  add rsp,20
+E685ADC6FD: 48 B8 18 FF 45 BC E6 00 00 00  -  mov rax,000000E6BC45FF18
+E685ADC707: 48 8B 4D 98                    -  mov rcx,[rbp-68]
+E685ADC70B: 48 89 08                       -  mov [rax],rcx
+E685ADC70E: 48 8B CD                       -  mov rcx,rbp
+E685ADC711: 48 83 C1 A0                    -  add rcx,-60
+E685ADC715: 33 D2                          -  xor edx,edx
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>283</ID>
+          <Description>"cashValue"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>cashValue</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

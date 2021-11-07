@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="28">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>709</ID>
+      <Description>"inf. Health"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Arc Savior.exe
+  Version: 1.0.1
+  Date   : 2019-02-19
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(health,F3 0F11 A8 A8010000  48 8B 34 24 48 83 C4 08 C3)
+alloc(newmem,$1024,health)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+
+fld dword ptr [rax+000001B0]
+fstp dword ptr [rax+000001A8]
+
+jmp returnhere
+
+originalcode:
+movss [rax+000001A8],xmm5
+
+exit:
+jmp returnhere
+
+health:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+registerSymbol(health)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+health:
+db F3 0F 11 A8 A8 01 00 00
+unregisterSymbol(health)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>10</ID>
+      <Description>"inf. Energy"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Arc Savior.exe
+  Version: 1.0.1
+  Date   : 2019-02-19
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(energy, F3 0F11 2E BF 01000000 48 8B C7 48 8D 65 F0 5F 5E)
+alloc(newmem,$1024,energy)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [rsi],(float)1
+mov edi,00000001
+jmp exit
+
+originalcode:
+movss [rsi],xmm5
+mov edi,00000001
+
+exit:
+jmp returnhere
+
+energy:
+jmp newmem
+nop
+nop
+nop
+nop
+returnhere:
+
+registerSymbol(energy)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+energy:
+db F3 0F 11 2E BF 01 00 00 00
+unregisterSymbol(energy)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: 22AC7E0E14
+
+22AC7E0DF4: 90                             -  nop
+22AC7E0DF5: FF 90 88 00 00 00              -  call qword ptr [rax+00000088]
+22AC7E0DFB: 48 83 C4 20                    -  add rsp,20
+22AC7E0DFF: 85 C0                          -  test eax,eax
+22AC7E0E01: 74 04                          -  je 22AC7E0E07
+22AC7E0E03: 33 FF                          -  xor edi,edi
+22AC7E0E05: EB 16                          -  jmp 22AC7E0E1D
+22AC7E0E07: F3 0F 10 45 E8                 -  movss xmm0,[rbp-18]
+22AC7E0E0C: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+22AC7E0E10: F2 0F 5A E8                    -  cvtsd2ss xmm5,xmm0
+// ---------- INJECTING HERE ----------
+22AC7E0E14: F3 0F 11 2E                    -  movss [rsi],xmm5
+22AC7E0E18: BF 01 00 00 00                 -  mov edi,00000001
+// ---------- DONE INJECTING  ----------
+22AC7E0E1D: 48 8B C7                       -  mov rax,rdi
+22AC7E0E20: 48 8D 65 F0                    -  lea rsp,[rbp-10]
+22AC7E0E24: 5F                             -  pop rdi
+22AC7E0E25: 5E                             -  pop rsi
+22AC7E0E26: C9                             -  leave
+22AC7E0E27: C3                             -  ret
+22AC7E0E28: 00 00                          -  add [rax],al
+22AC7E0E2A: 00 00                          -  add [rax],al
+22AC7E0E2C: 88 00                          -  mov [rax],al
+22AC7E0E2E: 00 00                          -  add [rax],al
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>8</ID>
+      <Description>"no overheap"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Arc Savior.exe
+  Version: 1.0.1
+  Date   : 2019-02-19
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(overheap,F3 0F11 68 38 0FB6 86 64030000 85 C0)
+alloc(newmem,$1024,overheap)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [rax+38],(float)0
+jmp exit
+
+originalcode:
+movss [rax+38],xmm5
+
+exit:
+jmp returnhere
+
+overheap:
+jmp newmem
+returnhere:
+
+registerSymbol(overheap)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+overheap:
+db F3 0F 11 68 38
+unregisterSymbol(overheap)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: 229EB87D99
+
+229EB87D6E: F3 0F 5A C9                    -  cvtss2sd xmm1,xmm1
+229EB87D72: 66 0F 2F C8                    -  comisd xmm1,xmm0
+229EB87D76: 76 26                          -  jna 229EB87D9E
+229EB87D78: 48 8B 46 30                    -  mov rax,[rsi+30]
+229EB87D7C: F3 0F 10 40 38                 -  movss xmm0,[rax+38]
+229EB87D81: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+229EB87D85: F3 0F 10 8E 50 03 00 00        -  movss xmm1,[rsi+00000350]
+229EB87D8D: F3 0F 5A C9                    -  cvtss2sd xmm1,xmm1
+229EB87D91: F2 0F 58 C1                    -  addsd xmm0,xmm1
+229EB87D95: F2 0F 5A E8                    -  cvtsd2ss xmm5,xmm0
+// ---------- INJECTING HERE ----------
+229EB87D99: F3 0F 11 68 38                 -  movss [rax+38],xmm5
+// ---------- DONE INJECTING  ----------
+229EB87D9E: 0F B6 86 64 03 00 00           -  movzx eax,byte ptr [rsi+00000364]
+229EB87DA5: 85 C0                          -  test eax,eax
+229EB87DA7: 0F 85 50 06 00 00              -  jne 229EB883FD
+229EB87DAD: 45 33 E4                       -  xor r12d,r12d
+229EB87DB0: E9 BD 05 00 00                 -  jmp 229EB88372
+229EB87DB5: 66 66 90                       -  nop
+229EB87DB8: 48 8B 86 A0 02 00 00           -  mov rax,[rsi+000002A0]
+229EB87DBF: 48 8B C8                       -  mov rcx,rax
+229EB87DC2: 48 8B 91 A8 00 00 00           -  mov rdx,[rcx+000000A8]
+229EB87DC9: 48 8B C8                       -  mov rcx,rax
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1066</ID>
+      <Description>"no overheap(Alt)"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Arc Savior.exe
+  Version: 1.0.1
+  Date   : 2019-02-19
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(overheap1,F3 0F11 68 38 E* ******** 48 8B CE 48 83 EC 20)
+alloc(newmem,$1024,overheap1)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [rax+38],(float)0
+jmp exit
+
+originalcode:
+movss [rax+38],xmm5
+
+exit:
+jmp returnhere
+
+overheap1:
+jmp newmem
+returnhere:
+
+registerSymbol(overheap1)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+overheap1:
+db F3 0F 11 68 38
+unregisterSymbol(overheap1)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: F88425F807
+
+F88425F7CF: 49 BB 60 D6 CC 9E F8 00 00 00  -  mov r11,000000F89ECCD660
+F88425F7D9: 41 FF D3                       -  call r11
+F88425F7DC: 48 83 C4 20                    -  add rsp,20
+F88425F7E0: F3 0F 5A D0                    -  cvtss2sd xmm2,xmm0
+F88425F7E4: 48 8B 85 F0 F0 FF FF           -  mov rax,[rbp-00000F10]
+F88425F7EB: F2 0F 10 85 D8 F0 FF FF        -  movsd xmm0,[rbp-00000F28]
+F88425F7F3: F2 0F 10 8D D0 F0 FF FF        -  movsd xmm1,[rbp-00000F30]
+F88425F7FB: F2 0F 59 CA                    -  mulsd xmm1,xmm2
+F88425F7FF: F2 0F 58 C1                    -  addsd xmm0,xmm1
+F88425F803: F2 0F 5A E8                    -  cvtsd2ss xmm5,xmm0
+// ---------- INJECTING HERE ----------
+F88425F807: F3 0F 11 68 38                 -  movss [rax+38],xmm5
+// ---------- DONE INJECTING  ----------
+F88425F80C: E9 18 00 00 00                 -  jmp F88425F829
+F88425F811: 48 8B CE                       -  mov rcx,rsi
+F88425F814: 48 83 EC 20                    -  sub rsp,20
+F88425F818: 49 BB 92 2F 26 84 F8 00 00 00  -  mov r11,000000F884262F92
+F88425F822: 41 FF D3                       -  call r11
+F88425F825: 48 83 C4 20                    -  add rsp,20
+F88425F829: 48 63 86 3C 03 00 00           -  movsxd  rax,dword ptr [rsi+0000033C]
+F88425F830: 85 C0                          -  test eax,eax
+F88425F832: 0F 85 CF 0D 00 00              -  jne F884260607
+F88425F838: 0F B6 86 66 03 00 00           -  movzx eax,byte ptr [rsi+00000366]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>12</ID>
+      <Description>"inf. Missiles"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Arc Savior.exe
+  Version: 1.0.1
+  Date   : 2019-02-19
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(missiles,89 88 FC000000 48 8B CE 48 83 EC 20)
+alloc(newmem,$1024,missiles)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [rax+000000FC],#10
+jmp returnhere
+
+originalcode:
+mov [rax+000000FC],ecx
+
+exit:
+jmp returnhere
+
+missiles:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(missiles)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+missiles:
+db 89 88 FC 00 00 00
+unregisterSymbol(missiles)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: 229EBB74EC
+
+229EBB74C0: E8 3B 8B 82 31                 -  call 22D03E0000
+229EBB74C5: 08 00                          -  or [rax],al
+229EBB74C7: A1 70 AB 22 00 00 00 00 00     -  mov eax,[0022AB70]
+229EBB74D0: 48 83 EC 08                    -  sub rsp,08
+229EBB74D4: 48 89 34 24                    -  mov [rsp],rsi
+229EBB74D8: 48 8B F1                       -  mov rsi,rcx
+229EBB74DB: 48 8B 46 18                    -  mov rax,[rsi+18]
+229EBB74DF: F3 0F 10 46 30                 -  movss xmm0,[rsi+30]
+229EBB74E4: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+229EBB74E8: F2 0F 5A E8                    -  cvtsd2ss xmm5,xmm0
+// ---------- INJECTING HERE ----------
+229EBB74EC: F3 0F 11 A8 A4 01 00 00        -  movss [rax+000001A4],xmm5
+// ---------- DONE INJECTING  ----------
+229EBB74F4: 48 8B 46 18                    -  mov rax,[rsi+18]
+229EBB74F8: F3 0F 10 46 34                 -  movss xmm0,[rsi+34]
+229EBB74FD: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+229EBB7501: F2 0F 5A E8                    -  cvtsd2ss xmm5,xmm0
+229EBB7505: F3 0F 11 A8 A8 01 00 00        -  movss [rax+000001A8],xmm5
+229EBB750D: 48 8B 34 24                    -  mov rsi,[rsp]
+229EBB7511: 48 83 C4 08                    -  add rsp,08
+229EBB7515: C3                             -  ret
+229EBB7516: 00 00                          -  add [rax],al
+229EBB7518: 00 00                          -  add [rax],al
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1055</ID>
+      <Description>"inf. Shield"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Arc Savior.exe
+  Version: 1.0.1
+  Date   : 2019-02-19
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(shield,F3 0F11 A8 A4010000  48 8B 46 18 F3 0F10 46 34 F3 0F5A C0 F2 0F5A E8)
+alloc(newmem,$1024,shield)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+
+fld dword ptr [rax+000001A8]
+fstp dword ptr [rax+000001A4]
+
+jmp returnhere
+
+originalcode:
+movss [rax+000001A4],xmm5
+
+exit:
+jmp returnhere
+
+shield:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+registerSymbol(shield)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+shield:
+db F3 0F 11 A8 A4 01 00 00
+unregisterSymbol(health)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: 229EBB74EC
+
+229EBB74C0: E8 3B 8B 82 31                 -  call 22D03E0000
+229EBB74C5: 08 00                          -  or [rax],al
+229EBB74C7: A1 70 AB 22 00 00 00 00 00     -  mov eax,[0022AB70]
+229EBB74D0: 48 83 EC 08                    -  sub rsp,08
+229EBB74D4: 48 89 34 24                    -  mov [rsp],rsi
+229EBB74D8: 48 8B F1                       -  mov rsi,rcx
+229EBB74DB: 48 8B 46 18                    -  mov rax,[rsi+18]
+229EBB74DF: F3 0F 10 46 30                 -  movss xmm0,[rsi+30]
+229EBB74E4: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+229EBB74E8: F2 0F 5A E8                    -  cvtsd2ss xmm5,xmm0
+// ---------- INJECTING HERE ----------
+229EBB74EC: F3 0F 11 A8 A4 01 00 00        -  movss [rax+000001A4],xmm5
+// ---------- DONE INJECTING  ----------
+229EBB74F4: 48 8B 46 18                    -  mov rax,[rsi+18]
+229EBB74F8: F3 0F 10 46 34                 -  movss xmm0,[rsi+34]
+229EBB74FD: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+229EBB7501: F2 0F 5A E8                    -  cvtsd2ss xmm5,xmm0
+229EBB7505: F3 0F 11 A8 A8 01 00 00        -  movss [rax+000001A8],xmm5
+229EBB750D: 48 8B 34 24                    -  mov rsi,[rsp]
+229EBB7511: 48 83 C4 08                    -  add rsp,08
+229EBB7515: C3                             -  ret
+229EBB7516: 00 00                          -  add [rax],al
+229EBB7518: 00 00                          -  add [rax],al
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1354</ID>
+      <Description>"freeze Death Ray charging"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Arc Savior.exe
+  Version: 1.0.1
+  Date   : 2019-02-19
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(timer,F3 0F11 AE 8C000000  F3 0F10 86 8C000000  F3 0F5A C0 F3 0F10 8E 88000000  F3 0F5A C9 66 0F2F C8)
+
+timer:
+db 90 90 90 90 90 90 90 90
+
+registerSymbol(timer)
+[DISABLE]
+timer:
+db F3 0F 11 AE 8C 00 00 00
+unregisterSymbol(timer)
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

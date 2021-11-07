@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="27">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>2</ID>
+      <Description>"no Reload"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : HellSign.exe
+  Version: Steam Early Access v1.0.0.7c
+  Date   : 2019-01-04
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(noReload,8B 47 1C 85 C0 0F9F C0 0FB6 C0)
+alloc(newmem,$1000,noReload)
+label(originalcode)
+label(returnhere)
+
+newmem:
+mov [edi+1C],#50
+
+originalcode:
+mov eax,[edi+1C]
+test eax,eax
+jmp returnhere
+
+noReload:
+jmp newmem
+returnhere:
+
+registerSymbol(noReload)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+noReload:
+mov eax,[edi+1C]
+test eax,eax
+//Alt: db 8B 47 1C 85 C0
+unregisterSymbol(noReload)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>13</ID>
+      <Description>"inf. Money"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : HellSign.exe
+  Version: Steam Early Access v1.0.0.7c
+  Date   : 2019-01-04
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(money,83 C4 10 89 46 3C 8B 05 ******** 8B 4E 3C 83 EC 08 51 50)
+alloc(newmem,$1000,money)
+label(returnhere)
+label(originalcode)
+
+newmem: //this is allocated memory, you have read,write,execute access
+add esp,10
+mov [esi+3C],#999999
+jmp returnhere
+
+originalcode:
+add esp,10
+mov [esi+3C],eax
+
+money:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(money)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+money:
+add esp,10
+mov [esi+3C],eax
+//Alt: db 83 C4 10 89 46 3C
+unregisterSymbol(money)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>11</ID>
+      <Description>"inf. Health"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : HellSign.exe
+  Version: Steam Early Access v1.0.0.7c
+  Date   : 2019-01-04
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(health,D9 5F 3C D9 47 3C DD 5D F0 D9EE DD 5D E8 83 EC 0C 57)
+alloc(newmem,$1000,health)
+label(returnhere)
+label(originalcode)
+
+newmem: //this is allocated memory, you have read,write,execute access
+fld dword ptr [edi+40]
+
+originalcode:
+fstp dword ptr [edi+3C]
+fld dword ptr [edi+3C]
+jmp returnhere
+
+health:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(health)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+health:
+fstp dword ptr [edi+3C]
+fld dword ptr [edi+3C]
+//Alt: db D9 5F 3C D9 47 3C
+unregisterSymbol(health)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>5</ID>
+      <Description>"inf. Ammo"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : HellSign.exe
+  Version: Steam Early Access v1.0.0.7c
+  Date   : 2019-01-04
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(ammo,2B CA 89 48 18 8B 47 08 8B C8 8B 49 0C 8B 49 18 89 48 20)
+alloc(newmem,$1000,ammo)
+label(returnhere)
+label(originalcode)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [eax+18],#999
+jmp returnhere
+
+originalcode:
+sub ecx,edx
+mov [eax+18],ecx
+
+ammo:
+jmp newmem
+returnhere:
+
+registerSymbol(ammo)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+ammo:
+sub ecx,edx
+mov [eax+18],ecx
+//Alt: db 2B CA 89 48 18
+unregisterSymbol(ammo)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>18</ID>
+      <Description>"inf. Skillpoints"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : HellSign.exe
+  Version: Steam Early Access v1.0.0.7c
+  Date   : 2019-01-04
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(points,8B 40 38 89 45 EC 83 EC 0C 68 ******** E8 ******** 83 C4 10 8B 4D EC 89 48 08)
+alloc(newmem,$1000,points)
+label(returnhere)
+label(originalcode)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [eax+38],#999
+mov eax,[eax+38]
+mov [ebp-14],eax
+jmp returnhere
+
+originalcode:
+mov eax,[eax+38]
+mov [ebp-14],eax
+jmp returnhere
+
+points:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(points)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+points:
+mov eax,[eax+38]
+mov [ebp-14],eax
+//Alt: db 8B 40 38 89 45 EC
+unregisterSymbol(points)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>20</ID>
+      <Description>"no level required"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : HellSign.exe
+  Version: Steam Early Access v1.0.0.7c
+  Date   : 2019-01-04
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(level_required,3BC1 0F9C C0 0FB6 C0 85 C0 0F94 C0 0FB6 C0 8B D8)
+alloc(newmem,$1000,level_required)
+label(returnhere)
+label(originalcode)
+
+newmem: //this is allocated memory, you have read,write,execute access
+cmp eax,#0
+setl al
+jmp returnhere
+
+originalcode:
+cmp eax,ecx
+setl al
+
+level_required:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(level_required)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+level_required:
+cmp eax,ecx
+setl al
+//Alt: db 3B C1 0F 9C C0
+unregisterSymbol(level_required)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>22</ID>
+      <Description>"inf. Medicine(injector)"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : HellSign.exe
+  Version: Steam Early Access v1.0.0.7c
+  Date   : 2019-01-05
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+aobscan(injector,D9 98 80000000 8B 47 08 8B 40 14 D9 80 80000000 D9EE)
+alloc(newmem1,$1000,injector)
+label(returnhere1)
+label(originalcode1)
+label(full1)
+
+newmem1: //this is allocated memory, you have read,write,execute access
+fld dword ptr [full1]
+
+originalcode1:
+fstp dword ptr [eax+00000080]
+jmp returnhere1
+
+full1:
+dd (float)999
+
+injector:
+jmp newmem1
+nop
+returnhere1:
+registerSymbol(injector)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+injector:
+fstp dword ptr [eax+00000080]
+//Alt: db D9 98 80 00 00 00
+unregisterSymbol(injector)
+dealloc(newmem1)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>31</ID>
+      <Description>"inf. Medicine(medkit)"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : HellSign.exe
+  Version: Steam Early Access v1.0.0.7c
+  Date   : 2019-01-05
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(medkit,D9 98 80 00 00 00 BA ******** E8 ******** 39 00)
+alloc(newmem,$1000,medkit)
+label(returnhere)
+label(originalcode)
+
+newmem: //this is allocated memory, you have read,write,execute access
+fld dword ptr [full]
+
+originalcode:
+fstp dword ptr [eax+00000080]
+jmp returnhere
+
+full:
+dd (float)999
+
+medkit:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(medkit)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+medkit:
+db D9 98 80 00 00 00
+unregisterSymbol(medkit)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>25</ID>
+      <Description>"inf. Throwables"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : HellSign.exe
+  Version: Steam Early Access v1.0.0.7c
+  Date   : 2019-01-05
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(Throwables,49 89 48 18 8B 47 14 8B 40 0C 8B 40 18 85 C0)
+alloc(newmem,$1000,Throwables)
+label(returnhere)
+label(originalcode)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov ecx,[eax+1C]
+mov [eax+18],ecx
+mov eax,[edi+14]
+jmp returnhere
+
+originalcode:
+dec ecx
+mov [eax+18],ecx
+mov eax,[edi+14]
+jmp returnhere
+
+Throwables:
+jmp newmem
+nop
+nop
+returnhere:
+
+registerSymbol(Throwables)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+throwable:
+dec ecx
+mov [eax+18],ecx
+mov eax,[edi+14]
+//Alt: db 49 89 48 18 8B 47 14
+unregisterSymbol(Throwables)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>27</ID>
+      <Description>"inf. Traps"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : HellSign.exe
+  Version: Steam Early Access v1.0.0.7c
+  Date   : 2019-01-05
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(traps,49 89 48 18 8B 47 10 8B 40 14 8B 40 5C 3D 01000000)
+alloc(newmem,$1000,traps)
+label(returnhere)
+label(originalcode)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [eax+18],#999
+mov eax,[edi+10]
+jmp returnhere
+
+originalcode:
+dec ecx
+mov [eax+18],ecx
+mov eax,[edi+10]
+
+traps:
+jmp newmem
+nop
+nop
+returnhere:
+
+registerSymbol(traps)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+traps:
+dec ecx
+mov [eax+18],ecx
+mov eax,[edi+10]
+//Alt: db 49 89 48 18 8B 47 10
+unregisterSymbol(traps)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

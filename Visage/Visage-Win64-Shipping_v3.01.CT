@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="31">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>123</ID>
+      <Description>"sanity"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Visage-Win64-Shipping.exe
+  Version: GOG v3.01(42342) x64
+  Date   : 07.11.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(sanity, Visage-Win64-Shipping.exe, 49 89 7E 58 48 85 FF)
+alloc(newmem,$1000,sanity)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+push rcx
+mov rcx,[r14+58]
+mov [rcx+138],(float)0
+pop rcx
+
+originalcode:
+mov [r14+58],rdi
+test rdi,rdi
+
+exit:
+jmp returnhere
+
+sanity:
+jmp newmem
+nop 2
+returnhere:
+
+registerSymbol(sanity)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+sanity:
+db 49 89 7E 58 48 85 FF
+unregisterSymbol(sanity)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "Visage-Win64-Shipping.exe"+1A83B5D
+
+"Visage-Win64-Shipping.exe"+1A83B32: 8B D6                       -  mov edx,esi
+"Visage-Win64-Shipping.exe"+1A83B34: 49 8D 8E B0 00 00 00        -  lea rcx,[r14+000000B0]
+"Visage-Win64-Shipping.exe"+1A83B3B: E8 10 0F 81 FE              -  call Visage-Win64-Shipping.exe+294A50
+"Visage-Win64-Shipping.exe"+1A83B40: 49 8B 86 B0 00 00 00        -  mov rax,[r14+000000B0]
+"Visage-Win64-Shipping.exe"+1A83B47: 48 8B CE                    -  mov rcx,rsi
+"Visage-Win64-Shipping.exe"+1A83B4A: 0F 10 45 B7                 -  movups xmm0,[rbp-49]
+"Visage-Win64-Shipping.exe"+1A83B4E: 48 03 C9                    -  add rcx,rcx
+"Visage-Win64-Shipping.exe"+1A83B51: 0F 11 04 C8                 -  movups [rax+rcx*8],xmm0
+"Visage-Win64-Shipping.exe"+1A83B55: 48 8B 47 20                 -  mov rax,[rdi+20]
+"Visage-Win64-Shipping.exe"+1A83B59: 48 8B 78 18                 -  mov rdi,[rax+18]
+// ---------- INJECTING HERE ----------
+"Visage-Win64-Shipping.exe"+1A83B5D: 49 89 7E 58                 -  mov [r14+58],rdi
+"Visage-Win64-Shipping.exe"+1A83B61: 48 85 FF                    -  test rdi,rdi
+// ---------- DONE INJECTING  ----------
+"Visage-Win64-Shipping.exe"+1A83B64: 0F 85 66 FF FF FF           -  jne Visage-Win64-Shipping.exe+1A83AD0
+"Visage-Win64-Shipping.exe"+1A83B6A: 49 8B CE                    -  mov rcx,r14
+"Visage-Win64-Shipping.exe"+1A83B6D: 48 8B 9C 24 D0 00 00 00     -  mov rbx,[rsp+000000D0]
+"Visage-Win64-Shipping.exe"+1A83B75: 4C 8D 9C 24 B0 00 00 00     -  lea r11,[rsp+000000B0]
+"Visage-Win64-Shipping.exe"+1A83B7D: 49 8B 73 30                 -  mov rsi,[r11+30]
+"Visage-Win64-Shipping.exe"+1A83B81: 49 8B 7B 38                 -  mov rdi,[r11+38]
+"Visage-Win64-Shipping.exe"+1A83B85: 41 0F 28 73 F0              -  movaps xmm6,[r11-10]
+"Visage-Win64-Shipping.exe"+1A83B8A: 49 8B E3                    -  mov rsp,r11
+"Visage-Win64-Shipping.exe"+1A83B8D: 41 5E                       -  pop r14
+"Visage-Win64-Shipping.exe"+1A83B8F: 41 5C                       -  pop r12
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>261</ID>
+      <Description>"unlimited lighter"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Visage-Win64-Shipping.exe
+  Version: GOG v3.01(42342) x64
+  Date   : 02.11.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(lighter,Visage-Win64-Shipping.exe,48 8B 4A 18 ?? ?? ?? ?? ?? ?? ?? CC CC CC CC CC 40 53 48 83 EC 30 48 8B 42 20)
+alloc(newmem,$1000,lighter)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+cmp [rcx+C4],(float)50
+jne originalcode
+mov [rcx+C0],(float)500
+
+originalcode:
+mov rcx,[rdx+18]
+jmp qword ptr [Visage-Win64-Shipping.exe+32716B0]
+
+exit:
+jmp returnhere
+
+lighter:
+jmp newmem
+nop 6
+returnhere:
+
+
+registerSymbol(lighter)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+lighter:
+db 48 8B 4A 18 48 FF 25 B5 2E AE 02
+unregisterSymbol(lighter)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "Visage-Win64-Shipping.exe"+78E7F0
+
+"Visage-Win64-Shipping.exe"+78E7E0: 41 C7 00 00 00 00 00  -  mov [r8],00000000
+"Visage-Win64-Shipping.exe"+78E7E7: C3                    -  ret
+"Visage-Win64-Shipping.exe"+78E7E8: CC                    -  int 3
+"Visage-Win64-Shipping.exe"+78E7E9: CC                    -  int 3
+"Visage-Win64-Shipping.exe"+78E7EA: CC                    -  int 3
+"Visage-Win64-Shipping.exe"+78E7EB: CC                    -  int 3
+"Visage-Win64-Shipping.exe"+78E7EC: CC                    -  int 3
+"Visage-Win64-Shipping.exe"+78E7ED: CC                    -  int 3
+"Visage-Win64-Shipping.exe"+78E7EE: CC                    -  int 3
+"Visage-Win64-Shipping.exe"+78E7EF: CC                    -  int 3
+// ---------- INJECTING HERE ----------
+"Visage-Win64-Shipping.exe"+78E7F0: 48 8B 4A 18           -  mov rcx,[rdx+18]
+"Visage-Win64-Shipping.exe"+78E7F4: 48 FF 25 B5 2E AE 02  -  jmp qword ptr [Visage-Win64-Shipping.exe+32716B0]
+// ---------- DONE INJECTING  ----------
+"Visage-Win64-Shipping.exe"+78E7FB: CC                    -  int 3
+"Visage-Win64-Shipping.exe"+78E7FC: CC                    -  int 3
+"Visage-Win64-Shipping.exe"+78E7FD: CC                    -  int 3
+"Visage-Win64-Shipping.exe"+78E7FE: CC                    -  int 3
+"Visage-Win64-Shipping.exe"+78E7FF: CC                    -  int 3
+"Visage-Win64-Shipping.exe"+78E800: 40 53                 -  push rbx
+"Visage-Win64-Shipping.exe"+78E802: 48 83 EC 30           -  sub rsp,30
+"Visage-Win64-Shipping.exe"+78E806: 48 8B 42 20           -  mov rax,[rdx+20]
+"Visage-Win64-Shipping.exe"+78E80A: 0F 57 C0              -  xorps xmm0,xmm0
+"Visage-Win64-Shipping.exe"+78E80D: F3 0F 7F 44 24 20     -  movdqu [rsp+20],xmm0
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>290</ID>
+      <Description>"get player pos(activate it to freeze enemies)"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Visage-Win64-Shipping.exe
+  Version: GOG v3.01(42342) x64
+  Date   : 08.11.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(playerPosPattern, Visage-Win64-Shipping.exe, 48 8B 06 F3 0F 11 7C 24 50)
+alloc(newmem,$1000,playerPosPattern)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [playerPos],rsi
+
+originalcode:
+mov rax,[rsi]
+movss [rsp+50],xmm7
+
+exit:
+jmp returnhere
+
+playerPos:
+dq 0
+
+playerPosPattern:
+jmp newmem
+nop 4
+returnhere:
+
+registerSymbol(playerPosPattern)
+registerSymbol(playerPos)
+aobscanmodule(cameraPosPattern,Visage-Win64-Shipping.exe,0F 10 8B C0 01 00 00 0F 28 C1 0F 29 4D 30)
+alloc(newmem1,$1000,cameraPosPattern)
+label(returnhere1)
+label(originalcode1)
+label(exit1)
+
+newmem1: //this is allocated memory, you have read,write,execute access
+mov [cameraPos],rbx
+
+originalcode1:
+movups xmm1,[rbx+000001C0]
+
+exit1:
+jmp returnhere1
+
+cameraPos:
+dq 0
+
+cameraPosPattern:
+jmp newmem1
+nop 2
+returnhere1:
+
+
+registerSymbol(cameraPos)
+registerSymbol(cameraPosPattern)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+playerPosPattern:
+db 48 8B 06 F3 0F 11 7C 24 50
+dealloc(newmem)
+unregisterSymbol(playerPos)
+unregisterSymbol(playerPosPattern)
+{
+// ORIGINAL CODE - INJECTION POINT: "Visage-Win64-Shipping.exe"+15B151F
+
+"Visage-Win64-Shipping.exe"+15B14FA: E9 DA 0F 00 00              -  jmp Visage-Win64-Shipping.exe+15B24D9
+"Visage-Win64-Shipping.exe"+15B14FF: 40 32 FF                    -  xor dil,dil
+"Visage-Win64-Shipping.exe"+15B1502: 32 DB                       -  xor bl,bl
+"Visage-Win64-Shipping.exe"+15B1504: E9 FC 08 00 00              -  jmp Visage-Win64-Shipping.exe+15B1E05
+"Visage-Win64-Shipping.exe"+15B1509: 0F B6 7C 24 40              -  movzx edi,byte ptr [rsp+40]
+"Visage-Win64-Shipping.exe"+15B150E: 32 DB                       -  xor bl,bl
+"Visage-Win64-Shipping.exe"+15B1510: E9 F0 08 00 00              -  jmp Visage-Win64-Shipping.exe+15B1E05
+"Visage-Win64-Shipping.exe"+15B1515: 40 B7 01                    -  mov dil,01
+"Visage-Win64-Shipping.exe"+15B1518: 32 DB                       -  xor bl,bl
+"Visage-Win64-Shipping.exe"+15B151A: E9 E6 08 00 00              -  jmp Visage-Win64-Shipping.exe+15B1E05
+// ---------- INJECTING HERE ----------
+"Visage-Win64-Shipping.exe"+15B151F: 48 8B 06                    -  mov rax,[rsi]
+"Visage-Win64-Shipping.exe"+15B1522: F3 0F 11 7C 24 50           -  movss [rsp+50],xmm7
+// ---------- DONE INJECTING  ----------
+"Visage-Win64-Shipping.exe"+15B1528: F3 44 0F 11 44 24 54        -  movss [rsp+54],xmm8
+"Visage-Win64-Shipping.exe"+15B152F: F3 44 0F 11 4C 24 58        -  movss [rsp+58],xmm9
+"Visage-Win64-Shipping.exe"+15B1536: 4C 89 7C 24 60              -  mov [rsp+60],r15
+"Visage-Win64-Shipping.exe"+15B153B: 4C 89 7C 24 68              -  mov [rsp+68],r15
+"Visage-Win64-Shipping.exe"+15B1540: FF 90 B0 04 00 00           -  call qword ptr [rax+000004B0]
+"Visage-Win64-Shipping.exe"+15B1546: FF C8                       -  dec eax
+"Visage-Win64-Shipping.exe"+15B1548: A9 FD FF FF FF              -  test eax,FFFFFFFD
+"Visage-Win64-Shipping.exe"+15B154D: 74 37                       -  je Visage-Win64-Shipping.exe+15B1586
+"Visage-Win64-Shipping.exe"+15B154F: 32 C0                       -  xor al,al
+"Visage-Win64-Shipping.exe"+15B1551: 41 0F 2F F3                 -  comiss xmm6,xmm11
+}
+cameraPosPattern:
+db 0F 10 8B C0 01 00 00
+unregisterSymbol(cameraPos)
+unregisterSymbol(cameraPosPattern)
+dealloc(newmem1)
+{
+// ORIGINAL CODE - INJECTION POINT: "Visage-Win64-Shipping.exe"+154DEA9
+
+"Visage-Win64-Shipping.exe"+154DE7A: F6 81 8C 02 00 00 02     -  test byte ptr [rcx+0000028C],02
+"Visage-Win64-Shipping.exe"+154DE81: 0F 84 7C 01 00 00        -  je Visage-Win64-Shipping.exe+154E003
+"Visage-Win64-Shipping.exe"+154DE87: 48 8B 01                 -  mov rax,[rcx]
+"Visage-Win64-Shipping.exe"+154DE8A: FF 90 90 06 00 00        -  call qword ptr [rax+00000690]
+"Visage-Win64-Shipping.exe"+154DE90: 84 C0                    -  test al,al
+"Visage-Win64-Shipping.exe"+154DE92: 0F 84 6B 01 00 00        -  je Visage-Win64-Shipping.exe+154E003
+"Visage-Win64-Shipping.exe"+154DE98: 48 8B 06                 -  mov rax,[rsi]
+"Visage-Win64-Shipping.exe"+154DE9B: 48 8D 54 24 48           -  lea rdx,[rsp+48]
+"Visage-Win64-Shipping.exe"+154DEA0: 48 8B CE                 -  mov rcx,rsi
+"Visage-Win64-Shipping.exe"+154DEA3: FF 90 B0 06 00 00        -  call qword ptr [rax+000006B0]
+// ---------- INJECTING HERE ----------
+"Visage-Win64-Shipping.exe"+154DEA9: 0F 10 8B C0 01 00 00     -  movups xmm1,[rbx+000001C0]
+// ---------- DONE INJECTING  ----------
+"Visage-Win64-Shipping.exe"+154DEB0: 0F 28 C1                 -  movaps xmm0,xmm1
+"Visage-Win64-Shipping.exe"+154DEB3: 0F 29 4D 30              -  movaps [rbp+30],xmm1
+"Visage-Win64-Shipping.exe"+154DEB7: 0F C2 83 80 01 00 00 04  -  cmpps xmm0,dqword ptr [rbx+00000180],04
+"Visage-Win64-Shipping.exe"+154DEBF: 0F 50 C0                 -  movmskps eax,xmm0
+"Visage-Win64-Shipping.exe"+154DEC2: 85 C0                    -  test eax,eax
+"Visage-Win64-Shipping.exe"+154DEC4: 74 2C                    -  je Visage-Win64-Shipping.exe+154DEF2
+"Visage-Win64-Shipping.exe"+154DEC6: 48 8D 95 B0 00 00 00     -  lea rdx,[rbp+000000B0]
+"Visage-Win64-Shipping.exe"+154DECD: 48 8D 4D 30              -  lea rcx,[rbp+30]
+"Visage-Win64-Shipping.exe"+154DED1: 0F 11 8B 80 01 00 00     -  movups [rbx+00000180],xmm1
+"Visage-Win64-Shipping.exe"+154DED8: E8 E3 8F 02 FF           -  call Visage-Win64-Shipping.exe+576EC0
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>320</ID>
+          <Description>"player pos x"</Description>
+          <LastState Value="-31.23161125" RealAddress="FF0F653480"/>
+          <VariableType>Float</VariableType>
+          <Address>playerPos</Address>
+          <Offsets>
+            <Offset>1D0</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>321</ID>
+          <Description>"player pos y"</Description>
+          <LastState Value="86.88344574" RealAddress="FF0F653484"/>
+          <VariableType>Float</VariableType>
+          <Address>playerPos</Address>
+          <Offsets>
+            <Offset>1D4</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>322</ID>
+          <Description>"player pos z"</Description>
+          <LastState Value="98.14997864" RealAddress="FF0F653488"/>
+          <VariableType>Float</VariableType>
+          <Address>playerPos</Address>
+          <Offsets>
+            <Offset>1D8</Offset>
+          </Offsets>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>292</ID>
+      <Description>"freeze enemies(set freezeFlag to 1 activate)"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Visage-Win64-Shipping.exe
+  Version: GOG v3.01(42342) x64
+  Date   : 08.11.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(freezeEnemies,Visage-Win64-Shipping.exe,0F 11 B7 C0 01 00 00 45 8B C6)
+alloc(newmem,$1000,freezeEnemies)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+push rax
+cmp [freezeFlag],0
+je originalcode
+mov rax,[playerPos]
+cmp rax,rdi
+je originalcode
+
+check2:
+mov rax,[cameraPos]
+cmp rax,rdi
+jne exit
+
+originalcode:
+pop rax
+movups [rdi+000001C0],xmm6
+//mov r8d,r14d
+movups [rdi+000001D0],xmm12
+//mov dl,01
+movups [rdi+000001E0],xmm15
+jmp returnhere
+
+exit:
+pop rax
+jmp returnhere
+
+exit2:
+//mov r8d,r14d
+//mov dl,01
+//mov rcx,rdi
+jmp returnhere
+
+freezeFlag:
+db 0
+
+freezeEnemies:
+jmp newmem
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+
+returnhere:
+ 
+registerSymbol(freezeEnemies)
+registerSymbol(freezeFlag)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+freezeEnemies:
+movups [rdi+000001C0],xmm6
+mov r8d,r14d
+movups [rdi+000001D0],xmm12
+mov dl,01
+movups [rdi+000001E0],xmm15
+//Alt: db 0F 11 B7 C0 01 00 00
+unregisterSymbol(freezeEnemies)
+unregisterSymbol(freezeFlag)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>323</ID>
+      <Description>"freezeFlag"</Description>
+      <LastState Value="0" RealAddress="7FF67E7A005C"/>
+      <VariableType>Byte</VariableType>
+      <Address>freezeFlag</Address>
+      <Hotkeys>
+        <Hotkey>
+          <Action>Set Value</Action>
+          <Keys>
+            <Key>49</Key>
+          </Keys>
+          <Value>1</Value>
+          <ID>0</ID>
+        </Hotkey>
+        <Hotkey>
+          <Action>Set Value</Action>
+          <Keys>
+            <Key>50</Key>
+          </Keys>
+          <Value>0</Value>
+          <ID>1</ID>
+        </Hotkey>
+      </Hotkeys>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

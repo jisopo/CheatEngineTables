@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="29">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>10</ID>
+      <Description>"inf. Dirtry tricks"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : MFL.exe
+  Version: v20200131
+  Date   : 22.02.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(dirtyTricks,0F B6 40 1F 85 C0 ?? ?? 49 8B 47 20 48 8B 40 68)
+alloc(newmem,$1024,dirtyTricks)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov eax,1
+test eax,eax
+jmp returnhere
+
+originalcode:
+movzx eax,byte ptr [rax+1F]
+test eax,eax
+
+exit:
+jmp returnhere
+
+dirtyTricks:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(dirtyTricks)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dirtyTricks:
+db 0F B6 40 1F 85 C0
+unregisterSymbol(dirtyTricks)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: 5C9FDE3C61
+
+5C9FDE3C32: 48 8B 40 38                    -  mov rax,[rax+38]
+5C9FDE3C36: 48 8B 80 80 00 00 00           -  mov rax,[rax+00000080]
+5C9FDE3C3D: 48 63 40 28                    -  movsxd  rax,dword ptr [rax+28]
+5C9FDE3C41: 83 F8 02                       -  cmp eax,02
+5C9FDE3C44: 0F 84 96 01 00 00              -  je 5C9FDE3DE0
+5C9FDE3C4A: 85 F6                          -  test esi,esi
+5C9FDE3C4C: 0F 84 8E 01 00 00              -  je 5C9FDE3DE0
+5C9FDE3C52: 49 8B 47 20                    -  mov rax,[r15+20]
+5C9FDE3C56: 48 8B 40 38                    -  mov rax,[rax+38]
+5C9FDE3C5A: 48 8B 80 88 00 00 00           -  mov rax,[rax+00000088]
+// ---------- INJECTING HERE ----------
+5C9FDE3C61: 0F B6 40 1F                    -  movzx eax,byte ptr [rax+1F]
+5C9FDE3C65: 85 C0                          -  test eax,eax
+// ---------- DONE INJECTING  ----------
+5C9FDE3C67: 74 2E                          -  je 5C9FDE3C97
+5C9FDE3C69: 49 8B 47 20                    -  mov rax,[r15+20]
+5C9FDE3C6D: 48 8B 40 68                    -  mov rax,[rax+68]
+5C9FDE3C71: 48 8B C8                       -  mov rcx,rax
+5C9FDE3C74: 48 8B D7                       -  mov rdx,rdi
+5C9FDE3C77: 48 83 EC 20                    -  sub rsp,20
+5C9FDE3C7B: 83 38 00                       -  cmp dword ptr [rax],00
+5C9FDE3C7E: 49 BB 10 07 0B 9B 5C 00 00 00  -  mov r11,0000005C9B0B0710
+5C9FDE3C88: 41 FF D3                       -  call r11
+5C9FDE3C8B: 48 83 C4 20                    -  add rsp,20
+}
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

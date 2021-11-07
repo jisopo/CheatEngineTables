@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="29">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>169</ID>
+      <Description>"Freeze Decision Timer"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : WalkingDead101.exe
+  Version:
+  Date   : 2018-12-30
+  Author : AJlex
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(dialog_flag,WalkingDead101.exe,83 7E 08 00 8B 46 0457 8B 7C 24 1C 75 18 57 8B 7C 24 18 50 6A 01 57 E8 FE38F1FF 8B C7 5F 5E 83 C4 08 C2 0C00 53 8B 5C 24 1C 55 3B 18 75 ** 8B 4F 0C 3B 4B 0C 0F8D ********) // should be unique
+alloc(newmem,$1000, dialog_flag)
+label(returnhere)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+push edi
+lea edi,[esi+08]
+mov [dialogFlag],edi
+pop edi
+cmp dword ptr [esi+08],00
+mov eax,[esi+04]
+jmp exit
+
+exit:
+jmp returnhere
+
+dialogFlag:
+dd 0
+
+dialog_flag:
+jmp newmem
+nop
+nop
+returnhere:
+registerSymbol(dialogFlag)
+registerSymbol(dialog_flag)
+aobscanmodule(inf_time,WalkingDead101.exe,8B 4C 24 10 1B 4F 04 89 44 24 14 DC 67 08 89 4C 24 18 DF 6C 24 14) // should be unique
+alloc(newmem1,$1000,inf_time)
+label(originalcode1)
+label(returnhere1)
+label(exit1)
+
+newmem1:
+cmp [dialogFlag],#0
+je originalcode1
+push edx
+push ecx
+mov edx,[dialogFlag]
+mov ecx,[edx]
+cmp ecx,#0
+pop ecx
+pop edx
+je originalcode1
+mov ecx,[esp+10]
+jmp exit1
+
+originalcode1:
+mov ecx,[esp+10]
+sbb ecx,[edi+04]
+jmp exit1
+
+exit1:
+jmp returnhere1
+
+inf_time:
+  jmp newmem1
+  nop
+  nop
+
+returnhere1:
+registersymbol(inf_time)
+aobscanmodule(inf_time1,WalkingDead101.exe,D9 46 18 D9 5C 24 10 D9 44 24 10 51 D9 1C 24 53) // should be unique
+alloc(newmem2,$1000)
+label(code)
+label(return)
+
+newmem2:
+cmp [dialogFlag],#0
+je code
+push edx
+push ecx
+mov edx,[dialogFlag]
+mov ecx,[edx]
+cmp ecx,#0
+pop ecx
+pop edx
+je code
+mov [esi+18],(float)0
+jmp return
+
+code:
+  fld dword ptr [esi+18]
+  fstp dword ptr [esp+10]
+  jmp return
+
+inf_time1:
+  jmp newmem2
+  nop
+  nop
+return:
+registersymbol(inf_time1)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+inf_time:
+  mov ecx,[esp+10]
+  sbb ecx,[edi+04]
+
+dialog_flag:
+cmp dword ptr [esi+08],00
+mov eax,[esi+04]
+//Alt: db 83 7E 08 00 8B 46 04
+
+inf_time1:
+  db D9 46 18 D9 5C 24 10
+
+
+unregistersymbol(inf_time)
+unregistersymbol(dialog_flag)
+unregistersymbol(dialogFlag)
+unregistersymbol(inf_time1)
+dealloc(newmem)
+dealloc(newmem1)
+dealloc(newmem2)
+{
+// ORIGINAL CODE - INJECTION POINT: "WalkingDead101.exe"+D4CD8
+
+"WalkingDead101.exe"+D4CB3: 89 56 04           -  mov [esi+04],edx
+"WalkingDead101.exe"+D4CB6: 8D 54 24 14        -  lea edx,[esp+14]
+"WalkingDead101.exe"+D4CBA: 52                 -  push edx
+"WalkingDead101.exe"+D4CBB: FF 15 A4 E2 F8 00  -  call dword ptr [WalkingDead101.exe+57E2A4]
+"WalkingDead101.exe"+D4CC1: DF 6C 24 14        -  fild qword ptr [esp+14]
+"WalkingDead101.exe"+D4CC5: 8B 44 24 0C        -  mov eax,[esp+0C]
+"WalkingDead101.exe"+D4CC9: 2B 07              -  sub eax,[edi]
+"WalkingDead101.exe"+D4CCB: DC 0D 40 C1 0B 01  -  fmul qword ptr [WalkingDead101.exe+6AC140]
+// ---------- INJECTING HERE ----------
+"WalkingDead101.exe"+D4CD1: 8B 4C 24 10        -  mov ecx,[esp+10]
+"WalkingDead101.exe"+D4CD5: 1B 4F 04           -  sbb ecx,[edi+04]
+// ---------- DONE INJECTING  ----------
+"WalkingDead101.exe"+D4CD8: 89 44 24 14        -  mov [esp+14],eax
+"WalkingDead101.exe"+D4CDC: DC 67 08           -  fsub qword ptr [edi+08]
+"WalkingDead101.exe"+D4CDF: 89 4C 24 18        -  mov [esp+18],ecx
+"WalkingDead101.exe"+D4CE3: DF 6C 24 14        -  fild qword ptr [esp+14]
+"WalkingDead101.exe"+D4CE7: E8 5A 44 40 00     -  call WalkingDead101.exe+4D9146
+"WalkingDead101.exe"+D4CEC: 89 44 24 14        -  mov [esp+14],eax
+"WalkingDead101.exe"+D4CF0: 89 54 24 18        -  mov [esp+18],edx
+"WalkingDead101.exe"+D4CF4: DF 6C 24 14        -  fild qword ptr [esp+14]
+"WalkingDead101.exe"+D4CF8: DE F9              -  fdivp st(1),st(0)
+"WalkingDead101.exe"+D4CFA: DD 5F 10           -  fstp qword ptr [edi+10]
+"WalkingDead101.exe"+D4CFD: 5F                 -  pop edi
+"WalkingDead101.exe"+D4CFE: 5E                 -  pop esi
+}
+
+{
+// ORIGINAL CODE - INJECTION POINT: "WalkingDead101.exe"+314FC9
+
+"WalkingDead101.exe"+314FAC: E8 2F 62 EA FF                 -  call WalkingDead101.exe+1BB1E0
+"WalkingDead101.exe"+314FB1: 83 C4 08                       -  add esp,08
+"WalkingDead101.exe"+314FB4: 6A 00                          -  push 00
+"WalkingDead101.exe"+314FB6: 53                             -  push ebx
+"WalkingDead101.exe"+314FB7: E8 D4 AB ED FF                 -  call WalkingDead101.exe+1EFB90
+"WalkingDead101.exe"+314FBC: D9 EE                          -  fldz
+"WalkingDead101.exe"+314FBE: 83 C4 08                       -  add esp,08
+"WalkingDead101.exe"+314FC1: D9 5C 24 10                    -  fstp dword ptr [esp+10]
+"WalkingDead101.exe"+314FC5: 85 F6                          -  test esi,esi
+"WalkingDead101.exe"+314FC7: 74 07                          -  je WalkingDead101.exe+314FD0
+// ---------- INJECTING HERE ----------
+"WalkingDead101.exe"+314FC9: D9 46 18                       -  fld dword ptr [esi+18]
+"WalkingDead101.exe"+314FCC: D9 5C 24 10                    -  fstp dword ptr [esp+10]
+// ---------- DONE INJECTING  ----------
+"WalkingDead101.exe"+314FD0: D9 44 24 10                    -  fld dword ptr [esp+10]
+"WalkingDead101.exe"+314FD4: 51                             -  push ecx
+"WalkingDead101.exe"+314FD5: D9 1C 24                       -  fstp dword ptr [esp]
+"WalkingDead101.exe"+314FD8: 53                             -  push ebx
+"WalkingDead101.exe"+314FD9: E8 D2 B1 ED FF                 -  call WalkingDead101.exe+1F01B0
+"WalkingDead101.exe"+314FDE: 53                             -  push ebx
+"WalkingDead101.exe"+314FDF: E8 9C AB ED FF                 -  call WalkingDead101.exe+1EFB80
+"WalkingDead101.exe"+314FE4: 8B 4C 24 20                    -  mov ecx,[esp+20]
+"WalkingDead101.exe"+314FE8: 83 C4 0C                       -  add esp,0C
+"WalkingDead101.exe"+314FEB: 5F                             -  pop edi
+}
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

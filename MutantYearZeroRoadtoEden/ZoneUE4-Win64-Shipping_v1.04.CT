@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="27">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>7</ID>
+      <Description>"inf. Actions / Inf. Movement"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : ZoneUE4-Win64-Shipping.exe
+  Version: v1.04
+  Date   : 2019-01-17
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(movement,ZoneUE4-Win64-Shipping.exe,8B 81 940C0000 41 89 00 C3 48 DC 92 00488B04)
+alloc(newmem,$1000,movement)
+label(returnhere)
+label(originalcode)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [rcx+00000C94],#2
+
+originalcode:
+mov eax,[rcx+00000C94]
+jmp returnhere
+
+movement:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(movement)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+movement:
+db 8B 81 94 0C 00 00
+unregisterSymbol(movement)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "ZoneUE4-Win64-Shipping.exe"+5A9BB25
+
+"ZoneUE4-Win64-Shipping.exe"+5A9BAFF: 4C 8D 2D 52 03 D7 FE     -  lea r13,[ZoneUE4-Win64-Shipping.exe+480BE58]
+"ZoneUE4-Win64-Shipping.exe"+5A9BB06: 4C 87 2C 24              -  xchg [rsp],r13
+"ZoneUE4-Win64-Shipping.exe"+5A9BB0A: C3                       -  ret
+"ZoneUE4-Win64-Shipping.exe"+5A9BB0B: 3D 0F 1F 40 00           -  cmp eax,00401F0F
+"ZoneUE4-Win64-Shipping.exe"+5A9BB10: 48 8B 42 20              -  mov rax,[rdx+20]
+"ZoneUE4-Win64-Shipping.exe"+5A9BB14: 45 31 C9                 -  xor r9d,r9d
+"ZoneUE4-Win64-Shipping.exe"+5A9BB17: 48 85 C0                 -  test rax,rax
+"ZoneUE4-Win64-Shipping.exe"+5A9BB1A: 41 0F 95 D1              -  setne r9l
+"ZoneUE4-Win64-Shipping.exe"+5A9BB1E: 49 01 C1                 -  add r9,rax
+"ZoneUE4-Win64-Shipping.exe"+5A9BB21: 4C 89 4A 20              -  mov [rdx+20],r9
+// ---------- INJECTING HERE ----------
+"ZoneUE4-Win64-Shipping.exe"+5A9BB25: 8B 81 94 0C 00 00        -  mov eax,[rcx+00000C94]
+// ---------- DONE INJECTING  ----------
+"ZoneUE4-Win64-Shipping.exe"+5A9BB2B: 41 89 00                 -  mov [r8],eax
+"ZoneUE4-Win64-Shipping.exe"+5A9BB2E: C3                       -  ret
+"ZoneUE4-Win64-Shipping.exe"+5A9BB2F: 48 DC 92 00 48 8B 04     -  fcom qword ptr [rdx+048B4800]
+"ZoneUE4-Win64-Shipping.exe"+5A9BB36: 24 48                    -  and al,48
+"ZoneUE4-Win64-Shipping.exe"+5A9BB38: 89 3C 24                 -  mov [rsp],edi
+"ZoneUE4-Win64-Shipping.exe"+5A9BB3B: 31 F8                    -  xor eax,edi
+"ZoneUE4-Win64-Shipping.exe"+5A9BB3D: 33 7C 24 08              -  xor edi,[rsp+08]
+"ZoneUE4-Win64-Shipping.exe"+5A9BB41: 31 F8                    -  xor eax,edi
+"ZoneUE4-Win64-Shipping.exe"+5A9BB43: 5F                       -  pop rdi
+"ZoneUE4-Win64-Shipping.exe"+5A9BB44: 83 34 24 FF              -  xor dword ptr [rsp],-01
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>20</ID>
+      <Description>"godmode/oneHitKill"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : ZoneUE4-Win64-Shipping.exe
+  Version: v1.04
+  Date   : 2019-01-17
+  Author : AJlex
+
+  This script does blah blah blah
+  Для убийства с одного удара:
+  Включить этот скрипт
+  Выставить oneHitKillFlag в 1
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(health,ZoneUE4-Win64-Shipping.exe,89 81 08020000 C3 9D 41 52)
+alloc(newmem,$1000,health)
+label(returnhere)
+label(easyKill)
+label(originalcode)
+
+newmem: //this is allocated memory, you have read,write,execute access
+cmp [rcx+230],#13
+jne originalcode
+cmp [rcx+290],#1
+jne originalcode
+cmp [rcx+1DC],#1
+jne originalcode
+jmp returnhere
+
+originalcode:
+cmp byte ptr [oneHitKillFlag],#1
+je easyKill
+mov [rcx+00000208],eax
+jmp returnhere
+
+easyKill:
+mov [rcx+00000208],#0
+jmp returnhere
+
+oneHitKillFlag:
+db 0
+
+health:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(health)
+registerSymbol(oneHitKillFlag)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+health:
+db 89 81 08 02 00 00
+unregisterSymbol(health)
+unregisterSymbol(oneHitKillFlag)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "ZoneUE4-Win64-Shipping.exe"+4C6269F
+
+"ZoneUE4-Win64-Shipping.exe"+4C62675: 4C 89 04 24                       -  mov [rsp],r8
+"ZoneUE4-Win64-Shipping.exe"+4C62679: 4C 8D 05 AB C0 92 01              -  lea r8,[ZoneUE4-Win64-Shipping.exe+658E72B]
+"ZoneUE4-Win64-Shipping.exe"+4C62680: 4C 87 04 24                       -  xchg [rsp],r8
+"ZoneUE4-Win64-Shipping.exe"+4C62684: C3                                -  ret
+"ZoneUE4-Win64-Shipping.exe"+4C62685: 66 66 2E 0F 1F 84 00 00 00 00 00  -  nop cs:[rax+rax+00000000]
+"ZoneUE4-Win64-Shipping.exe"+4C62690: 8B 81 08 02 00 00                 -  mov eax,[rcx+00000208]
+"ZoneUE4-Win64-Shipping.exe"+4C62696: 29 D0                             -  sub eax,edx
+"ZoneUE4-Win64-Shipping.exe"+4C62698: 31 D2                             -  xor edx,edx
+"ZoneUE4-Win64-Shipping.exe"+4C6269A: 85 C0                             -  test eax,eax
+"ZoneUE4-Win64-Shipping.exe"+4C6269C: 0F 4E C2                          -  cmovle eax,edx
+// ---------- INJECTING HERE ----------
+"ZoneUE4-Win64-Shipping.exe"+4C6269F: 89 81 08 02 00 00                 -  mov [rcx+00000208],eax
+// ---------- DONE INJECTING  ----------
+"ZoneUE4-Win64-Shipping.exe"+4C626A5: C3                                -  ret
+"ZoneUE4-Win64-Shipping.exe"+4C626A6: 9D                                -  popfq
+"ZoneUE4-Win64-Shipping.exe"+4C626A7: 41 52                             -  push r10
+"ZoneUE4-Win64-Shipping.exe"+4C626A9: 4C 8D 15 95 1F 7E 00              -  lea r10,[ZoneUE4-Win64-Shipping.exe+5444645]
+"ZoneUE4-Win64-Shipping.exe"+4C626B0: 4C 87 14 24                       -  xchg [rsp],r10
+"ZoneUE4-Win64-Shipping.exe"+4C626B4: C3                                -  ret
+"ZoneUE4-Win64-Shipping.exe"+4C626B5: 48 8B 2C 24                       -  mov rbp,[rsp]
+"ZoneUE4-Win64-Shipping.exe"+4C626B9: 48 8D 64 24 F8                    -  lea rsp,[rsp-08]
+"ZoneUE4-Win64-Shipping.exe"+4C626BE: 4C 89 04 24                       -  mov [rsp],r8
+"ZoneUE4-Win64-Shipping.exe"+4C626C2: 4D 29 C0                          -  sub r8,r8
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>21</ID>
+      <Description>"oneHitKillFlag"</Description>
+      <VariableType>Byte</VariableType>
+      <Address>oneHitKillFlag</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>22</ID>
+      <Description>"inf. Mutation Points"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : ZoneUE4-Win64-Shipping.exe
+  Version: v1.04
+  Date   : 2019-01-18
+  Author : AJlex
+
+  This script does blah blah blah
+  Включить скрипт, зайти в навыки, пару раз нажать tab
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(points,ZoneUE4-Win64-Shipping.exe,8B 88 10020000 89 8F B0040000 48)
+alloc(newmem,$1000,points)
+label(returnhere)
+label(originalcode)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [rax+00000210],#999
+
+originalcode:
+mov ecx,[rax+00000210]
+jmp returnhere
+
+points:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(points)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+points:
+db 8B 88 10 02 00 00
+unregisterSymbol(points)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "ZoneUE4-Win64-Shipping.exe"+4DE96D0
+
+"ZoneUE4-Win64-Shipping.exe"+4DE96AA: EB 1D                    -  jmp ZoneUE4-Win64-Shipping.exe+4DE96C9
+"ZoneUE4-Win64-Shipping.exe"+4DE96AC: 44 89 F2                 -  mov edx,r14d
+"ZoneUE4-Win64-Shipping.exe"+4DE96AF: 48 89 D9                 -  mov rcx,rbx
+"ZoneUE4-Win64-Shipping.exe"+4DE96B2: E8 F9 B6 51 FB           -  call ZoneUE4-Win64-Shipping.exe+304DB0
+"ZoneUE4-Win64-Shipping.exe"+4DE96B7: 48 8B 0B                 -  mov rcx,[rbx]
+"ZoneUE4-Win64-Shipping.exe"+4DE96BA: 4D 89 F0                 -  mov r8,r14
+"ZoneUE4-Win64-Shipping.exe"+4DE96BD: 49 C1 E0 05              -  shl r8,05
+"ZoneUE4-Win64-Shipping.exe"+4DE96C1: 4C 89 FA                 -  mov rdx,r15
+"ZoneUE4-Win64-Shipping.exe"+4DE96C4: E8 91 BF B7 FD           -  call ZoneUE4-Win64-Shipping.exe+296565A
+"ZoneUE4-Win64-Shipping.exe"+4DE96C9: 48 8B 86 F8 08 00 00     -  mov rax,[rsi+000008F8]
+// ---------- INJECTING HERE ----------
+"ZoneUE4-Win64-Shipping.exe"+4DE96D0: 8B 88 10 02 00 00        -  mov ecx,[rax+00000210]
+// ---------- DONE INJECTING  ----------
+"ZoneUE4-Win64-Shipping.exe"+4DE96D6: 89 8F B0 04 00 00        -  mov [rdi+000004B0],ecx
+"ZoneUE4-Win64-Shipping.exe"+4DE96DC: 48 8B 86 F0 08 00 00     -  mov rax,[rsi+000008F0]
+"ZoneUE4-Win64-Shipping.exe"+4DE96E3: 4C 8B B8 A8 05 00 00     -  mov r15,[rax+000005A8]
+"ZoneUE4-Win64-Shipping.exe"+4DE96EA: 41 83 BF F0 01 00 00 01  -  cmp dword ptr [r15+000001F0],01
+"ZoneUE4-Win64-Shipping.exe"+4DE96F2: 0F 8E 27 03 00 00        -  jng ZoneUE4-Win64-Shipping.exe+4DE9A1F
+"ZoneUE4-Win64-Shipping.exe"+4DE96F8: 41 0F 10 87 D8 01 00 00  -  movups xmm0,[r15+000001D8]
+"ZoneUE4-Win64-Shipping.exe"+4DE9700: 4C 8D AF A8 00 00 00     -  lea r13,[rdi+000000A8]
+"ZoneUE4-Win64-Shipping.exe"+4DE9707: 49 8D 5D 10              -  lea rbx,[r13+10]
+"ZoneUE4-Win64-Shipping.exe"+4DE970B: 49 8D 87 E8 01 00 00     -  lea rax,[r15+000001E8]
+"ZoneUE4-Win64-Shipping.exe"+4DE9712: 41 0F 11 45 00           -  movups [r13+00],xmm0
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>27</ID>
+      <Description>"no reload"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : ZoneUE4-Win64-Shipping.exe
+  Version: v1.04
+  Date   : 2019-01-18
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(noReload,ZoneUE4-Win64-Shipping.exe,FF C8 89 82 78020000 48 8B 87 88050000)
+
+noReload:
+db 90 90
+
+registerSymbol(noReload)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+noReload:
+db FF C8
+unregisterSymbol(noReload)
+{
+// ORIGINAL CODE - INJECTION POINT: "ZoneUE4-Win64-Shipping.exe"+4EF6D95
+
+"ZoneUE4-Win64-Shipping.exe"+4EF6D68: FF C8                    -  dec eax
+"ZoneUE4-Win64-Shipping.exe"+4EF6D6A: 89 86 20 04 00 00        -  mov [rsi+00000420],eax
+"ZoneUE4-Win64-Shipping.exe"+4EF6D70: 48 63 C5                 -  movsxd  rax,ebp
+"ZoneUE4-Win64-Shipping.exe"+4EF6D73: 48 8B 6C 24 38           -  mov rbp,[rsp+38]
+"ZoneUE4-Win64-Shipping.exe"+4EF6D78: 48 8D 0C C5 00 00 00 00  -  lea rcx,[rax*8+00000000]
+"ZoneUE4-Win64-Shipping.exe"+4EF6D80: 48 8B 87 88 05 00 00     -  mov rax,[rdi+00000588]
+"ZoneUE4-Win64-Shipping.exe"+4EF6D87: 48 8B 14 01              -  mov rdx,[rcx+rax]
+"ZoneUE4-Win64-Shipping.exe"+4EF6D8B: 8B 82 78 02 00 00        -  mov eax,[rdx+00000278]
+"ZoneUE4-Win64-Shipping.exe"+4EF6D91: 85 C0                    -  test eax,eax
+"ZoneUE4-Win64-Shipping.exe"+4EF6D93: 7E 2C                    -  jle ZoneUE4-Win64-Shipping.exe+4EF6DC1
+// ---------- INJECTING HERE ----------
+"ZoneUE4-Win64-Shipping.exe"+4EF6D95: FF C8                    -  dec eax
+"ZoneUE4-Win64-Shipping.exe"+4EF6D97: 89 82 78 02 00 00        -  mov [rdx+00000278],eax
+// ---------- DONE INJECTING  ----------
+"ZoneUE4-Win64-Shipping.exe"+4EF6D9D: 48 8B 87 88 05 00 00     -  mov rax,[rdi+00000588]
+"ZoneUE4-Win64-Shipping.exe"+4EF6DA4: 48 8B 0C 01              -  mov rcx,[rcx+rax]
+"ZoneUE4-Win64-Shipping.exe"+4EF6DA8: 8B 81 78 02 00 00        -  mov eax,[rcx+00000278]
+"ZoneUE4-Win64-Shipping.exe"+4EF6DAE: 89 81 00 02 00 00        -  mov [rcx+00000200],eax
+"ZoneUE4-Win64-Shipping.exe"+4EF6DB4: B0 01                    -  mov al,01
+"ZoneUE4-Win64-Shipping.exe"+4EF6DB6: 48 8B 74 24 40           -  mov rsi,[rsp+40]
+"ZoneUE4-Win64-Shipping.exe"+4EF6DBB: 48 83 C4 20              -  add rsp,20
+"ZoneUE4-Win64-Shipping.exe"+4EF6DBF: 5F                       -  pop rdi
+"ZoneUE4-Win64-Shipping.exe"+4EF6DC0: C3                       -  ret
+"ZoneUE4-Win64-Shipping.exe"+4EF6DC1: 30 C0                    -  xor al,al
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>30</ID>
+      <Description>"inf. Scrap/int.Medkits/inf.Weapon Parts"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : ZoneUE4-Win64-Shipping.exe
+  Version: v1.04
+  Date   : 2019-01-18
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(scrap,ZoneUE4-Win64-Shipping.exe,8B 81 10020000 03 82 68040000 48 83 C4 20)
+alloc(newmem,$1000,scrap)
+label(returnhere)
+label(originalcode)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [rcx+00000210],#999 // scrap
+mov [rcx+0000021C],#999 // medkits
+mov [rcx+00000220],#999 // weapon parts
+
+originalcode:
+mov eax,[rcx+00000210]
+jmp returnhere
+
+scrap:
+jmp newmem
+nop
+returnhere:
+
+
+registerSymbol(scrap)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+scrap:
+db 8B 81 10 02 00 00
+unregisterSymbol(scrap)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "ZoneUE4-Win64-Shipping.exe"+5220B77
+
+"ZoneUE4-Win64-Shipping.exe"+5220B4B: 48 87 3C 24                             -  xchg [rsp],rdi
+"ZoneUE4-Win64-Shipping.exe"+5220B4F: C3                                      -  ret
+"ZoneUE4-Win64-Shipping.exe"+5220B50: 8D 66 66                                -  lea esp,[rsi+66]
+"ZoneUE4-Win64-Shipping.exe"+5220B53: 66 66 66 66 2E 0F 1F 84 00 00 00 00 00  -  nop cs:[rax+rax+00000000]
+"ZoneUE4-Win64-Shipping.exe"+5220B60: 53                                      -  push rbx
+"ZoneUE4-Win64-Shipping.exe"+5220B61: 48 83 EC 20                             -  sub rsp,20
+"ZoneUE4-Win64-Shipping.exe"+5220B65: 48 89 CB                                -  mov rbx,rcx
+"ZoneUE4-Win64-Shipping.exe"+5220B68: E8 43 48 1A FB                          -  call ZoneUE4-Win64-Shipping.exe+3C53B0
+"ZoneUE4-Win64-Shipping.exe"+5220B6D: 48 8B 8B A8 03 00 00                    -  mov rcx,[rbx+000003A8]
+"ZoneUE4-Win64-Shipping.exe"+5220B74: 48 89 C2                                -  mov rdx,rax
+// ---------- INJECTING HERE ----------
+"ZoneUE4-Win64-Shipping.exe"+5220B77: 8B 81 10 02 00 00                       -  mov eax,[rcx+00000210]
+// ---------- DONE INJECTING  ----------
+"ZoneUE4-Win64-Shipping.exe"+5220B7D: 03 82 68 04 00 00                       -  add eax,[rdx+00000468]
+"ZoneUE4-Win64-Shipping.exe"+5220B83: 48 83 C4 20                             -  add rsp,20
+"ZoneUE4-Win64-Shipping.exe"+5220B87: 5B                                      -  pop rbx
+"ZoneUE4-Win64-Shipping.exe"+5220B88: C3                                      -  ret
+"ZoneUE4-Win64-Shipping.exe"+5220B89: CC                                      -  int 3
+"ZoneUE4-Win64-Shipping.exe"+5220B8A: 4C 8B 0C 24                             -  mov r9,[rsp]
+"ZoneUE4-Win64-Shipping.exe"+5220B8E: 48 83 EC F8                             -  sub rsp,-08
+"ZoneUE4-Win64-Shipping.exe"+5220B92: E9 A7 71 EE 06                          -  jmp ZoneUE4-Win64-Shipping.exe+C107D3E
+"ZoneUE4-Win64-Shipping.exe"+5220B97: 68 3B 37 2B 5E                          -  push 5E2B373B
+"ZoneUE4-Win64-Shipping.exe"+5220B9C: F7 D7                                   -  not edi
+}
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="28">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"inf. Ammo"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : EuroCops.exe
+  Version: 1.0.4
+  Date   : 2019-03-07
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(ammo,EntitiesMP.dll,89 46 20 C7 44 24 34 FFFFFFFF)
+alloc(newmem,$1024,ammo)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [esi+20],#99
+mov [esp+34],FFFFFFFF
+jmp returnhere
+
+originalcode:
+mov [esi+20],eax
+mov [esp+34],FFFFFFFF
+
+exit:
+jmp returnhere
+
+ammo:
+jmp newmem
+nop
+nop
+nop
+nop
+nop
+nop
+returnhere:
+
+aobscanmodule(ammo2,EntitiesMP.dll,89 46 20 C7 84 24 F0000000 FFFFFFFF)
+alloc(newmem1,$1024,ammo2)
+label(returnhere1)
+label(originalcode1)
+label(exit1)
+
+newmem1: //this is allocated memory, you have read,write,execute access
+mov [esi+20],#9
+mov [esp+000000F0],FFFFFFFF
+jmp returnhere1
+
+originalcode1:
+mov [esi+20],eax
+mov [esp+000000F0],FFFFFFFF
+
+exit1:
+jmp returnhere1
+
+ammo2:
+jmp newmem1
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+returnhere1:
+
+registerSymbol(ammo)
+registerSymbol(ammo2)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+ammo:
+db 89 46 20 C7 44 24 34 FF FF FF FF
+ammo2:
+db 89 46 20 C7 84 24 F0 00 00 00 FF FF FF FF
+unregisterSymbol(ammo2)
+dealloc(newmem)
+unregisterSymbol(ammo)
+dealloc(newmem1)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "EntitiesMP.dll"+14C36C
+
+"EntitiesMP.dll"+14C345: 8D 88 F4 04 00 00        -  lea ecx,[eax+000004F4]
+"EntitiesMP.dll"+14C34B: 6A 01                    -  push 01
+"EntitiesMP.dll"+14C34D: E8 3E 0B 01 00           -  call EntitiesMP.dll+15CE90
+"EntitiesMP.dll"+14C352: 8B 4C 24 3C              -  mov ecx,[esp+3C]
+"EntitiesMP.dll"+14C356: 88 5C 24 34              -  mov [esp+34],bl
+"EntitiesMP.dll"+14C35A: FF 15 CC 91 3F 02        -  call dword ptr [EntitiesMP.dll+1991CC]
+"EntitiesMP.dll"+14C360: 8B 46 20                 -  mov eax,[esi+20]
+"EntitiesMP.dll"+14C363: 8B 4C 24 1C              -  mov ecx,[esp+1C]
+"EntitiesMP.dll"+14C367: 48                       -  dec eax
+"EntitiesMP.dll"+14C368: C6 46 74 01              -  mov byte ptr [esi+74],01
+// ---------- INJECTING HERE ----------
+"EntitiesMP.dll"+14C36C: 89 46 20                 -  mov [esi+20],eax
+"EntitiesMP.dll"+14C36F: C7 44 24 34 FF FF FF FF  -  mov [esp+34],FFFFFFFF
+// ---------- DONE INJECTING  ----------
+"EntitiesMP.dll"+14C377: FF 15 CC 91 3F 02        -  call dword ptr [EntitiesMP.dll+1991CC]
+"EntitiesMP.dll"+14C37D: B0 01                    -  mov al,01
+"EntitiesMP.dll"+14C37F: 8B 4C 24 2C              -  mov ecx,[esp+2C]
+"EntitiesMP.dll"+14C383: 64 89 0D 00 00 00 00     -  mov fs:[00000000],ecx
+"EntitiesMP.dll"+14C38A: 5F                       -  pop edi
+"EntitiesMP.dll"+14C38B: 5E                       -  pop esi
+"EntitiesMP.dll"+14C38C: 5D                       -  pop ebp
+"EntitiesMP.dll"+14C38D: 5B                       -  pop ebx
+"EntitiesMP.dll"+14C38E: 83 C4 28                 -  add esp,28
+"EntitiesMP.dll"+14C391: C2 04 00                 -  ret 0004
+}
+{
+// ORIGINAL CODE - INJECTION POINT: "EntitiesMP.dll"+14978F
+
+"EntitiesMP.dll"+149772: 8B 11                             -  mov edx,[ecx]
+"EntitiesMP.dll"+149774: FF 52 74                          -  call dword ptr [edx+74]
+"EntitiesMP.dll"+149777: 84 C0                             -  test al,al
+"EntitiesMP.dll"+149779: 74 0C                             -  je EntitiesMP.dll+149787
+"EntitiesMP.dll"+14977B: D9 46 70                          -  fld dword ptr [esi+70]
+"EntitiesMP.dll"+14977E: D8 0D DC B5 3F 02                 -  fmul dword ptr [EntitiesMP.dll+19B5DC]
+"EntitiesMP.dll"+149784: D9 5E 70                          -  fstp dword ptr [esi+70]
+"EntitiesMP.dll"+149787: 8B 46 20                          -  mov eax,[esi+20]
+"EntitiesMP.dll"+14978A: 8B 4C 24 1C                       -  mov ecx,[esp+1C]
+"EntitiesMP.dll"+14978E: 48                                -  dec eax
+// ---------- INJECTING HERE ----------
+"EntitiesMP.dll"+14978F: 89 46 20                          -  mov [esi+20],eax
+"EntitiesMP.dll"+149792: C7 84 24 F0 00 00 00 FF FF FF FF  -  mov [esp+000000F0],FFFFFFFF
+// ---------- DONE INJECTING  ----------
+"EntitiesMP.dll"+14979D: FF 15 CC 91 3F 02                 -  call dword ptr [EntitiesMP.dll+1991CC]
+"EntitiesMP.dll"+1497A3: B0 01                             -  mov al,01
+"EntitiesMP.dll"+1497A5: EB 65                             -  jmp EntitiesMP.dll+14980C
+"EntitiesMP.dll"+1497A7: 8B BE 80 00 00 00                 -  mov edi,[esi+00000080]
+"EntitiesMP.dll"+1497AD: D9 44 24 10                       -  fld dword ptr [esp+10]
+"EntitiesMP.dll"+1497B1: 83 CF 40                          -  or edi,40
+"EntitiesMP.dll"+1497B4: 8B D7                             -  mov edx,edi
+"EntitiesMP.dll"+1497B6: 83 E2 FE                          -  and edx,-02
+"EntitiesMP.dll"+1497B9: 8B CA                             -  mov ecx,edx
+"EntitiesMP.dll"+1497BB: 83 E1 FD                          -  and ecx,-03
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>23</ID>
+      <Description>"inf. Grenades"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : EuroCops.exe
+  Version: 1.0.4
+  Date   : 2019-03-07
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(grenades,EntitiesMP.dll,89 46 20 C7 45 FC FFFFFFFF)
+alloc(newmem,$1024,grenades)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [esi+20],#9
+mov [ebp-04],FFFFFFFF
+jmp returnhere
+
+
+originalcode:
+mov [esi+20],eax
+mov [ebp-04],FFFFFFFF
+
+exit:
+jmp returnhere
+
+grenades:
+jmp newmem
+nop
+nop
+nop
+nop
+nop
+returnhere:
+
+registerSymbol(grenades)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+grenades:
+db 89 46 20 C7 45 FC FF FF FF FF
+unregisterSymbol(grenades)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "EntitiesMP.dll"+13F639
+
+"EntitiesMP.dll"+13F61E: 8B 11                 -  mov edx,[ecx]
+"EntitiesMP.dll"+13F620: 8B 06                 -  mov eax,[esi]
+"EntitiesMP.dll"+13F622: 6A 02                 -  push 02
+"EntitiesMP.dll"+13F624: 8B CE                 -  mov ecx,esi
+"EntitiesMP.dll"+13F626: 89 5D FC              -  mov [ebp-04],ebx
+"EntitiesMP.dll"+13F629: 89 96 A4 0A 00 00     -  mov [esi+00000AA4],edx
+"EntitiesMP.dll"+13F62F: FF 50 68              -  call dword ptr [eax+68]
+"EntitiesMP.dll"+13F632: 8B 46 20              -  mov eax,[esi+20]
+"EntitiesMP.dll"+13F635: 48                    -  dec eax
+"EntitiesMP.dll"+13F636: 8D 4D A8              -  lea ecx,[ebp-58]
+// ---------- INJECTING HERE ----------
+"EntitiesMP.dll"+13F639: 89 46 20              -  mov [esi+20],eax
+"EntitiesMP.dll"+13F63C: C7 45 FC FF FF FF FF  -  mov [ebp-04],FFFFFFFF
+// ---------- DONE INJECTING  ----------
+"EntitiesMP.dll"+13F643: E8 08 5B F2 FF        -  call EntitiesMP.dll+65150
+"EntitiesMP.dll"+13F648: B0 01                 -  mov al,01
+"EntitiesMP.dll"+13F64A: 8B 4D F4              -  mov ecx,[ebp-0C]
+"EntitiesMP.dll"+13F64D: 64 89 0D 00 00 00 00  -  mov fs:[00000000],ecx
+"EntitiesMP.dll"+13F654: 5F                    -  pop edi
+"EntitiesMP.dll"+13F655: 5E                    -  pop esi
+"EntitiesMP.dll"+13F656: 5B                    -  pop ebx
+"EntitiesMP.dll"+13F657: 8B E5                 -  mov esp,ebp
+"EntitiesMP.dll"+13F659: 5D                    -  pop ebp
+"EntitiesMP.dll"+13F65A: C2 04 00              -  ret 0004
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>21</ID>
+      <Description>"inf. Health(team+player)"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : EuroCops.exe
+  Version: 1.0.4
+  Date   : 2019-03-07
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(health,EntitiesMP.dll,D9 40 08 D8 74 24 20 D8 15 ******** DFE0 F6 C4 01)
+alloc(newmem,$1024,health)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [eax+8],(float)5000
+
+originalcode:
+fld dword ptr [eax+08]
+fdiv dword ptr [esp+20]
+
+exit:
+jmp returnhere
+
+health:
+jmp newmem
+nop
+nop
+returnhere:
+
+registerSymbol(health)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+health:
+db D9 40 08 D8 74 24 20
+unregisterSymbol(health)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "EntitiesMP.dll"+128160
+
+"EntitiesMP.dll"+128137: E8 44 41 FF FF           -  call EntitiesMP.dll+11C280
+"EntitiesMP.dll"+12813C: 8B 5C 24 54              -  mov ebx,[esp+54]
+"EntitiesMP.dll"+128140: 8B 4B 0C                 -  mov ecx,[ebx+0C]
+"EntitiesMP.dll"+128143: 83 C4 2C                 -  add esp,2C
+"EntitiesMP.dll"+128146: E8 F5 CA ED FF           -  call EntitiesMP.dll+4C40
+"EntitiesMP.dll"+12814B: 8B 50 04                 -  mov edx,[eax+04]
+"EntitiesMP.dll"+12814E: 8B 82 14 03 00 00        -  mov eax,[edx+00000314]
+"EntitiesMP.dll"+128154: 8B 4B 0C                 -  mov ecx,[ebx+0C]
+"EntitiesMP.dll"+128157: 89 44 24 20              -  mov [esp+20],eax
+"EntitiesMP.dll"+12815B: E8 E0 CA ED FF           -  call EntitiesMP.dll+4C40
+// ---------- INJECTING HERE ----------
+"EntitiesMP.dll"+128160: D9 40 08                 -  fld dword ptr [eax+08]
+"EntitiesMP.dll"+128163: D8 74 24 20              -  fdiv dword ptr [esp+20]
+// ---------- DONE INJECTING  ----------
+"EntitiesMP.dll"+128167: D8 15 F4 A4 3F 02        -  fcom dword ptr [EntitiesMP.dll+19A4F4]
+"EntitiesMP.dll"+12816D: DF E0                    -  fnstsw ax
+"EntitiesMP.dll"+12816F: F6 C4 01                 -  test ah,01
+"EntitiesMP.dll"+128172: 75 17                    -  jne EntitiesMP.dll+12818B
+"EntitiesMP.dll"+128174: D8 15 34 A3 3F 02        -  fcom dword ptr [EntitiesMP.dll+19A334]
+"EntitiesMP.dll"+12817A: DF E0                    -  fnstsw ax
+"EntitiesMP.dll"+12817C: F6 C4 41                 -  test ah,41
+"EntitiesMP.dll"+12817F: 7B 12                    -  jnp EntitiesMP.dll+128193
+"EntitiesMP.dll"+128181: DD D8                    -  fstp st(0)
+"EntitiesMP.dll"+128183: D9 05 34 A3 3F 02        -  fld dword ptr [EntitiesMP.dll+19A334]
+}
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="27">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>99</ID>
+      <Description>"absorption"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : From_Dust.exe
+  Version: 1.3
+  Date   : 2019-01-29
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(absortion,dustai.win32.f.dll,F3 0F11 86 58060000 76 ** F3 0F5C 86 5C060000  F3 0F5E C2 0F2F C1)
+
+absortion:
+db 90 90 90 90 90 90 90 90
+
+registerSymbol(absortion)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+absortion:
+db F3 0F 11 86 58 06 00 00
+unregisterSymbol(absortion)
+{
+// ORIGINAL CODE - INJECTION POINT: "dustai.win32.f.dll"+87293
+
+"dustai.win32.f.dll"+8726A: 51                             -  push ecx
+"dustai.win32.f.dll"+8726B: 8B 88 C8 02 00 00              -  mov ecx,[eax+000002C8]
+"dustai.win32.f.dll"+87271: F3 0F 5C C1                    -  subss xmm0,xmm1
+"dustai.win32.f.dll"+87275: F3 0F 11 04 24                 -  movss [esp],xmm0
+"dustai.win32.f.dll"+8727A: 6A 09                          -  push 09
+"dustai.win32.f.dll"+8727C: E8 BF C3 0A 00                 -  call dustai.win32.f.dll+133640
+"dustai.win32.f.dll"+87281: F3 0F 10 44 24 08              -  movss xmm0,[esp+08]
+"dustai.win32.f.dll"+87287: F3 0F 10 54 24 0C              -  movss xmm2,[esp+0C]
+"dustai.win32.f.dll"+8728D: 0F 57 C9                       -  xorps xmm1,xmm1
+"dustai.win32.f.dll"+87290: 0F 2F D1                       -  comiss xmm2,xmm1
+// ---------- INJECTING HERE ----------
+"dustai.win32.f.dll"+87293: F3 0F 11 86 58 06 00 00        -  movss [esi+00000658],xmm0
+// ---------- DONE INJECTING  ----------
+"dustai.win32.f.dll"+8729B: 76 16                          -  jna dustai.win32.f.dll+872B3
+"dustai.win32.f.dll"+8729D: F3 0F 5C 86 5C 06 00 00        -  subss xmm0,[esi+0000065C]
+"dustai.win32.f.dll"+872A5: F3 0F 5E C2                    -  divss xmm0,xmm2
+"dustai.win32.f.dll"+872A9: 0F 2F C1                       -  comiss xmm0,xmm1
+"dustai.win32.f.dll"+872AC: 72 0D                          -  jb dustai.win32.f.dll+872BB
+"dustai.win32.f.dll"+872AE: 0F 28 D8                       -  movaps xmm3,xmm0
+"dustai.win32.f.dll"+872B1: EB 10                          -  jmp dustai.win32.f.dll+872C3
+"dustai.win32.f.dll"+872B3: 0F 28 C1                       -  movaps xmm0,xmm1
+"dustai.win32.f.dll"+872B6: 0F 28 D8                       -  movaps xmm3,xmm0
+"dustai.win32.f.dll"+872B9: EB 08                          -  jmp dustai.win32.f.dll+872C3
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>91</ID>
+      <Description>"instant garbage"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : From_Dust.exe
+  Version: 1.3
+  Date   : 2019-01-29
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(sand,dustai.win32.f.dll,F3 0F11 86 58060000 76 ** F3 0F5C 86 5C060000  F3 0F5E C2 0F2F C1)
+alloc(newmem,$1000,sand)
+label(returnhere)
+label(originalcode)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [esi+00000658],(float)1000
+mov [esi+00000660],(float)1000
+mov [esi+0000062C],(float)1000
+jmp returnhere
+
+originalcode:
+movss [esi+00000658],xmm0
+jmp returnhere
+
+sand:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+registerSymbol(sand)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+sand:
+db F3 0F 11 86 58 06 00 00
+dealloc(newmem)
+unregisterSymbol(sand)
+{
+// ORIGINAL CODE - INJECTION POINT: "dustai.win32.f.dll"+87293
+
+"dustai.win32.f.dll"+8726A: 51                             -  push ecx
+"dustai.win32.f.dll"+8726B: 8B 88 C8 02 00 00              -  mov ecx,[eax+000002C8]
+"dustai.win32.f.dll"+87271: F3 0F 5C C1                    -  subss xmm0,xmm1
+"dustai.win32.f.dll"+87275: F3 0F 11 04 24                 -  movss [esp],xmm0
+"dustai.win32.f.dll"+8727A: 6A 09                          -  push 09
+"dustai.win32.f.dll"+8727C: E8 BF C3 0A 00                 -  call dustai.win32.f.dll+133640
+"dustai.win32.f.dll"+87281: F3 0F 10 44 24 08              -  movss xmm0,[esp+08]
+"dustai.win32.f.dll"+87287: F3 0F 10 54 24 0C              -  movss xmm2,[esp+0C]
+"dustai.win32.f.dll"+8728D: 0F 57 C9                       -  xorps xmm1,xmm1
+"dustai.win32.f.dll"+87290: 0F 2F D1                       -  comiss xmm2,xmm1
+// ---------- INJECTING HERE ----------
+"dustai.win32.f.dll"+87293: F3 0F 11 86 58 06 00 00        -  movss [esi+00000658],xmm0
+// ---------- DONE INJECTING  ----------
+"dustai.win32.f.dll"+8729B: 76 16                          -  jna dustai.win32.f.dll+872B3
+"dustai.win32.f.dll"+8729D: F3 0F 5C 86 5C 06 00 00        -  subss xmm0,[esi+0000065C]
+"dustai.win32.f.dll"+872A5: F3 0F 5E C2                    -  divss xmm0,xmm2
+"dustai.win32.f.dll"+872A9: 0F 2F C1                       -  comiss xmm0,xmm1
+"dustai.win32.f.dll"+872AC: 72 0D                          -  jb dustai.win32.f.dll+872BB
+"dustai.win32.f.dll"+872AE: 0F 28 D8                       -  movaps xmm3,xmm0
+"dustai.win32.f.dll"+872B1: EB 10                          -  jmp dustai.win32.f.dll+872C3
+"dustai.win32.f.dll"+872B3: 0F 28 C1                       -  movaps xmm0,xmm1
+"dustai.win32.f.dll"+872B6: 0F 28 D8                       -  movaps xmm3,xmm0
+"dustai.win32.f.dll"+872B9: EB 08                          -  jmp dustai.win32.f.dll+872C3
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>108</ID>
+      <Description>"mega Capacity"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : From_Dust.exe
+  Version: 1.3
+  Date   : 2019-01-29
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(mega_capacity,dustai.win32.f.dll,0F2F 81 58060000 73 06 B8 01000000 C3 33 C0)
+alloc(newmem,$1000,mega_capacity)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov [ecx+00000658],(float)40000
+
+originalcode:
+comiss xmm0,[ecx+00000658]
+
+exit:
+jmp returnhere
+
+mega_capacity:
+jmp newmem
+nop
+nop
+returnhere:
+
+registerSymbol(mega_capacity)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+mega_capacity:
+db 0F 2F 81 58 06 00 00
+unregisterSymbol(mega_capacity)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "dustai.win32.f.dll"+8771B
+
+"dustai.win32.f.dll"+87700: 8B 81 78 06 00 00              -  mov eax,[ecx+00000678]
+"dustai.win32.f.dll"+87706: 85 C0                          -  test eax,eax
+"dustai.win32.f.dll"+87708: 74 20                          -  je dustai.win32.f.dll+8772A
+"dustai.win32.f.dll"+8770A: 8B 40 1C                       -  mov eax,[eax+1C]
+"dustai.win32.f.dll"+8770D: 8B 40 18                       -  mov eax,[eax+18]
+"dustai.win32.f.dll"+87710: A8 01                          -  test al,01
+"dustai.win32.f.dll"+87712: 74 16                          -  je dustai.win32.f.dll+8772A
+"dustai.win32.f.dll"+87714: A8 02                          -  test al,02
+"dustai.win32.f.dll"+87716: 75 12                          -  jne dustai.win32.f.dll+8772A
+"dustai.win32.f.dll"+87718: 0F 57 C0                       -  xorps xmm0,xmm0
+// ---------- INJECTING HERE ----------
+"dustai.win32.f.dll"+8771B: 0F 2F 81 58 06 00 00           -  comiss xmm0,[ecx+00000658]
+// ---------- DONE INJECTING  ----------
+"dustai.win32.f.dll"+87722: 73 06                          -  jae dustai.win32.f.dll+8772A
+"dustai.win32.f.dll"+87724: B8 01 00 00 00                 -  mov eax,00000001
+"dustai.win32.f.dll"+87729: C3                             -  ret
+"dustai.win32.f.dll"+8772A: 33 C0                          -  xor eax,eax
+"dustai.win32.f.dll"+8772C: C3                             -  ret
+"dustai.win32.f.dll"+8772D: CC                             -  int 3
+"dustai.win32.f.dll"+8772E: CC                             -  int 3
+"dustai.win32.f.dll"+8772F: CC                             -  int 3
+"dustai.win32.f.dll"+87730: F3 0F 10 81 6C 06 00 00        -  movss xmm0,[ecx+0000066C]
+"dustai.win32.f.dll"+87738: 0F 2F 05 24 55 AF 0B           -  comiss xmm0,[dustai.win32.f.dll+155524]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>93</ID>
+      <Description>"no resource decrease"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : From_Dust.exe
+  Version: 1.3
+  Date   : 2019-01-29
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(sand_decrease,dustai.win32.f.dll,F3 0F11 88 58060000  F3 0F11 80 60060000 E9 ******** F3 0F10 8F 64020000)
+aobscanmodule(decrease,dustai.win32.f.dll,F3 0F11 80 58060000 F3 0F11 90 60060000 D9 98 5C060000)
+
+sand_decrease:
+db 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90
+decrease:
+db 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90
+
+registerSymbol(sand_decrease)
+registerSymbol(decrease)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+sand_decrease:
+db F3 0F 11 88 58 06 00 00 F3 0F 11 80 60 06 00 00
+decrease:
+db F3 0F 11 80 58 06 00 00 F3 0F 11 90 60 06 00 00
+unregisterSymbol(decrease)
+unregisterSymbol(sand_decrease)
+{
+// ORIGINAL CODE - INJECTION POINT: "dustai.win32.f.dll"+DA475
+
+"dustai.win32.f.dll"+DA445: 83 EC 08                 -  sub esp,08
+"dustai.win32.f.dll"+DA448: D9 5C 24 04              -  fstp dword ptr [esp+04]
+"dustai.win32.f.dll"+DA44C: F3 0F 11 04 24           -  movss [esp],xmm0
+"dustai.win32.f.dll"+DA451: E8 1A 18 F4 FF           -  call dustai.win32.f.dll+1BC70
+"dustai.win32.f.dll"+DA456: D9 5C 24 1C              -  fstp dword ptr [esp+1C]
+"dustai.win32.f.dll"+DA45A: F3 0F 10 4C 24 1C        -  movss xmm1,[esp+1C]
+"dustai.win32.f.dll"+DA460: 83 C4 08                 -  add esp,08
+"dustai.win32.f.dll"+DA463: 8B 87 7C 02 00 00        -  mov eax,[edi+0000027C]
+"dustai.win32.f.dll"+DA469: D9 80 58 06 00 00        -  fld dword ptr [eax+00000658]
+"dustai.win32.f.dll"+DA46F: F3 0F 10 44 24 28        -  movss xmm0,[esp+28]
+// ---------- INJECTING HERE ----------
+"dustai.win32.f.dll"+DA475: F3 0F 11 88 58 06 00 00  -  movss [eax+00000658],xmm1
+// ---------- DONE INJECTING  ----------
+"dustai.win32.f.dll"+DA47D: F3 0F 11 80 60 06 00 00  -  movss [eax+00000660],xmm0
+"dustai.win32.f.dll"+DA485: E9 75 01 00 00           -  jmp dustai.win32.f.dll+DA5FF
+"dustai.win32.f.dll"+DA48A: F3 0F 10 8F 64 02 00 00  -  movss xmm1,[edi+00000264]
+"dustai.win32.f.dll"+DA492: F3 0F 59 0D E4 5A AF 0B  -  mulss xmm1,[dustai.win32.f.dll+155AE4]
+"dustai.win32.f.dll"+DA49A: 0F 2F C8                 -  comiss xmm1,xmm0
+"dustai.win32.f.dll"+DA49D: F3 0F 10 BF 74 02 00 00  -  movss xmm7,[edi+00000274]
+"dustai.win32.f.dll"+DA4A5: F3 0F 10 97 70 02 00 00  -  movss xmm2,[edi+00000270]
+"dustai.win32.f.dll"+DA4AD: F3 0F 10 B7 60 02 00 00  -  movss xmm6,[edi+00000260]
+"dustai.win32.f.dll"+DA4B5: F3 0F 10 A7 68 02 00 00  -  movss xmm4,[edi+00000268]
+"dustai.win32.f.dll"+DA4BD: F3 0F 2C C1              -  cvttss2si eax,xmm1
+}
+{
+// ORIGINAL CODE - INJECTION POINT: "dustai.win32.f.dll"+DA5EF
+
+"dustai.win32.f.dll"+DA5BA: F3 0F 10 54 24 14        -  movss xmm2,[esp+14]
+"dustai.win32.f.dll"+DA5C0: 0F 2F C2                 -  comiss xmm0,xmm2
+"dustai.win32.f.dll"+DA5C3: 77 16                    -  ja dustai.win32.f.dll+DA5DB
+"dustai.win32.f.dll"+DA5C5: F3 0F 10 4C 24 10        -  movss xmm1,[esp+10]
+"dustai.win32.f.dll"+DA5CB: F3 0F 59 4C 24 50        -  mulss xmm1,[esp+50]
+"dustai.win32.f.dll"+DA5D1: F3 0F 10 44 24 28        -  movss xmm0,[esp+28]
+"dustai.win32.f.dll"+DA5D7: F3 0F 5C C1              -  subss xmm0,xmm1
+"dustai.win32.f.dll"+DA5DB: 8B 87 7C 02 00 00        -  mov eax,[edi+0000027C]
+"dustai.win32.f.dll"+DA5E1: F3 0F 11 87 74 02 00 00  -  movss [edi+00000274],xmm0
+"dustai.win32.f.dll"+DA5E9: D9 80 58 06 00 00        -  fld dword ptr [eax+00000658]
+// ---------- INJECTING HERE ----------
+"dustai.win32.f.dll"+DA5EF: F3 0F 11 80 58 06 00 00  -  movss [eax+00000658],xmm0
+// ---------- DONE INJECTING  ----------
+"dustai.win32.f.dll"+DA5F7: F3 0F 11 90 60 06 00 00  -  movss [eax+00000660],xmm2
+"dustai.win32.f.dll"+DA5FF: D9 98 5C 06 00 00        -  fstp dword ptr [eax+0000065C]
+"dustai.win32.f.dll"+DA605: 8B 87 7C 02 00 00        -  mov eax,[edi+0000027C]
+"dustai.win32.f.dll"+DA60B: F3 0F 7E 80 D8 06 00 00  -  movq xmm0,[eax+000006D8]
+"dustai.win32.f.dll"+DA613: 66 0F D6 44 24 64        -  movq [esp+64],xmm0
+"dustai.win32.f.dll"+DA619: 8B 88 E0 06 00 00        -  mov ecx,[eax+000006E0]
+"dustai.win32.f.dll"+DA61F: 8D 54 24 64              -  lea edx,[esp+64]
+"dustai.win32.f.dll"+DA623: 89 4C 24 6C              -  mov [esp+6C],ecx
+"dustai.win32.f.dll"+DA627: 52                       -  push edx
+"dustai.win32.f.dll"+DA628: 8D 8C 24 DC 00 00 00     -  lea ecx,[esp+000000DC]
+}
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>227</ID>
+      <Description>"inst. Cooldown"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(coolDown,dustai.win32.f.dll,8B D1 83 E2 01 0F2F C1 72 ** BD 01000000 EB 02)
+alloc(newmem,$1000,coolDown)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [esi],(float)100
+
+originalcode:
+mov edx,ecx
+and edx,01
+
+exit:
+jmp returnhere
+
+coolDown:
+jmp newmem
+returnhere:
+
+registerSymbol(coolDown)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+coolDown:
+db 8B D1 83 E2 01
+unregisterSymbol(coolDown)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "dustai.win32.f.dll"+12E574
+
+"dustai.win32.f.dll"+12E54D: F3 0F 58 44 24 44     -  addss xmm0,dword ptr [esp+44]
+"dustai.win32.f.dll"+12E553: 0F 28 D1              -  movaps xmm2,xmm1
+"dustai.win32.f.dll"+12E556: F3 0F 5C D0           -  subss xmm2,xmm0
+"dustai.win32.f.dll"+12E55A: 0F 2F 15 20 55 AF 0B  -  comiss xmm2,[dustai.win32.f.dll+155520]
+"dustai.win32.f.dll"+12E561: 73 03                 -  jae dustai.win32.f.dll+12E566
+"dustai.win32.f.dll"+12E563: 0F 28 C1              -  movaps xmm0,xmm1
+"dustai.win32.f.dll"+12E566: F3 0F 11 06           -  movss [esi],xmm0
+"dustai.win32.f.dll"+12E56A: EB 04                 -  jmp dustai.win32.f.dll+12E570
+"dustai.win32.f.dll"+12E56C: F3 0F 11 0E           -  movss [esi],xmm1
+"dustai.win32.f.dll"+12E570: F3 0F 10 06           -  movss xmm0,[esi]
+// ---------- INJECTING HERE ----------
+"dustai.win32.f.dll"+12E574: 8B D1                 -  mov edx,ecx
+"dustai.win32.f.dll"+12E576: 83 E2 01              -  and edx,01
+// ---------- DONE INJECTING  ----------
+"dustai.win32.f.dll"+12E579: 0F 2F C1              -  comiss xmm0,xmm1
+"dustai.win32.f.dll"+12E57C: 72 07                 -  jb dustai.win32.f.dll+12E585
+"dustai.win32.f.dll"+12E57E: BD 01 00 00 00        -  mov ebp,00000001
+"dustai.win32.f.dll"+12E583: EB 02                 -  jmp dustai.win32.f.dll+12E587
+"dustai.win32.f.dll"+12E585: 33 ED                 -  xor ebp,ebp
+"dustai.win32.f.dll"+12E587: F7 D0                 -  not eax
+"dustai.win32.f.dll"+12E589: 23 C5                 -  and eax,ebp
+"dustai.win32.f.dll"+12E58B: 23 C7                 -  and eax,edi
+"dustai.win32.f.dll"+12E58D: 83 E0 01              -  and eax,01
+"dustai.win32.f.dll"+12E590: 8B F9                 -  mov edi,ecx
+}
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+</CheatTable>

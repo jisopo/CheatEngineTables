@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="34">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>418</ID>
+      <Description>"break bad door checks"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+{$lua}
+prev_address = allocateSharedMemory("prev_address",4)
+address_identifier = allocateSharedMemory("address_identifier",4)
+empty_address = allocateSharedMemory("empty_address",4)
+aobresult = AOBScan("83 C4 10 D9 80 B8000000 D9EE DFF1 DDD8","*W-C+X")
+local counter = aobresult.Count - 1
+if (aobresult.Count&gt;0) then
+  while(counter ~= 0) do
+      writeBytes(aobresult[counter].."+4", 05)
+      writeBytes(prev_address, readBytes(aobresult[counter].."+5", 4, true),4)
+      writeBytes(aobresult[counter].."+5", dwordToByteTable(empty_address))
+    counter = counter - 1
+  end
+end
+{$asm}
+
+
+[DISABLE]
+{$lua}
+prev_address = allocateSharedMemory("prev_address",4)
+aobresult = AOBScan("83 C4 10 D9 05 ???????? D9EE DFF1 DDD8","*W-C+X")
+local counter = aobresult.Count - 1
+if (aobresult.Count&gt;1) then
+  while(counter ~= 0) do
+    if (readFloat(readPointer(aobresult[counter].."+5")) == 0.0) then
+           writeBytes(aobresult[counter].."+4", 80)
+           writeBytes(aobresult[counter].."+5", readBytes(prev_address, 4, true), 4)
+    end
+    counter = counter - 1
+  end
+
+end
+{$asm}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>407</ID>
+      <Description>"disable camera change zoom"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscan(timer_address, D9 5F 60 D9 05 ???????? D9 5D D4 D9 47 64)
+
+timer_address:
+nop
+nop
+nop
+
+
+[DISABLE]
+aobscan(timer_adress, 90 90 90 D9 05 ???????? D9 5D D4 D9 47 64)
+timer_adress:
+fstp dword ptr [edi+60]
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>372</ID>
+      <Description>"fast door open"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+{$lua}
+prev_address = allocateSharedMemory("prev_address",4)
+address_identifier = allocateSharedMemory("address_identifier",4)
+empty_address = allocateSharedMemory("empty_address",4)
+aobresult = AOBScan("83 C4 10 D9 80 B4000000 D9 05 ???????? DFF1","*W-C+X")
+local counter = aobresult.Count - 1
+if (aobresult.Count&gt;0) then
+  while(counter ~= 0) do
+    if (readFloat(readPointer(aobresult[counter].."+B")) == 100.0) then
+           writeBytes(prev_address, readBytes(aobresult[counter].."+B", 4, true),4)
+           writeBytes(aobresult[counter].."+B", dwordToByteTable(empty_address))
+    end
+    counter = counter - 1
+  end
+end
+{$asm}
+
+
+[DISABLE]
+{$lua}
+prev_address = allocateSharedMemory("prev_address",4)
+aobresult = AOBScan("83 C4 10 D9 80 B4000000 D9 05 ???????? DFF1","*W-C+X")
+local counter = aobresult.Count - 1
+if (aobresult.Count&gt;1) then
+  while(counter ~= 0) do
+    if (readFloat(readPointer(aobresult[counter].."+B")) == 0.0) then
+           writeBytes(aobresult[counter].."+B", readBytes(prev_address, 4, true), 4)
+    end
+    counter = counter - 1
+  end
+
+end
+{$asm}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"fast repair"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+{$lua}
+prev_address = allocateSharedMemory("prev_address",4)
+empty_address = allocateSharedMemory("empty_address",4)
+aobresult = AOBScan("D9 80 A8000000 D9 05 ???????? DFF1 DDD8","*W-C+X")
+writeBytes(prev_address, readBytes(aobresult[1].."+8", 4, true),4)
+writeBytes(aobresult[1].."+8", dwordToByteTable(empty_address))
+{$asm}
+
+
+[DISABLE]
+{$lua}
+prev_address = allocateSharedMemory("prev_address",4)
+aobresult = AOBScan("D9 80 A8000000 D9 05 ???????? DFF1 DDD8","*W-C+X")
+writeBytes(aobresult[1].."+8", readBytes(prev_address, 4, true), 4)
+{$asm}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>400</ID>
+      <Description>"fast room inspection"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(exit)
+aobscan(inspection_address, D9 87 60010000 D9 45 E0 DFF1 DDD8)
+
+newmem:
+mov [ebp-20],(float)0
+fld dword ptr [ebp-20]
+fcomip st(0),st(1)
+
+exit:
+jmp returnhere
+
+inspection_address+6:
+jmp newmem
+
+returnhere:
+
+[DISABLE]
+dealloc(newmem)
+aobscan(inspection_address, D9 87 60010000 E9 ???????? DDD8)
+inspection_address+6:
+fld dword ptr [ebp-20]
+fcomip st(0),st(1)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>408</ID>
+      <Description>"prevent teleport"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(inspection_address, D9 5E 18 8B 05 ???????? 83 EC 08 57 50)
+
+inspection_address:
+nop
+nop
+nop
+
+[DISABLE]
+aobscan(inspection_address, 90 90 90 8B 05 ???????? 83 EC 08 57 50)
+inspection_address:
+fstp dword ptr [esi+18]
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>484</ID>
+      <Description>"prevent teleport lua"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+{$lua}
+local function timer_tick(timer)
+  aobresult = AOBScan("D9 5E 18 8B 05 ???????? 83 EC 08 57 50","*W-C+X")
+     if aobresult ~= nil then
+       if (aobresult.Count&gt;0) then
+          writeBytes(aobresult[0], "90 90 90")
+          timer.Enabled = false
+          timer.destroy()
+     end
+  end
+end
+local someTimer = createTimer(MainForm, false)
+someTimer.Interval = 100
+someTimer.OnTimer = timer_tick
+someTimer.Enabled = true
+--code from here to '[DISABLE]' will be used to enable the cheat
+--aobscan(inspection_address, D9 5E 18 8B 05 ???????? 83 EC 08 57 50)
+
+--inspection_address:
+--nop
+--nop
+--nop
+{$asm}
+[DISABLE]
+{$lua}
+--aobscan(inspection_address, 90 90 90 8B 05 ???????? 83 EC 08 57 50)
+--inspection_address:
+--fstp dword ptr [esi+18]
+{$asm}
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols>
+    <SymbolEntry>
+      <Name>prev_addres</Name>
+      <Address>0F600000</Address>
+    </SymbolEntry>
+  </UserdefinedSymbols>
+</CheatTable>

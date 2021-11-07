@@ -1,0 +1,594 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="29">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>4</ID>
+      <Description>"no overheat"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : FeudalAlloy.exe
+  Version: 1.01
+  Date   : 2019-01-29
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(overheap,D9 86 AC010000 D9 45 10 DEC1 D9 9E AC010000)
+alloc(newmem,$1000,overheap)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+fstp dword ptr [esi+000001AC]
+fld dword ptr [zero]
+fstp dword ptr [esi+000001AC]
+
+exit:
+jmp returnhere
+
+zero:
+db (float)0
+
+overheap+B:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(overheap)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+overheap+B:
+db D9 9E AC 01 00 00
+unregisterSymbol(overheap)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: 1A532074
+
+1A53204B: 83 C4 10           -  add esp,10
+1A53204E: E9 54 04 00 00     -  jmp 1A5324A7
+1A532053: D9 86 A8 01 00 00  -  fld dword ptr [esi+000001A8]
+1A532059: D9 45 10           -  fld dword ptr [ebp+10]
+1A53205C: DE C1              -  faddp
+1A53205E: D9 9E A8 01 00 00  -  fstp dword ptr [esi+000001A8]
+1A532064: E9 3E 04 00 00     -  jmp 1A5324A7
+1A532069: D9 86 AC 01 00 00  -  fld dword ptr [esi+000001AC]
+1A53206F: D9 45 10           -  fld dword ptr [ebp+10]
+1A532072: DE C1              -  faddp
+// ---------- INJECTING HERE ----------
+1A532074: D9 9E AC 01 00 00  -  fstp dword ptr [esi+000001AC]
+// ---------- DONE INJECTING  ----------
+1A53207A: 83 EC 08           -  sub esp,08
+1A53207D: 68 A0 2A 73 15     -  push 15732AA0
+1A532082: 56                 -  push esi
+1A532083: E8 80 17 FD FF     -  call 1A503808
+1A532088: 83 C4 10           -  add esp,10
+1A53208B: 83 EC 08           -  sub esp,08
+1A53208E: 68 A0 2A 73 15     -  push 15732AA0
+1A532093: 56                 -  push esi
+1A532094: E8 9F D3 35 EA     -  call 0488F438
+1A532099: 83 C4 10           -  add esp,10
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>6</ID>
+      <Description>"inf. Coins"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : FeudalAlloy.exe
+  Version: 1.01
+  Date   : 2019-01-29
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(money,8B 80 C8010000 89 85 88FBFFFF 8D 85 88FBFFFF)
+alloc(newmem,$1000, money)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [eax+000001C8],#9999999
+
+originalcode:
+mov eax,[eax+000001C8]
+
+exit:
+jmp returnhere
+
+money:
+jmp newmem
+nop
+returnhere:
+
+aobscan(money1,F2 0F10 45 F0 F2 0F2C C8 03 C1 89 86 C8010000)
+
+money1+B:
+db 90 90 90 90 90 90
+
+registerSymbol(money)
+registerSymbol(money1)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+money:
+db 8B 80 C8 01 00 00
+money1+B:
+db 89 86 C8 01 00 00
+unregisterSymbol(money1)
+unregisterSymbol(money)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: money
+
+1A52F031: 50                 -  push eax
+1A52F032: 39 00              -  cmp [eax],eax
+1A52F034: E8 D7 B7 40 EA     -  call 0493A810
+1A52F039: 83 C4 10           -  add esp,10
+1A52F03C: 8B 47 4C           -  mov eax,[edi+4C]
+1A52F03F: 89 85 44 FB FF FF  -  mov [ebp-000004BC],eax
+1A52F045: BA 08 4E F9 0C     -  mov edx,0CF94E08
+1A52F04A: E8 69 30 41 EA     -  call 049420B8
+1A52F04F: 8B C8              -  mov ecx,eax
+1A52F051: 39 09              -  cmp [ecx],ecx
+// ---------- INJECTING HERE ----------
+1A52F053: 8B 80 C8 01 00 00  -  mov eax,[eax+000001C8]
+// ---------- DONE INJECTING  ----------
+1A52F059: 89 85 88 FB FF FF  -  mov [ebp-00000478],eax
+1A52F05F: 8D 85 88 FB FF FF  -  lea eax,[ebp-00000478]
+1A52F065: 83 EC 0C           -  sub esp,0C
+1A52F068: 50                 -  push eax
+1A52F069: E8 CA F1 37 EA     -  call 048AE238
+1A52F06E: 83 C4 10           -  add esp,10
+1A52F071: 8B C8              -  mov ecx,eax
+1A52F073: 8B 85 44 FB FF FF  -  mov eax,[ebp-000004BC]
+1A52F079: 83 EC 08           -  sub esp,08
+1A52F07C: 51                 -  push ecx
+}
+{
+// ORIGINAL CODE - INJECTION POINT: money1
+
+1A532110: D9 9E C0 01 00 00  -  fstp dword ptr [esi+000001C0]
+1A532116: E9 8C 03 00 00     -  jmp 1A5324A7
+1A53211B: D9 86 C4 01 00 00  -  fld dword ptr [esi+000001C4]
+1A532121: D9 45 10           -  fld dword ptr [ebp+10]
+1A532124: DE C1              -  faddp
+1A532126: D9 9E C4 01 00 00  -  fstp dword ptr [esi+000001C4]
+1A53212C: E9 76 03 00 00     -  jmp 1A5324A7
+1A532131: 8B 86 C8 01 00 00  -  mov eax,[esi+000001C8]
+1A532137: D9 45 10           -  fld dword ptr [ebp+10]
+1A53213A: DD 5D F0           -  fstp qword ptr [ebp-10]
+// ---------- INJECTING HERE ----------
+1A53213D: F2 0F 10 45 F0     -  movsd xmm0,[ebp-10]
+// ---------- DONE INJECTING  ----------
+1A532142: F2 0F 2C C8        -  cvttsd2si ecx,xmm0
+1A532146: 03 C1              -  add eax,ecx
+1A532148: 89 86 C8 01 00 00  -  mov [esi+000001C8],eax
+1A53214E: 83 EC 0C           -  sub esp,0C
+1A532151: 56                 -  push esi
+1A532152: E8 09 16 04 00     -  call 1A573760
+1A532157: 83 C4 10           -  add esp,10
+1A53215A: E9 48 03 00 00     -  jmp 1A5324A7
+1A53215F: 8B 86 CC 01 00 00  -  mov eax,[esi+000001CC]
+1A532165: D9 45 10           -  fld dword ptr [ebp+10]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>22</ID>
+      <Description>"inf. Health"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : FeudalAlloy.exe
+  Version: 1.01
+  Date   : 2019-01-29
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(health,D9 86 A4010000 D9 45 10 DEC1 D9 9E A4010000)
+alloc(newmem,$1000,health)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+fstp dword ptr [esi+000001A4]
+
+fld dword ptr [esi+000001A8]
+fstp dword ptr [esi+000001A4]
+
+exit:
+jmp returnhere
+
+health+B:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(health)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+health+B:
+db D9 9E A4 01 00 00
+unregisterSymbol(health)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: 1A532026
+
+1A532004: 0F 83 9D 04 00 00        -  jae 1A5324A7
+1A53200A: 8B 4D EC                 -  mov ecx,[ebp-14]
+1A53200D: C1 E1 02                 -  shl ecx,02
+1A532010: B8 60 25 53 1A           -  mov eax,1A532560
+1A532015: 03 C1                    -  add eax,ecx
+1A532017: 8B 00                    -  mov eax,[eax]
+1A532019: FF E0                    -  jmp eax
+1A53201B: D9 86 A4 01 00 00        -  fld dword ptr [esi+000001A4]
+1A532021: D9 45 10                 -  fld dword ptr [ebp+10]
+1A532024: DE C1                    -  faddp
+// ---------- INJECTING HERE ----------
+1A532026: D9 9E A4 01 00 00        -  fstp dword ptr [esi+000001A4]
+// ---------- DONE INJECTING  ----------
+1A53202C: 83 EC 08                 -  sub esp,08
+1A53202F: 68 80 23 0E 1A           -  push 1A0E2380
+1A532034: 56                       -  push esi
+1A532035: E8 CE 17 FD FF           -  call 1A503808
+1A53203A: 83 C4 10                 -  add esp,10
+1A53203D: 83 EC 08                 -  sub esp,08
+1A532040: 68 80 23 0E 1A           -  push 1A0E2380
+1A532045: 56                       -  push esi
+1A532046: E8 ED D3 35 EA           -  call 0488F438
+1A53204B: 83 C4 10                 -  add esp,10
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>41</ID>
+      <Description>"Super Jump"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : FeudalAlloy.exe
+  Version: 1.01
+  Date   : 25.01.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+{$lua}
+address_identifier = allocateSharedMemory("address_identifier",4)
+aobresult = AOBScan("DD 85 80 FE FF FF D9 40 08 DE C9","+RW")
+local counter = aobresult.Count - 1
+if (aobresult.Count&gt;0) then
+     writeBytes(address_identifier, qwordToByteTable(getAddress(aobresult[1])))
+end
+{$asm}
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,$1024,[address_identifier])
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//чем больше значение - тем выше прыжок
+mov [eax+08],(float)10
+
+originalcode:
+fld qword ptr [ebp-00000180]
+
+exit:
+jmp returnhere
+
+[address_identifier]:
+jmp newmem
+nop
+returnhere:
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+[address_identifier]:
+db DD 85 80 FE FF FF
+dealloc(newmem)
+dealloc(address_identifier)
+{
+// ORIGINAL CODE - INJECTION POINT: 182EE8EE
+
+182EE8C1: C6 40 1D 00        -  mov byte ptr [eax+1D],00
+182EE8C5: E9 96 00 00 00     -  jmp 182EE960
+182EE8CA: 8B 87 C8 00 00 00  -  mov eax,[edi+000000C8]
+182EE8D0: 89 85 94 FE FF FF  -  mov [ebp-0000016C],eax
+182EE8D6: D9 05 00 56 D2 13  -  fld dword ptr [13D25600]
+182EE8DC: DD 9D 80 FE FF FF  -  fstp qword ptr [ebp-00000180]
+182EE8E2: 83 EC 0C           -  sub esp,0C
+182EE8E5: 57                 -  push edi
+182EE8E6: E8 6D CD FB FF     -  call 182AB658
+182EE8EB: 83 C4 10           -  add esp,10
+// ---------- INJECTING HERE ----------
+182EE8EE: DD 85 80 FE FF FF  -  fld qword ptr [ebp-00000180]
+// ---------- DONE INJECTING  ----------
+182EE8F4: D9 40 08           -  fld dword ptr [eax+08]
+182EE8F7: DE C9              -  fmulp st(1),st(0)
+182EE8F9: DD 9D 88 FE FF FF  -  fstp qword ptr [ebp-00000178]
+182EE8FF: 8B 87 C8 00 00 00  -  mov eax,[edi+000000C8]
+182EE905: 83 EC 0C           -  sub esp,0C
+182EE908: 50                 -  push eax
+182EE909: 39 00              -  cmp [eax],eax
+182EE90B: E8 58 CC FB FF     -  call 182AB568
+182EE910: 83 C4 10           -  add esp,10
+182EE913: D9 40 18           -  fld dword ptr [eax+18]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>23</ID>
+      <Description>"get Overheap Address"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(overheap,D9 86 AC010000 D9 45 10 DEC1 D9 9E AC010000)
+alloc(newmem,$1000,overheap)
+label(returnhere)
+label(originalcode)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+fstp dword ptr [esi+000001AC]
+push ecx
+lea ecx, [esi+000001AC]
+mov [overheapPointer], ecx
+pop ecx
+jmp returnhere
+
+overheapPointer:
+db 0
+
+overheap+B:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(overheap)
+registerSymbol(overheapPointer)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+overheap+B:
+db D9 9E AC 01 00 00
+unregisterSymbol(overheap)
+unregisterSymbol(overheapPointer)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: 1A532074
+
+1A53204B: 83 C4 10           -  add esp,10
+1A53204E: E9 54 04 00 00     -  jmp 1A5324A7
+1A532053: D9 86 A8 01 00 00  -  fld dword ptr [esi+000001A8]
+1A532059: D9 45 10           -  fld dword ptr [ebp+10]
+1A53205C: DE C1              -  faddp
+1A53205E: D9 9E A8 01 00 00  -  fstp dword ptr [esi+000001A8]
+1A532064: E9 3E 04 00 00     -  jmp 1A5324A7
+1A532069: D9 86 AC 01 00 00  -  fld dword ptr [esi+000001AC]
+1A53206F: D9 45 10           -  fld dword ptr [ebp+10]
+1A532072: DE C1              -  faddp
+// ---------- INJECTING HERE ----------
+1A532074: D9 9E AC 01 00 00  -  fstp dword ptr [esi+000001AC]
+// ---------- DONE INJECTING  ----------
+1A53207A: 83 EC 08           -  sub esp,08
+1A53207D: 68 A0 2A 73 15     -  push 15732AA0
+1A532082: 56                 -  push esi
+1A532083: E8 80 17 FD FF     -  call 1A503808
+1A532088: 83 C4 10           -  add esp,10
+1A53208B: 83 EC 08           -  sub esp,08
+1A53208E: 68 A0 2A 73 15     -  push 15732AA0
+1A532093: 56                 -  push esi
+1A532094: E8 9F D3 35 EA     -  call 0488F438
+1A532099: 83 C4 10           -  add esp,10
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>25</ID>
+      <Description>"get Health Address"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : FeudalAlloy.exe
+  Version: 1.01
+  Date   : 2019-01-29
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(health,D9 86 A4010000 D9 45 10 DEC1 D9 9E A4010000)
+alloc(newmem,$1000,health)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+fstp dword ptr [esi+000001A4]
+push ecx
+lea ecx, [esi+000001A4]
+mov [healthPointer], ecx
+pop ecx
+
+exit:
+jmp returnhere
+
+healthPointer:
+db 0
+
+health+B:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(health)
+registerSymbol(healthPointer)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+health+B:
+db D9 9E A4 01 00 00
+unregisterSymbol(health)
+unregisterSymbol(healthPointer)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: 1A532026
+
+1A532004: 0F 83 9D 04 00 00        -  jae 1A5324A7
+1A53200A: 8B 4D EC                 -  mov ecx,[ebp-14]
+1A53200D: C1 E1 02                 -  shl ecx,02
+1A532010: B8 60 25 53 1A           -  mov eax,1A532560
+1A532015: 03 C1                    -  add eax,ecx
+1A532017: 8B 00                    -  mov eax,[eax]
+1A532019: FF E0                    -  jmp eax
+1A53201B: D9 86 A4 01 00 00        -  fld dword ptr [esi+000001A4]
+1A532021: D9 45 10                 -  fld dword ptr [ebp+10]
+1A532024: DE C1                    -  faddp
+// ---------- INJECTING HERE ----------
+1A532026: D9 9E A4 01 00 00        -  fstp dword ptr [esi+000001A4]
+// ---------- DONE INJECTING  ----------
+1A53202C: 83 EC 08                 -  sub esp,08
+1A53202F: 68 80 23 0E 1A           -  push 1A0E2380
+1A532034: 56                       -  push esi
+1A532035: E8 CE 17 FD FF           -  call 1A503808
+1A53203A: 83 C4 10                 -  add esp,10
+1A53203D: 83 EC 08                 -  sub esp,08
+1A532040: 68 80 23 0E 1A           -  push 1A0E2380
+1A532045: 56                       -  push esi
+1A532046: E8 ED D3 35 EA           -  call 0488F438
+1A53204B: 83 C4 10                 -  add esp,10
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>27</ID>
+      <Description>"get Coins Address"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+{$lua}
+address_identifier = allocateSharedMemory("address_identifier",4)
+aobresult = AOBScan("8B 80 C8010000 89 85 88FBFFFF 8D 85 88FBFFFF","+RW")
+local counter = aobresult.Count - 1
+if (aobresult.Count&gt;0) then
+     writeBytes(address_identifier, qwordToByteTable(getAddress(aobresult[1])))
+end
+{$asm}
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,$1000, [address_identifier])
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+push ecx
+lea ecx, [eax+000001C8]
+mov [coinsPointer], ecx
+pop ecx
+
+originalcode:
+mov eax,[eax+000001C8]
+
+exit:
+jmp returnhere
+
+coinsPointer:
+db 0
+
+[address_identifier]:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(coinsPointer)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+[address_identifier]:
+db 8B 80 C8 01 00 00
+unregisterSymbol(coinsPointer)
+dealloc(address_identifier)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: money
+
+1A52F031: 50                 -  push eax
+1A52F032: 39 00              -  cmp [eax],eax
+1A52F034: E8 D7 B7 40 EA     -  call 0493A810
+1A52F039: 83 C4 10           -  add esp,10
+1A52F03C: 8B 47 4C           -  mov eax,[edi+4C]
+1A52F03F: 89 85 44 FB FF FF  -  mov [ebp-000004BC],eax
+1A52F045: BA 08 4E F9 0C     -  mov edx,0CF94E08
+1A52F04A: E8 69 30 41 EA     -  call 049420B8
+1A52F04F: 8B C8              -  mov ecx,eax
+1A52F051: 39 09              -  cmp [ecx],ecx
+// ---------- INJECTING HERE ----------
+1A52F053: 8B 80 C8 01 00 00  -  mov eax,[eax+000001C8]
+// ---------- DONE INJECTING  ----------
+1A52F059: 89 85 88 FB FF FF  -  mov [ebp-00000478],eax
+1A52F05F: 8D 85 88 FB FF FF  -  lea eax,[ebp-00000478]
+1A52F065: 83 EC 0C           -  sub esp,0C
+1A52F068: 50                 -  push eax
+1A52F069: E8 CA F1 37 EA     -  call 048AE238
+1A52F06E: 83 C4 10           -  add esp,10
+1A52F071: 8B C8              -  mov ecx,eax
+1A52F073: 8B 85 44 FB FF FF  -  mov eax,[ebp-000004BC]
+1A52F079: 83 EC 08           -  sub esp,08
+1A52F07C: 51                 -  push ecx
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>24</ID>
+      <Description>"Overheap"</Description>
+      <VariableType>Float</VariableType>
+      <Address>overheapPointer</Address>
+      <Offsets>
+        <Offset>0</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>26</ID>
+      <Description>"Health"</Description>
+      <VariableType>Float</VariableType>
+      <Address>healthPointer</Address>
+      <Offsets>
+        <Offset>0</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>28</ID>
+      <Description>"Coins"</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>coinsPointer</Address>
+      <Offsets>
+        <Offset>0</Offset>
+      </Offsets>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

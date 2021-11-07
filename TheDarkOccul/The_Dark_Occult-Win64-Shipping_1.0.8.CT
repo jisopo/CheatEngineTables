@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="27">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>57</ID>
+      <Description>"inf. Flashlight"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : The_Dark_Occult-Win64-Shipping.exe
+  Version: 1.0.8
+  Date   : 2019-01-06
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(flashlight,The_Dark_Occult-Win64-Shipping.exe,F3 0F11 8E B8090000 EB ** 44 89 BE B8090000 F3 0F10 86 B8090000 0F2F 86 C8090000)
+alloc(newmem,$1000,flashlight)
+label(returnhere)
+label(originalcode)
+
+newmem: //this is allocated memory, you have read,write,execute access
+movss xmm3,[full_flashlight]
+movss [rsi+000009B8],xmm3
+jmp returnhere
+
+originalcode:
+movss [rsi+000009B8],xmm1
+jmp returnhere
+
+full_flashlight:
+dd (float)100
+
+flashlight:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+
+registerSymbol(flashlight)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+flashlight:
+movss [rsi+000009B8],xmm1
+//Alt: db F3 0F 11 8E B8 09 00 00
+unregisterSymbol(flashlight)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>59</ID>
+      <Description>"inf. Talismans"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : The_Dark_Occult-Win64-Shipping.exe
+  Version: 1.0.8
+  Date   : 2019-01-06
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(talismans,The_Dark_Occult-Win64-Shipping.exe,8B 90 BC0B0000 48 89 75 E0 48 89 75 E8 E8 ******** 48 8B 74 24 70 48 8D 45 E0 48 8D BB A8020000)
+alloc(newmem,$1000,talismans)
+label(returnhere)
+label(originalcode)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov edx,#999
+mov [rax+00000BBC],edx
+mov edx,[rax+00000BBC]
+jmp returnhere
+
+originalcode:
+mov edx,[rax+00000BBC]
+jmp returnhere
+
+talismans:
+jmp newmem
+nop
+returnhere:
+
+
+registerSymbol(talismans)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+talismans:
+mov edx,[rax+00000BBC]
+//Alt: db 8B 90 BC 0B 00 00
+unregisterSymbol(talismans)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+</CheatTable>

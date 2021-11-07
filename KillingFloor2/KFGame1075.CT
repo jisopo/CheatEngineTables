@@ -1,0 +1,757 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="28">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>29</ID>
+      <Description>"no recoil/crosshair/money"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : KFGame.exe
+  Version:
+  Date   : 2018-12-06
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(func,KFGame.exe,4C 8B D2 8B 51 68 4D 8B C8 83 FA 01 75 ** 41 8B 00 41 89 02) // should be unique
+alloc(newmem,$1024,func)
+label(returnhere)
+label(originalcode)
+label(originalcode1)
+label(moneyCheck)
+label(addMoney)
+label(m_code)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+
+cmp byte ptr [recoilFlag],#1
+jne @F
+  cmp [r8+C],(float)1.500
+  jne @F
+  cmp [r8+10],(float)0.750
+  jne @F
+  cmp [r8+7C],(float)0.500
+  jne @F
+  jmp m_code
+
+@@:
+ cmp byte ptr [crosshairFlag],#1
+ jne originalcode
+ cmp [r8+C],#3
+ jne originalcode
+ cmp [r8+10],#3
+ jne originalcode
+ cmp [r8+20],(float)150
+ jne originalcode
+ //cmp [r8+24],(float)48
+ //jne originalcode
+ jmp m_code
+
+m_code:
+  mov eax,(float)0
+  mov [r10],eax
+  jmp exit
+
+originalcode:
+  cmp dword ptr [money],#0
+  jg moneyCheck
+originalcode1:
+  mov eax,[r8]
+  mov [r10],eax
+  jmp returnhere
+
+exit:
+  jmp returnhere
+
+moneyCheck:
+  cmp [r8+1B0],#1
+  jne originalcode1
+  cmp [r8+164],#1
+  jne originalcode1
+  cmp [r8+C],#0
+  jne originalcode1
+
+addMoney:
+  movss xmm13,[r8]
+  addss xmm13,[money]
+  movss [r8],xmm13
+  xorpd xmm13,xmm13
+  mov eax,[r8]
+  mov [money],(float)0
+  mov [r10],eax
+  jmp returnhere
+
+recoilFlag:
+  db 0
+
+crosshairFlag:
+  db 0
+
+money:
+ dd (float)0
+
+func+E:
+  jmp newmem
+  nop
+returnhere:
+
+registersymbol(func)
+registerSymbol(recoilFlag)
+registerSymbol(crosshairFlag)
+registerSymbol(money)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+func+E:
+  mov eax,[r8]
+  mov [r10],eax
+  //Alt: db 41 8B 00 41 89 02
+unregistersymbol(func)
+unregistersymbol(recoilFlag)
+unregistersymbol(crosshairFlag)
+unregisterSymbol(money)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>43</ID>
+      <Description>"inf. Flashlight"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : KFGame.exe
+  Version:
+  Date   : 2018-12-06
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(flashlight_decrease,KFGame.exe,F3 0F59 B3 100C0000 F3 0F10 83 180C0000 0F57 C9 F3 0F5C C6 0F2F C1 73 ** 0F28 C1 0F2E C1 F3 0F11 83 180C0000) // should be unique
+alloc(newmem,$1024,flashlight_decrease)
+label(returnhere)
+label(exit)
+label(full_energy)
+
+newmem: //this is allocated memory, you have read,write,execute access
+movss xmm0,[full_energy]
+movss [rbx+00000C18],xmm0
+xorps xmm0,xmm0
+jmp exit
+
+exit:
+jmp returnhere
+
+full_energy:
+dd (float)100
+
+flashlight_decrease+22:
+jmp newmem
+nop
+nop
+nop
+
+returnhere:
+
+registerSymbol(flashlight_decrease)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+flashlight_decrease+22:
+movss [rbx+00000C18],xmm0
+//Alt: db F3 0F 11 83 18 0C 00 00
+unregisterSymbol(flashlight_decrease)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>61</ID>
+      <Description>"no reload/inf.welder"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : KFGame.exe
+  Version:
+  Date   : 2018-12-09
+  Author : AJlex
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(inf_ammo,KFGame.exe,48 8B 4A 1C 4C 8D 44 24 38 41 FF 14 C2 0FB6 44 24 38 88 03 48 83 C4 20 5B) // should be unique
+alloc(newmem,$1024,inf_ammo)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+cmp [rbx+14],#2
+jne originalcode
+cmp [rbx+18],#2
+jne originalcode
+push rdx
+mov dh,[rbx+2]
+cmp dh,1
+je job
+dec dh
+job:
+mov byte ptr [rbx], dh
+pop rdx
+add rsp,20
+jmp exit
+
+originalcode:
+mov [rbx],al
+add rsp,20
+
+exit:
+jmp returnhere
+
+inf_ammo+12:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(inf_ammo)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+inf_ammo+12:
+mov [rbx],al
+add rsp,20
+//Alt: db 88 03 48 83 C4 20
+unregisterSymbol(inf_ammo)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>81</ID>
+      <Description>"godmode"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : KFGame.exe
+  Version:
+  Date   : 2019-12-01
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(god_mode,KFGame.exe,8B 44 24 50 48 8B 5C 24 40 29 07 8B 07 89 06 48 83 C4 20 41 5E 5F 5E) // should be unique
+alloc(newmem,$1024,god_mode)
+label(returnhere)
+label(originalcode)
+
+newmem: //this is allocated memory, you have read,write,execute access
+push rdx
+mov rdx,[playerBase]
+add rdx,384
+cmp rdi,rdx
+pop rdx
+jne originalcode
+mov eax,[rdi]
+mov [rsi],eax
+jmp returnhere
+
+originalcode:
+sub [rdi],eax
+mov eax,[rdi]
+mov [rsi],eax
+jmp returnhere
+
+god_mode+9:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(god_mode)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+god_mode+9:
+sub [rdi],eax
+mov eax,[rdi]
+mov [rsi],eax
+unregisterSymbol(god_mode)
+dealloc(newmem)
+//Alt: db 29 07 8B 07 89 06
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>143</ID>
+      <Description>"inf. Armor"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : KFGame.exe
+  Version:
+  Date   : 2019-12-01
+  Author : AJlex
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(armor,KFGame.exe,28 07 0F B6 07 88 06 48 83 C4 20 5F 5E 5D C3) // should be unique
+alloc(newmem,$1024,armor)
+label(returnhere)
+label(originalcode)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov al,#0
+movzx eax,byte ptr [rdi]
+jmp returnhere
+
+originalcode:
+sub [rdi],al
+movzx eax,byte ptr [rdi]
+jmp returnhere
+
+armor:
+jmp newmem
+returnhere:
+
+registerSymbol(armor)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+armor:
+db 28 07 0F B6 07
+unregisterSymbol(armor)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>117</ID>
+      <Description>"get Player Base"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : KFGame.exe
+  Version:
+  Date   : 2019-15-01
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(playerPointer,KFGame.exe, 83 B9 84 03 00 00 00 7E ** F6 81 E8 00 00 00 08 75 ** F7 81 90 02 00 00 00 00 80 00 75 ** B8 01 00 00 00 C3 33 C0 C3)
+alloc(newmem,$1000,playerPointer)
+label(returnhere)
+label(originalcode)
+label(playerBase)
+
+newmem: //this is allocated memory, you have read,write,execute access
+cmp [rcx+170],#1
+je originalcode
+cmp [rcx+174],#4
+je originalcode
+mov [playerBase],rcx
+cmp dword ptr [rcx+00000384],00
+jmp returnhere
+
+originalcode:
+cmp dword ptr [rcx+00000384],00
+jmp returnhere
+
+playerBase:
+dq 0
+
+playerPointer:
+jmp newmem
+nop
+nop
+returnhere:
+
+
+registerSymbol(playerBase)
+registerSymbol(playerPointer)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+playerPointer:
+db 83 B9 84 03 00 00 00
+unregisterSymbol(playerBase)
+unregisterSymbol(playerPointer)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>153</ID>
+      <Description>"thurdPerson"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : KFGame.exe
+  Version:
+  Date   : 2019-15-01
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(callingMemory,KFGame.exe, E8 A791FDFF 41 B9 01 00 00 00 48 8B 9D D8 00 00 00 4D 3B EE 75)
+aobscanmodule(thurdPersonFunc,KFGame.exe, 49 B8 00 26 00 00 01 00 00 00 66 0F 1F 44 00 00 48 8B 11 0F B7 02 66 83 F8 20)
+
+alloc(thread,1000)
+createthread(thread)
+
+alloc(thurdPersonString,30)
+registerSymbol(thurdPersonString)
+
+thurdPersonString: // L "  ThirdPerson"
+db 20 00 54 00 68 00 69 00 72 00 64 00 50 00 65 00 72 00 73 00 6F 00 6E 00 00
+
+thread:
+push rcx
+push rdx
+push r8
+push r9
+lea rcx,[thurdPersonString]
+mov rdx,[playerBase]
+mov r8,1
+mov r9,1
+call thurdPersonFunc
+pop rcx
+pop rdx
+pop r8
+pop r9
+ret
+
+registerSymbol(thurdPersonFunc)
+registerSymbol(callingMemory)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+unregisterSymbol(thurdPersonFunc)
+unregisterSymbol(callingMemory)
+unregisterSymbol(thurdPersonString)
+dealloc(thread)
+dealloc(thurdPersonString)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>150</ID>
+      <Description>"How much money add"</Description>
+      <VariableType>Float</VariableType>
+      <Address>money</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>41</ID>
+      <Description>"CrosshairFlag"</Description>
+      <VariableType>Byte</VariableType>
+      <Address>crosshairFlag</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>40</ID>
+      <Description>"NoRecoilFlag"</Description>
+      <VariableType>Byte</VariableType>
+      <Address>recoilFlag</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>118</ID>
+      <Description>"playerBase"</Description>
+      <ShowAsHex>1</ShowAsHex>
+      <VariableType>8 Bytes</VariableType>
+      <Address>playerBase</Address>
+      <Offsets>
+        <Offset>0</Offset>
+      </Offsets>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>123</ID>
+          <Description>"health"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>playerBase</Address>
+          <Offsets>
+            <Offset>384</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>120</ID>
+          <Description>"z"</Description>
+          <VariableType>Float</VariableType>
+          <Address>playerBase</Address>
+          <Offsets>
+            <Offset>88</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>121</ID>
+          <Description>"y"</Description>
+          <VariableType>Float</VariableType>
+          <Address>playerBase</Address>
+          <Offsets>
+            <Offset>84</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>119</ID>
+          <Description>"x"</Description>
+          <VariableType>Float</VariableType>
+          <Address>playerBase</Address>
+          <Offsets>
+            <Offset>80</Offset>
+          </Offsets>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>161</ID>
+      <Description>"weaponStructPointer"</Description>
+      <ShowAsHex>1</ShowAsHex>
+      <VariableType>8 Bytes</VariableType>
+      <Address>weaponStructPointer</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>155</ID>
+      <Description>"addAmmo"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(ammo1,KFGame.exe,48 8B 06 48 8B 54 24 58 F3 0F10 54 24 50 4C 8B CF)
+alloc(newmem1,$1024,ammo1)
+label(returnhere1)
+label(originalcode1)
+label(exit1)
+
+newmem1: //this is allocated memory, you have read,write,execute access
+mov [weaponStructPointer],rsi
+
+originalcode1:
+mov rax,[rsi]
+mov rdx,[rsp+58]
+
+exit1:
+jmp returnhere1
+
+weaponStructPointer:
+dq 0
+
+ammo1:
+jmp newmem1
+nop
+nop
+nop
+returnhere1:
+
+
+registerSymbol(ammo1)
+registerSymbol(weaponStructPointer)
+aobscanmodule(addAmmo0,KFGame.exe,41 0FB6 00 88 02 C3 CC CC)
+alloc(newmem,$1024,addAmmo0)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+cmp [r8+14],#2
+jne originalcode
+cmp [r8+18],#2
+jne originalcode
+push rdx
+push rcx
+mov rdx,[weaponStructPointer]
+mov rcx,[rdx]
+cmp qword ptr [r8-424],rcx
+pop rcx
+pop rdx
+jne originalcode
+cmp byte ptr [addAmmoFlag],#0
+je originalcode
+mov byte ptr [addAmmoFlag],#0
+push rcx
+push rdx
+mov rcx,[weaponStructPointer]
+add rcx,424
+mov byte ptr [rcx],#250
+pop rdx
+pop rcx
+
+originalcode:
+movzx eax,byte ptr [r8]
+mov [rdx],al
+
+exit:
+jmp returnhere
+
+addAmmoFlag:
+db 0
+
+addAmmo0:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(addAmmoFlag)
+registerSymbol(addAmmo0)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+addAmmo0:
+db 41 0F B6 00 88 02
+unregisterSymbol(addAmmo0)
+unregisterSymbol(addAmmoFlag)
+dealloc(newmem)
+ammo1:
+db 48 8B 06 48 8B 54 24 58
+unregisterSymbol(weaponStructPointer)
+unregisterSymbol(ammo1)
+dealloc(newmem1)
+{
+// ORIGINAL CODE - INJECTION POINT: "KFGame.exe"+D232B3
+
+"KFGame.exe"+D2328F: 48 FF 43 24              -  inc [rbx+24]
+"KFGame.exe"+D23293: 48 8B 43 24              -  mov rax,[rbx+24]
+"KFGame.exe"+D23297: 80 38 41                 -  cmp byte ptr [rax],41
+"KFGame.exe"+D2329A: 75 17                    -  jne KFGame.exe+D232B3
+"KFGame.exe"+D2329C: 48 8B 4B 1C              -  mov rcx,[rbx+1C]
+"KFGame.exe"+D232A0: 48 FF C0                 -  inc rax
+"KFGame.exe"+D232A3: 45 33 C0                 -  xor r8d,r8d
+"KFGame.exe"+D232A6: 48 8B D3                 -  mov rdx,rbx
+"KFGame.exe"+D232A9: 48 89 43 24              -  mov [rbx+24],rax
+"KFGame.exe"+D232AD: FF 15 25 73 26 01        -  call qword ptr [KFGame.exe+1F8A5D8]
+// ---------- INJECTING HERE ----------
+"KFGame.exe"+D232B3: 48 8B 06                 -  mov rax,[rsi]
+"KFGame.exe"+D232B6: 48 8B 54 24 58           -  mov rdx,[rsp+58]
+// ---------- DONE INJECTING  ----------
+"KFGame.exe"+D232BB: F3 0F 10 54 24 50        -  movss xmm2,[rsp+50]
+"KFGame.exe"+D232C1: 4C 8B CF                 -  mov r9,rdi
+"KFGame.exe"+D232C4: 48 8B CE                 -  mov rcx,rsi
+"KFGame.exe"+D232C7: FF 90 60 07 00 00        -  call qword ptr [rax+00000760]
+"KFGame.exe"+D232CD: 48 8B 5C 24 60           -  mov rbx,[rsp+60]
+"KFGame.exe"+D232D2: 48 83 C4 30              -  add rsp,30
+"KFGame.exe"+D232D6: 5F                       -  pop rdi
+"KFGame.exe"+D232D7: 5E                       -  pop rsi
+"KFGame.exe"+D232D8: 5D                       -  pop rbp
+"KFGame.exe"+D232D9: C3                       -  ret
+}
+{
+// ORIGINAL CODE - INJECTION POINT: "KFGame.exe"+EA960
+
+"KFGame.exe"+EA954: 0B C8                 -  or ecx,eax
+"KFGame.exe"+EA956: 89 0A                 -  mov [rdx],ecx
+"KFGame.exe"+EA958: C3                    -  ret
+"KFGame.exe"+EA959: CC                    -  int 3
+"KFGame.exe"+EA95A: CC                    -  int 3
+"KFGame.exe"+EA95B: CC                    -  int 3
+"KFGame.exe"+EA95C: CC                    -  int 3
+"KFGame.exe"+EA95D: CC                    -  int 3
+"KFGame.exe"+EA95E: CC                    -  int 3
+"KFGame.exe"+EA95F: CC                    -  int 3
+// ---------- INJECTING HERE ----------
+"KFGame.exe"+EA960: 41 0F B6 00           -  movzx eax,byte ptr [r8]
+"KFGame.exe"+EA964: 88 02                 -  mov [rdx],al
+// ---------- DONE INJECTING  ----------
+"KFGame.exe"+EA966: C3                    -  ret
+"KFGame.exe"+EA967: CC                    -  int 3
+"KFGame.exe"+EA968: CC                    -  int 3
+"KFGame.exe"+EA969: CC                    -  int 3
+"KFGame.exe"+EA96A: CC                    -  int 3
+"KFGame.exe"+EA96B: CC                    -  int 3
+"KFGame.exe"+EA96C: CC                    -  int 3
+"KFGame.exe"+EA96D: CC                    -  int 3
+"KFGame.exe"+EA96E: CC                    -  int 3
+"KFGame.exe"+EA96F: CC                    -  int 3
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>160</ID>
+      <Description>"Auto Assemble script"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(ammo1,KFGame.exe,48 8B 06 48 8B 54 24 58 F3 0F10 54 24 50 4C 8B CF)
+alloc(newmem,$1024,ammo1)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [weaponStructPointer],rsi
+
+originalcode:
+mov rax,[rsi]
+mov rdx,[rsp+58]
+
+exit:
+jmp returnhere
+
+weaponStructPointer:
+dq 0
+
+ammo1:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+
+registerSymbol(ammo1)
+registerSymbol(weaponStructPointer)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+ammo1:
+db 48 8B 06 48 8B 54 24 58
+unregisterSymbol(weaponStructPointer)
+unregisterSymbol(ammo1)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "KFGame.exe"+D232B3
+
+"KFGame.exe"+D2328F: 48 FF 43 24              -  inc [rbx+24]
+"KFGame.exe"+D23293: 48 8B 43 24              -  mov rax,[rbx+24]
+"KFGame.exe"+D23297: 80 38 41                 -  cmp byte ptr [rax],41
+"KFGame.exe"+D2329A: 75 17                    -  jne KFGame.exe+D232B3
+"KFGame.exe"+D2329C: 48 8B 4B 1C              -  mov rcx,[rbx+1C]
+"KFGame.exe"+D232A0: 48 FF C0                 -  inc rax
+"KFGame.exe"+D232A3: 45 33 C0                 -  xor r8d,r8d
+"KFGame.exe"+D232A6: 48 8B D3                 -  mov rdx,rbx
+"KFGame.exe"+D232A9: 48 89 43 24              -  mov [rbx+24],rax
+"KFGame.exe"+D232AD: FF 15 25 73 26 01        -  call qword ptr [KFGame.exe+1F8A5D8]
+// ---------- INJECTING HERE ----------
+"KFGame.exe"+D232B3: 48 8B 06                 -  mov rax,[rsi]
+"KFGame.exe"+D232B6: 48 8B 54 24 58           -  mov rdx,[rsp+58]
+// ---------- DONE INJECTING  ----------
+"KFGame.exe"+D232BB: F3 0F 10 54 24 50        -  movss xmm2,[rsp+50]
+"KFGame.exe"+D232C1: 4C 8B CF                 -  mov r9,rdi
+"KFGame.exe"+D232C4: 48 8B CE                 -  mov rcx,rsi
+"KFGame.exe"+D232C7: FF 90 60 07 00 00        -  call qword ptr [rax+00000760]
+"KFGame.exe"+D232CD: 48 8B 5C 24 60           -  mov rbx,[rsp+60]
+"KFGame.exe"+D232D2: 48 83 C4 30              -  add rsp,30
+"KFGame.exe"+D232D6: 5F                       -  pop rdi
+"KFGame.exe"+D232D7: 5E                       -  pop rsi
+"KFGame.exe"+D232D8: 5D                       -  pop rbp
+"KFGame.exe"+D232D9: C3                       -  ret
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>165</ID>
+      <Description>"addAmmoFlag"</Description>
+      <VariableType>Byte</VariableType>
+      <Address>addAmmoFlag</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>166</ID>
+      <Description>"No Description"</Description>
+      <VariableType>Byte</VariableType>
+      <Address>1B044C984</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>168</ID>
+      <Description>"No description"</Description>
+      <VariableType>Byte</VariableType>
+      <Address>00000001B044C984+424</Address>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

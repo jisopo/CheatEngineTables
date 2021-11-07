@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="27">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"inf.Money"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : SolSurvivor.exe
+  Version:
+  Date   : 2018-12-25
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(energy,D9 40 04 DD 9D 3CFFFFFF DD 85 3CFFFFFF 83 EC 08 DD 1C 24) // should be unique
+alloc(newmem,$1000,energy)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [eax+04],(float)9999999
+fld dword ptr [eax+04]
+fstp qword ptr [ebp-000000C4]
+jmp exit
+
+originalcode:
+fld dword ptr [eax+04]
+fstp qword ptr [ebp-000000C4]
+
+exit:
+jmp returnhere
+
+energy:
+jmp newmem
+nop
+nop
+nop
+nop
+returnhere:
+
+
+
+registerSymbol(energy)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+energy:
+fld dword ptr [eax+04]
+fstp qword ptr [ebp-000000C4]
+dealloc(newmem)
+unregisterSymbol(energy)
+//Alt: db D9 40 04 DD 9D 3C FF FF FF
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1288</ID>
+      <Description>"inf.Energy"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : SolSurvivor.exe
+  Version:
+  Date   : 2018-12-25
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(power,3A 82 9C000000 8D B2 9C000000 A5 A5 A5 A5 3B 4D DC) // should be unique
+alloc(newmem,$1000,power)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [edx+0000005C],(float)999999 // 5C - maximum avaliable
+mov [edx+0000009C],(float)999999
+cmp al,[edx+0000009C]
+jmp exit
+
+originalcode:
+cmp al,[edx+0000009C]
+
+exit:
+jmp returnhere
+
+power:
+jmp newmem
+nop
+returnhere:
+
+
+
+registerSymbol(power)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+power:
+cmp al,[edx+0000009C]
+//Alt: db 3A 82 9C 00 00 00
+dealloc(newmem)
+unregisterSymbol(power)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1282</ID>
+      <Description>"inf.Colonists"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : SolSurvivor.exe
+  Version:
+  Date   : 2018-12-25
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(humans,DB 40 6C D9 9D 2CFEFFFF D9 85 2CFEFFFF 8B 93 78010000 8B 42 60) // should be unique
+alloc(newmem,$1000,humans)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [eax+6C],#99999
+fild dword ptr [eax+6C]
+fstp dword ptr [ebp-000001D4]
+jmp exit
+
+originalcode:
+fild dword ptr [eax+6C]
+fstp dword ptr [ebp-000001D4]
+
+exit:
+jmp returnhere
+
+humans:
+jmp newmem
+nop
+nop
+nop
+nop
+returnhere:
+
+
+
+registerSymbol(humans)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+humans:
+fild dword ptr [eax+6C]
+fstp dword ptr [ebp-000001D4]
+//Alt: db DB 40 6C D9 9D 2C FE FF FF
+dealloc(newmem)
+unregisterSymbol(humans)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1284</ID>
+      <Description>"Max Power"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : SolSurvivor.exe
+  Version:
+  Date   : 2018-12-25
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(max_power,8B 72 08 8B 8D 48FFFFFF E8 ******** 8B D0 39 02 8D 42 10 3B 70 08) // should be unique
+alloc(newmem,$1000,max_power)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [edx+08],#20
+mov esi,[edx+08]
+mov ecx,[ebp-000000B8]
+jmp exit
+
+originalcode:
+mov esi,[edx+08]
+mov ecx,[ebp-000000B8]
+
+exit:
+jmp returnhere
+
+max_power:
+jmp newmem
+nop
+nop
+nop
+nop
+returnhere:
+
+
+
+registerSymbol(max_power)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+max_power:
+mov esi,[edx+08]
+mov ecx,[ebp-000000B8]
+//Alt: db 8B 72 08 8B 8D 48 FF FF FF
+dealloc(newmem)
+unregisterSymbol(max_power)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1271</ID>
+      <Description>"instant Ability Restore"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : SolSurvivor.exe
+  Version:
+  Date   : 2018-12-25
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(ability_restore,mscorlib.ni.dll,8B 4D EC 8B 55 F0 8B 45 E8 89 08 89 50 04 8D 65 F4 5B 5E 5F 5D C2 0800 CC) // should be unique
+alloc(newmem,$1000,ability_restore)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+cmp [eax+28],#0
+jne originalcode
+cmp [eax+34],#0
+jne originalcode
+mov [eax],#0
+mov [eax+04],edx
+jmp exit
+
+originalcode:
+mov [eax],ecx
+mov [eax+04],edx
+
+exit:
+jmp returnhere
+
+ability_restore+9:
+jmp newmem
+returnhere:
+
+
+
+registerSymbol(ability_restore)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+ability_restore+9:
+mov [eax],ecx
+mov [eax+04],edx
+//Alt: db 89 08 89 50 04
+dealloc(newmem)
+unregisterSymbol(ability_restore)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1286</ID>
+      <Description>"inf. Badgest"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : SolSurvivor.exe
+  Version:
+  Date   : 2018-12-25
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(badgets,8B 40 38 89 46 04 8B D6 E8 ******** 8B D0 C7 45 8C ******** C7 45 90 ********) // should be unique
+alloc(newmem,$1000,badgets)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [eax+38],#50000
+mov eax,[eax+38]
+mov [esi+04],eax
+jmp exit
+
+originalcode:
+mov eax,[eax+38]
+mov [esi+04],eax
+
+exit:
+jmp returnhere
+
+badgets:
+jmp newmem
+nop
+returnhere:
+
+
+
+registerSymbol(badgets)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+badgets:
+mov eax,[eax+38]
+mov [esi+04],eax
+//Alt: db 8B 40 38 89 46 04
+dealloc(newmem)
+unregisterSymbol(badgets)
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

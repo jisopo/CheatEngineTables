@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="34">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>63</ID>
+      <Description>"inf stamina"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : FEAR2.exe
+  Version: 
+  Date   : 2018-09-23
+  Author : jisopo
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(stamina,GameClient.dll,D9 81 34060000 D8 A4 24 60010000 D9 1C 24 D9 04 24 D9 91 34060000) // should be unique
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+alloc(max_stamina,4)
+
+max_stamina:
+  dq (float)1
+
+newmem:
+
+code:
+  fst dword ptr [ecx+00000634]
+  fld dword ptr [max_stamina]
+  fst dword ptr [ecx+00000634]
+  jmp return
+
+stamina+13:
+  jmp newmem
+  nop
+return:
+registersymbol(stamina)
+
+[DISABLE]
+
+stamina+13:
+fst dword ptr [ecx+00000634]
+
+unregistersymbol(stamina)
+dealloc(newmem)
+dealloc(max_stamina)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "GameClient.dll"+103A9C
+
+"GameClient.dll"+103A70: D9 EE                          -  fldz 
+"GameClient.dll"+103A72: 81 EC 5C 01 00 00              -  sub esp,0000015C
+"GameClient.dll"+103A78: D8 91 34 06 00 00              -  fcom dword ptr [ecx+00000634]
+"GameClient.dll"+103A7E: DF E0                          -  fnstsw ax
+"GameClient.dll"+103A80: F6 C4 05                       -  test ah,05
+"GameClient.dll"+103A83: 0F 8A 95 00 00 00              -  jp GameClient.dll+103B1E
+"GameClient.dll"+103A89: D9 81 34 06 00 00              -  fld dword ptr [ecx+00000634]
+"GameClient.dll"+103A8F: D8 A4 24 60 01 00 00           -  fsub dword ptr [esp+00000160]
+"GameClient.dll"+103A96: D9 1C 24                       -  fstp dword ptr [esp]
+"GameClient.dll"+103A99: D9 04 24                       -  fld dword ptr [esp]
+// ---------- INJECTING HERE ----------
+"GameClient.dll"+103A9C: D9 91 34 06 00 00              -  fst dword ptr [ecx+00000634]
+// ---------- DONE INJECTING  ----------
+"GameClient.dll"+103AA2: DE D9                          -  fcompp 
+"GameClient.dll"+103AA4: DF E0                          -  fnstsw ax
+"GameClient.dll"+103AA6: F6 C4 41                       -  test ah,41
+"GameClient.dll"+103AA9: 7A 75                          -  jp GameClient.dll+103B20
+"GameClient.dll"+103AAB: D9 81 2C 08 00 00              -  fld dword ptr [ecx+0000082C]
+"GameClient.dll"+103AB1: 8B 41 04                       -  mov eax,[ecx+04]
+"GameClient.dll"+103AB4: D9 E0                          -  fchs 
+"GameClient.dll"+103AB6: D9 99 34 06 00 00              -  fstp dword ptr [ecx+00000634]
+"GameClient.dll"+103ABC: 8B 88 60 01 00 00              -  mov ecx,[eax+00000160]
+"GameClient.dll"+103AC2: 8B 41 54                       -  mov eax,[ecx+54]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>65</ID>
+      <Description>"inf slow time"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : FEAR2.exe
+  Version: 
+  Date   : 2018-09-23
+  Author : jisopo
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(time,GameClient.dll,DD 9E C0040000 DD 86 C0040000 D9 86 CC040000 D9EE) // should be unique
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+alloc(max_time,4)
+
+max_time:
+  dq (double)20
+
+newmem:
+
+code:
+  fstp qword ptr [esi+000004C0]
+  fld qword ptr [max_time]
+  fstp qword ptr [esi+000004C0]
+  jmp return
+
+time:
+  jmp newmem
+  nop
+return:
+registersymbol(time)
+
+[DISABLE]
+
+time:
+fstp qword ptr [esi+000004C0]
+
+unregistersymbol(time)
+dealloc(newmem)
+dealloc(max_time)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>66</ID>
+      <Description>"inf slow time"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : FEAR2.exe
+  Version: 
+  Date   : 2018-09-23
+  Author : jisopo
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(time,GameClient.dll,DD 9E C0040000 83 F8 03 0F87 C6000000) // should be unique
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+alloc(max_time,4)
+
+max_time:
+  dq (double)20
+
+newmem:
+
+code:
+  fstp qword ptr [esi+000004C0]
+  fld qword ptr [max_time]
+  fstp qword ptr [esi+000004C0]
+  jmp return
+
+time:
+  jmp newmem
+  nop
+return:
+registersymbol(time)
+
+[DISABLE]
+
+time:
+fstp qword ptr [esi+000004C0]
+
+unregistersymbol(time)
+dealloc(newmem)
+dealloc(max_time)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>573</ID>
+      <Description>"teleport"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+alloc(newmem,$1000)
+label(returnhere)
+label(originalcode)
+label(exit)
+label(coords)
+label(tflag)
+registersymbol(tflag)
+
+newmem:
+  cmp [ecx+64],(float)0.0
+  je originalcode
+  cmp [ecx+68],(float)0.0
+  je originalcode
+  cmp [ecx+6C],(float)0.0
+  je originalcode
+  cmp byte ptr [tflag],0
+  je originalcode
+  cmp byte ptr [tflag],1
+  jne @F
+  push ebx
+  mov ebx,[ecx+14]
+  mov [coords],ebx
+  mov ebx,[ecx+18]
+  mov [coords+4],ebx
+  mov ebx,[ecx+1C]
+  mov [coords+8],ebx
+  pop ebx
+  mov byte ptr[tflag],0
+  jmp originalcode
+@@:
+   cmp byte ptr [tflag],2
+   jne originalcode
+   push ebx
+   mov ebx,[coords]
+   mov [ecx+14],ebx
+   mov ebx,[coords+4]
+   mov [ecx+18],ebx
+   mov ebx,[coords+8]
+   mov [ecx+1C],ebx
+   pop ebx
+   mov byte ptr[tflag],0
+
+originalcode:
+fld dword ptr [ecx+14]
+fstp dword ptr [eax]
+jmp returnhere
+tflag:
+ db 00
+coords:
+ db 00 00 00 00 00 00 00 00 00 00 00 00
+
+exit:
+jmp returnhere
+
+"FEAR2.exe"+6C3C:
+jmp newmem
+returnhere:
+
+[DISABLE]
+unregistersymbol(tflag)
+"FEAR2.exe"+6C3C:
+fld dword ptr [ecx+14]
+fstp dword ptr [eax]
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>566</ID>
+      <Description>"teleport"</Description>
+      <VariableType>Byte</VariableType>
+      <Address>tflag</Address>
+      <Hotkeys>
+        <Hotkey>
+          <Action>Set Value</Action>
+          <Keys>
+            <Key>97</Key>
+          </Keys>
+          <Value>1</Value>
+          <ID>0</ID>
+        </Hotkey>
+        <Hotkey>
+          <Action>Set Value</Action>
+          <Keys>
+            <Key>98</Key>
+          </Keys>
+          <Value>2</Value>
+          <ID>1</ID>
+        </Hotkey>
+      </Hotkeys>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>581</ID>
+      <Description>"godmode/inf.armor"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscan(health,D8 65 28 D9 5C 24 18 D9 44 24 18 D9 56 18)
+
+alloc(newmem,$1000)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem:
+cmp [esi+21C],#6
+jne originalcode
+fst dword ptr [esi+18]
+mov [esi+18],(float)200//health
+mov [esi+58],(float)200//armor
+fldz
+jmp exit
+
+originalcode:
+fst dword ptr [esi+18]
+fldz
+jmp exit
+
+exit:
+jmp returnhere
+
+/*health+1B:
+nop
+nop
+nop*/
+
+health+B:
+jmp newmem
+returnhere:
+
+ registersymbol(health)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+health+B:
+fst dword ptr [esi+18]
+fldz
+
+/*health+1B:
+fstp dword ptr [esi+18]*/
+
+unregistersymbol(health)
+//Alt: db D9 56 18 D9 EE
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="34">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>105</ID>
+      <Description>"быстрое улучшение командира"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : SupremeCommander.exe
+  Version:
+  Date   : 27.12.2019
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(instantUpgrade,SupremeCommander.exe,89 4C 24 28 89 10)
+alloc(newmem,$1024,instantUpgrade)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+cmp [eax+64],0
+jne originalcode
+cmp [eax],0
+push edi
+push esi
+lea edi,[eax+2C]
+mov esi,[edi]
+
+lea edi,[esi+14]
+mov esi,[edi]
+lea edi,[esi+4E4]
+mov [upgradePointer],edi
+
+pop esi
+pop edi
+
+originalcode:
+mov [esp+28],ecx
+mov [eax],edx
+
+exit:
+jmp returnhere
+
+upgradePointer:
+dd 0
+
+instantUpgrade:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(upgradePointer)
+registerSymbol(instantUpgrade)
+aobscanmodule(instantUpgrade1,SupremeCommander.exe,89 53 04 5B 59 C3)
+alloc(newmem1,$1024,instantUpgrade1)
+label(returnhere1)
+label(originalcode1)
+label(exit1)
+
+newmem1: //this is allocated memory, you have read,write,execute access
+push edi
+lea edi,[ebx+04]
+cmp [upgradePointer],edi
+pop edi
+jne originalcode1
+mov [ebx+04],(float)1
+pop ebx
+pop ecx
+jmp returnhere1
+
+originalcode1:
+mov [ebx+04],edx
+pop ebx
+pop ecx
+
+exit1:
+jmp returnhere1
+
+instantUpgrade1:
+jmp newmem1
+returnhere1:
+
+registerSymbol(instantUpgrade1)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+instantUpgrade:
+db 89 4C 24 28 89 10
+unregisterSymbol(upgradePointer)
+unregisterSymbol(instantUpgrade)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "SupremeCommander.exe"+1C7BCC
+
+"SupremeCommander.exe"+1C7BB1: 89 44 24 20              -  mov [esp+20],eax
+"SupremeCommander.exe"+1C7BB5: 74 05                    -  je SupremeCommander.exe+1C7BBC
+"SupremeCommander.exe"+1C7BB7: 8D 47 04                 -  lea eax,[edi+04]
+"SupremeCommander.exe"+1C7BBA: EB 02                    -  jmp SupremeCommander.exe+1C7BBE
+"SupremeCommander.exe"+1C7BBC: 33 C0                    -  xor eax,eax
+"SupremeCommander.exe"+1C7BBE: 85 C0                    -  test eax,eax
+"SupremeCommander.exe"+1C7BC0: 89 44 24 24              -  mov [esp+24],eax
+"SupremeCommander.exe"+1C7BC4: 74 0E                    -  je SupremeCommander.exe+1C7BD4
+"SupremeCommander.exe"+1C7BC6: 8B 08                    -  mov ecx,[eax]
+"SupremeCommander.exe"+1C7BC8: 8D 54 24 24              -  lea edx,[esp+24]
+// ---------- INJECTING HERE ----------
+"SupremeCommander.exe"+1C7BCC: 89 4C 24 28              -  mov [esp+28],ecx
+"SupremeCommander.exe"+1C7BD0: 89 10                    -  mov [eax],edx
+// ---------- DONE INJECTING  ----------
+"SupremeCommander.exe"+1C7BD2: EB 08                    -  jmp SupremeCommander.exe+1C7BDC
+"SupremeCommander.exe"+1C7BD4: C7 44 24 28 00 00 00 00  -  mov [esp+28],00000000
+"SupremeCommander.exe"+1C7BDC: 85 FF                    -  test edi,edi
+"SupremeCommander.exe"+1C7BDE: 74 05                    -  je SupremeCommander.exe+1C7BE5
+"SupremeCommander.exe"+1C7BE0: 8B 7F 68                 -  mov edi,[edi+68]
+"SupremeCommander.exe"+1C7BE3: EB 02                    -  jmp SupremeCommander.exe+1C7BE7
+"SupremeCommander.exe"+1C7BE5: 33 FF                    -  xor edi,edi
+"SupremeCommander.exe"+1C7BE7: 89 7C 24 2C              -  mov [esp+2C],edi
+"SupremeCommander.exe"+1C7BEB: 8D 4E 04                 -  lea ecx,[esi+04]
+"SupremeCommander.exe"+1C7BEE: 8D 5C 24 24              -  lea ebx,[esp+24]
+}
+instantUpgrade1:
+db 89 53 04 5B 59
+unregisterSymbol(instantUpgrade1)
+dealloc(newmem1)
+{
+// ORIGINAL CODE - INJECTION POINT: "SupremeCommander.exe"+594A53
+
+"SupremeCommander.exe"+594A3E: 83 C4 0C                 -  add esp,0C
+"SupremeCommander.exe"+594A41: 85 FF                    -  test edi,edi
+"SupremeCommander.exe"+594A43: 75 36                    -  jne SupremeCommander.exe+594A7B
+"SupremeCommander.exe"+594A45: 8B 44 24 24              -  mov eax,[esp+24]
+"SupremeCommander.exe"+594A49: 8B 08                    -  mov ecx,[eax]
+"SupremeCommander.exe"+594A4B: 5F                       -  pop edi
+"SupremeCommander.exe"+594A4C: 89 0B                    -  mov [ebx],ecx
+"SupremeCommander.exe"+594A4E: 8B 50 04                 -  mov edx,[eax+04]
+"SupremeCommander.exe"+594A51: 5E                       -  pop esi
+"SupremeCommander.exe"+594A52: 5D                       -  pop ebp
+// ---------- INJECTING HERE ----------
+"SupremeCommander.exe"+594A53: 89 53 04                 -  mov [ebx+04],edx
+"SupremeCommander.exe"+594A56: 5B                       -  pop ebx
+"SupremeCommander.exe"+594A57: 59                       -  pop ecx
+// ---------- DONE INJECTING  ----------
+"SupremeCommander.exe"+594A58: C3                       -  ret
+"SupremeCommander.exe"+594A59: 6A 01                    -  push 01
+"SupremeCommander.exe"+594A5B: 55                       -  push ebp
+"SupremeCommander.exe"+594A5C: 56                       -  push esi
+"SupremeCommander.exe"+594A5D: E8 8E EF FF FF           -  call SupremeCommander.exe+5939F0
+"SupremeCommander.exe"+594A62: 8B F8                    -  mov edi,eax
+"SupremeCommander.exe"+594A64: 83 C4 0C                 -  add esp,0C
+"SupremeCommander.exe"+594A67: 83 3F 00                 -  cmp dword ptr [edi],00
+"SupremeCommander.exe"+594A6A: 75 0F                    -  jne SupremeCommander.exe+594A7B
+"SupremeCommander.exe"+594A6C: 68 14 5A D9 00           -  push SupremeCommander.exe+995A14
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>25</ID>
+      <Description>"Бесконечные ядерные заряды"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(unlimitedMissisles,SupremeCommander.exe,01 14 81 8D 04 81)
+alloc(newmem,$1024,unlimitedMissisles)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+cmp edx,FFFFFFFF
+jne originalcode
+lea eax,[ecx+eax*4]
+jmp exit
+
+originalcode:
+add [ecx+eax*4],edx
+lea eax,[ecx+eax*4]
+
+exit:
+jmp returnhere
+
+unlimitedMissisles:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(unlimitedMissisles)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+unlimitedMissisles:
+db 01 14 81 8D 04 81
+unregisterSymbol(unlimitedMissisles)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "SupremeCommander.exe"+1D5A7C
+
+"SupremeCommander.exe"+1D5A5F: CC                    -  int 3
+"SupremeCommander.exe"+1D5A60: 8B 44 24 04           -  mov eax,[esp+04]
+"SupremeCommander.exe"+1D5A64: 8D 04 40              -  lea eax,[eax+eax*2]
+"SupremeCommander.exe"+1D5A67: 8B 44 81 10           -  mov eax,[ecx+eax*4+10]
+"SupremeCommander.exe"+1D5A6B: C2 04 00              -  ret 0004
+"SupremeCommander.exe"+1D5A6E: CC                    -  int 3
+"SupremeCommander.exe"+1D5A6F: CC                    -  int 3
+"SupremeCommander.exe"+1D5A70: 8B 44 24 04           -  mov eax,[esp+04]
+"SupremeCommander.exe"+1D5A74: 8B 54 24 08           -  mov edx,[esp+08]
+"SupremeCommander.exe"+1D5A78: 8D 44 40 03           -  lea eax,[eax+eax*2+03]
+// ---------- INJECTING HERE ----------
+"SupremeCommander.exe"+1D5A7C: 01 14 81              -  add [ecx+eax*4],edx
+"SupremeCommander.exe"+1D5A7F: 8D 04 81              -  lea eax,[ecx+eax*4]
+// ---------- DONE INJECTING  ----------
+"SupremeCommander.exe"+1D5A82: 8B 41 04              -  mov eax,[ecx+04]
+"SupremeCommander.exe"+1D5A85: C6 80 8E 06 00 00 01  -  mov byte ptr [eax+0000068E],01
+"SupremeCommander.exe"+1D5A8C: C2 08 00              -  ret 0008
+"SupremeCommander.exe"+1D5A8F: CC                    -  int 3
+"SupremeCommander.exe"+1D5A90: 56                    -  push esi
+"SupremeCommander.exe"+1D5A91: 8B F1                 -  mov esi,ecx
+"SupremeCommander.exe"+1D5A93: 8B 4C 24 08           -  mov ecx,[esp+08]
+"SupremeCommander.exe"+1D5A97: 8D 04 49              -  lea eax,[ecx+ecx*2]
+"SupremeCommander.exe"+1D5A9A: 8B 44 86 08           -  mov eax,[esi+eax*4+08]
+"SupremeCommander.exe"+1D5A9E: 85 C0                 -  test eax,eax
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>106</ID>
+      <Description>"Быстрое восстановление ядерных зарядов"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : SupremeCommander.exe
+  Version:
+  Date   : 2018-06-17
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(fastAmmoRestore_nukeMissisle,SupremeCommander.exe,F3 0F 11 80 AC 02 00 00 83 47 48 01)
+alloc(newmem,$1024,fastAmmoRestore_nukeMissisle)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+// костыль way
+// фильтра свой/чужой нет
+// работает как на нас так и на врага
+// только для компании
+add dword ptr [edi+48],#5000
+
+originalcode:
+movss [eax+000002AC],xmm0
+
+exit:
+jmp returnhere
+
+fastAmmoRestore_nukeMissisle:
+jmp newmem
+nop 3
+returnhere:
+
+registerSymbol(fastAmmoRestore_nukeMissisle)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+fastAmmoRestore_nukeMissisle:
+db F3 0F 11 80 AC 02 00 00
+unregisterSymbol(fastAmmoRestore_nukeMissisle)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "SupremeCommander.exe"+1D5F78
+
+"SupremeCommander.exe"+1D5F47: 8B 47 04                       -  mov eax,[edi+04]
+"SupremeCommander.exe"+1D5F4A: F3 0F 58 80 F0 02 00 00        -  addss xmm0,[eax+000002F0]
+"SupremeCommander.exe"+1D5F52: 05 F0 02 00 00                 -  add eax,000002F0
+"SupremeCommander.exe"+1D5F57: F3 0F 11 00                    -  movss [eax],xmm0
+"SupremeCommander.exe"+1D5F5B: F3 0F 10 40 04                 -  movss xmm0,[eax+04]
+"SupremeCommander.exe"+1D5F60: F3 0F 58 44 24 1C              -  addss xmm0,[esp+1C]
+"SupremeCommander.exe"+1D5F66: F3 0F 11 40 04                 -  movss [eax+04],xmm0
+"SupremeCommander.exe"+1D5F6B: F3 0F 2A 47 48                 -  cvtsi2ss xmm0,[edi+48]
+"SupremeCommander.exe"+1D5F70: 8B 47 04                       -  mov eax,[edi+04]
+"SupremeCommander.exe"+1D5F73: F3 0F 5E 47 44                 -  divss xmm0,[edi+44]
+// ---------- INJECTING HERE ----------
+"SupremeCommander.exe"+1D5F78: F3 0F 11 80 AC 02 00 00        -  movss [eax+000002AC],xmm0
+// ---------- DONE INJECTING  ----------
+"SupremeCommander.exe"+1D5F80: 83 47 48 01                    -  add dword ptr [edi+48],01
+"SupremeCommander.exe"+1D5F84: F3 0F 2A 47 48                 -  cvtsi2ss xmm0,[edi+48]
+"SupremeCommander.exe"+1D5F89: 0F 2F 47 44                    -  comiss xmm0,[edi+44]
+"SupremeCommander.exe"+1D5F8D: 0F 82 BC 00 00 00              -  jb SupremeCommander.exe+1D604F
+"SupremeCommander.exe"+1D5F93: C7 47 30 03 00 00 00           -  mov [edi+30],00000003
+"SupremeCommander.exe"+1D5F9A: 8B 4C 24 24                    -  mov ecx,[esp+24]
+"SupremeCommander.exe"+1D5F9E: 64 89 0D 00 00 00 00           -  mov fs:[00000000],ecx
+"SupremeCommander.exe"+1D5FA5: 5F                             -  pop edi
+"SupremeCommander.exe"+1D5FA6: 5E                             -  pop esi
+"SupremeCommander.exe"+1D5FA7: 5D                             -  pop ebp
+}
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

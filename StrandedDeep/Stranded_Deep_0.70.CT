@@ -1,0 +1,898 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="29">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"durability"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Stranded_Deep.exe
+  Version: 0.70
+  Date   : 16.02.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(durability,0F B6 87 35 01 00 00 85 C0 ?? ?? ?? ?? ?? ?? F3 0F 10 87 ?? ?? 00 00 F3 0F 5A C0)
+alloc(newmem,$1024,durability)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [rdi+138],(float)999
+mov eax,1
+jmp returnhere
+
+originalcode:
+movzx eax,byte ptr [rdi+00000135]
+
+exit:
+jmp returnhere
+
+durability:
+jmp newmem
+nop
+nop
+returnhere:
+
+registerSymbol(durability)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+durability:
+db 0F B6 87 35 01 00 00
+unregisterSymbol(durability)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: B219331FA
+
+B219331CA: 0F 84 E1 00 00 00              -  je B219332B1
+B219331D0: F3 0F 10 87 40 01 00 00        -  movss xmm0,[rdi+00000140]
+B219331D8: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+B219331DC: 48 8B CE                       -  mov rcx,rsi
+B219331DF: 4C 8B C7                       -  mov r8,rdi
+B219331E2: F2 0F 10 C8                    -  movsd xmm1,xmm0
+B219331E6: F2 0F 5A C9                    -  cvtsd2ss xmm1,xmm1
+B219331EA: 48 8B 06                       -  mov rax,[rsi]
+B219331ED: 49 BA 00 42 9F E5 0A 00 00 00  -  mov r10,0000000AE59F4200
+B219331F7: FF 50 A0                       -  call qword ptr [rax-60]
+// ---------- INJECTING HERE ----------
+B219331FA: 0F B6 87 35 01 00 00           -  movzx eax,byte ptr [rdi+00000135]
+// ---------- DONE INJECTING  ----------
+B21933201: 85 C0                          -  test eax,eax
+B21933203: 0F 85 A8 00 00 00              -  jne B219332B1
+B21933209: F3 0F 10 87 38 01 00 00        -  movss xmm0,[rdi+00000138]
+B21933211: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+B21933215: F3 0F 10 0D A3 00 00 00        -  movss xmm1,[B219332C0]
+B2193321D: F3 0F 5A C9                    -  cvtss2sd xmm1,xmm1
+B21933221: F2 0F 5C C1                    -  subsd xmm0,xmm1
+B21933225: F2 0F 5A E8                    -  cvtsd2ss xmm5,xmm0
+B21933229: F3 0F 11 AF 38 01 00 00        -  movss [rdi+00000138],xmm5
+B21933231: F3 0F 10 87 38 01 00 00        -  movss xmm0,[rdi+00000138]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>4</ID>
+      <Description>"godmode"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Stranded_Deep.exe
+  Version: 0.70
+  Date   : 16.02.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(health,0F B6 86 47 01 00 00 85 C0 0F 84)
+alloc(newmem,$1024,health)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov byte ptr [rsi+00000147],1
+
+originalcode:
+movzx eax,byte ptr [rsi+00000147]
+
+exit:
+jmp returnhere
+
+health:
+jmp newmem
+nop
+nop
+returnhere:
+
+registerSymbol(health)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+health:
+db 0F B6 86 47 01 00 00
+unregisterSymbol(health)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: 3A8052012E
+
+3A805200F5: FF 50 80                       -  call qword ptr [rax-80]
+3A805200F8: 0F B6 80 20 01 00 00           -  movzx eax,byte ptr [rax+00000120]
+3A805200FF: 40 88 86 34 01 00 00           -  mov [rsi+00000134],al
+3A80520106: 48 8B 86 C0 00 00 00           -  mov rax,[rsi+000000C0]
+3A8052010D: 48 8B C8                       -  mov rcx,rax
+3A80520110: 48 8B 00                       -  mov rax,[rax]
+3A80520113: 49 BA 00 8F 13 87 3A 00 00 00  -  mov r10,0000003A87138F00
+3A8052011D: FF 50 80                       -  call qword ptr [rax-80]
+3A80520120: 0F B6 80 24 01 00 00           -  movzx eax,byte ptr [rax+00000124]
+3A80520127: 40 88 86 E0 00 00 00           -  mov [rsi+000000E0],al
+// ---------- INJECTING HERE ----------
+3A8052012E: 0F B6 86 47 01 00 00           -  movzx eax,byte ptr [rsi+00000147]
+// ---------- DONE INJECTING  ----------
+3A80520135: 85 C0                          -  test eax,eax
+3A80520137: 0F 84 29 00 00 00              -  je 3A80520166
+3A8052013D: 48 8B 86 C0 00 00 00           -  mov rax,[rsi+000000C0]
+3A80520144: 48 8B C8                       -  mov rcx,rax
+3A80520147: 48 8B 00                       -  mov rax,[rax]
+3A8052014A: 49 BA 00 8F 13 87 3A 00 00 00  -  mov r10,0000003A87138F00
+3A80520154: FF 50 80                       -  call qword ptr [rax-80]
+3A80520157: 83 38 00                       -  cmp dword ptr [rax],00
+3A8052015A: C6 80 B9 00 00 00 01           -  mov byte ptr [rax+000000B9],01
+3A80520161: E9 A6 03 00 00                 -  jmp 3A8052050C
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>5</ID>
+      <Description>"craft"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Stranded_Deep.exe
+  Version: 0.70
+  Date   : 16.02.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(freecraft,0F B6 46 58 85 C0 0F 84 ?? ?? ?? ?? 0F B6 46 59)
+alloc(newmem,$1024,freecraft)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov byte ptr [rsi+59],1
+
+originalcode:
+movzx eax,byte ptr [rsi+58]
+test eax,eax
+
+exit:
+jmp returnhere
+
+freecraft:
+jmp newmem
+nop
+returnhere:
+
+alloc(newmem1,$1024,freecraft+38)
+label(returnhere1)
+label(exit1)
+
+newmem1: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+call qword ptr [rax-38]
+mov eax,1
+test eax,eax
+
+exit1:
+jmp returnhere1
+
+freecraft+38:
+jmp newmem1
+returnhere1:
+
+
+registerSymbol(freecraft)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+freecraft:
+db 0F B6 46 58 85 C0
+freecraft+38:
+db FF 50 C8 85 C0
+unregisterSymbol(freecraft)
+dealloc(newmem)
+dealloc(newmem1)
+{
+// ORIGINAL CODE - INJECTION POINT: ED0AA85B6F
+
+ED0AA85B53: 05 04 03 01 50                 -  add eax,50010304
+ED0AA85B58: 00 00                          -  add [rax],al
+ED0AA85B5A: 00 00                          -  add [rax],al
+ED0AA85B5C: 00 00                          -  add [rax],al
+ED0AA85B5E: 00 00                          -  add [rax],al
+ED0AA85B60: 55                             -  push rbp
+ED0AA85B61: 48 8B EC                       -  mov rbp,rsp
+ED0AA85B64: 48 83 EC 40                    -  sub rsp,40
+ED0AA85B68: 48 89 75 F8                    -  mov [rbp-08],rsi
+ED0AA85B6C: 48 8B F1                       -  mov rsi,rcx
+// ---------- INJECTING HERE ----------
+ED0AA85B6F: 0F B6 46 58                    -  movzx eax,byte ptr [rsi+58]
+ED0AA85B73: 85 C0                          -  test eax,eax
+// ---------- DONE INJECTING  ----------
+ED0AA85B75: 0F 84 8F 00 00 00              -  je ED0AA85C0A
+ED0AA85B7B: 0F B6 46 59                    -  movzx eax,byte ptr [rsi+59]
+ED0AA85B7F: 85 C0                          -  test eax,eax
+ED0AA85B81: 0F 84 83 00 00 00              -  je ED0AA85C0A
+ED0AA85B87: 48 8B 46 18                    -  mov rax,[rsi+18]
+ED0AA85B8B: 48 8B C8                       -  mov rcx,rax
+ED0AA85B8E: 48 8B 00                       -  mov rax,[rax]
+ED0AA85B91: FF 90 08 01 00 00              -  call qword ptr [rax+00000108]
+ED0AA85B97: 48 8B C8                       -  mov rcx,rax
+ED0AA85B9A: 48 8B 00                       -  mov rax,[rax]
+}
+{
+// ORIGINAL CODE - INJECTION POINT: 9C0363E4B7
+
+9C0363E48B: 0F B6 46 59                    -  movzx eax,byte ptr [rsi+59]
+9C0363E48F: 85 C0                          -  test eax,eax
+9C0363E491: 0F 84 83 00 00 00              -  je 9C0363E51A
+9C0363E497: 48 8B 46 18                    -  mov rax,[rsi+18]
+9C0363E49B: 48 8B C8                       -  mov rcx,rax
+9C0363E49E: 48 8B 00                       -  mov rax,[rax]
+9C0363E4A1: FF 90 08 01 00 00              -  call qword ptr [rax+00000108]
+9C0363E4A7: 48 8B C8                       -  mov rcx,rax
+9C0363E4AA: 48 8B 00                       -  mov rax,[rax]
+9C0363E4AD: 49 BA 28 32 92 7C 9C 00 00 00  -  mov r10,0000009C7C923228
+// ---------- INJECTING HERE ----------
+9C0363E4B7: FF 50 C8                       -  call qword ptr [rax-38]
+9C0363E4BA: 85 C0                          -  test eax,eax
+// ---------- DONE INJECTING  ----------
+9C0363E4BC: 0F 84 58 00 00 00              -  je 9C0363E51A
+9C0363E4C2: 48 8B 46 20                    -  mov rax,[rsi+20]
+9C0363E4C6: 48 8B C8                       -  mov rcx,rax
+9C0363E4C9: 83 38 00                       -  cmp dword ptr [rax],00
+9C0363E4CC: 49 BB 90 88 2A 03 9C 00 00 00  -  mov r11,0000009C032A8890
+9C0363E4D6: 41 FF D3                       -  call r11
+9C0363E4D9: 85 C0                          -  test eax,eax
+9C0363E4DB: 0F 85 39 00 00 00              -  jne 9C0363E51A
+9C0363E4E1: 48 8B 46 20                    -  mov rax,[rsi+20]
+9C0363E4E5: 48 8B C8                       -  mov rcx,rax
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>7</ID>
+      <Description>"inf. Health"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Stranded_Deep.exe
+  Version: 0.70
+  Date   : 16.02.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(health,F3 0F 11 AF E8 00 00 00 F3 0F 10 87 E8 00 00 00)
+alloc(newmem,$1024,health)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [rdi+000000E8],(float)999
+jmp exit
+
+originalcode:
+movss [rdi+000000E8],xmm5
+
+exit:
+jmp returnhere
+
+health:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+registerSymbol(health)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+health:
+db F3 0F 11 AF E8 00 00 00
+unregisterSymbol(health)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: 1B00429444
+
+1B00429414: 4C 89 45 E8                    -  mov [rbp-18],r8
+1B00429418: 0F B6 87 47 01 00 00           -  movzx eax,byte ptr [rdi+00000147]
+1B0042941F: 85 C0                          -  test eax,eax
+1B00429421: 0F 85 65 00 00 00              -  jne 1B0042948C
+1B00429427: F3 0F 10 87 E8 00 00 00        -  movss xmm0,[rdi+000000E8]
+1B0042942F: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+1B00429433: F3 0F 10 4D F0                 -  movss xmm1,[rbp-10]
+1B00429438: F3 0F 5A C9                    -  cvtss2sd xmm1,xmm1
+1B0042943C: F2 0F 5C C1                    -  subsd xmm0,xmm1
+1B00429440: F2 0F 5A E8                    -  cvtsd2ss xmm5,xmm0
+// ---------- INJECTING HERE ----------
+1B00429444: F3 0F 11 AF E8 00 00 00        -  movss [rdi+000000E8],xmm5
+// ---------- DONE INJECTING  ----------
+1B0042944C: F3 0F 10 87 E8 00 00 00        -  movss xmm0,[rdi+000000E8]
+1B00429454: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+1B00429458: F3 0F 10 0D 40 00 00 00        -  movss xmm1,[1B004294A0]
+1B00429460: F3 0F 5A C9                    -  cvtss2sd xmm1,xmm1
+1B00429464: 66 0F 2F C8                    -  comisd xmm1,xmm0
+1B00429468: 72 16                          -  jb 1B00429480
+1B0042946A: 48 8B CF                       -  mov rcx,rdi
+1B0042946D: 48 8B 55 E8                    -  mov rdx,[rbp-18]
+1B00429471: 49 BB 7E 70 9D 02 35 00 00 00  -  mov r11,00000035029D707E
+1B0042947B: 41 FF D3                       -  call r11
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>9</ID>
+      <Description>"inf. Stamina"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Stranded_Deep.exe
+  Version: 0.70
+  Date   : 16.02.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(stamina,F3 0F 11 AE 04 01 00 00 F3 0F 10 86 04 01 00 00)
+alloc(newmem,$1024,stamina)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+movss xmm5,[rsi+00000108]
+
+originalcode:
+movss [rsi+00000104],xmm5
+
+exit:
+jmp returnhere
+
+stamina:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+registerSymbol(stamina)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+stamina:
+db F3 0F 11 AE 04 01 00 00
+unregisterSymbol(stamina)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: 3502A4D033
+
+3502A4D002: F3 0F 10 45 F4                 -  movss xmm0,[rbp-0C]
+3502A4D007: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+3502A4D00B: F2 0F 11 45 D8                 -  movsd [rbp-28],xmm0
+3502A4D010: 49 BB C0 51 70 64 1B 00 00 00  -  mov r11,0000001B647051C0
+3502A4D01A: 41 FF D3                       -  call r11
+3502A4D01D: F3 0F 5A D0                    -  cvtss2sd xmm2,xmm0
+3502A4D021: F2 0F 10 45 E0                 -  movsd xmm0,[rbp-20]
+3502A4D026: F2 0F 10 4D D8                 -  movsd xmm1,[rbp-28]
+3502A4D02B: F2 0F 59 CA                    -  mulsd xmm1,xmm2
+3502A4D02F: F2 0F 58 C1                    -  addsd xmm0,xmm1
+// ---------- INJECTING HERE ----------
+3502A4D033: F2 0F 5A E8                    -  cvtsd2ss xmm5,xmm0
+3502A4D037: F3 0F 11 AE 04 01 00 00        -  movss [rsi+00000104],xmm5
+// ---------- DONE INJECTING  ----------
+3502A4D03F: F3 0F 10 86 04 01 00 00        -  movss xmm0,[rsi+00000104]
+3502A4D047: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+3502A4D04B: F2 0F 11 45 E0                 -  movsd [rbp-20],xmm0
+3502A4D050: 66 0F 57 C0                    -  xorpd xmm0,xmm0
+3502A4D054: F2 0F 11 45 D8                 -  movsd [rbp-28],xmm0
+3502A4D059: F3 0F 10 86 08 01 00 00        -  movss xmm0,[rsi+00000108]
+3502A4D061: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+3502A4D065: F2 0F 11 45 D0                 -  movsd [rbp-30],xmm0
+3502A4D06A: 48 8B 86 C0 00 00 00           -  mov rax,[rsi+000000C0]
+3502A4D071: 48 8B C8                       -  mov rcx,rax
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>11</ID>
+      <Description>"inf. Oxygen"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Stranded_Deep.exe
+  Version: 0.70
+  Date   : 16.02.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(oxygen,F3 0F 11 A8 18 01 00 00 F3 0F 10 86 18 01 00 00)
+alloc(newmem,$1024,oxygen)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+movss xmm5,[rsi+0000011C]
+
+originalcode:
+movss [rax+00000118],xmm5
+
+exit:
+jmp returnhere
+
+oxygen:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+registerSymbol(oxygen)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+oxygen:
+db F3 0F 11 A8 18 01 00 00
+unregisterSymbol(oxygen)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: 3502A4C75D
+
+3502A4C72B: F2 0F 59 CA                    -  mulsd xmm1,xmm2
+3502A4C72F: F2 0F 5C C1                    -  subsd xmm0,xmm1
+3502A4C733: 48 8B 45 D8                    -  mov rax,[rbp-28]
+3502A4C737: F2 0F 5A E8                    -  cvtsd2ss xmm5,xmm0
+3502A4C73B: F3 0F 11 A8 18 01 00 00        -  movss [rax+00000118],xmm5
+3502A4C743: F3 0F 10 86 18 01 00 00        -  movss xmm0,[rsi+00000118]
+3502A4C74B: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+3502A4C74F: 66 0F 57 C9                    -  xorpd xmm1,xmm1
+3502A4C753: 66 0F 2F C8                    -  comisd xmm1,xmm0
+3502A4C757: 0F 82 9F 00 00 00              -  jb 3502A4C7FC
+// ---------- INJECTING HERE ----------
+3502A4C75D: C6 86 51 01 00 00 00           -  mov byte ptr [rsi+00000151],00
+// ---------- DONE INJECTING  ----------
+3502A4C764: F3 0F 10 86 14 01 00 00        -  movss xmm0,[rsi+00000114]
+3502A4C76C: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+3502A4C770: F2 0F 11 45 B0                 -  movsd [rbp-50],xmm0
+3502A4C775: 49 BB 54 51 70 64 1B 00 00 00  -  mov r11,0000001B64705154
+3502A4C77F: 41 FF D3                       -  call r11
+3502A4C782: F3 0F 5A C8                    -  cvtss2sd xmm1,xmm0
+3502A4C786: F2 0F 10 45 B0                 -  movsd xmm0,[rbp-50]
+3502A4C78B: F2 0F 58 C1                    -  addsd xmm0,xmm1
+3502A4C78F: F2 0F 5A E8                    -  cvtsd2ss xmm5,xmm0
+3502A4C793: F3 0F 11 AE 14 01 00 00        -  movss [rsi+00000114],xmm5
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>19</ID>
+      <Description>"super Speed"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Stranded_Deep.exe
+  Version: 0.70
+  Date   : 16.02.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(superSpeed,F3 0F 10 86 D4 00 00 00 F3 0F 5A C0 F2 0F 5A E8)
+alloc(newmem,$1024,superSpeed)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+movss xmm0,[superJump]
+jmp returnhere
+
+originalcode:
+movss xmm0,[rsi+000000D4]
+
+exit:
+jmp returnhere
+
+superJump:
+dd (float)20
+
+superSpeed:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+registerSymbol(superSpeed)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+superSpeed:
+db F3 0F 10 86 D4 00 00 00
+unregisterSymbol(superSpeed)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: 17300153AF8
+
+17300153ACC: 48 8B 46 60                    -  mov rax,[rsi+60]
+17300153AD0: 48 8B C8                       -  mov rcx,rax
+17300153AD3: 48 8B 00                       -  mov rax,[rax]
+17300153AD6: 49 BA 38 46 F1 33 BA 00 00 00  -  mov r10,000000BA33F14638
+17300153AE0: FF 50 C8                       -  call qword ptr [rax-38]
+17300153AE3: 48 8B C8                       -  mov rcx,rax
+17300153AE6: 83 39 00                       -  cmp dword ptr [rcx],00
+17300153AE9: 0F B6 80 0C 01 00 00           -  movzx eax,byte ptr [rax+0000010C]
+17300153AF0: 85 C0                          -  test eax,eax
+17300153AF2: 0F 85 52 00 00 00              -  jne 17300153B4A
+// ---------- INJECTING HERE ----------
+17300153AF8: F3 0F 10 86 D4 00 00 00        -  movss xmm0,[rsi+000000D4]
+// ---------- DONE INJECTING  ----------
+17300153B00: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+17300153B04: F2 0F 5A E8                    -  cvtsd2ss xmm5,xmm0
+17300153B08: F3 0F 11 AE BC 00 00 00        -  movss [rsi+000000BC],xmm5
+17300153B10: C6 86 24 01 00 00 01           -  mov byte ptr [rsi+00000124],01
+17300153B17: 0F B6 86 23 01 00 00           -  movzx eax,byte ptr [rsi+00000123]
+17300153B1E: 85 C0                          -  test eax,eax
+17300153B20: 0F 84 86 00 00 00              -  je 17300153BAC
+17300153B26: 48 8B CE                       -  mov rcx,rsi
+17300153B29: 49 BB D4 3B 15 00 73 01 00 00  -  mov r11,0000017300153BD4
+17300153B33: 41 FF D3                       -  call r11
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>22</ID>
+      <Description>"superSwimSpeed"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Stranded_Deep.exe
+  Version: 0.70
+  Date   : 16.02.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(superSwimSpeed,F3 0F 10 86 E4 00 00 00 F3 0F 5A C0 F2 0F 11 85 C8 FD FF FF)
+alloc(newmem,$1024,superSwimSpeed)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+movss xmm0,[superSpeed]
+jmp exit
+
+originalcode:
+movss xmm0,[rsi+000000E4]
+
+exit:
+jmp returnhere
+
+superSpeed:
+dd (float)40
+
+superSwimSpeed:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+registerSymbol(superSwimSpeed)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+superSwimSpeed:
+db F3 0F 10 86 E4 00 00 00
+unregisterSymbol(superSwimSpeed)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: BA23FE2444
+
+BA23FE2415: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+BA23FE2419: F2 0F 11 85 C8 FD FF FF        -  movsd [rbp-00000238],xmm0
+BA23FE2421: EB 35                          -  jmp BA23FE2458
+BA23FE2423: 0F B6 86 21 01 00 00           -  movzx eax,byte ptr [rsi+00000121]
+BA23FE242A: 85 C0                          -  test eax,eax
+BA23FE242C: 74 16                          -  je BA23FE2444
+BA23FE242E: F3 0F 10 86 DC 00 00 00        -  movss xmm0,[rsi+000000DC]
+BA23FE2436: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+BA23FE243A: F2 0F 11 85 C8 FD FF FF        -  movsd [rbp-00000238],xmm0
+BA23FE2442: EB 14                          -  jmp BA23FE2458
+// ---------- INJECTING HERE ----------
+BA23FE2444: F3 0F 10 86 E4 00 00 00        -  movss xmm0,[rsi+000000E4]
+// ---------- DONE INJECTING  ----------
+BA23FE244C: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+BA23FE2450: F2 0F 11 85 C8 FD FF FF        -  movsd [rbp-00000238],xmm0
+BA23FE2458: F2 0F 10 85 C8 FD FF FF        -  movsd xmm0,[rbp-00000238]
+BA23FE2460: F2 0F 5A E8                    -  cvtsd2ss xmm5,xmm0
+BA23FE2464: F3 0F 11 AF BC 00 00 00        -  movss [rdi+000000BC],xmm5
+BA23FE246C: 48 8B CE                       -  mov rcx,rsi
+BA23FE246F: 49 BB A0 39 15 00 73 01 00 00  -  mov r11,00000173001539A0
+BA23FE2479: 41 FF D3                       -  call r11
+BA23FE247C: 85 C0                          -  test eax,eax
+BA23FE247E: 74 3A                          -  je BA23FE24BA
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>24</ID>
+      <Description>"superSwimSpeed(sprint)"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048,Beam:Movement:DoSwim+167) 
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+movss xmm0,[superSpeed]
+jmp exit
+
+originalcode:
+movss xmm0,[rsi+000000F4]
+
+exit:
+jmp returnhere
+
+superSpeed:
+dd (float)80
+
+Beam:Movement:DoSwim+167:
+jmp newmem
+nop 3
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+Beam:Movement:DoSwim+167:
+movss xmm0,[rsi+000000F4]
+//Alt: db F3 0F 10 86 F4 00 00 00
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>26</ID>
+      <Description>"superJump"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Stranded_Deep.exe
+  Version: 0.70
+  Date   : 16.02.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(superJump,F3 0F 10 86 04 01 00 00 F3 0F 5A C0 F2 0F 5A E8 F3 0F 11 68 04 48 8B CE 48 8B 06 FF 90 A0 00 00 00)
+alloc(newmem,$1024,superJump)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+movss xmm0,[superJumpVar]
+jmp returnhere
+
+originalcode:
+movss xmm0,[rsi+00000104]
+
+exit:
+jmp returnhere
+
+superJumpVar:
+dd (float)16
+
+superJump:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+registerSymbol(superJump)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+superJump:
+db F3 0F 10 86 04 01 00 00
+unregisterSymbol(superJump)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: BA23FDA2EA
+
+BA23FDA2BB: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+BA23FDA2BF: F3 0F 10 0D 79 00 00 00        -  movss xmm1,[BA23FDA340]
+BA23FDA2C7: F3 0F 5A C9                    -  cvtss2sd xmm1,xmm1
+BA23FDA2CB: F2 0F 59 C1                    -  mulsd xmm0,xmm1
+BA23FDA2CF: F2 0F 5A E8                    -  cvtsd2ss xmm5,xmm0
+BA23FDA2D3: F3 0F 11 68 04                 -  movss [rax+04],xmm5
+BA23FDA2D8: EB 25                          -  jmp BA23FDA2FF
+BA23FDA2DA: 48 85 F6                       -  test rsi,rsi
+BA23FDA2DD: 0F 84 32 00 00 00              -  je BA23FDA315
+BA23FDA2E3: 48 8D 86 C0 00 00 00           -  lea rax,[rsi+000000C0]
+// ---------- INJECTING HERE ----------
+BA23FDA2EA: F3 0F 10 86 04 01 00 00        -  movss xmm0,[rsi+00000104]
+// ---------- DONE INJECTING  ----------
+BA23FDA2F2: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+BA23FDA2F6: F2 0F 5A E8                    -  cvtsd2ss xmm5,xmm0
+BA23FDA2FA: F3 0F 11 68 04                 -  movss [rax+04],xmm5
+BA23FDA2FF: 48 8B CE                       -  mov rcx,rsi
+BA23FDA302: 48 8B 06                       -  mov rax,[rsi]
+BA23FDA305: FF 90 A0 00 00 00              -  call qword ptr [rax+000000A0]
+BA23FDA30B: 48 8B 75 F8                    -  mov rsi,[rbp-08]
+BA23FDA30F: 48 8D 65 00                    -  lea rsp,[rbp+00]
+BA23FDA313: 5D                             -  pop rbp
+BA23FDA314: C3                             -  ret
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>27</ID>
+      <Description>"no fall damage"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Stranded_Deep.exe
+  Version: 0.70
+  Date   : 16.02.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(fallDamage,0F 86 ?? ?? ?? ?? E9 ?? ?? ?? ?? 48 8B 46 60 48 8B C8 48 8B 00 49 BA)
+
+fallDamage:
+db 90 90 90 90 90 90
+
+
+registerSymbol(fallDamage)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+fallDamage:
+db 0F 86 05 00 00 00
+unregisterSymbol(fallDamage)
+{
+// ORIGINAL CODE - INJECTION POINT: BA23FDEBE3
+
+BA23FDEBB7: 48 8B D5                       -  mov rdx,rbp
+BA23FDEBBA: 48 83 C2 A0                    -  add rdx,-60
+BA23FDEBBE: 48 8B C8                       -  mov rcx,rax
+BA23FDEBC1: 83 38 00                       -  cmp dword ptr [rax],00
+BA23FDEBC4: 49 BB 30 7D 5B 2B BA 00 00 00  -  mov r11,000000BA2B5B7D30
+BA23FDEBCE: 41 FF D3                       -  call r11
+BA23FDEBD1: F2 0F 10 45 90                 -  movsd xmm0,[rbp-70]
+BA23FDEBD6: F3 0F 10 4D A4                 -  movss xmm1,[rbp-5C]
+BA23FDEBDB: F3 0F 5A C9                    -  cvtss2sd xmm1,xmm1
+BA23FDEBDF: 66 0F 2F C8                    -  comisd xmm1,xmm0
+// ---------- INJECTING HERE ----------
+BA23FDEBE3: 0F 86 05 00 00 00              -  jbe BA23FDEBEE
+// ---------- DONE INJECTING  ----------
+BA23FDEBE9: E9 E6 01 00 00                 -  jmp BA23FDEDD4
+BA23FDEBEE: 48 8B 46 60                    -  mov rax,[rsi+60]
+BA23FDEBF2: 48 8B C8                       -  mov rcx,rax
+BA23FDEBF5: 48 8B 00                       -  mov rax,[rax]
+BA23FDEBF8: 49 BA 10 46 F1 33 BA 00 00 00  -  mov r10,000000BA33F14610
+BA23FDEC02: FF 50 C8                       -  call qword ptr [rax-38]
+BA23FDEC05: 48 8B C8                       -  mov rcx,rax
+BA23FDEC08: 83 38 00                       -  cmp dword ptr [rax],00
+BA23FDEC0B: 49 BB 52 EE FD 23 BA 00 00 00  -  mov r11,000000BA23FDEE52
+BA23FDEC15: 41 FF D3                       -  call r11
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>30</ID>
+      <Description>"noHungerNoThursty"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Stranded_Deep.exe
+  Version: 0.70
+  Date   : 16.02.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(noHungerNoThursty,F3 0F 10 86 F0 00 00 00 F3 0F 5A C0 F2 0F 11 85 50 FF FF FF)
+alloc(newmem,$1024,noHungerNoThursty)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [rsi+000000EC],(float)9999
+mov [rsi+000000F0],(float)9999
+
+originalcode:
+movss xmm0,[rsi+000000F0]
+
+exit:
+jmp returnhere
+
+noHungerNoThursty:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+registerSymbol(noHungerNoThursty)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+noHungerNoThursty:
+db F3 0F 10 86 F0 00 00 00
+unregisterSymbol(noHungerNoThursty)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: 173000C8AF6
+
+173000C8AB9: F2 0F 11 85 38 FF FF FF        -  movsd [rbp-000000C8],xmm0
+173000C8AC1: 49 BB 40 31 14 00 73 01 00 00  -  mov r11,0000017300143140
+173000C8ACB: 41 FF D3                       -  call r11
+173000C8ACE: F3 0F 5A D0                    -  cvtss2sd xmm2,xmm0
+173000C8AD2: F2 0F 10 85 40 FF FF FF        -  movsd xmm0,[rbp-000000C0]
+173000C8ADA: F2 0F 10 8D 38 FF FF FF        -  movsd xmm1,[rbp-000000C8]
+173000C8AE2: F2 0F 59 CA                    -  mulsd xmm1,xmm2
+173000C8AE6: F2 0F 58 C1                    -  addsd xmm0,xmm1
+173000C8AEA: F2 0F 5A E8                    -  cvtsd2ss xmm5,xmm0
+173000C8AEE: F3 0F 11 AE E8 00 00 00        -  movss [rsi+000000E8],xmm5
+// ---------- INJECTING HERE ----------
+173000C8AF6: F3 0F 10 86 F0 00 00 00        -  movss xmm0,[rsi+000000F0]
+// ---------- DONE INJECTING  ----------
+173000C8AFE: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+173000C8B02: F2 0F 11 85 50 FF FF FF        -  movsd [rbp-000000B0],xmm0
+173000C8B0A: 41 83 3E 00                    -  cmp dword ptr [r14],00
+173000C8B0E: F3 41 0F 10 46 24              -  movss xmm0,[r14+24]
+173000C8B14: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+173000C8B18: F2 0F 5A E8                    -  cvtsd2ss xmm5,xmm0
+173000C8B1C: F3 0F 11 AD 7C FF FF FF        -  movss [rbp-00000084],xmm5
+173000C8B24: F3 0F 10 85 7C FF FF FF        -  movss xmm0,[rbp-00000084]
+173000C8B2C: F3 0F 5A C0                    -  cvtss2sd xmm0,xmm0
+173000C8B30: F2 0F 11 85 48 FF FF FF        -  movsd [rbp-000000B8],xmm0
+}
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

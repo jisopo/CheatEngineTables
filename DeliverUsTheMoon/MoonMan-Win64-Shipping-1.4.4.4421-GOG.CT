@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="29">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>1980</ID>
+      <Description>"Activate Table(flashlight and oxygen)"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : MoonMan-Win64-Shipping.exe
+  Version: 1.4.2-CODEX
+  Date   : 26.04.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(activateTable,MoonMan-Win64-Shipping.exe,48 8B 03 48 8B CB FF 90 80 03 00 00)
+alloc(newmem,2048,activateTable)
+label(returnhere)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+mov rax,[rbx]
+
+cmp byte ptr [rbx+E4],1
+jne oxygen
+cmp byte ptr [flashlightFlag],1
+jne oxygen
+mov [rbx+E0],(float)1
+
+oxygen:
+cmp [rbx+E4],(float)100
+jne exit
+cmp [rbx+E0],0
+je exit
+cmp byte ptr [oxygenFlag],1
+jne exit
+// oxygen
+mov [rbx+E0],(float)180
+
+exit:
+mov rcx,rbx
+jmp returnhere
+
+flashlightFlag:
+db 0
+
+oxygenFlag:
+db 0
+
+activateTable:
+jmp newmem
+nop
+returnhere:
+
+
+registerSymbol(flashlightFlag)
+registerSymbol(oxygenFlag)
+registerSymbol(activateTable)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+activateTable:
+db 48 8B 03 48 8B CB
+unregisterSymbol(flashlightFlag)
+unregisterSymbol(oxygenFlag)
+unregisterSymbol(activateTable)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "MoonMan-Win64-Shipping.exe"+160A9E6
+
+"MoonMan-Win64-Shipping.exe"+160A9C0: C1 F9 10                 -  sar ecx,10
+"MoonMan-Win64-Shipping.exe"+160A9C3: 48 63 C9                 -  movsxd  rcx,ecx
+"MoonMan-Win64-Shipping.exe"+160A9C6: 48 8D 14 40              -  lea rdx,[rax+rax*2]
+"MoonMan-Win64-Shipping.exe"+160A9CA: 48 8B 05 67 A8 A5 01     -  mov rax,[MoonMan-Win64-Shipping.exe+3065238]
+"MoonMan-Win64-Shipping.exe"+160A9D1: 48 8B 0C C8              -  mov rcx,[rax+rcx*8]
+"MoonMan-Win64-Shipping.exe"+160A9D5: 48 8D 04 D1              -  lea rax,[rcx+rdx*8]
+"MoonMan-Win64-Shipping.exe"+160A9D9: EB 02                    -  jmp MoonMan-Win64-Shipping.exe+160A9DD
+"MoonMan-Win64-Shipping.exe"+160A9DB: 33 C0                    -  xor eax,eax
+"MoonMan-Win64-Shipping.exe"+160A9DD: F7 40 08 00 00 00 30     -  test [rax+08],30000000
+"MoonMan-Win64-Shipping.exe"+160A9E4: 75 6A                    -  jne MoonMan-Win64-Shipping.exe+160AA50
+// ---------- INJECTING HERE ----------
+"MoonMan-Win64-Shipping.exe"+160A9E6: 48 8B 03                 -  mov rax,[rbx]
+"MoonMan-Win64-Shipping.exe"+160A9E9: 48 8B CB                 -  mov rcx,rbx
+// ---------- DONE INJECTING  ----------
+"MoonMan-Win64-Shipping.exe"+160A9EC: FF 90 80 03 00 00        -  call qword ptr [rax+00000380]
+"MoonMan-Win64-Shipping.exe"+160A9F2: F6 83 AC 00 00 00 01     -  test byte ptr [rbx+000000AC],01
+"MoonMan-Win64-Shipping.exe"+160A9F9: 74 55                    -  je MoonMan-Win64-Shipping.exe+160AA50
+"MoonMan-Win64-Shipping.exe"+160A9FB: 48 8B 9B C8 00 00 00     -  mov rbx,[rbx+000000C8]
+"MoonMan-Win64-Shipping.exe"+160AA02: 83 FE 01                 -  cmp esi,01
+"MoonMan-Win64-Shipping.exe"+160AA05: 75 1B                    -  jne MoonMan-Win64-Shipping.exe+160AA22
+"MoonMan-Win64-Shipping.exe"+160AA07: 40 F6 C5 08              -  test bpl,08
+"MoonMan-Win64-Shipping.exe"+160AA0B: 75 15                    -  jne MoonMan-Win64-Shipping.exe+160AA22
+"MoonMan-Win64-Shipping.exe"+160AA0D: 48 85 DB                 -  test rbx,rbx
+"MoonMan-Win64-Shipping.exe"+160AA10: 74 3E                    -  je MoonMan-Win64-Shipping.exe+160AA50
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>35</ID>
+      <Description>"freeze timer(launch procedure)"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : MoonMan-Win64-Shipping.exe
+  Version: 1.3.1.18219-CODEX
+  Date   : 20.04.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+{$lua}
+address_identifier = allocateSharedMemory("address_identifier",8)
+aobresult = AOBScan("48 8B 07 4C 8B C5 48 8B D6 48 8B CF","+XW")
+local counter = aobresult.Count - 1
+if (aobresult.Count&gt;0) then
+     writeBytes(address_identifier, qwordToByteTable(getAddress(aobresult[6])))
+end
+{$asm}
+alloc(newmem,2048,[address_identifier])
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [rdi+24C],(float)599
+
+originalcode:
+mov rax,[rdi]
+mov r8,rbp
+
+exit:
+jmp returnhere
+
+[address_identifier]:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+[address_identifier]:
+db 48 8B 07 4C 8B C5
+dealloc(address_identifier)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "MoonMan-Win64-Shipping.exe"+10DFED9
+
+"MoonMan-Win64-Shipping.exe"+10DFEB8: 48 8D 14 40           -  lea rdx,[rax+rax*2]
+"MoonMan-Win64-Shipping.exe"+10DFEBC: 48 8B 05 B5 13 CA 01  -  mov rax,[MoonMan-Win64-Shipping.exe+2D81278]
+"MoonMan-Win64-Shipping.exe"+10DFEC3: 48 8B 0C C8           -  mov rcx,[rax+rcx*8]
+"MoonMan-Win64-Shipping.exe"+10DFEC7: 48 8D 04 D1           -  lea rax,[rcx+rdx*8]
+"MoonMan-Win64-Shipping.exe"+10DFECB: EB 02                 -  jmp MoonMan-Win64-Shipping.exe+10DFECF
+"MoonMan-Win64-Shipping.exe"+10DFECD: 33 C0                 -  xor eax,eax
+"MoonMan-Win64-Shipping.exe"+10DFECF: 8B 40 08              -  mov eax,[rax+08]
+"MoonMan-Win64-Shipping.exe"+10DFED2: C1 E8 1C              -  shr eax,1C
+"MoonMan-Win64-Shipping.exe"+10DFED5: A8 01                 -  test al,01
+"MoonMan-Win64-Shipping.exe"+10DFED7: 75 16                 -  jne MoonMan-Win64-Shipping.exe+10DFEEF
+// ---------- INJECTING HERE ----------
+"MoonMan-Win64-Shipping.exe"+10DFED9: 48 8B 07              -  mov rax,[rdi]
+"MoonMan-Win64-Shipping.exe"+10DFEDC: 4C 8B C5              -  mov r8,rbp
+// ---------- DONE INJECTING  ----------
+"MoonMan-Win64-Shipping.exe"+10DFEDF: 48 8B D6              -  mov rdx,rsi
+"MoonMan-Win64-Shipping.exe"+10DFEE2: 48 8B CF              -  mov rcx,rdi
+"MoonMan-Win64-Shipping.exe"+10DFEE5: FF 90 00 02 00 00     -  call qword ptr [rax+00000200]
+"MoonMan-Win64-Shipping.exe"+10DFEEB: B0 01                 -  mov al,01
+"MoonMan-Win64-Shipping.exe"+10DFEED: EB 02                 -  jmp MoonMan-Win64-Shipping.exe+10DFEF1
+"MoonMan-Win64-Shipping.exe"+10DFEEF: 32 C0                 -  xor al,al
+"MoonMan-Win64-Shipping.exe"+10DFEF1: 48 8B 5C 24 30        -  mov rbx,[rsp+30]
+"MoonMan-Win64-Shipping.exe"+10DFEF6: 48 8B 6C 24 38        -  mov rbp,[rsp+38]
+"MoonMan-Win64-Shipping.exe"+10DFEFB: 48 8B 74 24 40        -  mov rsi,[rsp+40]
+"MoonMan-Win64-Shipping.exe"+10DFF00: 48 83 C4 20           -  add rsp,20
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1993</ID>
+      <Description>"freeze timer(timer in the ship,works buggy a little)"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : MoonMan-Win64-Shipping.exe
+  Version: 1.4.2-CODEX
+  Date   : 26.04.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(timer2,MoonMan-Win64-Shipping.exe,F2 48 0F 2A 7C 24 48 F3 0F 5A C6)
+alloc(newmem,2048,timer2)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+movq xmm0,[new_value]
+
+originalcode:
+addsd xmm0,[r12+00000140]
+
+exit:
+jmp returnhere
+
+new_value:
+dq (double)0.008
+
+timer2+13:
+jmp newmem
+nop 5
+returnhere:
+
+registerSymbol(timer2)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+timer2+13:
+db F2 41 0F 58 84 24 40 01 00 00
+unregisterSymbol(timer2)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "MoonMan-Win64-Shipping.exe"+1AF3403
+
+"MoonMan-Win64-Shipping.exe"+1AF33DA: 33 DB                          -  xor ebx,ebx
+"MoonMan-Win64-Shipping.exe"+1AF33DC: 0F 57 C0                       -  xorps xmm0,xmm0
+"MoonMan-Win64-Shipping.exe"+1AF33DF: 89 5C 24 24                    -  mov [rsp+24],ebx
+"MoonMan-Win64-Shipping.exe"+1AF33E3: 0F 57 FF                       -  xorps xmm7,xmm7
+"MoonMan-Win64-Shipping.exe"+1AF33E6: 45 32 C0                       -  xor r8l,r8l
+"MoonMan-Win64-Shipping.exe"+1AF33E9: 44 88 44 24 20                 -  mov [rsp+20],r8l
+"MoonMan-Win64-Shipping.exe"+1AF33EE: 8B D3                          -  mov edx,ebx
+"MoonMan-Win64-Shipping.exe"+1AF33F0: F2 48 0F 2A 7C 24 48           -  cvtsi2sd xmm7,[rsp+48]
+"MoonMan-Win64-Shipping.exe"+1AF33F7: F3 0F 5A C6                    -  cvtss2sd xmm0,xmm6
+"MoonMan-Win64-Shipping.exe"+1AF33FB: F2 0F 59 3D 35 85 52 01        -  mulsd xmm7,[MoonMan-Win64-Shipping.exe+301B938]
+// ---------- INJECTING HERE ----------
+"MoonMan-Win64-Shipping.exe"+1AF3403: F2 41 0F 58 84 24 40 01 00 00  -  addsd xmm0,[r12+00000140]
+// ---------- DONE INJECTING  ----------
+"MoonMan-Win64-Shipping.exe"+1AF340D: F2 41 0F 11 84 24 40 01 00 00  -  movsd [r12+00000140],xmm0
+"MoonMan-Win64-Shipping.exe"+1AF3417: 48 85 C9                       -  test rcx,rcx
+"MoonMan-Win64-Shipping.exe"+1AF341A: 74 0F                          -  je MoonMan-Win64-Shipping.exe+1AF342B
+"MoonMan-Win64-Shipping.exe"+1AF341C: E8 AF 45 C3 FF                 -  call MoonMan-Win64-Shipping.exe+17279D0
+"MoonMan-Win64-Shipping.exe"+1AF3421: 4C 8B F8                       -  mov r15,rax
+"MoonMan-Win64-Shipping.exe"+1AF3424: 8B D3                          -  mov edx,ebx
+"MoonMan-Win64-Shipping.exe"+1AF3426: 45 32 C0                       -  xor r8l,r8l
+"MoonMan-Win64-Shipping.exe"+1AF3429: EB 03                          -  jmp MoonMan-Win64-Shipping.exe+1AF342E
+"MoonMan-Win64-Shipping.exe"+1AF342B: 4C 8B FB                       -  mov r15,rbx
+"MoonMan-Win64-Shipping.exe"+1AF342E: 41 B9 01 00 00 00              -  mov r9d,00000001
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1966</ID>
+      <Description>"godmode"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : MoonMan-Win64-Shipping.exe
+  Version: 1.4.2-CODEX
+  Date   : 26.04.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(player, MoonMan-Win64-Shipping.exe, 4C 8B 0B 4D 8B C4 48 8B D0 48 8B CB)
+alloc(newmem,2048,player)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [playerPointer],rbx
+
+originalcode:
+mov r9,[rbx]
+mov r8,r12
+
+exit:
+jmp returnhere
+
+playerPointer:
+dq 0
+
+player:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(player)
+registerSymbol(playerPointer)
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(godmode, MoonMan-Win64-Shipping.exe, 41 FF 54 C5 00 48 85 DB)
+alloc(newmem1,2048,godmode)
+label(returnhere1)
+label(originalcode1)
+label(exit1)
+
+newmem1: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode1:
+call qword ptr [r13+rax*8+00]
+
+push rcx
+mov rcx,[playerPointer]
+add rcx,158
+cmp rax,rcx
+jne exit1
+mov [rax],(float)1
+
+exit1:
+pop rcx
+jmp returnhere1
+
+godmode:
+jmp newmem1
+returnhere1:
+
+registerSymbol(godmode)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+player:
+db 4C 8B 0B 4D 8B C4
+unregisterSymbol(player)
+unregisterSymbol(playerPointer)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "MoonMan-Win64-Shipping.exe"+23C269
+
+"MoonMan-Win64-Shipping.exe"+23C245: 48 85 C0              -  test rax,rax
+"MoonMan-Win64-Shipping.exe"+23C248: 49 0F 45 FD           -  cmovne rdi,r13
+"MoonMan-Win64-Shipping.exe"+23C24C: 48 0B F8              -  or rdi,rax
+"MoonMan-Win64-Shipping.exe"+23C24F: 48 03 FE              -  add rdi,rsi
+"MoonMan-Win64-Shipping.exe"+23C252: 48 8B CF              -  mov rcx,rdi
+"MoonMan-Win64-Shipping.exe"+23C255: E8 26 74 53 00        -  call MoonMan-Win64-Shipping.exe+773680
+"MoonMan-Win64-Shipping.exe"+23C25A: 48 8B 57 08           -  mov rdx,[rdi+08]
+"MoonMan-Win64-Shipping.exe"+23C25E: 48 8B C8              -  mov rcx,rax
+"MoonMan-Win64-Shipping.exe"+23C261: 48 8B D8              -  mov rbx,rax
+"MoonMan-Win64-Shipping.exe"+23C264: E8 97 CE 51 00        -  call MoonMan-Win64-Shipping.exe+759100
+// ---------- INJECTING HERE ----------
+"MoonMan-Win64-Shipping.exe"+23C269: 4C 8B 0B              -  mov r9,[rbx]
+"MoonMan-Win64-Shipping.exe"+23C26C: 4D 8B C4              -  mov r8,r12
+// ---------- DONE INJECTING  ----------
+"MoonMan-Win64-Shipping.exe"+23C26F: 48 8B D0              -  mov rdx,rax
+"MoonMan-Win64-Shipping.exe"+23C272: 48 8B CB              -  mov rcx,rbx
+"MoonMan-Win64-Shipping.exe"+23C275: 41 FF 91 00 02 00 00  -  call qword ptr [r9+00000200]
+"MoonMan-Win64-Shipping.exe"+23C27C: 4C 8B 44 24 60        -  mov r8,[rsp+60]
+"MoonMan-Win64-Shipping.exe"+23C281: FF C5                 -  inc ebp
+"MoonMan-Win64-Shipping.exe"+23C283: E9 58 FF FF FF        -  jmp MoonMan-Win64-Shipping.exe+23C1E0
+"MoonMan-Win64-Shipping.exe"+23C288: 4C 8B 44 24 60        -  mov r8,[rsp+60]
+"MoonMan-Win64-Shipping.exe"+23C28D: 4D 85 C0              -  test r8,r8
+"MoonMan-Win64-Shipping.exe"+23C290: 48 8D 4C 24 20        -  lea rcx,[rsp+20]
+"MoonMan-Win64-Shipping.exe"+23C295: 49 0F 45 CD           -  cmovne rcx,r13
+}
+//code from here till the end of the code will be used to disable the cheat
+godmode:
+db 41 FF 54 C5 00
+unregisterSymbol(godmode)
+dealloc(newmem1)
+{
+// ORIGINAL CODE - INJECTION POINT: "MoonMan-Win64-Shipping.exe"+76C796
+
+"MoonMan-Win64-Shipping.exe"+76C775: 48 8B CE                 -  mov rcx,rsi
+"MoonMan-Win64-Shipping.exe"+76C778: FF 50 08                 -  call qword ptr [rax+08]
+"MoonMan-Win64-Shipping.exe"+76C77B: 49 8B 46 20              -  mov rax,[r14+20]
+"MoonMan-Win64-Shipping.exe"+76C77F: 49 8B D6                 -  mov rdx,r14
+"MoonMan-Win64-Shipping.exe"+76C782: 4D 8B 46 38              -  mov r8,[r14+38]
+"MoonMan-Win64-Shipping.exe"+76C786: 0F B6 08                 -  movzx ecx,byte ptr [rax]
+"MoonMan-Win64-Shipping.exe"+76C789: 48 FF C0                 -  inc rax
+"MoonMan-Win64-Shipping.exe"+76C78C: 49 89 46 20              -  mov [r14+20],rax
+"MoonMan-Win64-Shipping.exe"+76C790: 8B C1                    -  mov eax,ecx
+"MoonMan-Win64-Shipping.exe"+76C792: 49 8B 4E 18              -  mov rcx,[r14+18]
+// ---------- INJECTING HERE ----------
+"MoonMan-Win64-Shipping.exe"+76C796: 41 FF 54 C5 00           -  call qword ptr [r13+rax*8+00]
+// ---------- DONE INJECTING  ----------
+"MoonMan-Win64-Shipping.exe"+76C79B: 48 85 DB                 -  test rbx,rbx
+"MoonMan-Win64-Shipping.exe"+76C79E: 74 22                    -  je MoonMan-Win64-Shipping.exe+76C7C2
+"MoonMan-Win64-Shipping.exe"+76C7A0: 48 85 FF                 -  test rdi,rdi
+"MoonMan-Win64-Shipping.exe"+76C7A3: 74 1D                    -  je MoonMan-Win64-Shipping.exe+76C7C2
+"MoonMan-Win64-Shipping.exe"+76C7A5: 48 8B 47 38              -  mov rax,[rdi+38]
+"MoonMan-Win64-Shipping.exe"+76C7A9: 48 C1 E8 24              -  shr rax,24
+"MoonMan-Win64-Shipping.exe"+76C7AD: F6 D0                    -  not al
+"MoonMan-Win64-Shipping.exe"+76C7AF: A8 01                    -  test al,01
+"MoonMan-Win64-Shipping.exe"+76C7B1: 74 0F                    -  je MoonMan-Win64-Shipping.exe+76C7C2
+"MoonMan-Win64-Shipping.exe"+76C7B3: 48 8B 07                 -  mov rax,[rdi]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1962</ID>
+      <Description>"inf. Flashlight"</Description>
+      <VariableType>Byte</VariableType>
+      <Address>flashlightFlag</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1963</ID>
+      <Description>"inf. Oxygen"</Description>
+      <VariableType>Byte</VariableType>
+      <Address>oxygenFlag</Address>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

@@ -1,0 +1,1636 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="29">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>163</ID>
+      <Description>"godmode"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Genesis-Win64-Shipping.exe
+  Version: 25.02.2020 deluxe edition
+  Date   : 05.03.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+aobscanmodule(health,Genesis-Win64-Shipping.exe,4C 8B 0F 4C 8D 44 24 68 48 8B D0 48 8B CF)
+alloc(newmem,$1024,health)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+push rdx
+lea rdx,[rdi]
+mov [playerPointer],rdx
+pop rdx
+
+originalcode:
+mov r9,[rdi]
+lea r8,[rsp+68]
+
+exit:
+jmp returnhere
+
+playerPointer:
+dq 0
+
+health:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+registerSymbol(health)
+registerSymbol(playerPointer)
+aobscanmodule(blood,Genesis-Win64-Shipping.exe,F3 0F 11 34 08 44 39 6C 37 38)
+alloc(newmem1,2048,blood)
+label(returnhere1)
+label(originalcode1)
+label(exit1)
+
+newmem1: //this is allocated memory, you have read,write,execute access
+push rbx
+push rdx
+lea rbx,[rax+rcx]
+mov rdx,[playerPointer]
+add rdx,7F0
+cmp rbx,rdx
+je exit1
+originalcode1:
+pop rbx
+pop rdx
+movss [rax+rcx],xmm6
+jmp returnhere1
+
+
+exit1:
+add rdx,54
+mov [rdx],(float)999
+pop rbx
+pop rdx
+jmp returnhere1
+
+blood:
+jmp newmem1
+returnhere1:
+registerSymbol(blood)
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(health2,Genesis-Win64-Shipping.exe,49 89 46 20 8B C1 49 8B 4E 18 41 FF 54 C5 00)
+alloc(newmem2,2048,health2)
+label(returnhere2)
+label(originalcode2)
+label(code2)
+label(exit2)
+
+newmem2: //this is allocated memory, you have read,write,execute access
+//place your code here
+call qword ptr [r13+rax*8+00]
+
+originalcode2:
+push rbx
+mov rbx,[playerPointer]
+add rbx,844
+cmp rax,rbx
+jne code2
+mov [rbx],(float)999
+code2:
+pop rbx
+test rbx,rbx
+
+exit2:
+jmp returnhere2
+
+health2+A:
+jmp newmem2
+nop
+nop
+nop
+returnhere2:
+registerSymbol(health2)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+health:
+db 4C 8B 0F 4C 8D 44 24 68
+unregisterSymbol(health)
+unregisterSymbol(playerPointer)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "Genesis-Win64-Shipping.exe"+1998E24
+
+"Genesis-Win64-Shipping.exe"+1998DFF: 84 C0                 -  test al,al
+"Genesis-Win64-Shipping.exe"+1998E01: 74 36                 -  je Genesis-Win64-Shipping.exe+1998E39
+"Genesis-Win64-Shipping.exe"+1998E03: 48 8B 5E 10           -  mov rbx,[rsi+10]
+"Genesis-Win64-Shipping.exe"+1998E07: 48 8B CB              -  mov rcx,rbx
+"Genesis-Win64-Shipping.exe"+1998E0A: F3 0F 11 74 24 68     -  movss [rsp+68],xmm6
+"Genesis-Win64-Shipping.exe"+1998E10: E8 5B 96 E2 FE        -  call Genesis-Win64-Shipping.exe+7C2470
+"Genesis-Win64-Shipping.exe"+1998E15: 48 8B 53 08           -  mov rdx,[rbx+08]
+"Genesis-Win64-Shipping.exe"+1998E19: 48 8B C8              -  mov rcx,rax
+"Genesis-Win64-Shipping.exe"+1998E1C: 48 8B F8              -  mov rdi,rax
+"Genesis-Win64-Shipping.exe"+1998E1F: E8 0C D1 E0 FE        -  call Genesis-Win64-Shipping.exe+7A5F30
+// ---------- INJECTING HERE ----------
+"Genesis-Win64-Shipping.exe"+1998E24: 4C 8B 0F              -  mov r9,[rdi]
+"Genesis-Win64-Shipping.exe"+1998E27: 4C 8D 44 24 68        -  lea r8,[rsp+68]
+// ---------- DONE INJECTING  ----------
+"Genesis-Win64-Shipping.exe"+1998E2C: 48 8B D0              -  mov rdx,rax
+"Genesis-Win64-Shipping.exe"+1998E2F: 48 8B CF              -  mov rcx,rdi
+"Genesis-Win64-Shipping.exe"+1998E32: 41 FF 91 10 02 00 00  -  call qword ptr [r9+00000210]
+"Genesis-Win64-Shipping.exe"+1998E39: 48 83 C6 28           -  add rsi,28
+"Genesis-Win64-Shipping.exe"+1998E3D: 49 3B F6              -  cmp rsi,r14
+"Genesis-Win64-Shipping.exe"+1998E40: 0F 85 22 FF FF FF     -  jne Genesis-Win64-Shipping.exe+1998D68
+"Genesis-Win64-Shipping.exe"+1998E46: 48 8B 35 CB A8 5B 01  -  mov rsi,[Genesis-Win64-Shipping.exe+2F53718]
+"Genesis-Win64-Shipping.exe"+1998E4D: 48 63 05 CC A8 5B 01  -  movsxd  rax,dword ptr [Genesis-Win64-Shipping.exe+2F53720]
+"Genesis-Win64-Shipping.exe"+1998E54: 4C 8D 34 40           -  lea r14,[rax+rax*2]
+"Genesis-Win64-Shipping.exe"+1998E58: 49 C1 E6 04           -  shl r14,04
+}
+blood:
+db F3 0F 11 34 08
+unregisterSymbol(blood)
+dealloc(newmem1)
+{
+// ORIGINAL CODE - INJECTION POINT: "Genesis-Win64-Shipping.exe"+1955869
+
+"Genesis-Win64-Shipping.exe"+1955846: E8 95 47 CE FF        -  call Genesis-Win64-Shipping.exe+1639FE0
+"Genesis-Win64-Shipping.exe"+195584B: 48 8B 55 CF           -  mov rdx,[rbp-31]
+"Genesis-Win64-Shipping.exe"+195584F: 48 85 D2              -  test rdx,rdx
+"Genesis-Win64-Shipping.exe"+1955852: 75 CC                 -  jne Genesis-Win64-Shipping.exe+1955820
+"Genesis-Win64-Shipping.exe"+1955854: 49 8B D5              -  mov rdx,r13
+"Genesis-Win64-Shipping.exe"+1955857: 48 8B 4D 67           -  mov rcx,[rbp+67]
+"Genesis-Win64-Shipping.exe"+195585B: 48 89 54 37 28        -  mov [rdi+rsi+28],rdx
+"Genesis-Win64-Shipping.exe"+1955860: 48 85 D2              -  test rdx,rdx
+"Genesis-Win64-Shipping.exe"+1955863: 74 09                 -  je Genesis-Win64-Shipping.exe+195586E
+"Genesis-Win64-Shipping.exe"+1955865: 48 63 42 44           -  movsxd  rax,dword ptr [rdx+44]
+// ---------- INJECTING HERE ----------
+"Genesis-Win64-Shipping.exe"+1955869: F3 0F 11 34 08        -  movss [rax+rcx],xmm6
+// ---------- DONE INJECTING  ----------
+"Genesis-Win64-Shipping.exe"+195586E: 44 39 6C 37 38        -  cmp [rdi+rsi+38],r13d
+"Genesis-Win64-Shipping.exe"+1955873: 74 18                 -  je Genesis-Win64-Shipping.exe+195588D
+"Genesis-Win64-Shipping.exe"+1955875: 48 8B 4C 37 30        -  mov rcx,[rdi+rsi+30]
+"Genesis-Win64-Shipping.exe"+195587A: 48 85 C9              -  test rcx,rcx
+"Genesis-Win64-Shipping.exe"+195587D: 74 0E                 -  je Genesis-Win64-Shipping.exe+195588D
+"Genesis-Win64-Shipping.exe"+195587F: 48 8B 01              -  mov rax,[rcx]
+"Genesis-Win64-Shipping.exe"+1955882: FF 50 28              -  call qword ptr [rax+28]
+"Genesis-Win64-Shipping.exe"+1955885: 84 C0                 -  test al,al
+"Genesis-Win64-Shipping.exe"+1955887: 74 04                 -  je Genesis-Win64-Shipping.exe+195588D
+"Genesis-Win64-Shipping.exe"+1955889: B0 01                 -  mov al,01
+}
+health2+A:
+db 41 FF 54 C5 00 48 85 DB
+unregisterSymbol(health2)
+dealloc(newmem2)
+{
+// ORIGINAL CODE - INJECTION POINT: "Genesis-Win64-Shipping.exe"+7BB426
+
+"Genesis-Win64-Shipping.exe"+7BB405: 48 8B CE                 -  mov rcx,rsi
+"Genesis-Win64-Shipping.exe"+7BB408: FF 50 08                 -  call qword ptr [rax+08]
+"Genesis-Win64-Shipping.exe"+7BB40B: 49 8B 46 20              -  mov rax,[r14+20]
+"Genesis-Win64-Shipping.exe"+7BB40F: 49 8B D6                 -  mov rdx,r14
+"Genesis-Win64-Shipping.exe"+7BB412: 4D 8B 46 38              -  mov r8,[r14+38]
+"Genesis-Win64-Shipping.exe"+7BB416: 0F B6 08                 -  movzx ecx,byte ptr [rax]
+"Genesis-Win64-Shipping.exe"+7BB419: 48 FF C0                 -  inc rax
+"Genesis-Win64-Shipping.exe"+7BB41C: 49 89 46 20              -  mov [r14+20],rax
+"Genesis-Win64-Shipping.exe"+7BB420: 8B C1                    -  mov eax,ecx
+"Genesis-Win64-Shipping.exe"+7BB422: 49 8B 4E 18              -  mov rcx,[r14+18]
+// ---------- INJECTING HERE ----------
+"Genesis-Win64-Shipping.exe"+7BB426: 41 FF 54 C5 00           -  call qword ptr [r13+rax*8+00]
+// ---------- DONE INJECTING  ----------
+"Genesis-Win64-Shipping.exe"+7BB42B: 48 85 DB                 -  test rbx,rbx
+"Genesis-Win64-Shipping.exe"+7BB42E: 74 22                    -  je Genesis-Win64-Shipping.exe+7BB452
+"Genesis-Win64-Shipping.exe"+7BB430: 48 85 FF                 -  test rdi,rdi
+"Genesis-Win64-Shipping.exe"+7BB433: 74 1D                    -  je Genesis-Win64-Shipping.exe+7BB452
+"Genesis-Win64-Shipping.exe"+7BB435: 48 8B 47 38              -  mov rax,[rdi+38]
+"Genesis-Win64-Shipping.exe"+7BB439: 48 C1 E8 24              -  shr rax,24
+"Genesis-Win64-Shipping.exe"+7BB43D: F6 D0                    -  not al
+"Genesis-Win64-Shipping.exe"+7BB43F: A8 01                    -  test al,01
+"Genesis-Win64-Shipping.exe"+7BB441: 74 0F                    -  je Genesis-Win64-Shipping.exe+7BB452
+"Genesis-Win64-Shipping.exe"+7BB443: 48 8B 07                 -  mov rax,[rdi]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>275</ID>
+      <Description>"inf. Ammo"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Genesis-Win64-Shipping.exe
+  Version: 25.02.2020 deluxe edition
+  Date   : 05.03.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(ammo, Genesis-Win64-Shipping.exe, 48 8B 80 48 02 00 00 48 85 C0 7? ?? F3 0F 10 B8 80 02 00 00)
+alloc(newmem,$1024,ammo)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+push rbx
+mov rbx,[rax+00000248]
+lea rbx,[rbx+378]
+mov [ammoPtr],rbx
+pop rbx
+
+originalcode:
+mov rax,[rax+00000248]
+
+exit:
+jmp returnhere
+
+ammoPtr:
+dq 0
+
+ammo:
+jmp newmem
+nop
+nop
+returnhere:
+
+aobscanmodule(ammo2,Genesis-Win64-Shipping.exe,48 63 C8 48 03 0B 49 8B 06 4C 8B C1 49 8B D7)
+alloc(newmem1,2048,ammo2)
+label(returnhere1)
+label(originalcode1)
+label(exit1)
+
+newmem1: //this is allocated memory, you have read,write,execute access
+movsxd  rcx,eax
+
+cmp rbx,[ammoPtr]
+jne originalcode1
+push rax
+mov rax,[rbx]
+mov [rax+28],#999
+mov [rax+30],#999
+mov [rax+34],#999
+mov [rax+38],#999
+mov [rax+3C],#999
+mov [rax+40],#999
+mov [rax+44],#999
+mov [rax+48],#999
+mov [rax+4C],#999
+mov [rax+30],#999
+mov [rax+34],#999
+mov [rax+38],#999
+mov [rax+3C],#999
+mov [rax+50],#999
+mov [rax+54],#999
+mov [rax+58],#999
+mov [rax+5C],#999
+mov [rax+60],#999
+mov [rax+64],#999
+mov [rax+68],#999
+mov [rax+6C],#999
+mov [rax+70],#999
+mov [rax+74],#999
+mov [rax+78],#999
+mov [rax+7C],#999
+pop rax
+
+originalcode1:
+add rcx,[rbx]
+
+exit1:
+jmp returnhere1
+
+ammo2:
+jmp newmem1
+nop
+returnhere1:
+
+registerSymbol(ammo)
+registerSymbol(ammo2)
+registerSymbol(ammoPtr)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+ammo:
+db 48 8B 80 48 02 00 00
+unregisterSymbol(ammo)
+unregisterSymbol(ammoPtr)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "Genesis-Win64-Shipping.exe"+17C7E85
+
+"Genesis-Win64-Shipping.exe"+17C7E5E: 48 8B 49 50                 -  mov rcx,[rcx+50]
+"Genesis-Win64-Shipping.exe"+17C7E62: EB 03                       -  jmp Genesis-Win64-Shipping.exe+17C7E67
+"Genesis-Win64-Shipping.exe"+17C7E64: 48 8B CB                    -  mov rcx,rbx
+"Genesis-Win64-Shipping.exe"+17C7E67: 0F 29 BC 24 B0 00 00 00     -  movaps [rsp+000000B0],xmm7
+"Genesis-Win64-Shipping.exe"+17C7E6F: 48 85 C9                    -  test rcx,rcx
+"Genesis-Win64-Shipping.exe"+17C7E72: 74 20                       -  je Genesis-Win64-Shipping.exe+17C7E94
+"Genesis-Win64-Shipping.exe"+17C7E74: E8 C7 71 1E 00              -  call Genesis-Win64-Shipping.exe+19AF040
+"Genesis-Win64-Shipping.exe"+17C7E79: 48 85 C0                    -  test rax,rax
+"Genesis-Win64-Shipping.exe"+17C7E7C: 74 16                       -  je Genesis-Win64-Shipping.exe+17C7E94
+"Genesis-Win64-Shipping.exe"+17C7E7E: 48 8B 80 48 02 00 00        -  mov rax,[rax+00000248]
+// ---------- INJECTING HERE ----------
+"Genesis-Win64-Shipping.exe"+17C7E85: 48 85 C0                    -  test rax,rax
+"Genesis-Win64-Shipping.exe"+17C7E88: 74 0A                       -  je Genesis-Win64-Shipping.exe+17C7E94
+// ---------- DONE INJECTING  ----------
+"Genesis-Win64-Shipping.exe"+17C7E8A: F3 0F 10 B8 80 02 00 00     -  movss xmm7,[rax+00000280]
+"Genesis-Win64-Shipping.exe"+17C7E92: EB 03                       -  jmp Genesis-Win64-Shipping.exe+17C7E97
+"Genesis-Win64-Shipping.exe"+17C7E94: 0F 57 FF                    -  xorps xmm7,xmm7
+"Genesis-Win64-Shipping.exe"+17C7E97: 44 8B 57 28                 -  mov r10d,[rdi+28]
+"Genesis-Win64-Shipping.exe"+17C7E9B: 48 8D 57 10                 -  lea rdx,[rdi+10]
+"Genesis-Win64-Shipping.exe"+17C7E9F: 89 5D 97                    -  mov [rbp-69],ebx
+"Genesis-Win64-Shipping.exe"+17C7EA2: 8B CB                       -  mov ecx,ebx
+"Genesis-Win64-Shipping.exe"+17C7EA4: C7 45 9B 01 00 00 00        -  mov [rbp-65],00000001
+"Genesis-Win64-Shipping.exe"+17C7EAB: 48 89 55 9F                 -  mov [rbp-61],rdx
+"Genesis-Win64-Shipping.exe"+17C7EAF: C7 45 A7 FF FF FF FF        -  mov [rbp-59],FFFFFFFF
+}
+ammo2:
+db 48 63 C8 48 03 0B
+unregisterSymbol(ammo2)
+dealloc(newmem1)
+{
+// ORIGINAL CODE - INJECTION POINT: "Genesis-Win64-Shipping.exe"+1632554
+
+"Genesis-Win64-Shipping.exe"+163253C: 45 85 C0                    -  test r8d,r8d
+"Genesis-Win64-Shipping.exe"+163253F: 78 3B                       -  js Genesis-Win64-Shipping.exe+163257C
+"Genesis-Win64-Shipping.exe"+1632541: 8B 49 08                    -  mov ecx,[rcx+08]
+"Genesis-Win64-Shipping.exe"+1632544: 44 3B C1                    -  cmp r8d,ecx
+"Genesis-Win64-Shipping.exe"+1632547: 7D 33                       -  jnl Genesis-Win64-Shipping.exe+163257C
+"Genesis-Win64-Shipping.exe"+1632549: 85 C9                       -  test ecx,ecx
+"Genesis-Win64-Shipping.exe"+163254B: 75 04                       -  jne Genesis-Win64-Shipping.exe+1632551
+"Genesis-Win64-Shipping.exe"+163254D: 33 C9                       -  xor ecx,ecx
+"Genesis-Win64-Shipping.exe"+163254F: EB 09                       -  jmp Genesis-Win64-Shipping.exe+163255A
+"Genesis-Win64-Shipping.exe"+1632551: 0F AF C5                    -  imul eax,ebp
+// ---------- INJECTING HERE ----------
+"Genesis-Win64-Shipping.exe"+1632554: 48 63 C8                    -  movsxd  rcx,eax
+"Genesis-Win64-Shipping.exe"+1632557: 48 03 0B                    -  add rcx,[rbx]
+// ---------- DONE INJECTING  ----------
+"Genesis-Win64-Shipping.exe"+163255A: 49 8B 06                    -  mov rax,[r14]
+"Genesis-Win64-Shipping.exe"+163255D: 4C 8B C1                    -  mov r8,rcx
+"Genesis-Win64-Shipping.exe"+1632560: 49 8B D7                    -  mov rdx,r15
+"Genesis-Win64-Shipping.exe"+1632563: 49 8B CE                    -  mov rcx,r14
+"Genesis-Win64-Shipping.exe"+1632566: 4C 8B 74 24 60              -  mov r14,[rsp+60]
+"Genesis-Win64-Shipping.exe"+163256B: 48 83 C4 68                 -  add rsp,68
+"Genesis-Win64-Shipping.exe"+163256F: 41 5F                       -  pop r15
+"Genesis-Win64-Shipping.exe"+1632571: 41 5D                       -  pop r13
+"Genesis-Win64-Shipping.exe"+1632573: 5D                          -  pop rbp
+"Genesis-Win64-Shipping.exe"+1632574: 5B                          -  pop rbx
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>323</ID>
+      <Description>"inf. Shield"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Genesis-Win64-Shipping.exe
+  Version: 25.02.2020 deluxe edition
+  Date   : 03.03.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+{$lua}
+address_identifier = allocateSharedMemory("address_identifier",8)
+aobresult = AOBScan("48 8B 43 20 3? C9 F3 0F 10 44 24 38 48 85 C0 0F 95 C1 48 03 C8 0F 2E 44 24 40 48 89 4B 20","+X")
+local counter = aobresult.Count - 1
+if (aobresult.Count&gt;0) then
+     writeBytes(address_identifier, qwordToByteTable(getAddress(aobresult[3])))
+end
+{$asm}
+alloc(newmem,$1024,[address_identifier])
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [rdx],(float)1
+
+originalcode:
+mov rax,[rbx+20]
+xor ecx,ecx
+
+exit:
+jmp returnhere
+
+[address_identifier]:
+jmp newmem
+nop
+returnhere:
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+[address_identifier]:
+db 48 8B 43 20 33 C9
+dealloc(address_identifier)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "Genesis-Win64-Shipping.exe"+1A66F4C
+
+"Genesis-Win64-Shipping.exe"+1A66F1E: 74 10                    -  je Genesis-Win64-Shipping.exe+1A66F30
+"Genesis-Win64-Shipping.exe"+1A66F20: 48 8B 53 18              -  mov rdx,[rbx+18]
+"Genesis-Win64-Shipping.exe"+1A66F24: 4C 8D 44 24 40           -  lea r8,[rsp+40]
+"Genesis-Win64-Shipping.exe"+1A66F29: E8 22 FB D4 FE           -  call Genesis-Win64-Shipping.exe+7B6A50
+"Genesis-Win64-Shipping.exe"+1A66F2E: EB 1C                    -  jmp Genesis-Win64-Shipping.exe+1A66F4C
+"Genesis-Win64-Shipping.exe"+1A66F30: 4C 8B 83 80 00 00 00     -  mov r8,[rbx+00000080]
+"Genesis-Win64-Shipping.exe"+1A66F37: 48 8D 54 24 40           -  lea rdx,[rsp+40]
+"Genesis-Win64-Shipping.exe"+1A66F3C: 49 8B 40 28              -  mov rax,[r8+28]
+"Genesis-Win64-Shipping.exe"+1A66F40: 48 89 83 80 00 00 00     -  mov [rbx+00000080],rax
+"Genesis-Win64-Shipping.exe"+1A66F47: E8 34 FB D4 FE           -  call Genesis-Win64-Shipping.exe+7B6A80
+// ---------- INJECTING HERE ----------
+"Genesis-Win64-Shipping.exe"+1A66F4C: 48 8B 43 20              -  mov rax,[rbx+20]
+"Genesis-Win64-Shipping.exe"+1A66F50: 31 C9                    -  xor ecx,ecx
+// ---------- DONE INJECTING  ----------
+"Genesis-Win64-Shipping.exe"+1A66F52: F3 0F 10 44 24 38        -  movss xmm0,[rsp+38]
+"Genesis-Win64-Shipping.exe"+1A66F58: 48 85 C0                 -  test rax,rax
+"Genesis-Win64-Shipping.exe"+1A66F5B: 0F 95 C1                 -  setne cl
+"Genesis-Win64-Shipping.exe"+1A66F5E: 48 03 C8                 -  add rcx,rax
+"Genesis-Win64-Shipping.exe"+1A66F61: 0F 2E 44 24 40           -  ucomiss xmm0,[rsp+40]
+"Genesis-Win64-Shipping.exe"+1A66F66: 48 89 4B 20              -  mov [rbx+20],rcx
+"Genesis-Win64-Shipping.exe"+1A66F6A: 74 0E                    -  je Genesis-Win64-Shipping.exe+1A66F7A
+"Genesis-Win64-Shipping.exe"+1A66F6C: C6 07 01                 -  mov byte ptr [rdi],01
+"Genesis-Win64-Shipping.exe"+1A66F6F: 48 8B 5C 24 30           -  mov rbx,[rsp+30]
+"Genesis-Win64-Shipping.exe"+1A66F74: 48 83 C4 20              -  add rsp,20
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>29</ID>
+      <Description>"inf. Energy"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Genesis-Win64-Shipping.exe
+  Version: v2.0
+  Date   : 08.12.2019
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+// если паттерн сломается, то искать по
+// 48 85 C0 41 0F 95 C1 4C 03 C8 4C 89 4A 20 8B 81 ?? ?? 00 00 41 89 00
+// найдет ~ 11 совпадение, искать среди них
+// смещение само собой поменяется
+aobscanmodule(energy,Genesis-Win64-Shipping.exe,48 85 C0 41 0F 95 C1 4C 03 C8 4C 89 4A 20 8B 81 F0 03 00 00 41 89 00 C3 CC)
+alloc(newmem,$1024,energy)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [rcx+000003F0],#9999
+
+originalcode:
+mov eax,[rcx+000003F0]
+
+exit:
+jmp returnhere
+
+energy+E:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(energy)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+energy+E:
+db 8B 81 F0 03 00 00
+unregisterSymbol(energy)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "Genesis-Win64-Shipping.exe"+4FF7F5
+
+"Genesis-Win64-Shipping.exe"+4FF7DC: C3                    -  ret
+"Genesis-Win64-Shipping.exe"+4FF7DD: CC                    -  int 3
+"Genesis-Win64-Shipping.exe"+4FF7DE: CC                    -  int 3
+"Genesis-Win64-Shipping.exe"+4FF7DF: CC                    -  int 3
+"Genesis-Win64-Shipping.exe"+4FF7E0: 48 8B 42 20           -  mov rax,[rdx+20]
+"Genesis-Win64-Shipping.exe"+4FF7E4: 45 33 C9              -  xor r9d,r9d
+"Genesis-Win64-Shipping.exe"+4FF7E7: 48 85 C0              -  test rax,rax
+"Genesis-Win64-Shipping.exe"+4FF7EA: 41 0F 95 C1           -  setne r9l
+"Genesis-Win64-Shipping.exe"+4FF7EE: 4C 03 C8              -  add r9,rax
+"Genesis-Win64-Shipping.exe"+4FF7F1: 4C 89 4A 20           -  mov [rdx+20],r9
+// ---------- INJECTING HERE ----------
+"Genesis-Win64-Shipping.exe"+4FF7F5: 8B 81 F0 03 00 00     -  mov eax,[rcx+000003F0]
+// ---------- DONE INJECTING  ----------
+"Genesis-Win64-Shipping.exe"+4FF7FB: 41 89 00              -  mov [r8],eax
+"Genesis-Win64-Shipping.exe"+4FF7FE: C3                    -  ret
+"Genesis-Win64-Shipping.exe"+4FF7FF: CC                    -  int 3
+"Genesis-Win64-Shipping.exe"+4FF800: 48 89 5C 24 08        -  mov [rsp+08],rbx
+"Genesis-Win64-Shipping.exe"+4FF805: 48 89 74 24 18        -  mov [rsp+18],rsi
+"Genesis-Win64-Shipping.exe"+4FF80A: 57                    -  push rdi
+"Genesis-Win64-Shipping.exe"+4FF80B: 48 83 EC 20           -  sub rsp,20
+"Genesis-Win64-Shipping.exe"+4FF80F: 48 83 7A 20 00        -  cmp qword ptr [rdx+20],00
+"Genesis-Win64-Shipping.exe"+4FF814: 48 8B F1              -  mov rsi,rcx
+"Genesis-Win64-Shipping.exe"+4FF817: 48 8B CA              -  mov rcx,rdx
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>330</ID>
+      <Description>"inf. Atmosphere"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Genesis-Win64-Shipping.exe
+  Version: 25.02.2020 deluxe edition
+  Date   : 06.03.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+/*aobscanmodule(atmosphere,Genesis-Win64-Shipping.exe,48 8B 01 0F 28 CE FF 90 D8 03 00 00)
+alloc(newmem,$1024,atmosphere)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+cmp [rcx+13C],0
+jne originalcode
+cmp [rcx+268],1
+jne originalcode
+cmp [rcx],0
+push rbx
+lea rbx,[rcx+430]
+mov [atmPointer],rbx
+pop rbx
+
+originalcode:
+mov rax,[rcx]
+movaps xmm1,xmm6
+
+exit:
+jmp returnhere
+
+
+atmPointer:
+dq 0
+
+atmosphere:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(atmosphere)
+registerSymbol(atmPointer)*/
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(atmosphere2,Genesis-Win64-Shipping.exe,48 8B 36 41 83 7E 08 00 7? ?? 49 8B 1E 8B 40 38)
+alloc(newmem1,2048,atmosphere2)
+label(returnhere1)
+label(originalcode1)
+label(exit1)
+
+newmem1: //this is allocated memory, you have read,write,execute access
+push rbx
+mov rbx,[atmPointer]
+cmp rbx,rsi
+jne originalcode1
+mov rbx,[rbx]
+mov [rbx+4],#999  // O2
+mov [rbx+8],#999  // NH3
+mov [rbx+C],#999  // KOH
+mov [rbx+10],#999 // N2O
+mov [rbx+14],#999 // HCI
+
+
+originalcode1:
+pop rbx
+mov rsi,[rsi]
+cmp dword ptr [r14+08],00
+
+exit1:
+jmp returnhere1
+
+atmosphere2:
+jmp newmem1
+nop
+nop
+nop
+returnhere1:
+
+registerSymbol(atmosphere2)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+/*atmosphere:
+db db 48 8B 01 0F 28 CE
+unregisterSymbol(atmosphere)
+unregisterSymbol(atmPointer)
+dealloc(newmem)*/
+{
+// ORIGINAL CODE - INJECTION POINT: "Genesis-Win64-Shipping.exe"+1366299
+
+"Genesis-Win64-Shipping.exe"+1366275: 75 10                    -  jne Genesis-Win64-Shipping.exe+1366287
+"Genesis-Win64-Shipping.exe"+1366277: 49 8B 01                 -  mov rax,[r9]
+"Genesis-Win64-Shipping.exe"+136627A: 49 8B C9                 -  mov rcx,r9
+"Genesis-Win64-Shipping.exe"+136627D: FF 90 38 04 00 00        -  call qword ptr [rax+00000438]
+"Genesis-Win64-Shipping.exe"+1366283: 84 C0                    -  test al,al
+"Genesis-Win64-Shipping.exe"+1366285: 74 1E                    -  je Genesis-Win64-Shipping.exe+13662A5
+"Genesis-Win64-Shipping.exe"+1366287: 48 8B 4B 50              -  mov rcx,[rbx+50]
+"Genesis-Win64-Shipping.exe"+136628B: 4C 8B CB                 -  mov r9,rbx
+"Genesis-Win64-Shipping.exe"+136628E: 44 8B C7                 -  mov r8d,edi
+"Genesis-Win64-Shipping.exe"+1366291: F3 0F 59 B1 C0 00 00 00  -  mulss xmm6,[rcx+000000C0]
+// ---------- INJECTING HERE ----------
+"Genesis-Win64-Shipping.exe"+1366299: 48 8B 01                 -  mov rax,[rcx]
+"Genesis-Win64-Shipping.exe"+136629C: 0F 28 CE                 -  movaps xmm1,xmm6
+// ---------- DONE INJECTING  ----------
+"Genesis-Win64-Shipping.exe"+136629F: FF 90 D8 03 00 00        -  call qword ptr [rax+000003D8]
+"Genesis-Win64-Shipping.exe"+13662A5: 48 8B 5C 24 40           -  mov rbx,[rsp+40]
+"Genesis-Win64-Shipping.exe"+13662AA: 0F 28 74 24 20           -  movaps xmm6,[rsp+20]
+"Genesis-Win64-Shipping.exe"+13662AF: 48 83 C4 30              -  add rsp,30
+"Genesis-Win64-Shipping.exe"+13662B3: 5F                       -  pop rdi
+"Genesis-Win64-Shipping.exe"+13662B4: C3                       -  ret
+"Genesis-Win64-Shipping.exe"+13662B5: CC                       -  int 3
+"Genesis-Win64-Shipping.exe"+13662B6: CC                       -  int 3
+"Genesis-Win64-Shipping.exe"+13662B7: CC                       -  int 3
+"Genesis-Win64-Shipping.exe"+13662B8: CC                       -  int 3
+}
+atmosphere2:
+db 48 8B 36 41 83 7E 08 00
+unregisterSymbol(atmosphere2)
+dealloc(newmem1)
+{
+// ORIGINAL CODE - INJECTION POINT: "Genesis-Win64-Shipping.exe"+76717E
+
+"Genesis-Win64-Shipping.exe"+76715C: E8 AF D1 00 00                    -  call Genesis-Win64-Shipping.exe+774310
+"Genesis-Win64-Shipping.exe"+767161: 83 7E 08 00                       -  cmp dword ptr [rsi+08],00
+"Genesis-Win64-Shipping.exe"+767165: 49 8B 47 70                       -  mov rax,[r15+70]
+"Genesis-Win64-Shipping.exe"+767169: 48 63 48 34                       -  movsxd  rcx,dword ptr [rax+34]
+"Genesis-Win64-Shipping.exe"+76716D: 75 0F                             -  jne Genesis-Win64-Shipping.exe+76717E
+"Genesis-Win64-Shipping.exe"+76716F: 48 8B F3                          -  mov rsi,rbx
+"Genesis-Win64-Shipping.exe"+767172: EB 0D                             -  jmp Genesis-Win64-Shipping.exe+767181
+"Genesis-Win64-Shipping.exe"+767174: 85 ED                             -  test ebp,ebp
+"Genesis-Win64-Shipping.exe"+767176: 0F 84 8E 00 00 00                 -  je Genesis-Win64-Shipping.exe+76720A
+"Genesis-Win64-Shipping.exe"+76717C: EB A8                             -  jmp Genesis-Win64-Shipping.exe+767126
+// ---------- INJECTING HERE ----------
+"Genesis-Win64-Shipping.exe"+76717E: 48 8B 36                          -  mov rsi,[rsi]
+"Genesis-Win64-Shipping.exe"+767181: 41 83 7E 08 00                    -  cmp dword ptr [r14+08],00
+// ---------- DONE INJECTING  ----------
+"Genesis-Win64-Shipping.exe"+767186: 74 03                             -  je Genesis-Win64-Shipping.exe+76718B
+"Genesis-Win64-Shipping.exe"+767188: 49 8B 1E                          -  mov rbx,[r14]
+"Genesis-Win64-Shipping.exe"+76718B: 8B 40 38                          -  mov eax,[rax+38]
+"Genesis-Win64-Shipping.exe"+76718E: 48 C1 E8 1E                       -  shr rax,1E
+"Genesis-Win64-Shipping.exe"+767192: F6 D0                             -  not al
+"Genesis-Win64-Shipping.exe"+767194: A8 01                             -  test al,01
+"Genesis-Win64-Shipping.exe"+767196: 74 61                             -  je Genesis-Win64-Shipping.exe+7671F9
+"Genesis-Win64-Shipping.exe"+767198: 85 ED                             -  test ebp,ebp
+"Genesis-Win64-Shipping.exe"+76719A: 7E 6E                             -  jle Genesis-Win64-Shipping.exe+76720A
+"Genesis-Win64-Shipping.exe"+76719C: 4C 8B F1                          -  mov r14,rcx
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>344</ID>
+      <Description>"unbreakable power nodes"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Genesis-Win64-Shipping.exe
+  Version: 25.02.2020 deluxe edition
+  Date   : 08.03.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(powerNodes,Genesis-Win64-Shipping.exe,48 8B 17 0F 28 CE 4C 8B 8C 24 20 01 00 00)
+alloc(newmem,2048,powerNodes)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+cmp [rdi+2C0],(float)200
+jne originalcode
+mov [rdi+2C8],(float)9999
+
+originalcode:
+mov rdx,[rdi]
+movaps xmm1,xmm6
+
+exit:
+jmp returnhere
+
+powerNodes:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(powerNodes)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+powerNodes:
+db 48 8B 17 0F 28 CE
+unregisterSymbol(powerNodes)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "Genesis-Win64-Shipping.exe"+15A3003
+
+"Genesis-Win64-Shipping.exe"+15A2FD1: 48 8D 4C 24 50           -  lea rcx,[rsp+50]
+"Genesis-Win64-Shipping.exe"+15A2FD6: 8B 46 08                 -  mov eax,[rsi+08]
+"Genesis-Win64-Shipping.exe"+15A2FD9: 48 8B D5                 -  mov rdx,rbp
+"Genesis-Win64-Shipping.exe"+15A2FDC: 89 44 24 4C              -  mov [rsp+4C],eax
+"Genesis-Win64-Shipping.exe"+15A2FE0: F3 0F 11 74 24 40        -  movss [rsp+40],xmm6
+"Genesis-Win64-Shipping.exe"+15A2FE6: 48 89 5C 24 38           -  mov [rsp+38],rbx
+"Genesis-Win64-Shipping.exe"+15A2FEB: F2 0F 11 44 24 44        -  movsd [rsp+44],xmm0
+"Genesis-Win64-Shipping.exe"+15A2FF1: E8 FA C6 C0 FF           -  call Genesis-Win64-Shipping.exe+11AF6F0
+"Genesis-Win64-Shipping.exe"+15A2FF6: 48 8B 84 24 28 01 00 00  -  mov rax,[rsp+00000128]
+"Genesis-Win64-Shipping.exe"+15A2FFE: 4C 8D 44 24 30           -  lea r8,[rsp+30]
+// ---------- INJECTING HERE ----------
+"Genesis-Win64-Shipping.exe"+15A3003: 48 8B 17                 -  mov rdx,[rdi]
+"Genesis-Win64-Shipping.exe"+15A3006: 0F 28 CE                 -  movaps xmm1,xmm6
+// ---------- DONE INJECTING  ----------
+"Genesis-Win64-Shipping.exe"+15A3009: 4C 8B 8C 24 20 01 00 00  -  mov r9,[rsp+00000120]
+"Genesis-Win64-Shipping.exe"+15A3011: 48 8B CF                 -  mov rcx,rdi
+"Genesis-Win64-Shipping.exe"+15A3014: 48 89 44 24 20           -  mov [rsp+20],rax
+"Genesis-Win64-Shipping.exe"+15A3019: FF 92 70 05 00 00        -  call qword ptr [rdx+00000570]
+"Genesis-Win64-Shipping.exe"+15A301F: 48 8B 9C 24 00 01 00 00  -  mov rbx,[rsp+00000100]
+"Genesis-Win64-Shipping.exe"+15A3027: 4C 8D 9C 24 F0 00 00 00  -  lea r11,[rsp+000000F0]
+"Genesis-Win64-Shipping.exe"+15A302F: 49 8B 6B 18              -  mov rbp,[r11+18]
+"Genesis-Win64-Shipping.exe"+15A3033: 49 8B 73 20              -  mov rsi,[r11+20]
+"Genesis-Win64-Shipping.exe"+15A3037: 41 0F 28 73 F0           -  movaps xmm6,[r11-10]
+"Genesis-Win64-Shipping.exe"+15A303C: 49 8B E3                 -  mov rsp,r11
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>42</ID>
+      <Description>"inf. Biomass storage +get value"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Genesis-Win64-Shipping.exe
+  Version: 25.02.2020 deluxe edition
+  Date   : 27.02.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+// 8B 81 ?? ?? 00 00 41 89 00 C3
+aobscanmodule(biomass,Genesis-Win64-Shipping.exe,8B 81 FC 03 00 00 41 89 00 C3 )
+alloc(newmem,$1024,biomass)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [rcx+000003F8],#9999
+push rbx
+lea rbx,[rcx+000003FC]
+mov [biomassPointer],rbx
+pop rbx
+
+originalcode:
+mov eax,[rcx+000003FC]
+
+exit:
+jmp returnhere
+
+biomassPointer:
+dq 0
+
+biomass:
+jmp newmem
+nop
+returnhere:
+
+
+registerSymbol(biomass)
+registerSymbol(biomassPointer)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+biomass:
+db 8B 81 FC 03 00 00
+unregisterSymbol(biomass)
+unregisterSymbol(biomassPointer)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "Genesis-Win64-Shipping.exe"+4FF555
+
+"Genesis-Win64-Shipping.exe"+4FF53C: CC                    -  int 3
+"Genesis-Win64-Shipping.exe"+4FF53D: CC                    -  int 3
+"Genesis-Win64-Shipping.exe"+4FF53E: CC                    -  int 3
+"Genesis-Win64-Shipping.exe"+4FF53F: CC                    -  int 3
+"Genesis-Win64-Shipping.exe"+4FF540: 48 8B 42 20           -  mov rax,[rdx+20]
+"Genesis-Win64-Shipping.exe"+4FF544: 45 33 C9              -  xor r9d,r9d
+"Genesis-Win64-Shipping.exe"+4FF547: 48 85 C0              -  test rax,rax
+"Genesis-Win64-Shipping.exe"+4FF54A: 41 0F 95 C1           -  setne r9l
+"Genesis-Win64-Shipping.exe"+4FF54E: 4C 03 C8              -  add r9,rax
+"Genesis-Win64-Shipping.exe"+4FF551: 4C 89 4A 20           -  mov [rdx+20],r9
+// ---------- INJECTING HERE ----------
+"Genesis-Win64-Shipping.exe"+4FF555: 8B 81 FC 03 00 00     -  mov eax,[rcx+000003FC]
+// ---------- DONE INJECTING  ----------
+"Genesis-Win64-Shipping.exe"+4FF55B: 41 89 00              -  mov [r8],eax
+"Genesis-Win64-Shipping.exe"+4FF55E: C3                    -  ret
+"Genesis-Win64-Shipping.exe"+4FF55F: CC                    -  int 3
+"Genesis-Win64-Shipping.exe"+4FF560: 48 8B 42 20           -  mov rax,[rdx+20]
+"Genesis-Win64-Shipping.exe"+4FF564: 45 33 C9              -  xor r9d,r9d
+"Genesis-Win64-Shipping.exe"+4FF567: 48 85 C0              -  test rax,rax
+"Genesis-Win64-Shipping.exe"+4FF56A: 41 0F 95 C1           -  setne r9l
+"Genesis-Win64-Shipping.exe"+4FF56E: 4C 03 C8              -  add r9,rax
+"Genesis-Win64-Shipping.exe"+4FF571: 4C 89 4A 20           -  mov [rdx+20],r9
+"Genesis-Win64-Shipping.exe"+4FF575: 8B 81 F8 03 00 00     -  mov eax,[rcx+000003F8]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>14</ID>
+      <Description>"get Resources Address"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Genesis-Win64-Shipping.exe
+  Version: v2.0
+  Date   : 04.08.2019
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(resources,Genesis-Win64-Shipping.exe,48 63 D2 8B 04 90 C3 33 C0 C3)
+alloc(newmem,$1024,resources)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [resousePointer],rax
+
+originalcode:
+movsxd  rdx,edx
+mov eax,[rax+rdx*4]
+
+exit:
+jmp returnhere
+
+resousePointer:
+dq 0
+
+resources:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(resources)
+registerSymbol(resousePointer)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+resources:
+db 48 63 D2 8B 04 90
+unregisterSymbol(resources)
+unregisterSymbol(resousePointer)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "Genesis-Win64-Shipping.exe"+44CC03
+
+"Genesis-Win64-Shipping.exe"+44CBEB: CC                          -  int 3
+"Genesis-Win64-Shipping.exe"+44CBEC: CC                          -  int 3
+"Genesis-Win64-Shipping.exe"+44CBED: CC                          -  int 3
+"Genesis-Win64-Shipping.exe"+44CBEE: CC                          -  int 3
+"Genesis-Win64-Shipping.exe"+44CBEF: CC                          -  int 3
+"Genesis-Win64-Shipping.exe"+44CBF0: 85 D2                       -  test edx,edx
+"Genesis-Win64-Shipping.exe"+44CBF2: 78 16                       -  js Genesis-Win64-Shipping.exe+44CC0A
+"Genesis-Win64-Shipping.exe"+44CBF4: 3B 91 C8 04 00 00           -  cmp edx,[rcx+000004C8]
+"Genesis-Win64-Shipping.exe"+44CBFA: 7D 0E                       -  jnl Genesis-Win64-Shipping.exe+44CC0A
+"Genesis-Win64-Shipping.exe"+44CBFC: 48 8B 81 C0 04 00 00        -  mov rax,[rcx+000004C0]
+// ---------- INJECTING HERE ----------
+"Genesis-Win64-Shipping.exe"+44CC03: 48 63 D2                    -  movsxd  rdx,edx
+"Genesis-Win64-Shipping.exe"+44CC06: 8B 04 90                    -  mov eax,[rax+rdx*4]
+// ---------- DONE INJECTING  ----------
+"Genesis-Win64-Shipping.exe"+44CC09: C3                          -  ret
+"Genesis-Win64-Shipping.exe"+44CC0A: 33 C0                       -  xor eax,eax
+"Genesis-Win64-Shipping.exe"+44CC0C: C3                          -  ret
+"Genesis-Win64-Shipping.exe"+44CC0D: CC                          -  int 3
+"Genesis-Win64-Shipping.exe"+44CC0E: CC                          -  int 3
+"Genesis-Win64-Shipping.exe"+44CC0F: CC                          -  int 3
+"Genesis-Win64-Shipping.exe"+44CC10: 40 55                       -  push rbp
+"Genesis-Win64-Shipping.exe"+44CC12: 53                          -  push rbx
+"Genesis-Win64-Shipping.exe"+44CC13: 56                          -  push rsi
+"Genesis-Win64-Shipping.exe"+44CC14: 41 57                       -  push r15
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>16</ID>
+          <Description>"Framework"</Description>
+          <LastState Value="1" RealAddress="3A8820E304"/>
+          <VariableType>4 Bytes</VariableType>
+          <Address>resousePointer</Address>
+          <Offsets>
+            <Offset>4</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>17</ID>
+          <Description>"Cable"</Description>
+          <LastState Value="2283851392" RealAddress="3A8820E308"/>
+          <VariableType>4 Bytes</VariableType>
+          <Address>resousePointer</Address>
+          <Offsets>
+            <Offset>8</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>18</ID>
+          <Description>"Panel"</Description>
+          <LastState Value="58" RealAddress="3A8820E30C"/>
+          <VariableType>4 Bytes</VariableType>
+          <Address>resousePointer</Address>
+          <Offsets>
+            <Offset>C</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>19</ID>
+          <Description>"Circuit"</Description>
+          <LastState Value="27" RealAddress="3A8820E310"/>
+          <VariableType>4 Bytes</VariableType>
+          <Address>resousePointer</Address>
+          <Offsets>
+            <Offset>10</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>21</ID>
+          <Description>"Centrifuge"</Description>
+          <LastState Value="35" RealAddress="3A8820E314"/>
+          <VariableType>4 Bytes</VariableType>
+          <Address>resousePointer</Address>
+          <Offsets>
+            <Offset>14</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>22</ID>
+          <Description>"Gunpowder"</Description>
+          <LastState Value="43" RealAddress="3A8820E318"/>
+          <VariableType>4 Bytes</VariableType>
+          <Address>resousePointer</Address>
+          <Offsets>
+            <Offset>18</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>24</ID>
+          <Description>"Battery"</Description>
+          <LastState Value="4294967295" RealAddress="3A8820E31C"/>
+          <VariableType>4 Bytes</VariableType>
+          <Address>resousePointer</Address>
+          <Offsets>
+            <Offset>1C</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>25</ID>
+          <Description>"Nitro"</Description>
+          <LastState Value="38" RealAddress="3A8820E320"/>
+          <VariableType>4 Bytes</VariableType>
+          <Address>resousePointer</Address>
+          <Offsets>
+            <Offset>20</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>26</ID>
+          <Description>"Jacket"</Description>
+          <LastState Value="41" RealAddress="3A8820E324"/>
+          <VariableType>4 Bytes</VariableType>
+          <Address>resousePointer</Address>
+          <Offsets>
+            <Offset>24</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>27</ID>
+          <Description>"Fuel Rod"</Description>
+          <LastState Value="15" RealAddress="3A8820E328"/>
+          <VariableType>4 Bytes</VariableType>
+          <Address>resousePointer</Address>
+          <Offsets>
+            <Offset>28</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>298</ID>
+          <Description>"Radiation Blue"</Description>
+          <LastState Value="42" RealAddress="3A8820E32C"/>
+          <VariableType>4 Bytes</VariableType>
+          <Address>resousePointer</Address>
+          <Offsets>
+            <Offset>2C</Offset>
+          </Offsets>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>83</ID>
+      <Description>"Biomass"</Description>
+      <LastState Value="35" RealAddress="3AA6DF653C"/>
+      <VariableType>4 Bytes</VariableType>
+      <Address>biomassPointer</Address>
+      <Offsets>
+        <Offset>0</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>331</ID>
+      <Description>"pointerscan result"</Description>
+      <VariableType>Float</VariableType>
+      <Address>"Genesis-Win64-Shipping.exe"+02F53CA0</Address>
+      <Offsets>
+        <Offset>2C8</Offset>
+        <Offset>0</Offset>
+        <Offset>260</Offset>
+        <Offset>2C0</Offset>
+        <Offset>40</Offset>
+        <Offset>528</Offset>
+        <Offset>130</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>332</ID>
+      <Description>"pointerscan result"</Description>
+      <VariableType>Float</VariableType>
+      <Address>"Genesis-Win64-Shipping.exe"+02F53CA0</Address>
+      <Offsets>
+        <Offset>2C8</Offset>
+        <Offset>0</Offset>
+        <Offset>260</Offset>
+        <Offset>328</Offset>
+        <Offset>40</Offset>
+        <Offset>528</Offset>
+        <Offset>130</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>334</ID>
+      <Description>"No description"</Description>
+      <VariableType>Float</VariableType>
+      <Address>C00F6984C8</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>335</ID>
+      <Description>"No description"</Description>
+      <VariableType>Float</VariableType>
+      <Address>C0050C99C8</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>336</ID>
+      <Description>"No description"</Description>
+      <VariableType>Float</VariableType>
+      <Address>7E2F1FD5C8</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>337</ID>
+      <Description>"pointerscan result"</Description>
+      <VariableType>Float</VariableType>
+      <Address>"Genesis-Win64-Shipping.exe"+02F415A0</Address>
+      <Offsets>
+        <Offset>2C8</Offset>
+        <Offset>820</Offset>
+        <Offset>20</Offset>
+        <Offset>0</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>338</ID>
+      <Description>"pointerscan result"</Description>
+      <VariableType>Float</VariableType>
+      <Address>"Genesis-Win64-Shipping.exe"+02F415A0</Address>
+      <Offsets>
+        <Offset>2C8</Offset>
+        <Offset>820</Offset>
+        <Offset>20</Offset>
+        <Offset>0</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>339</ID>
+      <Description>"pointerscan result"</Description>
+      <LastState Value="-9.344144728E33" RealAddress="3AB3B934C0"/>
+      <VariableType>Float</VariableType>
+      <Address>"Genesis-Win64-Shipping.exe"+02EE82C0</Address>
+      <Offsets>
+        <Offset>0</Offset>
+        <Offset>820</Offset>
+        <Offset>240</Offset>
+        <Offset>0</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>340</ID>
+      <Description>"pointerscan result"</Description>
+      <VariableType>Float</VariableType>
+      <Address>"Genesis-Win64-Shipping.exe"+02F351D0</Address>
+      <Offsets>
+        <Offset>2C8</Offset>
+        <Offset>18</Offset>
+        <Offset>260</Offset>
+        <Offset>ED8</Offset>
+        <Offset>270</Offset>
+        <Offset>30</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>341</ID>
+      <Description>"pointerscan result"</Description>
+      <VariableType>Float</VariableType>
+      <Address>"Genesis-Win64-Shipping.exe"+02F351D0</Address>
+      <Offsets>
+        <Offset>0</Offset>
+        <Offset>260</Offset>
+        <Offset>ED8</Offset>
+        <Offset>270</Offset>
+        <Offset>30</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>342</ID>
+      <Description>"No description"</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>8C0CCE8200</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>343</ID>
+      <Description>"No Description"</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>8C0CCE7F00</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>345</ID>
+      <Description>"No Description"</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>2CC80F9004</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>346</ID>
+      <Description>"No Description"</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>1403FE9444</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>347</ID>
+      <Description>"No Description"</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>823921C404</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>348</ID>
+      <Description>"pointerscan result"</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>"Genesis-Win64-Shipping.exe"+02F53CA0</Address>
+      <Offsets>
+        <Offset>4</Offset>
+        <Offset>430</Offset>
+        <Offset>128</Offset>
+        <Offset>348</Offset>
+        <Offset>128</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>349</ID>
+      <Description>"pointerscan result"</Description>
+      <LastState Value="4160951904" RealAddress="3AEDCC0200"/>
+      <VariableType>4 Bytes</VariableType>
+      <Address>"Genesis-Win64-Shipping.exe"+02F53CA0</Address>
+      <Offsets>
+        <Offset>0</Offset>
+        <Offset>128</Offset>
+        <Offset>348</Offset>
+        <Offset>128</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>350</ID>
+      <Description>"atm fix"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048,"Genesis-Win64-Shipping.exe"+15A1740) 
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+push rbx
+lea rbx,[rcx+430]
+mov [atmPointer],rbx
+pop rbx
+
+originalcode:
+mov rax,[rcx]
+jmp qword ptr [rax+000006D8]
+
+exit:
+jmp returnhere
+
+atmPointer:
+dq 0
+
+"Genesis-Win64-Shipping.exe"+15A1740:
+jmp newmem
+nop 4
+returnhere:
+
+registerSymbol(atmPointer)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"Genesis-Win64-Shipping.exe"+15A1740:
+mov rax,[rcx]
+jmp qword ptr [rax+000006D8]
+//Alt: db 48 8B 01 FF A0 D8 06 00 00
+unregisterSymbol(atmPointer)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>351</ID>
+      <Description>"Auto Assemble script"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048,"Genesis-Win64-Shipping.exe"+1366299) 
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//cmp [rcx+5C],#79
+//jne originalcode
+cmp [rcx+268],1
+jne originalcode
+cmp [rcx],0
+push rbx
+lea rbx,[rcx+430]
+mov [atmPointer],rbx
+pop rbx
+
+
+originalcode:
+mov rax,[rcx]
+movaps xmm1,xmm6
+
+exit:
+jmp returnhere
+
+atmPointer:
+dq 0
+
+"Genesis-Win64-Shipping.exe"+1366299:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(atmPointer)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"Genesis-Win64-Shipping.exe"+1366299:
+mov rax,[rcx]
+movaps xmm1,xmm6
+//Alt: db 48 8B 01 0F 28 CE
+unregisterSymbol(atmPointer)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>352</ID>
+      <Description>"No description"</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>7FF6D29E0019</Address>
+      <Offsets>
+        <Offset>0</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>374</ID>
+      <Description>"No description"</Description>
+      <LastState Value="2597290048" RealAddress="7FF7F8C80019"/>
+      <VariableType>4 Bytes</VariableType>
+      <Address>playerPointer</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>375</ID>
+      <Description>"Auto Assemble script"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048,"Genesis-Win64-Shipping.exe"+137049A) 
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+cmp [rcx+13C],0
+jne originalcode
+cmp [rcx+268],1
+jne originalcode
+cmp [rcx],0
+push rbx
+lea rbx,[rcx+430]
+mov [atmPointer],rbx
+/*
+mov rbx,[rbx]
+mov [rbx+4],#999  // O2
+mov [rbx+8],#999  // NH3
+mov [rbx+C],#999  // KOH
+mov [rbx+10],#999 // N2O
+mov [rbx+14],#999 // HCI*/
+pop rbx
+
+originalcode:
+mov rax,[rcx]
+mov rbx,rcx
+
+exit:
+jmp returnhere
+
+atmPointer:
+dq 0
+
+"Genesis-Win64-Shipping.exe"+137049A:
+jmp newmem
+nop
+returnhere:
+
+
+registerSymbol(atmPointer)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"Genesis-Win64-Shipping.exe"+137049A:
+mov rax,[rcx]
+mov rbx,rcx
+//Alt: db 48 8B 01 48 8B D9
+unregisterSymbol(atmPointer)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>376</ID>
+      <Description>"No description"</Description>
+      <ShowAsHex>1</ShowAsHex>
+      <VariableType>8 Bytes</VariableType>
+      <Address>atmPointer</Address>
+      <Offsets>
+        <Offset>0</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>377</ID>
+      <Description>"No description"</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>46BB9619D0</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>378</ID>
+      <Description>"No description"</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>4E96E0E470</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>379</ID>
+      <Description>"Auto Assemble script"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048,"Genesis-Win64-Shipping.exe"+774530) 
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+push rbx
+mov rbx,[atmPointer]
+cmp rbx,rdi
+jne originalcode
+mov rbx,[rdi]
+mov [rbx+4],#999  // O2
+mov [rbx+8],#999  // NH3
+mov [rbx+C],#999  // KOH
+mov [rbx+10],#999 // N2O
+mov [rbx+14],#999 // HCI
+
+originalcode:
+mov rcx,[rdi]
+mov [rdi+0C],ebx
+
+exit:
+pop rbx
+jmp returnhere
+
+"Genesis-Win64-Shipping.exe"+774530:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"Genesis-Win64-Shipping.exe"+774530:
+mov rcx,[rdi]
+mov [rdi+0C],ebx
+//Alt: db 48 8B 0F 89 5F 0C
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>380</ID>
+      <Description>"Auto Assemble script"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048,"Genesis-Win64-Shipping.exe"+137658F) 
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+push rsi
+mov rsi,[atmPointer]
+cmp rcx,rsi
+jne originalcode
+mov rsi,[rsi]
+mov [rsi+4],#999  // O2
+mov [rsi+8],#999  // NH3
+mov [rsi+C],#999  // KOH
+mov [rsi+10],#999 // N2O
+mov [rsi+14],#999 // HCI
+
+originalcode:
+mov rax,[rcx]
+mov rbx,rdx
+
+exit:
+pop rsi
+jmp returnhere
+
+"Genesis-Win64-Shipping.exe"+137658F:
+jmp newmem
+nop
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"Genesis-Win64-Shipping.exe"+137658F:
+mov rax,[rcx]
+mov rbx,rdx
+//Alt: db 48 8B 01 48 8B DA
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>381</ID>
+      <Description>"No description"</Description>
+      <LastState Value="0000003A9ACF8040" RealAddress="7FF7F8C80019"/>
+      <ShowAsHex>1</ShowAsHex>
+      <VariableType>8 Bytes</VariableType>
+      <Address>playerPointer</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>391</ID>
+      <Description>"shield falg"</Description>
+      <LastState Value="178" RealAddress="3A9ACF8F91"/>
+      <VariableType>Byte</VariableType>
+      <Address>playerPointer</Address>
+      <Offsets>
+        <Offset>F51</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>392</ID>
+      <Description>"shield timer"</Description>
+      <LastState Value="2.242077543E-43" RealAddress="3A9ACF8F98"/>
+      <VariableType>Float</VariableType>
+      <Address>playerPointer</Address>
+      <Offsets>
+        <Offset>F58</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>382</ID>
+      <Description>"No description"</Description>
+      <VariableType>Float</VariableType>
+      <Address>2F9E557D60</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>383</ID>
+      <Description>"No description"</Description>
+      <VariableType>Float</VariableType>
+      <Address>2F9746F0C4</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>384</ID>
+      <Description>"No description"</Description>
+      <VariableType>Float</VariableType>
+      <Address>2F9476A1E0</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>385</ID>
+      <Description>"No description"</Description>
+      <VariableType>Float</VariableType>
+      <Address>2F922939F4</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>386</ID>
+      <Description>"pointerscan result"</Description>
+      <LastState Value="-3.707681596E-23" RealAddress="3A9ACF8FA0"/>
+      <VariableType>Float</VariableType>
+      <Address>"Genesis-Win64-Shipping.exe"+02EE82C0</Address>
+      <Offsets>
+        <Offset>F60</Offset>
+        <Offset>110</Offset>
+        <Offset>0</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>387</ID>
+      <Description>"No description"</Description>
+      <VariableType>Float</VariableType>
+      <Address>2F9E557D58</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>388</ID>
+      <Description>"4 Bytes"</Description>
+      <LastState Value="23921004" RealAddress="3A95C86B10"/>
+      <VariableType>4 Bytes</VariableType>
+      <Address>3A95C86B10</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>389</ID>
+      <Description>"No description"</Description>
+      <LastState Value="1" RealAddress="3A95C86B11"/>
+      <VariableType>Byte</VariableType>
+      <Address>3A95C86B11</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>390</ID>
+      <Description>"Auto Assemble script"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048,"Genesis-Win64-Shipping.exe"+7BB57B) 
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+push rax
+lea rax,[rcx+r14]
+cmp rax,[val]
+//je exit
+mov al,1
+
+originalcode:
+mov [rcx+r14],al
+
+exit:
+add rsp,28
+pop rax
+jmp returnhere
+
+val:
+dq 3A95C86B11
+
+"Genesis-Win64-Shipping.exe"+7BB57B:
+jmp newmem
+nop 3
+returnhere:
+
+
+ 
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+"Genesis-Win64-Shipping.exe"+7BB57B:
+mov [rcx+r14],al
+add rsp,28
+//Alt: db 42 88 04 31 48 83 C4 28
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

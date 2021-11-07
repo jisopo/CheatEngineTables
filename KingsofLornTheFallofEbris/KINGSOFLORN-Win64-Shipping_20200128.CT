@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="29">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>6</ID>
+      <Description>"ActivateTable"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : KINGSOFLORN-Win64-Shipping.exe
+  Version: 20200128
+  Date   : 10.04.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(godmode,KINGSOFLORN-Win64-Shipping.exe,4C 8B 0F 4C 8D 44 24 68 48 8B D0)
+alloc(newmem,2048,godmode)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [playerPointer],rdi
+
+originalcode:
+mov r9,[rdi]
+lea r8,[rsp+68]
+
+exit:
+jmp returnhere
+
+playerPointer:
+dq 0
+
+godmodeFlag:
+db 0
+
+ammoFlag:
+db 0
+
+godmode:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+registerSymbol(playerPointer)
+registerSymbol(godmodeFlag)
+registerSymbol(ammoFlag)
+registerSymbol(godmode)
+aobscanmodule(godmode1, KINGSOFLORN-Win64-Shipping.exe, 41 FF 54 C5 00 48 85 DB 74 ?? 48 85 FF 74 ?? 48 8B 47 38)
+alloc(newmem1,2048,godmode1)
+label(returnhere1)
+label(originalcode1)
+label(exit1)
+
+newmem1: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode1:
+call qword ptr [r13+rax*8+00]
+
+push rcx
+push rdx
+mov rcx,[playerPointer]
+add rcx,A80
+cmp rcx,rax
+jne ammo
+cmp byte ptr [godmodeFlag],0
+je ammo
+// health
+mov rdx,[playerPointer]
+add rdx,A7C // max health
+mov rdx,[rdx]
+mov [rax],rdx
+jmp exit1
+
+ammo:
+mov rcx,[playerPointer]
+add rcx,C98
+cmp rcx,rax
+jne ammo1
+cmp byte ptr [ammoFlag],0
+je ammo1
+// arrows
+mov [rax],#9
+jmp exit1
+
+ammo1:
+mov rcx,[playerPointer]
+add rcx,B70
+cmp rcx,rax
+jne exit1
+cmp byte ptr [ammoFlag],0
+je exit1
+// bolts
+mov [rax],#9
+
+exit1:
+pop rcx
+pop rdx
+jmp returnhere1
+
+godmode1:
+jmp newmem1
+returnhere1:
+
+registersymbol(godmode1)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+godmode:
+db 4C 8B 0F 4C 8D 44 24 68
+unregisterSymbol(playerPointer)
+unregisterSymbol(godmode)
+unregisterSymbol(godmodeFlag)
+unregisterSymbol(ammoFlag)
+{
+// ORIGINAL CODE - INJECTION POINT: "KINGSOFLORN-Win64-Shipping.exe"+1B15004
+
+"KINGSOFLORN-Win64-Shipping.exe"+1B14FDF: 84 C0                 -  test al,al
+"KINGSOFLORN-Win64-Shipping.exe"+1B14FE1: 74 36                 -  je KINGSOFLORN-Win64-Shipping.exe+1B15019
+"KINGSOFLORN-Win64-Shipping.exe"+1B14FE3: 48 8B 5E 10           -  mov rbx,[rsi+10]
+"KINGSOFLORN-Win64-Shipping.exe"+1B14FE7: 48 8B CB              -  mov rcx,rbx
+"KINGSOFLORN-Win64-Shipping.exe"+1B14FEA: F3 0F 11 74 24 68     -  movss [rsp+68],xmm6
+"KINGSOFLORN-Win64-Shipping.exe"+1B14FF0: E8 6B AB CC FE        -  call KINGSOFLORN-Win64-Shipping.exe+7DFB60
+"KINGSOFLORN-Win64-Shipping.exe"+1B14FF5: 48 8B 53 08           -  mov rdx,[rbx+08]
+"KINGSOFLORN-Win64-Shipping.exe"+1B14FF9: 48 8B C8              -  mov rcx,rax
+"KINGSOFLORN-Win64-Shipping.exe"+1B14FFC: 48 8B F8              -  mov rdi,rax
+"KINGSOFLORN-Win64-Shipping.exe"+1B14FFF: E8 6C E5 CA FE        -  call KINGSOFLORN-Win64-Shipping.exe+7C3570
+// ---------- INJECTING HERE ----------
+"KINGSOFLORN-Win64-Shipping.exe"+1B15004: 4C 8B 0F              -  mov r9,[rdi]
+"KINGSOFLORN-Win64-Shipping.exe"+1B15007: 4C 8D 44 24 68        -  lea r8,[rsp+68]
+// ---------- DONE INJECTING  ----------
+"KINGSOFLORN-Win64-Shipping.exe"+1B1500C: 48 8B D0              -  mov rdx,rax
+"KINGSOFLORN-Win64-Shipping.exe"+1B1500F: 48 8B CF              -  mov rcx,rdi
+"KINGSOFLORN-Win64-Shipping.exe"+1B15012: 41 FF 91 10 02 00 00  -  call qword ptr [r9+00000210]
+"KINGSOFLORN-Win64-Shipping.exe"+1B15019: 48 83 C6 28           -  add rsi,28
+"KINGSOFLORN-Win64-Shipping.exe"+1B1501D: 49 3B F6              -  cmp rsi,r14
+"KINGSOFLORN-Win64-Shipping.exe"+1B15020: 0F 85 22 FF FF FF     -  jne KINGSOFLORN-Win64-Shipping.exe+1B14F48
+"KINGSOFLORN-Win64-Shipping.exe"+1B15026: 48 8B 35 4B 97 8F 01  -  mov rsi,[KINGSOFLORN-Win64-Shipping.exe+340E778]
+"KINGSOFLORN-Win64-Shipping.exe"+1B1502D: 48 63 05 4C 97 8F 01  -  movsxd  rax,dword ptr [KINGSOFLORN-Win64-Shipping.exe+340E780]
+"KINGSOFLORN-Win64-Shipping.exe"+1B15034: 4C 8D 34 40           -  lea r14,[rax+rax*2]
+"KINGSOFLORN-Win64-Shipping.exe"+1B15038: 49 C1 E6 04           -  shl r14,04
+}
+godmode1:
+db 41 FF 54 C5 00
+unregisterSymbol(godmode1)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "KINGSOFLORN-Win64-Shipping.exe"+7D8B26
+
+"KINGSOFLORN-Win64-Shipping.exe"+7D8B05: 48 8B CE                 -  mov rcx,rsi
+"KINGSOFLORN-Win64-Shipping.exe"+7D8B08: FF 50 08                 -  call qword ptr [rax+08]
+"KINGSOFLORN-Win64-Shipping.exe"+7D8B0B: 49 8B 46 20              -  mov rax,[r14+20]
+"KINGSOFLORN-Win64-Shipping.exe"+7D8B0F: 49 8B D6                 -  mov rdx,r14
+"KINGSOFLORN-Win64-Shipping.exe"+7D8B12: 4D 8B 46 38              -  mov r8,[r14+38]
+"KINGSOFLORN-Win64-Shipping.exe"+7D8B16: 0F B6 08                 -  movzx ecx,byte ptr [rax]
+"KINGSOFLORN-Win64-Shipping.exe"+7D8B19: 48 FF C0                 -  inc rax
+"KINGSOFLORN-Win64-Shipping.exe"+7D8B1C: 49 89 46 20              -  mov [r14+20],rax
+"KINGSOFLORN-Win64-Shipping.exe"+7D8B20: 8B C1                    -  mov eax,ecx
+"KINGSOFLORN-Win64-Shipping.exe"+7D8B22: 49 8B 4E 18              -  mov rcx,[r14+18]
+// ---------- INJECTING HERE ----------
+"KINGSOFLORN-Win64-Shipping.exe"+7D8B26: 41 FF 54 C5 00           -  call qword ptr [r13+rax*8+00]
+// ---------- DONE INJECTING  ----------
+"KINGSOFLORN-Win64-Shipping.exe"+7D8B2B: 48 85 DB                 -  test rbx,rbx
+"KINGSOFLORN-Win64-Shipping.exe"+7D8B2E: 74 22                    -  je KINGSOFLORN-Win64-Shipping.exe+7D8B52
+"KINGSOFLORN-Win64-Shipping.exe"+7D8B30: 48 85 FF                 -  test rdi,rdi
+"KINGSOFLORN-Win64-Shipping.exe"+7D8B33: 74 1D                    -  je KINGSOFLORN-Win64-Shipping.exe+7D8B52
+"KINGSOFLORN-Win64-Shipping.exe"+7D8B35: 48 8B 47 38              -  mov rax,[rdi+38]
+"KINGSOFLORN-Win64-Shipping.exe"+7D8B39: 48 C1 E8 24              -  shr rax,24
+"KINGSOFLORN-Win64-Shipping.exe"+7D8B3D: F6 D0                    -  not al
+"KINGSOFLORN-Win64-Shipping.exe"+7D8B3F: A8 01                    -  test al,01
+"KINGSOFLORN-Win64-Shipping.exe"+7D8B41: 74 0F                    -  je KINGSOFLORN-Win64-Shipping.exe+7D8B52
+"KINGSOFLORN-Win64-Shipping.exe"+7D8B43: 48 8B 07                 -  mov rax,[rdi]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>19</ID>
+      <Description>"godmode"</Description>
+      <LastState Value="1" RealAddress="7FF62115001C"/>
+      <VariableType>Byte</VariableType>
+      <Address>godmodeFlag</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>20</ID>
+      <Description>"inf.Ammo(arrows)"</Description>
+      <LastState Value="1" RealAddress="7FF62115001D"/>
+      <VariableType>Byte</VariableType>
+      <Address>ammoFlag</Address>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

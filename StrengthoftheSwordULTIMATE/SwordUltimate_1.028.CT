@@ -1,0 +1,591 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="29">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>3</ID>
+      <Description>"godmode/oneHitKill"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : SwordUltimate.exe
+  Version: v1.028
+  Date   : 09.12.2019
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(playerHealth,SwordUltimate.exe,F3 48 0F 2C 88 1C 10 00 00)
+alloc(newmem0,$1024,playerHealth)
+label(returnhere0)
+label(originalcode0)
+label(exit0)
+
+newmem0: //this is allocated memory, you have read,write,execute access
+push rbx
+lea rbx,[rax+0000101C]
+mov [playerPointer],rbx
+pop rbx
+
+originalcode0:
+cvttss2si rcx,[rax+0000101C]
+
+exit0:
+jmp returnhere0
+
+playerPointer:
+dq 0
+
+oneHitKillFlag:
+db 0
+
+zero_hp:
+dq (float)0
+
+playerHealth:
+jmp newmem0
+nop 4
+returnhere0:
+
+
+registerSymbol(playerHealth)
+registerSymbol(playerPointer)
+registerSymbol(oneHitKillFlag)
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(health,SwordUltimate.exe, F3 41 0F 11 82 1C 10 00 00 41 80 B8 88 01 00 00 00)
+alloc(newmem,$1024,health)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+movss xmm0,[r10+00001028] // full hp
+
+originalcode:
+movss [r10+0000101C],xmm0
+
+exit:
+jmp returnhere
+
+health:
+jmp newmem
+nop 4
+returnhere:
+
+
+registerSymbol(health)
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(health2,SwordUltimate.exe, F3 0F 11 83 1C 10 00 00 66 0F 6E 83 64 12 00 00 0F 5B C0)
+alloc(newmem2,$1024,health2)
+label(returnhere2)
+label(originalcode2)
+label(exit2)
+
+newmem2: //this is allocated memory, you have read,write,execute access
+//place your code here
+cmp [playerPointer],0
+je originalcode2
+push rdx
+push rsi
+mov rdx, [playerPointer]
+lea rsi,[rbx+0000101C]
+cmp rsi, rdx
+pop rsi
+pop rdx
+je exit2
+cmp byte ptr [oneHitKillFlag],#1
+jne originalcode2
+movss xmm0,[zero_hp]
+originalcode2:
+movss [rbx+0000101C],xmm0
+
+exit2:
+jmp returnhere2
+
+health2:
+jmp newmem2
+nop 3
+returnhere2:
+
+registerSymbol(health2)
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(health3,SwordUltimate.exe,F3 0F 10 83 B8 00 00 00 84 C0 74 0D 48 8B 83 B8 00 00 00 F3 0F 11 30)
+alloc(newmem3,$1024,health3)
+label(returnhere3)
+label(originalcode3)
+label(exit3)
+
+newmem3: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov rax,[rbx+000000B8]
+push rdx
+mov rdx, [playerPointer]
+cmp rax,rdx
+pop rdx
+je exit3
+cmp byte ptr [oneHitKillFlag],#1
+jne originalcode3
+movss xmm6,[zero_hp]
+originalcode3:
+movss [rax],xmm6
+
+exit3:
+jmp returnhere3
+
+health3+C:
+jmp newmem3
+nop 2
+nop
+nop
+nop
+nop
+returnhere3:
+
+registerSymbol(health3)
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(health4,SwordUltimate.exe,F3 0F 11 83 1C 10 00 00 0F 2F B3 1C 10 00 00)
+alloc(newmem4,$1024,health4)
+label(returnhere4)
+label(originalcode4)
+label(exit4)
+
+newmem4: //this is allocated memory, you have read,write,execute access
+push rdx
+push rsi
+mov rdx, [playerPointer]
+lea rsi,[rbx+0000101C]
+cmp rsi, rdx
+pop rsi
+pop rdx
+je exit4
+cmp byte ptr [oneHitKillFlag],#1
+jne originalcode4
+movss xmm0,[zero_hp]
+
+originalcode4:
+movss [rbx+0000101C],xmm0
+
+exit4:
+jmp returnhere4
+
+health4:
+jmp newmem4
+nop 3
+returnhere4:
+
+registerSymbol(health4)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+playerHealth:
+db F3 48 0F 2C 88 1C 10 00 00
+unregisterSymbol(playerHealth)
+unregisterSymbol(playerPointer)
+unregisterSymbol(oneHitKillFlag)
+dealloc(newmem0)
+{
+// ORIGINAL CODE - INJECTION POINT: "SwordUltimate.exe"+12842F
+
+"SwordUltimate.exe"+1283EC: 66 0F 7F 87 50 03 00 00     -  movdqa [rdi+00000350],xmm0
+"SwordUltimate.exe"+1283F4: 89 9F 64 03 00 00           -  mov [rdi+00000364],ebx
+"SwordUltimate.exe"+1283FA: 48 8B 97 30 02 00 00        -  mov rdx,[rdi+00000230]
+"SwordUltimate.exe"+128401: 8B 82 90 10 00 00           -  mov eax,[rdx+00001090]
+"SwordUltimate.exe"+128407: 89 87 70 03 00 00           -  mov [rdi+00000370],eax
+"SwordUltimate.exe"+12840D: 8B 82 94 10 00 00           -  mov eax,[rdx+00001094]
+"SwordUltimate.exe"+128413: 89 87 7C 03 00 00           -  mov [rdi+0000037C],eax
+"SwordUltimate.exe"+128419: F3 48 0F 2C 82 1C 10 00 00  -  cvttss2si rax,[rdx+0000101C]
+"SwordUltimate.exe"+128422: 89 87 88 03 00 00           -  mov [rdi+00000388],eax
+"SwordUltimate.exe"+128428: 48 8B 87 D0 02 00 00        -  mov rax,[rdi+000002D0]
+// ---------- INJECTING HERE ----------
+"SwordUltimate.exe"+12842F: F3 48 0F 2C 88 1C 10 00 00  -  cvttss2si rcx,[rax+0000101C]
+// ---------- DONE INJECTING  ----------
+"SwordUltimate.exe"+128438: 89 8F 94 03 00 00           -  mov [rdi+00000394],ecx
+"SwordUltimate.exe"+12843E: 8B 82 98 10 00 00           -  mov eax,[rdx+00001098]
+"SwordUltimate.exe"+128444: 89 87 A0 03 00 00           -  mov [rdi+000003A0],eax
+"SwordUltimate.exe"+12844A: 48 8D 4E 10                 -  lea rcx,[rsi+10]
+"SwordUltimate.exe"+12844E: 48 8D 54 24 38              -  lea rdx,[rsp+38]
+"SwordUltimate.exe"+128453: E8 08 6D FC FF              -  call SwordUltimate.exe+EF160
+"SwordUltimate.exe"+128458: 90                          -  nop
+"SwordUltimate.exe"+128459: 48 8D 8F 60 02 00 00        -  lea rcx,[rdi+00000260]
+"SwordUltimate.exe"+128460: 48 8B D0                    -  mov rdx,rax
+"SwordUltimate.exe"+128463: E8 D8 93 EE FF              -  call SwordUltimate.exe+11840
+}
+health:
+db F3 41 0F 11 82 1C 10 00 00
+unregisterSymbol(health)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "SwordUltimate.exe"+37876
+
+"SwordUltimate.exe"+3783F: 74 3E                       -  je SwordUltimate.exe+3787F
+"SwordUltimate.exe"+37841: F3 41 0F 2C 8A 1C 10 00 00  -  cvttss2si ecx,[r10+0000101C]
+"SwordUltimate.exe"+3784A: 45 39 98 C4 01 00 00        -  cmp [r8+000001C4],r11d
+"SwordUltimate.exe"+37851: 75 10                       -  jne SwordUltimate.exe+37863
+"SwordUltimate.exe"+37853: F3 49 0F 2C 81 B8 05 00 00  -  cvttss2si rax,[r9+000005B8]
+"SwordUltimate.exe"+3785C: 41 89 80 C4 01 00 00        -  mov [r8+000001C4],eax
+"SwordUltimate.exe"+37863: 41 2B 88 C4 01 00 00        -  sub ecx,[r8+000001C4]
+"SwordUltimate.exe"+3786A: 44 0F 49 D9                 -  cmovns r11d,ecx
+"SwordUltimate.exe"+3786E: 66 41 0F 6E C3              -  movd xmm0,r11d
+"SwordUltimate.exe"+37873: 0F 5B C0                    -  cvtdq2ps xmm0,xmm0
+// ---------- INJECTING HERE ----------
+"SwordUltimate.exe"+37876: F3 41 0F 11 82 1C 10 00 00  -  movss [r10+0000101C],xmm0
+// ---------- DONE INJECTING  ----------
+"SwordUltimate.exe"+3787F: 41 80 B8 88 01 00 00 00     -  cmp byte ptr [r8+00000188],00
+"SwordUltimate.exe"+37887: 74 3D                       -  je SwordUltimate.exe+378C6
+"SwordUltimate.exe"+37889: 49 8B 90 F8 00 00 00        -  mov rdx,[r8+000000F8]
+"SwordUltimate.exe"+37890: 48 8B 82 A0 06 00 00        -  mov rax,[rdx+000006A0]
+"SwordUltimate.exe"+37897: 48 8B 08                    -  mov rcx,[rax]
+"SwordUltimate.exe"+3789A: 48 85 C9                    -  test rcx,rcx
+"SwordUltimate.exe"+3789D: 74 12                       -  je SwordUltimate.exe+378B1
+"SwordUltimate.exe"+3789F: 90                          -  nop
+"SwordUltimate.exe"+378A0: 4C 39 40 10                 -  cmp [rax+10],r8
+"SwordUltimate.exe"+378A4: 74 20                       -  je SwordUltimate.exe+378C6
+}
+health2:
+db F3 0F 11 83 1C 10 00 00
+unregisterSymbol(health2)
+dealloc(newmem2)
+{
+// ORIGINAL CODE - INJECTION POINT: "SwordUltimate.exe"+1AF87
+
+"SwordUltimate.exe"+1AF50: 48 85 C0                    -  test rax,rax
+"SwordUltimate.exe"+1AF53: 74 0B                       -  je SwordUltimate.exe+1AF60
+"SwordUltimate.exe"+1AF55: 49 8D 4E 10                 -  lea rcx,[r14+10]
+"SwordUltimate.exe"+1AF59: 48 89 88 B8 00 00 00        -  mov [rax+000000B8],rcx
+"SwordUltimate.exe"+1AF60: 80 BB 0C 0F 00 00 00        -  cmp byte ptr [rbx+00000F0C],00
+"SwordUltimate.exe"+1AF67: 74 26                       -  je SwordUltimate.exe+1AF8F
+"SwordUltimate.exe"+1AF69: F3 41 0F 10 8E B8 05 00 00  -  movss xmm1,[r14+000005B8]
+"SwordUltimate.exe"+1AF72: F3 41 0F 59 8E 64 10 00 00  -  mulss xmm1,[r14+00001064]
+"SwordUltimate.exe"+1AF7B: F3 0F 10 83 1C 10 00 00     -  movss xmm0,[rbx+0000101C]
+"SwordUltimate.exe"+1AF83: F3 0F 5C C1                 -  subss xmm0,xmm1
+// ---------- INJECTING HERE ----------
+"SwordUltimate.exe"+1AF87: F3 0F 11 83 1C 10 00 00     -  movss [rbx+0000101C],xmm0
+// ---------- DONE INJECTING  ----------
+"SwordUltimate.exe"+1AF8F: 66 0F 6E 83 64 12 00 00     -  movd xmm0,[rbx+00001264]
+"SwordUltimate.exe"+1AF97: 0F 5B C0                    -  cvtdq2ps xmm0,xmm0
+"SwordUltimate.exe"+1AF9A: 0F 2F 83 1C 10 00 00        -  comiss xmm0,[rbx+0000101C]
+"SwordUltimate.exe"+1AFA1: 76 38                       -  jna SwordUltimate.exe+1AFDB
+"SwordUltimate.exe"+1AFA3: 80 BB 60 12 00 00 00        -  cmp byte ptr [rbx+00001260],00
+"SwordUltimate.exe"+1AFAA: 74 2F                       -  je SwordUltimate.exe+1AFDB
+"SwordUltimate.exe"+1AFAC: 48 8B 83 50 12 00 00        -  mov rax,[rbx+00001250]
+"SwordUltimate.exe"+1AFB3: 48 85 C0                    -  test rax,rax
+"SwordUltimate.exe"+1AFB6: 74 07                       -  je SwordUltimate.exe+1AFBF
+"SwordUltimate.exe"+1AFB8: C6 80 8A 00 00 00 01        -  mov byte ptr [rax+0000008A],01
+}
+health3+C:
+db 48 8B 83 B8 00 00 00 F3 0F 11 30
+unregisterSymbol(health3)
+dealloc(newmem3)
+{
+// ORIGINAL CODE - INJECTION POINT: "SwordUltimate.exe"+71EB5
+
+"SwordUltimate.exe"+71E8B: 0F 84 03 02 00 00        -  je SwordUltimate.exe+72094
+"SwordUltimate.exe"+71E91: 0F B6 80 B4 00 00 00     -  movzx eax,byte ptr [rax+000000B4]
+"SwordUltimate.exe"+71E98: 84 C0                    -  test al,al
+"SwordUltimate.exe"+71E9A: 74 0D                    -  je SwordUltimate.exe+71EA9
+"SwordUltimate.exe"+71E9C: 48 8B 8B B8 00 00 00     -  mov rcx,[rbx+000000B8]
+"SwordUltimate.exe"+71EA3: F3 0F 10 01              -  movss xmm0,[rcx]
+"SwordUltimate.exe"+71EA7: EB 08                    -  jmp SwordUltimate.exe+71EB1
+"SwordUltimate.exe"+71EA9: F3 0F 10 83 B8 00 00 00  -  movss xmm0,[rbx+000000B8]
+"SwordUltimate.exe"+71EB1: 84 C0                    -  test al,al
+"SwordUltimate.exe"+71EB3: 74 0D                    -  je SwordUltimate.exe+71EC2
+// ---------- INJECTING HERE ----------
+"SwordUltimate.exe"+71EB5: 48 8B 83 B8 00 00 00     -  mov rax,[rbx+000000B8]
+// ---------- DONE INJECTING  ----------
+"SwordUltimate.exe"+71EBC: F3 0F 11 30              -  movss [rax],xmm6
+"SwordUltimate.exe"+71EC0: EB 08                    -  jmp SwordUltimate.exe+71ECA
+"SwordUltimate.exe"+71EC2: E9 39 E1 F4 FF           -  jmp 7FF7F90E0000
+"SwordUltimate.exe"+71EC7: 0F 1F 00                 -  nop [rax]
+"SwordUltimate.exe"+71ECA: 0F 2E C6                 -  ucomiss xmm0,xmm6
+"SwordUltimate.exe"+71ECD: 74 23                    -  je SwordUltimate.exe+71EF2
+"SwordUltimate.exe"+71ECF: 40 38 B7 80 01 00 00     -  cmp [rdi+00000180],sil
+"SwordUltimate.exe"+71ED6: 75 11                    -  jne SwordUltimate.exe+71EE9
+"SwordUltimate.exe"+71ED8: 48 8B CB                 -  mov rcx,rbx
+"SwordUltimate.exe"+71EDB: E8 E0 BB 0D 00           -  call SwordUltimate.exe+14DAC0
+}
+health4:
+db F3 0F 11 83 1C 10 00 00
+unregisterSymbol(health4)
+dealloc(newmem4)
+{
+// ORIGINAL CODE - INJECTION POINT: "SwordUltimate.exe"+1A886
+
+"SwordUltimate.exe"+1A84F: 45 84 C9                    -  test r9l,r9l
+"SwordUltimate.exe"+1A852: 0F 85 91 00 00 00           -  jne SwordUltimate.exe+1A8E9
+"SwordUltimate.exe"+1A858: EB 09                       -  jmp SwordUltimate.exe+1A863
+"SwordUltimate.exe"+1A85A: 44 0F B6 8C 24 70 01 00 00  -  movzx r9d,byte ptr [rsp+00000170]
+"SwordUltimate.exe"+1A863: 0F 2E B3 74 10 00 00        -  ucomiss xmm6,[rbx+00001074]
+"SwordUltimate.exe"+1A86A: 75 7D                       -  jne SwordUltimate.exe+1A8E9
+"SwordUltimate.exe"+1A86C: 80 BB 0C 0F 00 00 00        -  cmp byte ptr [rbx+00000F0C],00
+"SwordUltimate.exe"+1A873: 74 19                       -  je SwordUltimate.exe+1A88E
+"SwordUltimate.exe"+1A875: F3 0F 10 83 1C 10 00 00     -  movss xmm0,[rbx+0000101C]
+"SwordUltimate.exe"+1A87D: F3 41 0F 5C 85 B8 05 00 00  -  subss xmm0,[r13+000005B8]
+// ---------- INJECTING HERE ----------
+"SwordUltimate.exe"+1A886: F3 0F 11 83 1C 10 00 00     -  movss [rbx+0000101C],xmm0
+// ---------- DONE INJECTING  ----------
+"SwordUltimate.exe"+1A88E: 0F 2F B3 1C 10 00 00        -  comiss xmm6,[rbx+0000101C]
+"SwordUltimate.exe"+1A895: 76 06                       -  jna SwordUltimate.exe+1A89D
+"SwordUltimate.exe"+1A897: 89 BB 1C 10 00 00           -  mov [rbx+0000101C],edi
+"SwordUltimate.exe"+1A89D: 66 0F 6E 83 64 12 00 00     -  movd xmm0,[rbx+00001264]
+"SwordUltimate.exe"+1A8A5: 0F 5B C0                    -  cvtdq2ps xmm0,xmm0
+"SwordUltimate.exe"+1A8A8: 0F 2F 83 1C 10 00 00        -  comiss xmm0,[rbx+0000101C]
+"SwordUltimate.exe"+1A8AF: 76 38                       -  jna SwordUltimate.exe+1A8E9
+"SwordUltimate.exe"+1A8B1: 80 BB 60 12 00 00 00        -  cmp byte ptr [rbx+00001260],00
+"SwordUltimate.exe"+1A8B8: 74 2F                       -  je SwordUltimate.exe+1A8E9
+"SwordUltimate.exe"+1A8BA: 48 8B 83 50 12 00 00        -  mov rax,[rbx+00001250]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>245</ID>
+      <Description>"one hit Kill"</Description>
+      <VariableType>Byte</VariableType>
+      <Address>oneHitKillFlag</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>11</ID>
+      <Description>"inf. Shield/inf.ammo/inf.stamina/inf. Mana"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : SwordUltimate.exe
+  Version: v1.028
+  Date   : 09.12.2019
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(shield,SwordUltimate.exe,F3 0F 11 B3 B8 00 00 00 0F 2E C6 74)
+alloc(newmem,$1024,shield)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+cmp [rbx+48],'shie'
+jne ammo
+cmp [rbx+4C],'ldHP'
+jne ammo
+cmp byte ptr [shieldFlag],#1
+jne ammo
+//movss xmm6,[rbx+00000478] // full shield
+//movss [rbx+000000B8],xmm6
+jmp exit
+ammo:
+cmp [rbx+48],'ammo'
+jne stamina
+cmp byte ptr [ammoFlag],#1
+jne stamina
+movss xmm6,[max_ammo]
+movss [rbx+000000B8],xmm6
+jmp exit
+stamina:
+cmp [rbx+48],'Stam'
+jne Mana
+cmp byte ptr [staminaFlag],#1
+jne Mana
+//movss xmm6,[rbx+000001A8] // max stamina
+//movss [rbx+000000B8],xmm6
+jmp exit
+Mana:
+cmp [rbx+48],'Mana'
+jne originalcode
+cmp byte ptr [manaFlag],#1
+jne originalcode
+movss xmm6,[max_mana]
+movss [rbx+000000B8],xmm6
+jmp exit
+originalcode:
+movss [rbx+000000B8],xmm6
+
+exit:
+jmp returnhere
+
+max_ammo:
+dq (float)50
+
+max_mana:
+dq (float)50
+
+shieldFlag:
+db 0
+
+ammoFlag:
+db 0
+
+staminaFlag:
+db 0
+
+manaFlag:
+db 0
+
+shield:
+jmp newmem
+nop 3
+returnhere:
+
+registerSymbol(shield)
+registerSymbol(shieldFlag)
+registerSymbol(ammoFlag)
+registerSymbol(staminaFlag)
+registerSymbol(manaFlag)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+shield:
+db F3 0F 11 B3 B8 00 00 00
+unregisterSymbol(shield)
+unregisterSymbol(shieldFlag)
+unregisterSymbol(ammoFlag)
+unregisterSymbol(staminaFlag)
+unregisterSymbol(manaFlag)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "SwordUltimate.exe"+71EC2
+
+"SwordUltimate.exe"+71E9A: 74 0D                    -  je SwordUltimate.exe+71EA9
+"SwordUltimate.exe"+71E9C: 48 8B 8B B8 00 00 00     -  mov rcx,[rbx+000000B8]
+"SwordUltimate.exe"+71EA3: F3 0F 10 01              -  movss xmm0,[rcx]
+"SwordUltimate.exe"+71EA7: EB 08                    -  jmp SwordUltimate.exe+71EB1
+"SwordUltimate.exe"+71EA9: F3 0F 10 83 B8 00 00 00  -  movss xmm0,[rbx+000000B8]
+"SwordUltimate.exe"+71EB1: 84 C0                    -  test al,al
+"SwordUltimate.exe"+71EB3: 74 0D                    -  je SwordUltimate.exe+71EC2
+"SwordUltimate.exe"+71EB5: 48 8B 83 B8 00 00 00     -  mov rax,[rbx+000000B8]
+"SwordUltimate.exe"+71EBC: F3 0F 11 30              -  movss [rax],xmm6
+"SwordUltimate.exe"+71EC0: EB 08                    -  jmp SwordUltimate.exe+71ECA
+// ---------- INJECTING HERE ----------
+"SwordUltimate.exe"+71EC2: F3 0F 11 B3 B8 00 00 00  -  movss [rbx+000000B8],xmm6
+// ---------- DONE INJECTING  ----------
+"SwordUltimate.exe"+71ECA: 0F 2E C6                 -  ucomiss xmm0,xmm6
+"SwordUltimate.exe"+71ECD: 74 23                    -  je SwordUltimate.exe+71EF2
+"SwordUltimate.exe"+71ECF: 40 38 B7 80 01 00 00     -  cmp [rdi+00000180],sil
+"SwordUltimate.exe"+71ED6: 75 11                    -  jne SwordUltimate.exe+71EE9
+"SwordUltimate.exe"+71ED8: 48 8B CB                 -  mov rcx,rbx
+"SwordUltimate.exe"+71EDB: E8 E0 BB 0D 00           -  call SwordUltimate.exe+14DAC0
+"SwordUltimate.exe"+71EE0: 40 38 B7 80 01 00 00     -  cmp [rdi+00000180],sil
+"SwordUltimate.exe"+71EE7: 74 09                    -  je SwordUltimate.exe+71EF2
+"SwordUltimate.exe"+71EE9: 48 8B 4B 30              -  mov rcx,[rbx+30]
+"SwordUltimate.exe"+71EED: E8 FE A7 0D 00           -  call SwordUltimate.exe+14C6F0
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>166</ID>
+      <Description>"inf. Shield"</Description>
+      <VariableType>Byte</VariableType>
+      <Address>shieldFlag</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>167</ID>
+      <Description>"inf. Ammo"</Description>
+      <VariableType>Byte</VariableType>
+      <Address>ammoFlag</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>168</ID>
+      <Description>"inf. Stamina"</Description>
+      <VariableType>Byte</VariableType>
+      <Address>staminaFlag</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>244</ID>
+      <Description>"inf. Mana"</Description>
+      <VariableType>Byte</VariableType>
+      <Address>manaFlag</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>249</ID>
+      <Description>"Get money address"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : SwordUltimate.exe
+  Version: v1.08
+  Date   : 16.12.2019
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(money,SwordUltimate.exe,F3 0F 10 87 B8 00 00 00 0F 2E 83 B4 03 00 00)
+alloc(newmem,$1024,money)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+cmp [rdi+48],'poin'
+jne originalcode
+push rbp
+lea rbp,[rdi+000000B8]
+mov [moneyPointer],rbp
+pop rbp
+
+originalcode:
+movss xmm0,[rdi+000000B8]
+
+exit:
+jmp returnhere
+
+moneyPointer:
+dq 0
+
+money:
+jmp newmem
+nop 3
+returnhere:
+
+registerSymbol(moneyPointer)
+registerSymbol(money)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+money:
+db F3 0F 10 87 B8 00 00 00
+unregisterSymbol(moneyPointer)
+unregisterSymbol(money)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "SwordUltimate.exe"+176628
+
+"SwordUltimate.exe"+1765FB: 0F 84 FC 01 00 00        -  je SwordUltimate.exe+1767FD
+"SwordUltimate.exe"+176601: 8B 8F A8 00 00 00        -  mov ecx,[rdi+000000A8]
+"SwordUltimate.exe"+176607: 33 F6                    -  xor esi,esi
+"SwordUltimate.exe"+176609: 83 F9 01                 -  cmp ecx,01
+"SwordUltimate.exe"+17660C: 0F 85 84 00 00 00        -  jne SwordUltimate.exe+176696
+"SwordUltimate.exe"+176612: 40 38 B7 B4 00 00 00     -  cmp [rdi+000000B4],sil
+"SwordUltimate.exe"+176619: 74 0D                    -  je SwordUltimate.exe+176628
+"SwordUltimate.exe"+17661B: 48 8B 8F B8 00 00 00     -  mov rcx,[rdi+000000B8]
+"SwordUltimate.exe"+176622: F3 0F 10 01              -  movss xmm0,[rcx]
+"SwordUltimate.exe"+176626: EB 08                    -  jmp SwordUltimate.exe+176630
+// ---------- INJECTING HERE ----------
+"SwordUltimate.exe"+176628: F3 0F 10 87 B8 00 00 00  -  movss xmm0,[rdi+000000B8]
+// ---------- DONE INJECTING  ----------
+"SwordUltimate.exe"+176630: 0F 2E 83 B4 03 00 00     -  ucomiss xmm0,[rbx+000003B4]
+"SwordUltimate.exe"+176637: 0F 84 C0 01 00 00        -  je SwordUltimate.exe+1767FD
+"SwordUltimate.exe"+17663D: F3 0F 10 8B 80 05 00 00  -  movss xmm1,[rbx+00000580]
+"SwordUltimate.exe"+176645: 0F 2F CF                 -  comiss xmm1,xmm7
+"SwordUltimate.exe"+176648: 72 38                    -  jb SwordUltimate.exe+176682
+"SwordUltimate.exe"+17664A: 0F 2E C1                 -  ucomiss xmm0,xmm1
+"SwordUltimate.exe"+17664D: 75 33                    -  jne SwordUltimate.exe+176682
+"SwordUltimate.exe"+17664F: 48 8D 93 10 05 00 00     -  lea rdx,[rbx+00000510]
+"SwordUltimate.exe"+176656: 8B 42 08                 -  mov eax,[rdx+08]
+"SwordUltimate.exe"+176659: 85 C0                    -  test eax,eax
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>250</ID>
+      <Description>"Money"</Description>
+      <LastState Value="150000" RealAddress="84E73BF398"/>
+      <VariableType>Float</VariableType>
+      <Address>moneyPointer</Address>
+      <Offsets>
+        <Offset>0</Offset>
+      </Offsets>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

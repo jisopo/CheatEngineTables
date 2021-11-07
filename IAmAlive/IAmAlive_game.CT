@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="34">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>581</ID>
+      <Description>"inf.Health"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(health, IAmAlive_game.exe, F3 0F10 81 80000000  0F2F 81 90000000 76 ** 33 C0)
+alloc(newmem,$1000, health)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+fld [max]
+fstp [ecx+00000080]
+
+originalcode:
+movss xmm0,[ecx+00000080]
+
+exit:
+jmp returnhere
+
+max:
+dd (float)1800
+
+health:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+registerSymbol(health)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+health:
+db F3 0F 10 81 80 00 00 00
+dealloc(newmem)
+unregisterSymbol(health)
+{
+// ORIGINAL CODE - INJECTION POINT: "IAmAlive_game.exe"+2587FD
+
+"IAmAlive_game.exe"+2587E5: 51                       -  push ecx
+"IAmAlive_game.exe"+2587E6: D9 1C 24                 -  fstp dword ptr [esp]
+"IAmAlive_game.exe"+2587E9: FF 50 7C                 -  call dword ptr [eax+7C]
+"IAmAlive_game.exe"+2587EC: C3                       -  ret
+"IAmAlive_game.exe"+2587ED: 0F 57 C0                 -  xorps xmm0,xmm0
+"IAmAlive_game.exe"+2587F0: 33 C0                    -  xor eax,eax
+"IAmAlive_game.exe"+2587F2: 0F 2F 81 80 00 00 00     -  comiss xmm0,[ecx+00000080]
+"IAmAlive_game.exe"+2587F9: 72 01                    -  jb IAmAlive_game.exe+2587FC
+"IAmAlive_game.exe"+2587FB: 40                       -  inc eax
+"IAmAlive_game.exe"+2587FC: C3                       -  ret
+// ---------- INJECTING HERE ----------
+"IAmAlive_game.exe"+2587FD: F3 0F 10 81 80 00 00 00  -  movss xmm0,[ecx+00000080]
+// ---------- DONE INJECTING  ----------
+"IAmAlive_game.exe"+258805: 0F 2F 81 90 00 00 00     -  comiss xmm0,[ecx+00000090]
+"IAmAlive_game.exe"+25880C: 76 03                    -  jna IAmAlive_game.exe+258811
+"IAmAlive_game.exe"+25880E: 33 C0                    -  xor eax,eax
+"IAmAlive_game.exe"+258810: C3                       -  ret
+"IAmAlive_game.exe"+258811: 0F 2F 81 94 00 00 00     -  comiss xmm0,[ecx+00000094]
+"IAmAlive_game.exe"+258818: 76 04                    -  jna IAmAlive_game.exe+25881E
+"IAmAlive_game.exe"+25881A: 33 C0                    -  xor eax,eax
+"IAmAlive_game.exe"+25881C: 40                       -  inc eax
+"IAmAlive_game.exe"+25881D: C3                       -  ret
+"IAmAlive_game.exe"+25881E: 6A 02                    -  push 02
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>582</ID>
+      <Description>"inf. Ammo"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(ammo,IAmAlive_game.exe,39 87 00090000 **** 8B 0E 8B 01 FF 90 5C040000)
+alloc(newmem,$1000,ammo)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [edi+00000900],#99
+
+originalcode:
+cmp [edi+00000900],eax
+
+exit:
+jmp returnhere
+
+ammo:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(ammo)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+ammo:
+db 39 87 00 09 00 00
+dealloc(newmem)
+unregisterSymbol(ammo)
+{
+// ORIGINAL CODE - INJECTION POINT: "IAmAlive_game.exe"+25C867
+
+"IAmAlive_game.exe"+25C849: 89 86 04 09 00 00        -  mov [esi+00000904],eax
+"IAmAlive_game.exe"+25C84F: 5E                       -  pop esi
+"IAmAlive_game.exe"+25C850: C2 04 00                 -  ret 0004
+"IAmAlive_game.exe"+25C853: 56                       -  push esi
+"IAmAlive_game.exe"+25C854: 57                       -  push edi
+"IAmAlive_game.exe"+25C855: 8B F9                    -  mov edi,ecx
+"IAmAlive_game.exe"+25C857: 8D B7 80 00 00 00        -  lea esi,[edi+00000080]
+"IAmAlive_game.exe"+25C85D: 83 3E 00                 -  cmp dword ptr [esi],00
+"IAmAlive_game.exe"+25C860: 74 2F                    -  je IAmAlive_game.exe+25C891
+"IAmAlive_game.exe"+25C862: E8 1B F3 FF FF           -  call IAmAlive_game.exe+25BB82
+// ---------- INJECTING HERE ----------
+"IAmAlive_game.exe"+25C867: 39 87 00 09 00 00        -  cmp [edi+00000900],eax
+// ---------- DONE INJECTING  ----------
+"IAmAlive_game.exe"+25C86D: 7D 22                    -  jnl IAmAlive_game.exe+25C891
+"IAmAlive_game.exe"+25C86F: 8B 0E                    -  mov ecx,[esi]
+"IAmAlive_game.exe"+25C871: 8B 01                    -  mov eax,[ecx]
+"IAmAlive_game.exe"+25C873: FF 90 5C 04 00 00        -  call dword ptr [eax+0000045C]
+"IAmAlive_game.exe"+25C879: 83 F8 01                 -  cmp eax,01
+"IAmAlive_game.exe"+25C87C: 74 0E                    -  je IAmAlive_game.exe+25C88C
+"IAmAlive_game.exe"+25C87E: 8B 07                    -  mov eax,[edi]
+"IAmAlive_game.exe"+25C880: 8B CF                    -  mov ecx,edi
+"IAmAlive_game.exe"+25C882: FF 90 A0 07 00 00        -  call dword ptr [eax+000007A0]
+"IAmAlive_game.exe"+25C888: 85 C0                    -  test eax,eax
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>583</ID>
+      <Description>"inf. Stamina"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(stamina1,IAmAlive_game.exe,F3 0F11 41 28 40 C2 0800 F3 0F10 51 28 F3 0F10 59 34)
+alloc(newmem,$1000,stamina1)
+label(returnhere)
+label(originalcode)
+
+newmem: //this is allocated memory, you have read,write,execute access
+fld [ecx+34]
+fstp [ecx+28]
+jmp returnhere
+
+originalcode:
+movss [ecx+28],xmm0
+
+stamina1:
+jmp newmem
+returnhere:
+
+aobscanmodule(stamina2,IAmAlive_game.exe,F3 0F11 41 28 40 C2 0400 F3 0F10 41 28 F3 0F10 49 34 0F2F C1)
+alloc(newmem1,$1000,stamina2)
+label(returnhere1)
+label(originalcode1)
+
+newmem1: //this is allocated memory, you have read,write,execute access
+fld [ecx+34]
+fstp [ecx+28]
+jmp returnhere1
+
+originalcode1:
+movss [ecx+14],xmm0
+
+stamina2:
+jmp newmem1
+returnhere1:
+
+registerSymbol(stamina1)
+registerSymbol(stamina2)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+stamina1:
+db F3 0F 11 41 28
+stamina2:
+db F3 0F 11 41 28
+unregisterSymbol(stamina1)
+dealloc(newmem)
+unregisterSymbol(stamina2)
+dealloc(newmem1)
+{
+// ORIGINAL CODE - INJECTION POINT: "IAmAlive_game.exe"+2E20FE
+
+"IAmAlive_game.exe"+2E20DD: EB 25              -  jmp IAmAlive_game.exe+2E2104
+"IAmAlive_game.exe"+2E20DF: F3 0F 10 54 24 04  -  movss xmm2,[esp+04]
+"IAmAlive_game.exe"+2E20E5: F3 0F 59 54 24 08  -  mulss xmm2,[esp+08]
+"IAmAlive_game.exe"+2E20EB: 0F 2F C2           -  comiss xmm0,xmm2
+"IAmAlive_game.exe"+2E20EE: 77 EB              -  ja IAmAlive_game.exe+2E20DB
+"IAmAlive_game.exe"+2E20F0: F3 0F 5C CA        -  subss xmm1,xmm2
+"IAmAlive_game.exe"+2E20F4: 0F 2F C8           -  comiss xmm1,xmm0
+"IAmAlive_game.exe"+2E20F7: 72 03              -  jb IAmAlive_game.exe+2E20FC
+"IAmAlive_game.exe"+2E20F9: 0F 28 C1           -  movaps xmm0,xmm1
+"IAmAlive_game.exe"+2E20FC: 33 C0              -  xor eax,eax
+// ---------- INJECTING HERE ----------
+"IAmAlive_game.exe"+2E20FE: F3 0F 11 41 28     -  movss [ecx+28],xmm0
+// ---------- DONE INJECTING  ----------
+"IAmAlive_game.exe"+2E2103: 40                 -  inc eax
+"IAmAlive_game.exe"+2E2104: C2 08 00           -  ret 0008
+"IAmAlive_game.exe"+2E2107: F3 0F 10 51 28     -  movss xmm2,[ecx+28]
+"IAmAlive_game.exe"+2E210C: F3 0F 10 59 34     -  movss xmm3,[ecx+34]
+"IAmAlive_game.exe"+2E2111: 0F 2F D3           -  comiss xmm2,xmm3
+"IAmAlive_game.exe"+2E2114: 72 04              -  jb IAmAlive_game.exe+2E211A
+"IAmAlive_game.exe"+2E2116: 33 C0              -  xor eax,eax
+"IAmAlive_game.exe"+2E2118: EB 3B              -  jmp IAmAlive_game.exe+2E2155
+"IAmAlive_game.exe"+2E211A: F3 0F 10 49 30     -  movss xmm1,[ecx+30]
+"IAmAlive_game.exe"+2E211F: F3 0F 10 44 24 04  -  movss xmm0,[esp+04]
+}
+{
+// ORIGINAL CODE - INJECTION POINT: "IAmAlive_game.exe"+2E2099
+
+"IAmAlive_game.exe"+2E207D: 0F 57 C0                 -  xorps xmm0,xmm0
+"IAmAlive_game.exe"+2E2080: 0F 2F C1                 -  comiss xmm0,xmm1
+"IAmAlive_game.exe"+2E2083: 72 04                    -  jb IAmAlive_game.exe+2E2089
+"IAmAlive_game.exe"+2E2085: 33 C0                    -  xor eax,eax
+"IAmAlive_game.exe"+2E2087: EB 16                    -  jmp IAmAlive_game.exe+2E209F
+"IAmAlive_game.exe"+2E2089: F3 0F 5C 4C 24 04        -  subss xmm1,[esp+04]
+"IAmAlive_game.exe"+2E208F: 0F 2F C8                 -  comiss xmm1,xmm0
+"IAmAlive_game.exe"+2E2092: 72 03                    -  jb IAmAlive_game.exe+2E2097
+"IAmAlive_game.exe"+2E2094: 0F 28 C1                 -  movaps xmm0,xmm1
+"IAmAlive_game.exe"+2E2097: 33 C0                    -  xor eax,eax
+// ---------- INJECTING HERE ----------
+"IAmAlive_game.exe"+2E2099: F3 0F 11 41 28           -  movss [ecx+28],xmm0
+// ---------- DONE INJECTING  ----------
+"IAmAlive_game.exe"+2E209E: 40                       -  inc eax
+"IAmAlive_game.exe"+2E209F: C2 04 00                 -  ret 0004
+"IAmAlive_game.exe"+2E20A2: F3 0F 10 41 28           -  movss xmm0,[ecx+28]
+"IAmAlive_game.exe"+2E20A7: F3 0F 10 49 34           -  movss xmm1,[ecx+34]
+"IAmAlive_game.exe"+2E20AC: 0F 2F C1                 -  comiss xmm0,xmm1
+"IAmAlive_game.exe"+2E20AF: 72 04                    -  jb IAmAlive_game.exe+2E20B5
+"IAmAlive_game.exe"+2E20B1: 33 C0                    -  xor eax,eax
+"IAmAlive_game.exe"+2E20B3: EB 16                    -  jmp IAmAlive_game.exe+2E20CB
+"IAmAlive_game.exe"+2E20B5: F3 0F 58 44 24 04        -  addss xmm0,dword ptr [esp+04]
+"IAmAlive_game.exe"+2E20BB: 0F 2F C8                 -  comiss xmm1,xmm0
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>585</ID>
+      <Description>"inf. Tries"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(tries,IAmAlive_game.exe,8B 80 4D010000 C3 33 C0 C3)
+alloc(newmem,$1000,tries)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [eax+0000014D],#999
+
+originalcode:
+mov eax,[eax+0000014D]
+
+exit:
+jmp returnhere
+
+tries:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(tries)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+tries:
+db 8B 80 4D 01 00 00
+unregisterSymbol(tries)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "IAmAlive_game.exe"+97C90
+
+"IAmAlive_game.exe"+97C74: 8B C8              -  mov ecx,eax
+"IAmAlive_game.exe"+97C76: FF 92 C8 01 00 00  -  call dword ptr [edx+000001C8]
+"IAmAlive_game.exe"+97C7C: 85 C0              -  test eax,eax
+"IAmAlive_game.exe"+97C7E: 74 17              -  je IAmAlive_game.exe+97C97
+"IAmAlive_game.exe"+97C80: 8B C8              -  mov ecx,eax
+"IAmAlive_game.exe"+97C82: E8 37 E5 10 00     -  call IAmAlive_game.exe+1A61BE
+"IAmAlive_game.exe"+97C87: 85 C0              -  test eax,eax
+"IAmAlive_game.exe"+97C89: 74 0C              -  je IAmAlive_game.exe+97C97
+"IAmAlive_game.exe"+97C8B: 83 C0 14           -  add eax,14
+"IAmAlive_game.exe"+97C8E: 74 07              -  je IAmAlive_game.exe+97C97
+// ---------- INJECTING HERE ----------
+"IAmAlive_game.exe"+97C90: 8B 80 4D 01 00 00  -  mov eax,[eax+0000014D]
+// ---------- DONE INJECTING  ----------
+"IAmAlive_game.exe"+97C96: C3                 -  ret
+"IAmAlive_game.exe"+97C97: 33 C0              -  xor eax,eax
+"IAmAlive_game.exe"+97C99: C3                 -  ret
+"IAmAlive_game.exe"+97C9A: E8 F0 35 04 00     -  call IAmAlive_game.exe+DB28F
+"IAmAlive_game.exe"+97C9F: 85 C0              -  test eax,eax
+"IAmAlive_game.exe"+97CA1: 74 46              -  je IAmAlive_game.exe+97CE9
+"IAmAlive_game.exe"+97CA3: 56                 -  push esi
+"IAmAlive_game.exe"+97CA4: E8 E6 35 04 00     -  call IAmAlive_game.exe+DB28F
+"IAmAlive_game.exe"+97CA9: 8B 10              -  mov edx,[eax]
+"IAmAlive_game.exe"+97CAB: 8B C8              -  mov ecx,eax
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>566</ID>
+      <Description>"teleport"</Description>
+      <VariableType>Byte</VariableType>
+      <Address>tflag</Address>
+      <Hotkeys>
+        <Hotkey>
+          <Action>Set Value</Action>
+          <Keys>
+            <Key>49</Key>
+          </Keys>
+          <Value>1</Value>
+          <ID>0</ID>
+        </Hotkey>
+        <Hotkey>
+          <Action>Set Value</Action>
+          <Keys>
+            <Key>50</Key>
+          </Keys>
+          <Value>2</Value>
+          <ID>1</ID>
+        </Hotkey>
+      </Hotkeys>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>573</ID>
+      <Description>"teleport"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048,"IAmAlive_game.exe"+CDD2)
+label(returnhere)
+label(originalcode)
+label(exit)
+label(coords)
+label(tflag)
+registersymbol(tflag)
+
+newmem:
+  cmp byte ptr [tflag],0
+  je originalcode
+  cmp byte ptr [tflag],1
+  jne @F
+  push esi
+  mov esi,[ecx]
+  mov [coords],esi
+  mov esi,[ecx+4]
+  mov [coords+4],esi
+  mov esi,[ecx+8]
+  mov [coords+8],esi
+  pop esi
+  mov byte ptr[tflag],0
+  jmp originalcode
+@@:
+   cmp byte ptr [tflag],2
+   jne originalcode
+   push esi
+   mov esi,[coords]
+   mov [ecx],esi
+   mov esi,[coords+4]
+   mov [ecx+4],esi
+   mov esi,[coords+8]
+   mov [ecx+8],esi
+   pop esi
+   mov byte ptr[tflag],0
+
+originalcode:
+fsub dword ptr [ecx+08]
+fld st(0)
+jmp returnhere
+tflag:
+ db 00
+coords:
+ db 00 00 00 00 00 00 00 00 00 00 00 00
+
+exit:
+jmp returnhere
+
+"IAmAlive_game.exe"+CDD2:
+jmp newmem
+returnhere:
+
+
+
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+unregistersymbol(tflag)
+"IAmAlive_game.exe"+CDD2:
+fsub dword ptr [ecx+08]
+fld st(0)
+//Alt: db D8 61 08 D9 C0
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="27">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>4</ID>
+      <Description>"sound mind"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Visage-Win64-Shipping.exe
+  Version: Steam Early Access v 1.31
+  Date   : 2019-01-20
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(mind,Visage-Win64-Shipping.exe,F3 0F11 89 A4010000 48 85 C0 74 ** 0F10 81 98010000 48 8D 54 24 20 48 8B C8 0F29 44 24 20)
+alloc(newmem,$1000,mind)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [rcx+000001A4],(float)0
+jmp exit
+
+originalcode:
+movss [rcx+000001A4],xmm1
+
+exit:
+jmp returnhere
+
+mind:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+registerSymbol(mind)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+mind:
+db F3 0F 11 89 A4 01 00 00
+unregisterSymbol(mind)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "Visage-Win64-Shipping.exe"+E9B83B
+
+"Visage-Win64-Shipping.exe"+E9B815: C6 44 24 30 01           -  mov byte ptr [rsp+30],01
+"Visage-Win64-Shipping.exe"+E9B81A: E8 91 87 45 FF           -  call Visage-Win64-Shipping.exe+2F3FB0
+"Visage-Win64-Shipping.exe"+E9B81F: 48 8D 4C 24 38           -  lea rcx,[rsp+38]
+"Visage-Win64-Shipping.exe"+E9B824: E8 C7 6C 32 FF           -  call Visage-Win64-Shipping.exe+1C24F0
+"Visage-Win64-Shipping.exe"+E9B829: 48 83 C4 58              -  add rsp,58
+"Visage-Win64-Shipping.exe"+E9B82D: C3                       -  ret
+"Visage-Win64-Shipping.exe"+E9B82E: CC                       -  int 3
+"Visage-Win64-Shipping.exe"+E9B82F: CC                       -  int 3
+"Visage-Win64-Shipping.exe"+E9B830: 48 83 EC 38              -  sub rsp,38
+"Visage-Win64-Shipping.exe"+E9B834: 48 8B 81 C8 01 00 00     -  mov rax,[rcx+000001C8]
+// ---------- INJECTING HERE ----------
+"Visage-Win64-Shipping.exe"+E9B83B: F3 0F 11 89 A4 01 00 00  -  movss [rcx+000001A4],xmm1
+// ---------- DONE INJECTING  ----------
+"Visage-Win64-Shipping.exe"+E9B843: 48 85 C0                 -  test rax,rax
+"Visage-Win64-Shipping.exe"+E9B846: 74 19                    -  je Visage-Win64-Shipping.exe+E9B861
+"Visage-Win64-Shipping.exe"+E9B848: 0F 10 81 98 01 00 00     -  movups xmm0,[rcx+00000198]
+"Visage-Win64-Shipping.exe"+E9B84F: 48 8D 54 24 20           -  lea rdx,[rsp+20]
+"Visage-Win64-Shipping.exe"+E9B854: 48 8B C8                 -  mov rcx,rax
+"Visage-Win64-Shipping.exe"+E9B857: 0F 29 44 24 20           -  movaps [rsp+20],xmm0
+"Visage-Win64-Shipping.exe"+E9B85C: E8 AF 9B 93 FF           -  call Visage-Win64-Shipping.exe+7D5410
+"Visage-Win64-Shipping.exe"+E9B861: 48 83 C4 38              -  add rsp,38
+"Visage-Win64-Shipping.exe"+E9B865: C3                       -  ret
+"Visage-Win64-Shipping.exe"+E9B866: CC                       -  int 3
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>40</ID>
+      <Description>"unlimited lighter"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Visage-Win64-Shipping.exe
+  Version: Steam Early Access v 1.31
+  Date   : 2019-01-20
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(lighter,Visage-Win64-Shipping.exe,8B 41 34 49 8B D2 0FAF 41 30 49 8B CB 4C 63 C0)
+alloc(newmem,$1000,lighter)
+label(returnhere)
+label(originalcode)
+
+newmem: //this is allocated memory, you have read,write,execute access
+cmp [rdx+4],(float)50
+jne originalcode
+cmp [rdx+28],#1
+jne originalcode
+cmp [rdx+2C],#4
+jne originalcode
+mov r10,full_lighter
+
+originalcode:
+mov eax,[rcx+34]
+mov rdx,r10
+jmp returnhere
+
+full_lighter:
+dd (float)500
+
+lighter:
+jmp newmem
+nop
+returnhere:
+
+
+registerSymbol(lighter)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+lighter:
+db 8B 41 34 49 8B D2
+unregisterSymbol(lighter)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "Visage-Win64-Shipping.exe"+5D6145
+
+"Visage-Win64-Shipping.exe"+5D612D: CC                       -  int 3
+"Visage-Win64-Shipping.exe"+5D612E: CC                       -  int 3
+"Visage-Win64-Shipping.exe"+5D612F: CC                       -  int 3
+"Visage-Win64-Shipping.exe"+5D6130: 4D 8B D0                 -  mov r10,r8
+"Visage-Win64-Shipping.exe"+5D6133: 4C 8B DA                 -  mov r11,rdx
+"Visage-Win64-Shipping.exe"+5D6136: 49 3B D0                 -  cmp rdx,r8
+"Visage-Win64-Shipping.exe"+5D6139: 74 2D                    -  je Visage-Win64-Shipping.exe+5D6168
+"Visage-Win64-Shipping.exe"+5D613B: 8B 41 38                 -  mov eax,[rcx+38]
+"Visage-Win64-Shipping.exe"+5D613E: 48 0F BA E0 1E           -  bt rax,1E
+"Visage-Win64-Shipping.exe"+5D6143: 73 15                    -  jae Visage-Win64-Shipping.exe+5D615A
+// ---------- INJECTING HERE ----------
+"Visage-Win64-Shipping.exe"+5D6145: 8B 41 34                 -  mov eax,[rcx+34]
+"Visage-Win64-Shipping.exe"+5D6148: 49 8B D2                 -  mov rdx,r10
+// ---------- DONE INJECTING  ----------
+"Visage-Win64-Shipping.exe"+5D614B: 0F AF 41 30              -  imul eax,[rcx+30]
+"Visage-Win64-Shipping.exe"+5D614F: 49 8B CB                 -  mov rcx,r11
+"Visage-Win64-Shipping.exe"+5D6152: 4C 63 C0                 -  movsxd  r8,eax
+"Visage-Win64-Shipping.exe"+5D6155: E9 A5 4A 67 01           -  jmp Visage-Win64-Shipping.exe+1C4ABFF
+"Visage-Win64-Shipping.exe"+5D615A: 48 8B 01                 -  mov rax,[rcx]
+"Visage-Win64-Shipping.exe"+5D615D: 44 8B 49 30              -  mov r9d,[rcx+30]
+"Visage-Win64-Shipping.exe"+5D6161: 48 FF A0 B0 02 00 00     -  jmp qword ptr [rax+000002B0]
+"Visage-Win64-Shipping.exe"+5D6168: C3                       -  ret
+"Visage-Win64-Shipping.exe"+5D6169: CC                       -  int 3
+"Visage-Win64-Shipping.exe"+5D616A: CC                       -  int 3
+}
+
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+</CheatTable>

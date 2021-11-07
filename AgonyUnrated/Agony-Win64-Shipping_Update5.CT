@@ -1,0 +1,764 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="29">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>11</ID>
+      <Description>"inf. Stamina"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Agony-Win64-Shipping.exe
+  Version: Update 5
+  Date   : 19.01.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(staminaRun,Agony-Win64-Shipping.exe,F3 0F 11 86 88 0D 00 00 ?? ?? ?? ?? ?? F3 0F 10 86 F0 09 00 00 F3 0F 5E 86 5C 09 00 00 F3 0F 10 96 20 0D 00 00 0F 2F 86 B8 0A 00 00 F3 0F10 8E 24 0D 00 00)
+alloc(newmem,$1024,staminaRun)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+fld  [rsi+00000D94]
+fstp [rsi+00000D88]
+jmp returnhere
+
+originalcode:
+movss [rsi+00000D88],xmm0
+
+exit:
+jmp returnhere
+
+staminaRun:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+registerSymbol(staminaRun)
+aobscanmodule(staminaJump, Agony-Win64-Shipping.exe, F3 0F 5D CA F3 0F 11 89 88 0D 00 00 C3)
+alloc(newmem1,$1024,staminaJump)
+label(returnhere1)
+label(originalcode1)
+label(exit1)
+
+newmem1: //this is allocated memory, you have read,write,execute access
+fld [rcx+00000D94]
+fstp [rcx+00000D88]
+jmp returnhere1
+
+originalcode1:
+movss [rcx+00000D88],xmm1
+
+exit1:
+jmp returnhere1
+
+staminaJump+4:
+jmp newmem1
+nop
+nop
+nop
+returnhere1:
+
+registerSymbol(staminaJump)
+aobscanmodule(staminaAlways, Agony-Win64-Shipping.exe, F3 0F 11 9E 88 0D 00 00 F3 0F 11 A6 94 0D 00 00 76 05)
+alloc(newmem2,$1024,staminaAlways)
+label(returnhere2)
+label(originalcode2)
+label(exit2)
+
+newmem2: //this is allocated memory, you have read,write,execute access
+fld  [rsi+00000D94]
+fstp [rsi+00000D88]
+jmp returnhere2
+
+originalcode2:
+movss [rsi+00000D88],xmm3
+
+exit2:
+jmp returnhere2
+
+staminaAlways:
+jmp newmem2
+nop
+nop
+nop
+returnhere2:
+
+registerSymbol(staminaAlways)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+staminaRun:
+db F3 0F 11 86 88 0D 00 00
+unregisterSymbol(staminaRun)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "Agony-Win64-Shipping.exe"+23D138
+
+"Agony-Win64-Shipping.exe"+23D104: 48 8B 86 F0 03 00 00     -  mov rax,[rsi+000003F0]
+"Agony-Win64-Shipping.exe"+23D10B: 48 85 C0                 -  test rax,rax
+"Agony-Win64-Shipping.exe"+23D10E: 74 35                    -  je Agony-Win64-Shipping.exe+23D145
+"Agony-Win64-Shipping.exe"+23D110: 80 B8 8C 02 00 00 03     -  cmp byte ptr [rax+0000028C],03
+"Agony-Win64-Shipping.exe"+23D117: 74 2C                    -  je Agony-Win64-Shipping.exe+23D145
+"Agony-Win64-Shipping.exe"+23D119: F3 0F 10 86 88 0D 00 00  -  movss xmm0,[rsi+00000D88]
+"Agony-Win64-Shipping.exe"+23D121: 0F 28 CF                 -  movaps xmm1,xmm7
+"Agony-Win64-Shipping.exe"+23D124: F3 0F 59 8E 14 0D 00 00  -  mulss xmm1,[rsi+00000D14]
+"Agony-Win64-Shipping.exe"+23D12C: F3 0F 59 8E C0 0D 00 00  -  mulss xmm1,[rsi+00000DC0]
+"Agony-Win64-Shipping.exe"+23D134: F3 0F 5C C1              -  subss xmm0,xmm1
+// ---------- INJECTING HERE ----------
+"Agony-Win64-Shipping.exe"+23D138: F3 0F 11 86 88 0D 00 00  -  movss [rsi+00000D88],xmm0
+// ---------- DONE INJECTING  ----------
+"Agony-Win64-Shipping.exe"+23D140: E9 A6 00 00 00           -  jmp Agony-Win64-Shipping.exe+23D1EB
+"Agony-Win64-Shipping.exe"+23D145: F3 0F 10 86 F0 09 00 00  -  movss xmm0,[rsi+000009F0]
+"Agony-Win64-Shipping.exe"+23D14D: F3 0F 5E 86 5C 09 00 00  -  divss xmm0,[rsi+0000095C]
+"Agony-Win64-Shipping.exe"+23D155: F3 0F 10 96 20 0D 00 00  -  movss xmm2,[rsi+00000D20]
+"Agony-Win64-Shipping.exe"+23D15D: 0F 2F 86 B8 0A 00 00     -  comiss xmm0,[rsi+00000AB8]
+"Agony-Win64-Shipping.exe"+23D164: F3 0F 10 8E 24 0D 00 00  -  movss xmm1,[rsi+00000D24]
+"Agony-Win64-Shipping.exe"+23D16C: 0F 28 DA                 -  movaps xmm3,xmm2
+"Agony-Win64-Shipping.exe"+23D16F: F3 0F 59 1D 21 6B 58 02  -  mulss xmm3,[Agony-Win64-Shipping.exe+27C3C98]
+"Agony-Win64-Shipping.exe"+23D177: 0F 28 E1                 -  movaps xmm4,xmm1
+"Agony-Win64-Shipping.exe"+23D17A: F3 0F 59 25 16 6B 58 02  -  mulss xmm4,[Agony-Win64-Shipping.exe+27C3C98]
+}
+staminaJump+4:
+db F3 0F 11 89 88 0D 00 00
+unregisterSymbol(staminaJump)
+dealloc(newmem1)
+{
+// ORIGINAL CODE - INJECTION POINT: "Agony-Win64-Shipping.exe"+22D743
+
+"Agony-Win64-Shipping.exe"+22D716: 0F 28 C1                 -  movaps xmm0,xmm1
+"Agony-Win64-Shipping.exe"+22D719: F3 0F 59 C2              -  mulss xmm0,xmm2
+"Agony-Win64-Shipping.exe"+22D71D: F3 0F 10 91 88 0D 00 00  -  movss xmm2,[rcx+00000D88]
+"Agony-Win64-Shipping.exe"+22D725: F3 0F 59 81 14 0D 00 00  -  mulss xmm0,[rcx+00000D14]
+"Agony-Win64-Shipping.exe"+22D72D: F3 0F 5C D0              -  subss xmm2,xmm0
+"Agony-Win64-Shipping.exe"+22D731: 0F 2F D3                 -  comiss xmm2,xmm3
+"Agony-Win64-Shipping.exe"+22D734: 73 09                    -  jae Agony-Win64-Shipping.exe+22D73F
+"Agony-Win64-Shipping.exe"+22D736: F3 0F 11 99 88 0D 00 00  -  movss [rcx+00000D88],xmm3
+"Agony-Win64-Shipping.exe"+22D73E: C3                       -  ret
+"Agony-Win64-Shipping.exe"+22D73F: F3 0F 5D CA              -  minss xmm1,xmm2
+// ---------- INJECTING HERE ----------
+"Agony-Win64-Shipping.exe"+22D743: F3 0F 11 89 88 0D 00 00  -  movss [rcx+00000D88],xmm1
+// ---------- DONE INJECTING  ----------
+"Agony-Win64-Shipping.exe"+22D74B: C3                       -  ret
+"Agony-Win64-Shipping.exe"+22D74C: CC                       -  int 3
+"Agony-Win64-Shipping.exe"+22D74D: CC                       -  int 3
+"Agony-Win64-Shipping.exe"+22D74E: CC                       -  int 3
+"Agony-Win64-Shipping.exe"+22D74F: CC                       -  int 3
+"Agony-Win64-Shipping.exe"+22D750: 48 89 5C 24 08           -  mov [rsp+08],rbx
+"Agony-Win64-Shipping.exe"+22D755: 48 89 74 24 10           -  mov [rsp+10],rsi
+"Agony-Win64-Shipping.exe"+22D75A: 57                       -  push rdi
+"Agony-Win64-Shipping.exe"+22D75B: 48 83 EC 20              -  sub rsp,20
+"Agony-Win64-Shipping.exe"+22D75F: 48 8B 01                 -  mov rax,[rcx]
+}
+staminaAlways:
+db F3 0F 11 9E 88 0D 00 00
+unregisterSymbol(staminaAlways)
+dealloc(newmem2)
+{
+// ORIGINAL CODE - INJECTION POINT: "Agony-Win64-Shipping.exe"+23D1AA
+
+"Agony-Win64-Shipping.exe"+23D16C: 0F 28 DA                 -  movaps xmm3,xmm2
+"Agony-Win64-Shipping.exe"+23D16F: F3 0F 59 1D 21 6B 58 02  -  mulss xmm3,[Agony-Win64-Shipping.exe+27C3C98]
+"Agony-Win64-Shipping.exe"+23D177: 0F 28 E1                 -  movaps xmm4,xmm1
+"Agony-Win64-Shipping.exe"+23D17A: F3 0F 59 25 16 6B 58 02  -  mulss xmm4,[Agony-Win64-Shipping.exe+27C3C98]
+"Agony-Win64-Shipping.exe"+23D182: F3 0F 59 DF              -  mulss xmm3,xmm7
+"Agony-Win64-Shipping.exe"+23D186: F3 0F 59 E7              -  mulss xmm4,xmm7
+"Agony-Win64-Shipping.exe"+23D18A: F3 0F 59 9E 8C 0D 00 00  -  mulss xmm3,[rsi+00000D8C]
+"Agony-Win64-Shipping.exe"+23D192: F3 0F 59 A6 90 0D 00 00  -  mulss xmm4,[rsi+00000D90]
+"Agony-Win64-Shipping.exe"+23D19A: F3 0F 58 9E 88 0D 00 00  -  addss xmm3,[rsi+00000D88]
+"Agony-Win64-Shipping.exe"+23D1A2: F3 0F 58 A6 94 0D 00 00  -  addss xmm4,[rsi+00000D94]
+// ---------- INJECTING HERE ----------
+"Agony-Win64-Shipping.exe"+23D1AA: F3 0F 11 9E 88 0D 00 00  -  movss [rsi+00000D88],xmm3
+// ---------- DONE INJECTING  ----------
+"Agony-Win64-Shipping.exe"+23D1B2: F3 0F 11 A6 94 0D 00 00  -  movss [rsi+00000D94],xmm4
+"Agony-Win64-Shipping.exe"+23D1BA: 76 05                    -  jna Agony-Win64-Shipping.exe+23D1C1
+"Agony-Win64-Shipping.exe"+23D1BC: 0F 28 C6                 -  movaps xmm0,xmm6
+"Agony-Win64-Shipping.exe"+23D1BF: EB 08                    -  jmp Agony-Win64-Shipping.exe+23D1C9
+"Agony-Win64-Shipping.exe"+23D1C1: F3 0F 10 05 9B 63 59 02  -  movss xmm0,[Agony-Win64-Shipping.exe+27D3564]
+"Agony-Win64-Shipping.exe"+23D1C9: F3 0F 59 D0              -  mulss xmm2,xmm0
+"Agony-Win64-Shipping.exe"+23D1CD: 0F 2F DA                 -  comiss xmm3,xmm2
+"Agony-Win64-Shipping.exe"+23D1D0: 76 08                    -  jna Agony-Win64-Shipping.exe+23D1DA
+"Agony-Win64-Shipping.exe"+23D1D2: F3 0F 11 96 88 0D 00 00  -  movss [rsi+00000D88],xmm2
+"Agony-Win64-Shipping.exe"+23D1DA: F3 0F 59 C8              -  mulss xmm1,xmm0
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>17</ID>
+      <Description>"inf. Breath"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Agony-Win64-Shipping.exe
+  Version: Update 5
+  Date   : 19.01.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(infBreath, Agony-Win64-Shipping.exe ,F3 0F 11 86 94 0D 00 00 F3 0F 11 8E B4 0D 00 00)
+alloc(newmem,$1024,infBreath)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+fld [rsi+00000D88]
+fstp [rsi+00000D94]
+jmp returnhere
+
+originalcode:
+movss [rsi+00000D94],xmm0
+
+exit:
+jmp returnhere
+
+infBreath:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+registerSymbol(infBreath)
+aobscanmodule(infBreathUnderWater, Agony-Win64-Shipping.exe, F3 0F 11 86 94 0D 00 00 E9 ?? ?? ?? ?? 80 BE 8A 09 00 00 00)
+alloc(newmem1,$1024,infBreathUnderWater)
+label(returnhere1)
+label(originalcode1)
+label(exit1)
+
+newmem1: //this is allocated memory, you have read,write,execute access
+fld [rsi+00000D88]
+fstp [rsi+00000D94]
+jmp returnhere1
+
+originalcode1:
+movss [rsi+00000D94],xmm0
+
+exit1:
+jmp returnhere1
+
+infBreathUnderWater:
+jmp newmem1
+nop
+nop
+nop
+returnhere1:
+
+registerSymbol(infBreathUnderWater)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+infBreath:
+db F3 0F 11 86 94 0D 00 00
+unregisterSymbol(infBreath)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "Agony-Win64-Shipping.exe"+23D0B8
+
+"Agony-Win64-Shipping.exe"+23D080: E9 66 01 00 00           -  jmp Agony-Win64-Shipping.exe+23D1EB
+"Agony-Win64-Shipping.exe"+23D085: 80 BE 52 0D 00 00 00     -  cmp byte ptr [rsi+00000D52],00
+"Agony-Win64-Shipping.exe"+23D08C: 74 3F                    -  je Agony-Win64-Shipping.exe+23D0CD
+"Agony-Win64-Shipping.exe"+23D08E: F3 0F 10 86 94 0D 00 00  -  movss xmm0,[rsi+00000D94]
+"Agony-Win64-Shipping.exe"+23D096: 0F 28 CF                 -  movaps xmm1,xmm7
+"Agony-Win64-Shipping.exe"+23D099: F3 0F 59 8E 18 0D 00 00  -  mulss xmm1,[rsi+00000D18]
+"Agony-Win64-Shipping.exe"+23D0A1: F3 0F 59 8E BC 0D 00 00  -  mulss xmm1,[rsi+00000DBC]
+"Agony-Win64-Shipping.exe"+23D0A9: F3 0F 5C C1              -  subss xmm0,xmm1
+"Agony-Win64-Shipping.exe"+23D0AD: 0F 28 CF                 -  movaps xmm1,xmm7
+"Agony-Win64-Shipping.exe"+23D0B0: F3 0F 58 8E B4 0D 00 00  -  addss xmm1,[rsi+00000DB4]
+// ---------- INJECTING HERE ----------
+"Agony-Win64-Shipping.exe"+23D0B8: F3 0F 11 86 94 0D 00 00  -  movss [rsi+00000D94],xmm0
+// ---------- DONE INJECTING  ----------
+"Agony-Win64-Shipping.exe"+23D0C0: F3 0F 11 8E B4 0D 00 00  -  movss [rsi+00000DB4],xmm1
+"Agony-Win64-Shipping.exe"+23D0C8: E9 1E 01 00 00           -  jmp Agony-Win64-Shipping.exe+23D1EB
+"Agony-Win64-Shipping.exe"+23D0CD: 80 BE 89 09 00 00 00     -  cmp byte ptr [rsi+00000989],00
+"Agony-Win64-Shipping.exe"+23D0D4: 74 6F                    -  je Agony-Win64-Shipping.exe+23D145
+"Agony-Win64-Shipping.exe"+23D0D6: 48 8B 06                 -  mov rax,[rsi]
+"Agony-Win64-Shipping.exe"+23D0D9: 48 8D 55 C0              -  lea rdx,[rbp-40]
+"Agony-Win64-Shipping.exe"+23D0DD: 48 8B CE                 -  mov rcx,rsi
+"Agony-Win64-Shipping.exe"+23D0E0: FF 90 B0 02 00 00        -  call qword ptr [rax+000002B0]
+"Agony-Win64-Shipping.exe"+23D0E6: F3 0F 10 40 04           -  movss xmm0,[rax+04]
+"Agony-Win64-Shipping.exe"+23D0EB: F3 0F 10 08              -  movss xmm1,[rax]
+}
+//code from here till the end of the code will be used to disable the cheat
+infBreathUnderWater:
+db F3 0F 11 86 94 0D 00 00
+unregisterSymbol(infBreathUnderWater)
+dealloc(newmem1)
+{
+// ORIGINAL CODE - INJECTION POINT: "Agony-Win64-Shipping.exe"+23D043
+
+"Agony-Win64-Shipping.exe"+23D00C: F3 0F 58 C8              -  addss xmm1,xmm0
+"Agony-Win64-Shipping.exe"+23D010: 0F 2F 0D C1 6C 58 02     -  comiss xmm1,[Agony-Win64-Shipping.exe+27C3CD8]
+"Agony-Win64-Shipping.exe"+23D017: 76 0A                    -  jna Agony-Win64-Shipping.exe+23D023
+"Agony-Win64-Shipping.exe"+23D019: F3 0F 10 8E 10 0D 00 00  -  movss xmm1,[rsi+00000D10]
+"Agony-Win64-Shipping.exe"+23D021: EB 08                    -  jmp Agony-Win64-Shipping.exe+23D02B
+"Agony-Win64-Shipping.exe"+23D023: F3 0F 10 8E 0C 0D 00 00  -  movss xmm1,[rsi+00000D0C]
+"Agony-Win64-Shipping.exe"+23D02B: F3 0F 10 86 94 0D 00 00  -  movss xmm0,[rsi+00000D94]
+"Agony-Win64-Shipping.exe"+23D033: F3 0F 59 CF              -  mulss xmm1,xmm7
+"Agony-Win64-Shipping.exe"+23D037: F3 0F 59 8E BC 0D 00 00  -  mulss xmm1,[rsi+00000DBC]
+"Agony-Win64-Shipping.exe"+23D03F: F3 0F 5C C1              -  subss xmm0,xmm1
+// ---------- INJECTING HERE ----------
+"Agony-Win64-Shipping.exe"+23D043: F3 0F 11 86 94 0D 00 00  -  movss [rsi+00000D94],xmm0
+// ---------- DONE INJECTING  ----------
+"Agony-Win64-Shipping.exe"+23D04B: E9 9B 01 00 00           -  jmp Agony-Win64-Shipping.exe+23D1EB
+"Agony-Win64-Shipping.exe"+23D050: 80 BE 8A 09 00 00 00     -  cmp byte ptr [rsi+0000098A],00
+"Agony-Win64-Shipping.exe"+23D057: 74 2C                    -  je Agony-Win64-Shipping.exe+23D085
+"Agony-Win64-Shipping.exe"+23D059: F3 0F 10 86 88 0D 00 00  -  movss xmm0,[rsi+00000D88]
+"Agony-Win64-Shipping.exe"+23D061: 0F 28 CF                 -  movaps xmm1,xmm7
+"Agony-Win64-Shipping.exe"+23D064: F3 0F 59 8E 1C 0D 00 00  -  mulss xmm1,[rsi+00000D1C]
+"Agony-Win64-Shipping.exe"+23D06C: F3 0F 59 8E C0 0D 00 00  -  mulss xmm1,[rsi+00000DC0]
+"Agony-Win64-Shipping.exe"+23D074: F3 0F 5C C1              -  subss xmm0,xmm1
+"Agony-Win64-Shipping.exe"+23D078: F3 0F 11 86 88 0D 00 00  -  movss [rsi+00000D88],xmm0
+"Agony-Win64-Shipping.exe"+23D080: E9 66 01 00 00           -  jmp Agony-Win64-Shipping.exe+23D1EB
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>25</ID>
+      <Description>"inf. Skill points"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Agony-Win64-Shipping.exe
+  Version: Update 5
+  Date   : 20.01.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(infPoints, Agony-Win64-Shipping.exe, 89 97 18 03 00 00 E8 ?? ?? ?? ?? 48 8B 5C 24 30)
+alloc(newmem,$1024,infPoints)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [rdi+00000318],#100
+jmp returnhere
+
+originalcode:
+mov [rdi+00000318],edx
+
+exit:
+jmp returnhere
+
+infPoints:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(infPoints)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+infPoints:
+db 89 97 18 03 00 00
+unregisterSymbol(infPoints)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "Agony-Win64-Shipping.exe"+2F3CAB
+
+"Agony-Win64-Shipping.exe"+2F3C8C: 48 8B D6              -  mov rdx,rsi
+"Agony-Win64-Shipping.exe"+2F3C8F: 48 8B CF              -  mov rcx,rdi
+"Agony-Win64-Shipping.exe"+2F3C92: 8B D8                 -  mov ebx,eax
+"Agony-Win64-Shipping.exe"+2F3C94: E8 F7 0F 02 00        -  call Agony-Win64-Shipping.exe+314C90
+"Agony-Win64-Shipping.exe"+2F3C99: 8B 8F 18 03 00 00     -  mov ecx,[rdi+00000318]
+"Agony-Win64-Shipping.exe"+2F3C9F: 8D 14 18              -  lea edx,[rax+rbx]
+"Agony-Win64-Shipping.exe"+2F3CA2: 03 D1                 -  add edx,ecx
+"Agony-Win64-Shipping.exe"+2F3CA4: 3B CA                 -  cmp ecx,edx
+"Agony-Win64-Shipping.exe"+2F3CA6: 74 0E                 -  je Agony-Win64-Shipping.exe+2F3CB6
+"Agony-Win64-Shipping.exe"+2F3CA8: 48 8B CF              -  mov rcx,rdi
+// ---------- INJECTING HERE ----------
+"Agony-Win64-Shipping.exe"+2F3CAB: 89 97 18 03 00 00     -  mov [rdi+00000318],edx
+// ---------- DONE INJECTING  ----------
+"Agony-Win64-Shipping.exe"+2F3CB1: E8 5A D5 19 00        -  call Agony-Win64-Shipping.exe+491210
+"Agony-Win64-Shipping.exe"+2F3CB6: 48 8B 5C 24 30        -  mov rbx,[rsp+30]
+"Agony-Win64-Shipping.exe"+2F3CBB: 48 8B CF              -  mov rcx,rdi
+"Agony-Win64-Shipping.exe"+2F3CBE: E8 8D E0 01 00        -  call Agony-Win64-Shipping.exe+311D50
+"Agony-Win64-Shipping.exe"+2F3CC3: 48 8B 74 24 38        -  mov rsi,[rsp+38]
+"Agony-Win64-Shipping.exe"+2F3CC8: 48 83 C4 20           -  add rsp,20
+"Agony-Win64-Shipping.exe"+2F3CCC: 5F                    -  pop rdi
+"Agony-Win64-Shipping.exe"+2F3CCD: C3                    -  ret
+"Agony-Win64-Shipping.exe"+2F3CCE: CC                    -  int 3
+"Agony-Win64-Shipping.exe"+2F3CCF: CC                    -  int 3
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>78</ID>
+      <Description>"inf. Spirit time"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Agony-Win64-Shipping.exe
+  Version: Update 5
+  Date   : 20.01.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(infSpirit,Agony-Win64-Shipping.exe,F3 0F 11 83 10 0D 00 00 48 83 C4 60 5B C3)
+alloc(newmem,$1024,infSpirit)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+fld [rbx+00000D0C]
+fstp [rbx+00000D10]
+jmp returnhere
+
+originalcode:
+movss [rbx+00000D10],xmm0
+
+exit:
+jmp returnhere
+
+infSpirit:
+jmp newmem
+nop
+nop
+nop
+returnhere:
+
+registerSymbol(infSpirit)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+infSpirit:
+db F3 0F 11 83 10 0D 00 00
+unregisterSymbol(infSpirit)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "Agony-Win64-Shipping.exe"+238000
+
+"Agony-Win64-Shipping.exe"+237FC9: 48 8B 03                       -  mov rax,[rbx]
+"Agony-Win64-Shipping.exe"+237FCC: 48 8B CB                       -  mov rcx,rbx
+"Agony-Win64-Shipping.exe"+237FCF: FF 90 38 01 00 00              -  call qword ptr [rax+00000138]
+"Agony-Win64-Shipping.exe"+237FD5: 48 85 C0                       -  test rax,rax
+"Agony-Win64-Shipping.exe"+237FD8: 74 2E                          -  je Agony-Win64-Shipping.exe+238008
+"Agony-Win64-Shipping.exe"+237FDA: F3 0F 10 83 10 0D 00 00        -  movss xmm0,[rbx+00000D10]
+"Agony-Win64-Shipping.exe"+237FE2: F3 0F 5C 05 D2 BC 58 02        -  subss xmm0,[Agony-Win64-Shipping.exe+27C3CBC]
+"Agony-Win64-Shipping.exe"+237FEA: C7 83 14 0D 00 00 00 00 00 00  -  mov [rbx+00000D14],00000000
+"Agony-Win64-Shipping.exe"+237FF4: 8B 80 00 09 00 00              -  mov eax,[rax+00000900]
+"Agony-Win64-Shipping.exe"+237FFA: 89 83 08 0D 00 00              -  mov [rbx+00000D08],eax
+// ---------- INJECTING HERE ----------
+"Agony-Win64-Shipping.exe"+238000: F3 0F 11 83 10 0D 00 00        -  movss [rbx+00000D10],xmm0
+// ---------- DONE INJECTING  ----------
+"Agony-Win64-Shipping.exe"+238008: 48 83 C4 60                    -  add rsp,60
+"Agony-Win64-Shipping.exe"+23800C: 5B                             -  pop rbx
+"Agony-Win64-Shipping.exe"+23800D: C3                             -  ret
+"Agony-Win64-Shipping.exe"+23800E: CC                             -  int 3
+"Agony-Win64-Shipping.exe"+23800F: CC                             -  int 3
+"Agony-Win64-Shipping.exe"+238010: 48 89 5C 24 08                 -  mov [rsp+08],rbx
+"Agony-Win64-Shipping.exe"+238015: 48 89 6C 24 10                 -  mov [rsp+10],rbp
+"Agony-Win64-Shipping.exe"+23801A: 48 89 74 24 18                 -  mov [rsp+18],rsi
+"Agony-Win64-Shipping.exe"+23801F: 48 89 7C 24 20                 -  mov [rsp+20],rdi
+"Agony-Win64-Shipping.exe"+238024: 41 56                          -  push r14
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>80</ID>
+      <Description>"godmode(trap, tentacles etc)"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Agony-Win64-Shipping.exe
+  Version: Update 5
+  Date   : 20.01.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(godmode,Agony-Win64-Shipping.exe,F3 41 0F 11 86 F0 09 00 00)
+
+godmode:
+db 90 90 90 90 90 90 90 90 90
+
+registerSymbol(godmode)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+godmode:
+db F3 41 0F 11 86 F0 09 00 00
+unregisterSymbol(godmode)
+{
+// ORIGINAL CODE - INJECTION POINT: "Agony-Win64-Shipping.exe"+23A0B1
+
+"Agony-Win64-Shipping.exe"+23A076: 48 3B D8                    -  cmp rbx,rax
+"Agony-Win64-Shipping.exe"+23A079: 75 09                       -  jne Agony-Win64-Shipping.exe+23A084
+"Agony-Win64-Shipping.exe"+23A07B: F3 41 0F 10 BE 5C 09 00 00  -  movss xmm7,[r14+0000095C]
+"Agony-Win64-Shipping.exe"+23A084: 41 0F 2F BE 5C 09 00 00     -  comiss xmm7,[r14+0000095C]
+"Agony-Win64-Shipping.exe"+23A08C: 73 09                       -  jae Agony-Win64-Shipping.exe+23A097
+"Agony-Win64-Shipping.exe"+23A08E: F3 41 0F 59 BE F4 09 00 00  -  mulss xmm7,[r14+000009F4]
+"Agony-Win64-Shipping.exe"+23A097: F3 41 0F 10 86 F0 09 00 00  -  movss xmm0,[r14+000009F0]
+"Agony-Win64-Shipping.exe"+23A0A0: F3 44 0F 10 05 FB 9B 58 02  -  movss xmm8,[Agony-Win64-Shipping.exe+27C3CA4]
+"Agony-Win64-Shipping.exe"+23A0A9: F3 0F 5C C7                 -  subss xmm0,xmm7
+"Agony-Win64-Shipping.exe"+23A0AD: 41 0F 2F C1                 -  comiss xmm0,xmm9
+// ---------- INJECTING HERE ----------
+"Agony-Win64-Shipping.exe"+23A0B1: F3 41 0F 11 86 F0 09 00 00  -  movss [r14+000009F0],xmm0
+// ---------- DONE INJECTING  ----------
+"Agony-Win64-Shipping.exe"+23A0BA: 0F 87 BD 0B 00 00           -  ja Agony-Win64-Shipping.exe+23AC7D
+"Agony-Win64-Shipping.exe"+23A0C0: 49 8B 06                    -  mov rax,[r14]
+"Agony-Win64-Shipping.exe"+23A0C3: 49 8B CE                    -  mov rcx,r14
+"Agony-Win64-Shipping.exe"+23A0C6: FF 90 38 01 00 00           -  call qword ptr [rax+00000138]
+"Agony-Win64-Shipping.exe"+23A0CC: 48 8B C8                    -  mov rcx,rax
+"Agony-Win64-Shipping.exe"+23A0CF: E8 0C F7 84 01              -  call Agony-Win64-Shipping.exe+1A897E0
+"Agony-Win64-Shipping.exe"+23A0D4: 48 89 45 C0                 -  mov [rbp-40],rax
+"Agony-Win64-Shipping.exe"+23A0D8: 48 8B F8                    -  mov rdi,rax
+"Agony-Win64-Shipping.exe"+23A0DB: 48 85 C0                    -  test rax,rax
+"Agony-Win64-Shipping.exe"+23A0DE: 0F 84 2C 06 00 00           -  je Agony-Win64-Shipping.exe+23A710
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>435</ID>
+      <Description>"enemy Not Attack(Onoskelis)"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Agony-Win64-Shipping.exe
+  Version: Update 5
+  Date   : 21.01.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+aobscanmodule(enemyNotAttack, Agony-Win64-Shipping.exe, 48 89 5C 24 10 48 89 74 24 18 57 48 83 EC 20 41 0F B6 F0 48 8B F9)
+
+enemyNotAttack+16:
+db 90 90 90 90 90
+
+
+registerSymbol(enemyNotAttack)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+enemyNotAttack+16:
+db E8 75 4F FC FF
+unregisterSymbol(enemyNotAttack)
+//Alt: db E8 75 4F FC FF
+{
+// ORIGINAL CODE - INJECTION POINT: "Agony-Win64-Shipping.exe"+2357E6
+
+"Agony-Win64-Shipping.exe"+2357CC: CC                       -  int 3
+"Agony-Win64-Shipping.exe"+2357CD: CC                       -  int 3
+"Agony-Win64-Shipping.exe"+2357CE: CC                       -  int 3
+"Agony-Win64-Shipping.exe"+2357CF: CC                       -  int 3
+"Agony-Win64-Shipping.exe"+2357D0: 48 89 5C 24 10           -  mov [rsp+10],rbx
+"Agony-Win64-Shipping.exe"+2357D5: 48 89 74 24 18           -  mov [rsp+18],rsi
+"Agony-Win64-Shipping.exe"+2357DA: 57                       -  push rdi
+"Agony-Win64-Shipping.exe"+2357DB: 48 83 EC 20              -  sub rsp,20
+"Agony-Win64-Shipping.exe"+2357DF: 41 0F B6 F0              -  movzx esi,r8l
+"Agony-Win64-Shipping.exe"+2357E3: 48 8B F9                 -  mov rdi,rcx
+// ---------- INJECTING HERE ----------
+"Agony-Win64-Shipping.exe"+2357E6: E8 75 4F FC FF           -  call Agony-Win64-Shipping.exe+1FA760
+// ---------- DONE INJECTING  ----------
+"Agony-Win64-Shipping.exe"+2357EB: 48 83 BF 50 04 00 00 00  -  cmp qword ptr [rdi+00000450],00
+"Agony-Win64-Shipping.exe"+2357F3: 0F B6 D8                 -  movzx ebx,al
+"Agony-Win64-Shipping.exe"+2357F6: 74 41                    -  je Agony-Win64-Shipping.exe+235839
+"Agony-Win64-Shipping.exe"+2357F8: 40 84 F6                 -  test sil,sil
+"Agony-Win64-Shipping.exe"+2357FB: 75 11                    -  jne Agony-Win64-Shipping.exe+23580E
+"Agony-Win64-Shipping.exe"+2357FD: F3 0F 10 05 D3 E4 58 02  -  movss xmm0,[Agony-Win64-Shipping.exe+27C3CD8]
+"Agony-Win64-Shipping.exe"+235805: 0F 2F 87 A0 04 00 00     -  comiss xmm0,[rdi+000004A0]
+"Agony-Win64-Shipping.exe"+23580C: 77 2B                    -  ja Agony-Win64-Shipping.exe+235839
+"Agony-Win64-Shipping.exe"+23580E: 41 B8 01 00 00 00        -  mov r8d,00000001
+"Agony-Win64-Shipping.exe"+235814: 48 8D 15 F5 FE 59 02     -  lea rdx,[Agony-Win64-Shipping.exe+27D5710]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>448</ID>
+      <Description>"Teleport"</Description>
+      <LastState Activated="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Agony-Win64-Shipping.exe
+  Version: Update 5
+  Date   : 21.01.2020
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(teleport,Agony-Win64-Shipping.exe,48 8B 8F 58 02 00 00 48 8D 45 A7 F2 0F 10 00)
+alloc(newmem,$1024,teleport)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [playerPointer],rax
+push rcx
+cmp byte ptr [tflag],0
+je originalcode
+cmp byte ptr [tflag],1
+jne save_pos
+mov rcx,[rax+00000280]
+mov [coords],rcx
+mov rcx,[rax+00000284]
+mov [coords+4],rcx
+mov rcx,[rax+00000288]
+mov [coords+8],rcx
+mov byte ptr [tflag],0
+jmp originalcode
+
+save_pos:
+cmp byte ptr [tflag],2
+jne originalcode
+
+mov rcx,[coords]
+mov [rax+00000280],rcx
+mov rcx,[coords+4]
+mov [rax+00000284],rcx
+mov rcx,[coords+8]
+mov [rax+00000288],rcx
+mov byte ptr [tflag],0
+jmp exit
+
+originalcode:
+movaps xmm1,[rax+00000280]
+
+exit:
+pop rcx
+jmp returnhere
+
+playerPointer:
+ dq 0
+tflag:
+ db 00
+coords:
+ db 00 00 00 00 00 00 00 00 00 00 00 00
+
+teleport-39:
+jmp newmem
+nop
+nop
+returnhere:
+
+registerSymbol(teleport)
+registerSymbol(tflag)
+registerSymbol(coords)
+registerSymbol(playerPointer)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+teleport-39:
+db 0F 28 88 80 02 00 00
+unregisterSymbol(teleport)
+unregisterSymbol(tflag)
+unregisterSymbol(coords)
+unregisterSymbol(playerPointer)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: "Agony-Win64-Shipping.exe"+2F32BA
+
+"Agony-Win64-Shipping.exe"+2F328A: 49 63 40 08              -  movsxd  rax,dword ptr [r8+08]
+"Agony-Win64-Shipping.exe"+2F328E: 3B 82 90 00 00 00        -  cmp eax,[rdx+00000090]
+"Agony-Win64-Shipping.exe"+2F3294: 0F 8F 6B 04 00 00        -  jg Agony-Win64-Shipping.exe+2F3705
+"Agony-Win64-Shipping.exe"+2F329A: 48 8B C8                 -  mov rcx,rax
+"Agony-Win64-Shipping.exe"+2F329D: 48 8B 82 88 00 00 00     -  mov rax,[rdx+00000088]
+"Agony-Win64-Shipping.exe"+2F32A4: 4C 39 04 C8              -  cmp [rax+rcx*8],r8
+"Agony-Win64-Shipping.exe"+2F32A8: 0F 85 57 04 00 00        -  jne Agony-Win64-Shipping.exe+2F3705
+"Agony-Win64-Shipping.exe"+2F32AE: 48 8B 86 68 01 00 00     -  mov rax,[rsi+00000168]
+"Agony-Win64-Shipping.exe"+2F32B5: 48 85 C0                 -  test rax,rax
+"Agony-Win64-Shipping.exe"+2F32B8: 74 23                    -  je Agony-Win64-Shipping.exe+2F32DD
+// ---------- INJECTING HERE ----------
+"Agony-Win64-Shipping.exe"+2F32BA: 0F 28 88 80 02 00 00     -  movaps xmm1,[rax+00000280]
+// ---------- DONE INJECTING  ----------
+"Agony-Win64-Shipping.exe"+2F32C1: 0F 28 C1                 -  movaps xmm0,xmm1
+"Agony-Win64-Shipping.exe"+2F32C4: F3 0F 11 4D A7           -  movss [rbp-59],xmm1
+"Agony-Win64-Shipping.exe"+2F32C9: 0F C6 C1 55              -  shufps xmm0,xmm1,55
+"Agony-Win64-Shipping.exe"+2F32CD: 0F C6 C9 AA              -  shufps xmm1,xmm1,-56
+"Agony-Win64-Shipping.exe"+2F32D1: F3 0F 11 4D AF           -  movss [rbp-51],xmm1
+"Agony-Win64-Shipping.exe"+2F32D6: F3 0F 11 45 AB           -  movss [rbp-55],xmm0
+"Agony-Win64-Shipping.exe"+2F32DB: EB 16                    -  jmp Agony-Win64-Shipping.exe+2F32F3
+"Agony-Win64-Shipping.exe"+2F32DD: F2 0F 10 05 33 DF 0F 03  -  movsd xmm0,[Agony-Win64-Shipping.exe+33F1218]
+"Agony-Win64-Shipping.exe"+2F32E5: 8B 05 35 DF 0F 03        -  mov eax,[Agony-Win64-Shipping.exe+33F1220]
+"Agony-Win64-Shipping.exe"+2F32EB: F2 0F 11 45 A7           -  movsd [rbp-59],xmm0
+"Agony-Win64-Shipping.exe"+2F32F0: 89 45 AF                 -  mov [rbp-51],eax
+// ---------- teleport ----------
+"Agony-Win64-Shipping.exe"+2F32F3: 48 8B 8F 58 02 00 00     -  mov rcx,[rdi+00000258]
+// ------------------------------
+"Agony-Win64-Shipping.exe"+2F32FA: 48 8D 45 A7              -  lea rax,[rbp-59]
+"Agony-Win64-Shipping.exe"+2F32FE: F2 0F 10 00              -  movsd xmm0,[rax]
+"Agony-Win64-Shipping.exe"+2F3302: 8B 40 08                 -  mov eax,[rax+08]
+"Agony-Win64-Shipping.exe"+2F3305: F2 0F 11 87 64 02 00 00  -  movsd [rdi+00000264],xmm0
+"Agony-Win64-Shipping.exe"+2F330D: 89 87 6C 02 00 00        -  mov [rdi+0000026C],eax
+"Agony-Win64-Shipping.exe"+2F3313: 48 85 C9                 -  test rcx,rcx
+"Agony-Win64-Shipping.exe"+2F3316: 0F 84 E9 03 00 00        -  je Agony-Win64-Shipping.exe+2F3705
+"Agony-Win64-Shipping.exe"+2F331C: 48 8B 81 68 01 00 00     -  mov rax,[rcx+00000168]
+"Agony-Win64-Shipping.exe"+2F3323: 8B 15 F7 DE 0F 03        -  mov edx,[Agony-Win64-Shipping.exe+33F1220]
+"Agony-Win64-Shipping.exe"+2F3329: F2 0F 10 15 E7 DE 0F 03  -  movsd xmm2,[Agony-Win64-Shipping.exe+33F1218]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>436</ID>
+      <Description>"Tflag"</Description>
+      <LastState Value="0" RealAddress="7FF6962B00B3"/>
+      <VariableType>Byte</VariableType>
+      <Address>tflag</Address>
+      <Hotkeys>
+        <Hotkey>
+          <Action>Set Value</Action>
+          <Keys>
+            <Key>97</Key>
+          </Keys>
+          <Value>1</Value>
+          <ID>0</ID>
+        </Hotkey>
+        <Hotkey>
+          <Action>Set Value</Action>
+          <Keys>
+            <Key>98</Key>
+          </Keys>
+          <Value>2</Value>
+          <ID>1</ID>
+        </Hotkey>
+      </Hotkeys>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>438</ID>
+      <Description>"No description"</Description>
+      <LastState Value="17081.70117" RealAddress="B963A96760"/>
+      <VariableType>Float</VariableType>
+      <Address>playerPointer</Address>
+      <Offsets>
+        <Offset>280</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>440</ID>
+      <Description>"No description"</Description>
+      <LastState Value="-2207.351807" RealAddress="B963A96764"/>
+      <VariableType>Float</VariableType>
+      <Address>playerPointer</Address>
+      <Offsets>
+        <Offset>284</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>441</ID>
+      <Description>"No description"</Description>
+      <LastState Value="-4343.538574" RealAddress="B963A96768"/>
+      <VariableType>Float</VariableType>
+      <Address>playerPointer</Address>
+      <Offsets>
+        <Offset>288</Offset>
+      </Offsets>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

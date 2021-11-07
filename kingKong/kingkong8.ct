@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="27">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>15</ID>
+      <Description>"infinity ammo"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : KingKong8.exe
+  Version:
+  Date   : 2018-12-30
+  Author : AJlex
+  Updated: 2019-01-01
+
+  This script does blah blah blah
+}
+[ENABLE]
+aobscanmodule(ammo1,KingKong8.exe,89 8C 82 74340000 8B 85 24FEFFFF 8B 48 18 8B 51 04 8B 42 40 8B 8D 98FBFFFF) // should be unique
+aobscanmodule(ammo2,KingKong8.exe,89 8C 82 04350000 8B 85 24FEFFFF 8B 48 18 8B 51 04 8B 42 40 8B 8D 98FBFFFF) // should be unique
+aobscanmodule(ammo3,KingKong8.exe,89 8C 82 4C350000 8B 85 24FEFFFF 8B 48 18 8B 51 04 8B 42 40 8B 8D 98FBFFFF) // should be unique
+aobscanmodule(ammo4,KingKong8.exe,89 94 88 BC340000 8B 8D 98FBFFFF 8B 51 04) // should be unique
+alloc(newmem,256)
+alloc(newmem2,256)
+alloc(newmem3,256)
+alloc(newmem4,256)
+
+newmem:
+mov [edx+eax*4+00003474],#99
+jmp exitnewmem
+
+ammo1:
+jmp newmem
+nop
+nop
+
+exitnewmem:
+
+newmem2:
+mov [edx+eax*4+00003504],#99
+jmp exitnewmem2
+
+ammo2:
+jmp newmem2
+nop
+nop
+
+exitnewmem2:
+
+newmem3:
+mov [edx+eax*4+0000354C],#99
+jmp exitnewmem3
+
+ammo3:
+jmp newmem3
+nop
+nop
+
+exitnewmem3:
+
+newmem4:
+mov [eax+ecx*4+000034BC],#99
+jmp Exitnewmem4
+
+ammo4:
+jmp newmem4
+nop
+nop
+
+Exitnewmem4:
+
+registerSymbol(ammo1)
+registerSymbol(ammo2)
+registerSymbol(ammo3)
+registerSymbol(ammo4)
+[DISABLE]
+ammo1:
+mov [edx+eax*4+00003474],ecx
+ammo2:
+mov [edx+eax*4+00003504],ecx
+ammo3:
+mov [edx+eax*4+0000354C],ecx
+ammo4:
+mov [eax+ecx*4+000034BC],edx
+unregisterSymbol(ammo1)
+unregisterSymbol(ammo2)
+unregisterSymbol(ammo3)
+unregisterSymbol(ammo4)
+dealloc(newmem)
+dealloc(newmem2)
+dealloc(newmem3)
+dealloc(newmem4)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>16</ID>
+      <Description>"godmode"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : KingKong8.exe
+  Version:
+  Date   : 2018-12-30
+  Author : AJlex
+  Updated: 2019-01-01
+
+  This script does blah blah blah
+}
+[ENABLE]
+aobscanmodule(gm1,KingKong8.exe,C7 84 81 B41B0000 0000803F8B 55 E0 8B 82 840C0000 83 E0 04 0F84) // should be unique
+aobscanmodule(gm2,KingKong8.exe,C7 84 81 B41B0000 0000803F8B 55 E0 8B 82 840C0000 83 E0 40 0F84) // should be unique
+aobscanmodule(gm3,KingKong8.exe,C7 84 90 B41B0000 00004040 EB ** 8B 4D E0 8B 91 840C0000 81 E2 00010000 74) // should be unique
+aobscanmodule(gm4,KingKong8.exe,C7 84 81 B41B0000 00004040 EB ** 8D 95 84FEFFFF 52 8D 85 70FFFFFF 50 8D 4D FC) // should be unique
+gm1:
+mov [ecx+eax*4+00001BB4],(float)0
+gm2:
+mov [ecx+eax*4+00001BB4],(float)0
+gm3:
+mov [eax+edx*4+00001BB4],(float)0
+gm4:
+mov [ecx+eax*4+00001BB4],(float)0
+
+registerSymbol(gm1)
+registerSymbol(gm2)
+registerSymbol(gm3)
+registerSymbol(gm4)
+[DISABLE]
+gm1:
+mov [ecx+eax*4+00001BB4],3F800000
+gm2:
+mov [ecx+eax*4+00001BB4],3F800000
+gm3:
+mov [eax+edx*4+00001BB4],40400000
+gm4:
+mov [ecx+eax*4+00001BB4],40400000
+unregisterSymbol(gm1)
+unregisterSymbol(gm2)
+unregisterSymbol(gm3)
+unregisterSymbol(gm4)
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

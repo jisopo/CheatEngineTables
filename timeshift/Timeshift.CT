@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="34">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>202</ID>
+      <Description>"inf. suitAbilities"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(inf_time,TimeShift.Exe,F3 0F10 46 2C F3 0F5C C1 F3 0F10 0D ********  0F2F C8 F3 0F11 46 2C) // should be unique
+alloc(newmem,$1000,inf_time)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [esi+2C],(float)1
+jmp exit
+
+originalcode:
+movss [esi+2C],xmm0
+
+exit:
+jmp returnhere
+
+inf_time+14:
+jmp newmem
+returnhere:
+
+
+registersymbol(inf_time)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+inf_time+14:
+movss [esi+2C],xmm0
+dealloc(newmem)
+unregistersymbol(inf_time)
+//Alt: db F3 0F 11 46 2C
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="27">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>3477</ID>
+      <Description>"Freeze Decision Timer"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : WalkingDead101.exe
+  Version:
+  Date   : 2018-12-30
+  Author : AJlex
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(dialogFlag,TheWalkingDead2.exe,CC CC CC CC CC CC CC CC CC CC CC CC CC CC 55 8B EC 83 EC 08 56 8B F1 83 7E 08 00 8B 46 04 57 8B 7D 10 75 ** 57 8B 7D 08 50 6A 01 57 E8 ******** 8B C7 5F 5E 8B E5 5D C2 0C00 53 8B 5D 0C 3B 18 75 26 8B 4F 0C 3B 4B 0C 0F8D ******** 57 8B 7D 08 53 6A 01 57 8B CE E8) // should be unique
+alloc(newmem,$1000, dialogFlag)
+label(originalcode)
+label(return)
+
+newmem:
+cmp [esi+34],#0
+jne originalcode
+cmp [esi+68],#0
+jne originalcode
+push edi
+lea edi,[esi+08]
+mov [dialogFlagVariable],edi
+pop edi
+originalcode:
+cmp dword ptr [esi+08],00
+mov eax,[esi+04]
+jmp return
+
+dialogFlagVariable:
+dd 0
+
+dialogFlag+17:
+  jmp newmem
+  nop
+  nop
+return:
+registersymbol(dialogFlag)
+registerSymbol(dialogFlagVariable)
+aobscanmodule(inf_time,TheWalkingDead2.exe,F3 0F10 40 18 51 F3 0F11 04 24 50 53 FF D2 F3 0F10 53 20 0F2F 15 ******** 76 ** F3 0F58 55 08 F3 0F11 55 08 47 EB ** F3 0F10 55 08 0F57 C0 8B 5D FC 8B 5B 04 89 5D FC 85 DB 0F85 D2FBFFFF 85 FF 0F8E ********) // should be unique
+alloc(newmem1,$1000,inf_time)
+label(returnhere1)
+label(originalcode1)
+label(exit1)
+
+newmem1: //this is allocated memory, you have read,write,execute access
+cmp [dialogFlagVariable],#0
+je originalcode1
+push edx
+push ecx
+mov edx,[dialogFlagVariable]
+mov ecx,[edx]
+cmp ecx,#0
+pop ecx
+pop edx
+je originalcode1
+mov [eax+18],(float)1
+movss xmm0,[eax+18]
+jmp exit1
+
+originalcode1:
+movss xmm0,[eax+18]
+jmp exit1
+
+exit1:
+jmp returnhere1
+
+inf_time:
+jmp newmem1
+returnhere1:
+
+registerSymbol(inf_time)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+inf_time:
+movss xmm0,[eax+18]
+//Alt: db F3 0F 10 40 18
+dialogFlag+17:
+  db 83 7E 08 00 8B 46 04
+unregisterSymbol(inf_time)
+unregistersymbol(dialogFlag)
+unregistersymbol(dialogFlagVariable)
+dealloc(newmem)
+dealloc(newmem1)
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

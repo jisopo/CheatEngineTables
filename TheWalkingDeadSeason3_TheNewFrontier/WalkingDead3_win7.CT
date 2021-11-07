@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="27">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>379</ID>
+      <Description>"Freeze Decision Timer"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : WalkingDead3_win7.exe
+  Version:
+  Date   : 2018-12-31
+  Author : AJlex
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(dialog_flag2,WalkingDead3_win7.exe,0FB6 41 0D C3 CC CC CC CC CC CC CC CC CC CC CC 88 51 0E) // should be unique
+alloc(newmem2,$1000,dialog_flag2)
+label(returnhere2)
+label(originalcode2)
+label(exit2)
+
+newmem2:
+push rdi
+lea rdi,[rcx+0D]
+mov [dialogFlagVariable2],rdi
+pop rdi
+originalcode2:
+movzx eax,byte ptr [rcx+0D]
+ret
+jmp exit2
+
+dialogFlagVariable2:
+dq 0
+
+exit2:
+jmp returnhere2
+
+dialog_flag2:
+jmp newmem2
+returnhere2:
+registerSymbol(dialogFlagVariable2)
+registerSymbol(dialog_flag2)
+aobscanmodule(dialog_flag1,WalkingDead3_win7.exe,48 83 79 10 00 75 ** 48 8B 84 24 80000000 48 89 44 24 28 4C 89 4C 24 20 4C 8B 49 08 41 B0 01 E8 ******** 48 8B C3 E9 ******** 48 8B 49 08 4C 3B 01 75 ** 41 8B 40 1C 41 39 01 0F8D ******** 48 8B 84 24) // should be unique
+alloc(newmem1,$1000,dialog_flag1)
+label(returnhere1)
+label(originalcode1)
+label(exit1)
+
+newmem1:
+push rdi
+lea rdi,[rcx+10]
+mov [dialogFlagVariable1],rdi
+pop rdi
+originalcode1:
+cmp qword ptr [rcx+10],00
+jmp exit1
+
+dialogFlagVariable1:
+dq 0
+
+exit1:
+jmp returnhere1
+
+dialog_flag1:
+jmp newmem1
+returnhere1:
+registerSymbol(dialogFlagVariable1)
+registerSymbol(dialog_flag1)
+
+aobscanmodule(inf_time,WalkingDead3_win7.exe,F3 0F11 73 30 48 8B 9B A8000000 48 85 DB 74 ** 8B 43 44 C1 E8 07 A8 01 74 **) // should be unique
+alloc(newmem,$1000,inf_time)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+cmp qword ptr [dialogFlagVariable1],#0
+je originalcode
+cmp qword ptr [dialogFlagVariable2],#0
+je originalcode
+push rdx
+push rcx
+mov rdx,[dialogFlagVariable1]
+mov rcx,[rdx]
+cmp rcx,#0
+pop rcx
+pop rdx
+je originalcode
+push rdx
+push rcx
+mov rdx,[dialogFlagVariable2]
+cmp byte ptr [rdx],#1
+pop rcx
+pop rdx
+jne originalcode
+mov [rbx+30],(float)1
+jmp exit
+originalcode:
+movss [rbx+30],xmm6
+
+exit:
+jmp returnhere
+
+inf_time:
+jmp newmem
+returnhere:
+
+registerSymbol(inf_time)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+inf_time:
+movss [rbx+30],xmm6
+//Alt: db F3 0F 11 73 30
+
+dialog_flag1:
+cmp qword ptr [rcx+10],00
+//Alt: db 48 83 79 10 00
+
+dialog_flag2:
+movzx eax,byte ptr [rcx+0D]
+ret
+//Alt: db 0F B6 41 0D C3
+
+unregisterSymbol(inf_time)
+unregisterSymbol(dialogFlagVariable1)
+unregisterSymbol(dialog_flag1)
+unregisterSymbol(dialogFlagVariable2)
+unregisterSymbol(dialog_flag2)
+dealloc(newmem)
+dealloc(newmem1)
+dealloc(newmem2)
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+</CheatTable>
