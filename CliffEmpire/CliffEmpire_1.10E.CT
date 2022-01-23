@@ -1,0 +1,541 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="34">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>94</ID>
+      <Description>"Activate table"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : CliffEmpire.exe
+  Version: 1.10e
+  Date   : 16.01.2022
+  Author : jisopo
+  Github:  github.com/jisopo/CheatEngineTables
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(money, 8D 44 88 10 8B 00 8B 80 58 01 00 00 01 85 90 ED FF FF)
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+
+cmp byte ptr [dronesMaxFlag],1
+jne moneyCheck
+// max drones
+mov [eax+F0],#999 // drone simpl
+mov [eax+F4],#999 // drone angrar
+mov [eax+F8],#999 // drone gruz
+mov [eax+FC],#999 // zappel
+mov [eax+100],#999 // dostoprim
+
+moneyCheck:
+cmp byte ptr [infMoneyFlag],1
+jne originalcode
+// money
+mov [eax+00000158],#999999
+
+originalcode:
+mov eax,[eax+00000158]
+
+exit:
+jmp returnhere
+
+dronesMaxFlag:
+db 0
+
+infMoneyFlag:
+db 0
+
+//USER_UI:Update+2e1a6:
+money+6:
+jmp newmem
+nop
+returnhere:
+
+
+registerSymbol(money)
+registerSymbol(dronesMaxFlag)
+registerSymbol(infMoneyFlag)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+//USER_UI:Update+2e1a6:
+money+6:
+mov eax,[eax+00000158]
+//Alt: db 8B 80 58 01 00 00
+dealloc(newmem)
+unregisterSymbol(money)
+unregisterSymbol(dronesMaxFlag)
+unregisterSymbol(infMoneyFlag)
+{
+// ORIGINAL CODE - INJECTION POINT: USER_UI:Update+2e1a6
+
+USER_UI:Update+2e181: 83 C4 10                       - add esp,10
+USER_UI:Update+2e184: 85 C0                          - test eax,eax
+USER_UI:Update+2e186: 74 2A                          - je USER_UI:Update+2e1b2
+USER_UI:Update+2e188: 8B 45 08                       - mov eax,[ebp+08]
+USER_UI:Update+2e18b: 8B 80 3C 02 00 00              - mov eax,[eax+0000023C]
+USER_UI:Update+2e191: 8B 8D 94 ED FF FF              - mov ecx,[ebp-0000126C]
+USER_UI:Update+2e197: 39 48 0C                       - cmp [eax+0C],ecx
+USER_UI:Update+2e19a: 0F 86 53 00 00 00              - jbe USER_UI:Update+2e1f3
+USER_UI:Update+2e1a0: 8D 44 88 10                    - lea eax,[eax+ecx*4+10]
+USER_UI:Update+2e1a4: 8B 00                          - mov eax,[eax]
+// ---------- INJECTING HERE ----------
+USER_UI:Update+2e1a6: 8B 80 58 01 00 00              - mov eax,[eax+00000158]
+// ---------- DONE INJECTING  ----------
+USER_UI:Update+2e1ac: 01 85 90 ED FF FF              - add [ebp-00001270],eax
+USER_UI:Update+2e1b2: 83 85 94 ED FF FF 01           - add dword ptr [ebp-0000126C],01
+USER_UI:Update+2e1b9: 8B 45 08                       - mov eax,[ebp+08]
+USER_UI:Update+2e1bc: 8B 80 3C 02 00 00              - mov eax,[eax+0000023C]
+USER_UI:Update+2e1c2: 8B 40 0C                       - mov eax,[eax+0C]
+USER_UI:Update+2e1c5: 39 85 94 ED FF FF              - cmp [ebp-0000126C],eax
+USER_UI:Update+2e1cb: 7C 8B                          - jl USER_UI:Update+2e158
+USER_UI:Update+2e1cd: 81 BD 90 ED FF FF 40 42 0F 00  - cmp [ebp-00001270],000F4240
+USER_UI:Update+2e1d7: 7E 18                          - jle USER_UI:Update+2e1f1
+USER_UI:Update+2e1d9: 0F B6 05 50 77 DC 0E           - movzx eax,byte ptr [0EDC7750]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>96</ID>
+      <Description>"Inf. natural resources"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : CliffEmpire.exe
+  Version: 1.10e
+  Date   : 16.01.2022
+  Author : jisopo
+  Github:  github.com/jisopo/CheatEngineTables
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(resources, D9 9F 8C 01 00 00 8B 45 AC 8B 80 7C 02 00 00 85 C0)
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+fstp dword ptr [edi+0000018C]
+
+mov [edi+0000017C],(float)1  // water
+mov [edi+00000180],(float)1  // metal
+mov [edi+00000184],(float)1  // ural
+mov [edi+00000188],(float)9999 // windPower
+mov [edi+0000018C],(float)1  // fish
+mov [edi+00000190],(float)1  // ground
+mov [edi+00000194],(float)99  // sunny
+
+exit:
+jmp returnhere
+
+//TERRA:StatsRefresh+cf3:
+resources:
+jmp newmem
+nop
+returnhere:
+
+
+registerSymbol(resources)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+//TERRA:StatsRefresh+cf3:
+resources:
+fstp dword ptr [edi+0000018C]
+//Alt: db D9 9F 8C 01 00 00
+unregisterSymbol(resources)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: TERRA:StatsRefresh+cf3
+
+TERRA:StatsRefresh+cd3: 8B 45 AC           - mov eax,[ebp-54]
+TERRA:StatsRefresh+cd6: 8B 80 54 01 00 00  - mov eax,[eax+00000154]
+TERRA:StatsRefresh+cdc: 50                 - push eax
+TERRA:StatsRefresh+cdd: DB 04 24           - fild dword ptr [esp]
+TERRA:StatsRefresh+ce0: D9 1C 24           - fstp dword ptr [esp]
+TERRA:StatsRefresh+ce3: D9 04 24           - fld dword ptr [esp]
+TERRA:StatsRefresh+ce6: 83 C4 04           - add esp,04
+TERRA:StatsRefresh+ce9: D9 05 58 BE 02 57  - fld dword ptr [5702BE58]
+TERRA:StatsRefresh+cef: DE C9              - fmulp st(1),st(0)
+TERRA:StatsRefresh+cf1: DE C1              - faddp
+// ---------- INJECTING HERE ----------
+TERRA:StatsRefresh+cf3: D9 9F 8C 01 00 00  - fstp dword ptr [edi+0000018C]
+// ---------- DONE INJECTING  ----------
+TERRA:StatsRefresh+cf9: 8B 45 AC           - mov eax,[ebp-54]
+TERRA:StatsRefresh+cfc: 8B 80 7C 02 00 00  - mov eax,[eax+0000027C]
+TERRA:StatsRefresh+d02: 85 C0              - test eax,eax
+TERRA:StatsRefresh+d04: 0F 8D 18 02 00 00  - jnl TERRA:StatsRefresh+f22
+TERRA:StatsRefresh+d0a: 8B 45 AC           - mov eax,[ebp-54]
+TERRA:StatsRefresh+d0d: 8B 88 7C 02 00 00  - mov ecx,[eax+0000027C]
+TERRA:StatsRefresh+d13: 51                 - push ecx
+TERRA:StatsRefresh+d14: DB 04 24           - fild dword ptr [esp]
+TERRA:StatsRefresh+d17: D9 1C 24           - fstp dword ptr [esp]
+TERRA:StatsRefresh+d1a: D9 04 24           - fld dword ptr [esp]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>107</ID>
+      <Description>"Increase drone limit"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : CliffEmpire.exe
+  Version: 1.10e
+  Date   : 20.01.2022
+  Author : jisopo
+  Github:  github.com/jisopo/CheatEngineTables
+  This script does blah blah blah
+}
+
+aobscan(droneChecks, C7 87 F0 00 00 00 0E 00 00 00 C7 87 F4 00 00 00 0C 00 00 00 C7 87 F8 00 00 00 08 00 00 00)
+
+[ENABLE]
+droneChecks-2:
+db EB
+
+droneChecks+2B:
+db EB
+
+droneChecks-15B:
+db EB
+
+//droneChecks-54:
+//db E9 B8 00 00 00
+
+//droneChecks-109:
+//db E9 6D 01 00 00 90
+
+registerSymbol(droneChecks)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+droneChecks-2:
+db 74
+
+droneChecks+2B:
+db 74
+
+droneChecks-15B:
+db 74
+
+//droneChecks-109:
+//db 0F85 6C010000
+
+unregisterSymbol(droneChecks)
+
+{
+// ORIGINAL CODE - INJECTION POINT: TERRA:Update+219
+
+TERRA:Update+1ee: 8B 87 F0 00 00 00              - mov eax,[edi+000000F0]
+TERRA:Update+1f4: 3D 0E 00 00 00                 - cmp eax,0000000E
+TERRA:Update+1f9: 74 3E                          - je TERRA:Update+239
+TERRA:Update+1fb: 8B 05 E8 FF 97 4A              - mov eax,[4A97FFE8]
+TERRA:Update+201: 8B 80 68 04 00 00              - mov eax,[eax+00000468]
+TERRA:Update+207: 83 78 0C 23                    - cmp dword ptr [eax+0C],23
+TERRA:Update+20b: 0F 86 D8 32 00 00              - jbe TERRA:Update+34e9
+TERRA:Update+211: 0F B6 40 33                    - movzx eax,byte ptr [eax+33]
+TERRA:Update+215: 85 C0                          - test eax,eax
+TERRA:Update+217: 74 20                          - je TERRA:Update+239
+// ---------- INJECTING HERE ----------
+TERRA:Update+219: C7 87 F0 00 00 00 0E 00 00 00  - mov [edi+000000F0],0000000E
+// ---------- DONE INJECTING  ----------
+TERRA:Update+223: C7 87 F4 00 00 00 0C 00 00 00  - mov [edi+000000F4],0000000C
+TERRA:Update+22d: C7 87 F8 00 00 00 08 00 00 00  - mov [edi+000000F8],00000008
+TERRA:Update+237: EB 49                          - jmp TERRA:Update+282
+TERRA:Update+239: 8B 87 F0 00 00 00              - mov eax,[edi+000000F0]
+TERRA:Update+23f: 3D 0A 00 00 00                 - cmp eax,0000000A
+TERRA:Update+244: 74 3C                          - je TERRA:Update+282
+TERRA:Update+246: 8B 05 E8 FF 97 4A              - mov eax,[4A97FFE8]
+TERRA:Update+24c: 8B 80 68 04 00 00              - mov eax,[eax+00000468]
+TERRA:Update+252: 83 78 0C 23                    - cmp dword ptr [eax+0C],23
+TERRA:Update+256: 0F 86 83 32 00 00              - jbe TERRA:Update+34df
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>136</ID>
+      <Description>"Drones fast delivery"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : CliffEmpire.exe
+  Version:
+  Date   :
+  Author : shinkansen
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(fastDelivery, D9 47 4C D9 9D 38 FF FF FF 8B 47 5C)
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov [edi+54],(float)99999
+
+originalcode:
+fld dword ptr [edi+4C]
+fstp dword ptr [ebp-000000C8]
+
+exit:
+jmp returnhere
+
+//TECH:Update+399:
+fastDelivery:
+jmp newmem
+nop 4
+returnhere:
+
+registerSymbol(fastDelivery)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+//TECH:Update+399:
+fastDelivery:
+fld dword ptr [edi+4C]
+fstp dword ptr [ebp-000000C8]
+dealloc(newmem)
+unregisterSymbol(fastDelivery)
+//Alt: db D9 47 4C D9 9D 38 FF FF FF
+{
+// ORIGINAL CODE - INJECTION POINT: TECH:Update+399
+
+TECH:Update+341: C7 85 38 FC FF FF 00 00 00 00  - mov [ebp-000003C8],00000000
+TECH:Update+34b: C7 85 3C FC FF FF 00 00 00 00  - mov [ebp-000003C4],00000000
+TECH:Update+355: C7 85 BC FA FF FF 00 00 00 00  - mov [ebp-00000544],00000000
+TECH:Update+35f: C7 85 B8 FA FF FF 00 00 00 00  - mov [ebp-00000548],00000000
+TECH:Update+369: C7 85 B4 FA FF FF 00 00 00 00  - mov [ebp-0000054C],00000000
+TECH:Update+373: D9 EE                          - fldz
+TECH:Update+375: D9 9D B0 FA FF FF              - fstp dword ptr [ebp-00000550]
+TECH:Update+37b: C7 85 40 FC FF FF 00 00 00 00  - mov [ebp-000003C0],00000000
+TECH:Update+385: C7 85 44 FC FF FF 00 00 00 00  - mov [ebp-000003BC],00000000
+TECH:Update+38f: C7 85 48 FC FF FF 00 00 00 00  - mov [ebp-000003B8],00000000
+// ---------- INJECTING HERE ----------
+TECH:Update+399: D9 47 4C                       - fld dword ptr [edi+4C]
+// ---------- DONE INJECTING  ----------
+TECH:Update+39c: D9 9D 38 FF FF FF              - fstp dword ptr [ebp-000000C8]
+TECH:Update+3a2: 8B 47 5C                       - mov eax,[edi+5C]
+TECH:Update+3a5: 85 C0                          - test eax,eax
+TECH:Update+3a7: 0F 85 C3 2D 00 00              - jne TECH:Update+3170
+TECH:Update+3ad: 8B 47 18                       - mov eax,[edi+18]
+TECH:Update+3b0: 8B 80 24 01 00 00              - mov eax,[eax+00000124]
+TECH:Update+3b6: 85 C0                          - test eax,eax
+TECH:Update+3b8: 0F 85 B2 2D 00 00              - jne TECH:Update+3170
+TECH:Update+3be: 85 FF                          - test edi,edi
+TECH:Update+3c0: 0F 84 AE 6D 00 00              - je TECH:Update+7174
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>142</ID>
+      <Description>"Fast research"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : CliffEmpire.exe
+  Version:
+  Date   :
+  Author : shinkansen
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(fastResearch, 8D 85 24 FE FF FF 83 EC 04 0F B6 4D 10 51 53 50)
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+
+originalcode:
+add esp,10
+fld dword ptr [ebx+6C]
+
+mov [ebx+6C], (float)0.99990
+
+exit:
+jmp returnhere
+
+//UnityEngine.UI:Image:GenerateFilledSprite+101:
+fastResearch-17:
+jmp newmem
+nop
+returnhere:
+
+
+registerSymbol(fastResearch)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+
+//UnityEngine.UI:Image:GenerateFilledSprite+101:
+fastResearch-17:
+add esp,10
+fld dword ptr [ebx+6C]
+//Alt: db 83 C4 10 D9 43 6C
+dealloc(newmem)
+unregisterSymbol(fastResearch)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>147</ID>
+      <Description>"Fast production"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : CliffEmpire.exe
+  Version: 1.10e
+  Date   : 22.01.2022
+  Author : jisopo
+  Github:  github.com/jisopo/CheatEngineTables
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(fastProduction, 8B 45 08 D9 98 B0 01 00 00 0F B6 80 5B 01 00 00 85 C0)
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+fstp dword ptr [eax+000001B0]
+
+mov [eax+000001B0],(float)40
+
+exit:
+jmp returnhere
+
+fastProduction+3:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(fastProduction)
+
+aobscan(workInNight, 8B 4D 08 8B 81 B8 01 00 00 8B 89 BC 01 00 00 3B C1)
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem1,2048)
+label(returnhere1)
+label(originalcode1)
+label(exit1)
+
+newmem1: //this is allocated memory, you have read,write,execute access
+
+push ecx
+mov ecx, [ebp+08]
+mov [ecx+0000015B],#0 // not work in night
+pop ecx
+
+originalcode1:
+mov ecx,[ecx+000001BC]
+
+exit1:
+jmp returnhere1
+
+//BLD:Update+6a0:
+workInNight+9:
+jmp newmem1
+nop
+returnhere1:
+
+
+registerSymbol(workInNight)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+fastProduction+3:
+fstp dword ptr [eax+000001B0]
+//Alt: db D9 98 B0 01 00 00
+unregisterSymbol(fastProduction)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: BLD:Update+5acc
+
+BLD:Update+5aa8: 0F B6 40 39           - movzx eax,byte ptr [eax+39]
+BLD:Update+5aac: 85 C0                 - test eax,eax
+BLD:Update+5aae: 74 17                 - je BLD:Update+5ac7
+BLD:Update+5ab0: 8B 45 08              - mov eax,[ebp+08]
+BLD:Update+5ab3: D9 80 AC 01 00 00     - fld dword ptr [eax+000001AC]
+BLD:Update+5ab9: D9 05 60 36 24 56     - fld dword ptr [56243660]
+BLD:Update+5abf: DE C1                 - faddp
+BLD:Update+5ac1: D9 98 AC 01 00 00     - fstp dword ptr [eax+000001AC]
+BLD:Update+5ac7: D9 E8                 - fld1
+BLD:Update+5ac9: 8B 45 08              - mov eax,[ebp+08]
+// ---------- INJECTING HERE ----------
+BLD:Update+5acc: D9 98 B0 01 00 00     - fstp dword ptr [eax+000001B0]
+// ---------- DONE INJECTING  ----------
+BLD:Update+5ad2: 0F B6 80 5B 01 00 00  - movzx eax,byte ptr [eax+0000015B]
+BLD:Update+5ad9: 85 C0                 - test eax,eax
+BLD:Update+5adb: 0F 84 58 00 00 00     - je BLD:Update+5b39
+BLD:Update+5ae1: 8B 05 E0 FF D0 4A     - mov eax,[4AD0FFE0]
+BLD:Update+5ae7: 3D 08 00 00 00        - cmp eax,00000008
+BLD:Update+5aec: 7C 0D                 - jl BLD:Update+5afb
+BLD:Update+5aee: 8B 05 E0 FF D0 4A     - mov eax,[4AD0FFE0]
+BLD:Update+5af4: 3D 14 00 00 00        - cmp eax,00000014
+BLD:Update+5af9: 7E 3E                 - jle BLD:Update+5b39
+BLD:Update+5afb: 8B 45 08              - mov eax,[ebp+08]
+}
+
+//BLD:Update+6a0:
+workInNight+9:
+mov ecx,[ecx+000001BC]
+//Alt: db 8B 89 BC 01 00 00
+unregisterSymbol(workInNight)
+dealloc(newmem1)
+{
+// ORIGINAL CODE - INJECTION POINT: BLD:Update+6a0
+
+BLD:Update+66d: 3D 7E 00 00 00                 - cmp eax,0000007E
+BLD:Update+672: 75 14                          - jne BLD:Update+688
+BLD:Update+674: 8B 45 08                       - mov eax,[ebp+08]
+BLD:Update+677: C6 80 59 01 00 00 01           - mov byte ptr [eax+00000159],01
+BLD:Update+67e: C7 80 F0 01 00 00 98 00 00 00  - mov [eax+000001F0],00000098
+BLD:Update+688: 0F B6 05 E4 1F 26 4A           - movzx eax,byte ptr [4A261FE4]
+BLD:Update+68f: 85 C0                          - test eax,eax
+BLD:Update+691: 0F 84 A4 0F 00 00              - je BLD:Update+163b
+BLD:Update+697: 8B 4D 08                       - mov ecx,[ebp+08]
+BLD:Update+69a: 8B 81 B8 01 00 00              - mov eax,[ecx+000001B8]
+// ---------- INJECTING HERE ----------
+BLD:Update+6a0: 8B 89 BC 01 00 00              - mov ecx,[ecx+000001BC]
+// ---------- DONE INJECTING  ----------
+BLD:Update+6a6: 3B C1                          - cmp eax,ecx
+BLD:Update+6a8: 7D 2D                          - jnl BLD:Update+6d7
+BLD:Update+6aa: 8B 4D 08                       - mov ecx,[ebp+08]
+BLD:Update+6ad: 8B 81 B8 01 00 00              - mov eax,[ecx+000001B8]
+BLD:Update+6b3: 05 05 00 00 00                 - add eax,00000005
+BLD:Update+6b8: 89 81 B8 01 00 00              - mov [ecx+000001B8],eax
+BLD:Update+6be: 8B 89 BC 01 00 00              - mov ecx,[ecx+000001BC]
+BLD:Update+6c4: 3B C1                          - cmp eax,ecx
+BLD:Update+6c6: 7E 0F                          - jle BLD:Update+6d7
+BLD:Update+6c8: 8B 45 08                       - mov eax,[ebp+08]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>138</ID>
+      <Description>"Increase drones limit(Activate Increase drone limit script first)"</Description>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>Byte</VariableType>
+      <Address>dronesMaxFlag</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>139</ID>
+      <Description>"Infinity money"</Description>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>Byte</VariableType>
+      <Address>infMoneyFlag</Address>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
