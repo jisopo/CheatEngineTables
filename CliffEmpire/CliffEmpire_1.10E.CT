@@ -101,21 +101,20 @@ USER_UI:Update+2e1d9: 0F B6 05 50 77 DC 0E           - movzx eax,byte ptr [0EDC7
 </AssemblerScript>
     </CheatEntry>
     <CheatEntry>
-      <ID>96</ID>
+      <ID>149</ID>
       <Description>"Inf. natural resources"</Description>
-      <LastState/>
+      <LastState Activated="1"/>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript>{
   Game   : CliffEmpire.exe
   Version: 1.10e
-  Date   : 16.01.2022
+  Date   : 29.01.2022
   Author : jisopo
   Github:  github.com/jisopo/CheatEngineTables
   This script does blah blah blah
 }
 [ENABLE]
-//code from here to '[DISABLE]' will be used to enable the cheat
-aobscan(resources, D9 9F 8C 01 00 00 8B 45 AC 8B 80 7C 02 00 00 85 C0)
+aobscan(resources, D9 80 B4 07 00 00 D9 80 AC 07 00 00 DE E9 D9 98 B4 07 00 00 D9 80 B4 07 00 00)
 alloc(newmem,2048)
 label(returnhere)
 label(originalcode)
@@ -124,9 +123,43 @@ label(exit)
 newmem: //this is allocated memory, you have read,write,execute access
 //place your code here
 
-originalcode:
-fstp dword ptr [edi+0000018C]
+mov [edx+0000017C],(float)1  // water
+mov [edx+00000180],(float)1  // metal
+mov [edx+00000184],(float)1  // ural
+mov [edx+00000188],(float)9999 // windPower
+mov [edx+0000018C],(float)1  // fish
+mov [edx+00000190],(float)1  // ground
+mov [edx+00000194],(float)99  // sunny
 
+originalcode:
+push ebx
+mov ebx,(float)1
+//fstp dword ptr [edx+00000190]
+fstp dword ptr [ebx]
+pop ebx
+
+
+exit:
+jmp returnhere
+
+//USER_UI:Update+3144:
+resources-79:
+jmp newmem
+nop
+returnhere:
+
+
+registerSymbol(resources)
+
+aobscan(resources_2, D9 9F 8C 01 00 00 D9 EE)
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem1,2048)
+label(returnhere1)
+label(originalcode1)
+label(exit1)
+
+newmem1: //this is allocated memory, you have read,write,execute access
+//place your code here
 mov [edi+0000017C],(float)1  // water
 mov [edi+00000180],(float)1  // metal
 mov [edi+00000184],(float)1  // ural
@@ -135,51 +168,91 @@ mov [edi+0000018C],(float)1  // fish
 mov [edi+00000190],(float)1  // ground
 mov [edi+00000194],(float)99  // sunny
 
-exit:
-jmp returnhere
+originalcode1:
+push edx
+mov edx,(float)1
+fstp dword ptr [edx]
+//fstp dword ptr [edi+0000018C]
+pop edx
 
-//TERRA:StatsRefresh+cf3:
-resources:
-jmp newmem
+exit1:
+jmp returnhere1
+
+//TERRA:StatsRefresh+69c:
+resources_2:
+jmp newmem1
 nop
-returnhere:
+returnhere1:
 
 
-registerSymbol(resources)
+registerSymbol(resources_2)
 [DISABLE]
 //code from here till the end of the code will be used to disable the cheat
-//TERRA:StatsRefresh+cf3:
-resources:
+//TERRA:StatsRefresh+69c:
+resources_2:
 fstp dword ptr [edi+0000018C]
 //Alt: db D9 9F 8C 01 00 00
+unregisterSymbol(resources_2)
+dealloc(newmem1)
+{
+// ORIGINAL CODE - INJECTION POINT: TERRA:StatsRefresh+69c
+
+TERRA:StatsRefresh+63c: C7 87 20 03 00 00 00 00 00 00  - mov [edi+00000320],00000000
+TERRA:StatsRefresh+646: C7 87 28 03 00 00 00 00 00 00  - mov [edi+00000328],00000000
+TERRA:StatsRefresh+650: C7 87 2C 03 00 00 04 00 00 00  - mov [edi+0000032C],00000004
+TERRA:StatsRefresh+65a: C7 87 38 03 00 00 00 00 00 00  - mov [edi+00000338],00000000
+TERRA:StatsRefresh+664: C7 87 3C 03 00 00 FB FF FF FF  - mov [edi+0000033C],FFFFFFFB
+TERRA:StatsRefresh+66e: C7 87 30 03 00 00 00 00 00 00  - mov [edi+00000330],00000000
+TERRA:StatsRefresh+678: C7 87 34 03 00 00 00 00 00 00  - mov [edi+00000334],00000000
+TERRA:StatsRefresh+682: C7 87 44 03 00 00 00 00 00 00  - mov [edi+00000344],00000000
+TERRA:StatsRefresh+68c: C7 87 40 03 00 00 00 00 00 00  - mov [edi+00000340],00000000
+TERRA:StatsRefresh+696: D9 87 98 01 00 00              - fld dword ptr [edi+00000198]
+// ---------- INJECTING HERE ----------
+TERRA:StatsRefresh+69c: D9 9F 8C 01 00 00              - fstp dword ptr [edi+0000018C]
+// ---------- DONE INJECTING  ----------
+TERRA:StatsRefresh+6a2: D9 EE                          - fldz
+TERRA:StatsRefresh+6a4: D9 9F 44 01 00 00              - fstp dword ptr [edi+00000144]
+TERRA:StatsRefresh+6aa: D9 EE                          - fldz
+TERRA:StatsRefresh+6ac: D9 9F 78 01 00 00              - fstp dword ptr [edi+00000178]
+TERRA:StatsRefresh+6b2: 8B 05 E8 FF 01 4F              - mov eax,[4F01FFE8]
+TERRA:StatsRefresh+6b8: 8B 80 68 04 00 00              - mov eax,[eax+00000468]
+TERRA:StatsRefresh+6be: 83 78 0C 0D                    - cmp dword ptr [eax+0C],0D
+TERRA:StatsRefresh+6c2: 0F 86 BE 39 00 00              - jbe TERRA:StatsRefresh+4086
+TERRA:StatsRefresh+6c8: 0F B6 40 1D                    - movzx eax,byte ptr [eax+1D]
+TERRA:StatsRefresh+6cc: 85 C0                          - test eax,eax
+}
+//USER_UI:Update+3144:
+resources-79:
+fstp dword ptr [edx+00000190]
+//Alt: db D9 9A 90 01 00 00
 unregisterSymbol(resources)
 dealloc(newmem)
 {
-// ORIGINAL CODE - INJECTION POINT: TERRA:StatsRefresh+cf3
+// ORIGINAL CODE - INJECTION POINT: USER_UI:Update+3144
 
-TERRA:StatsRefresh+cd3: 8B 45 AC           - mov eax,[ebp-54]
-TERRA:StatsRefresh+cd6: 8B 80 54 01 00 00  - mov eax,[eax+00000154]
-TERRA:StatsRefresh+cdc: 50                 - push eax
-TERRA:StatsRefresh+cdd: DB 04 24           - fild dword ptr [esp]
-TERRA:StatsRefresh+ce0: D9 1C 24           - fstp dword ptr [esp]
-TERRA:StatsRefresh+ce3: D9 04 24           - fld dword ptr [esp]
-TERRA:StatsRefresh+ce6: 83 C4 04           - add esp,04
-TERRA:StatsRefresh+ce9: D9 05 58 BE 02 57  - fld dword ptr [5702BE58]
-TERRA:StatsRefresh+cef: DE C9              - fmulp st(1),st(0)
-TERRA:StatsRefresh+cf1: DE C1              - faddp
+USER_UI:Update+3119: 39 48 0C           - cmp [eax+0C],ecx
+USER_UI:Update+311c: 0F 86 84 F9 02 00  - jbe USER_UI:Update+32aa6
+USER_UI:Update+3122: 8D 44 88 10        - lea eax,[eax+ecx*4+10]
+USER_UI:Update+3126: 8B 00              - mov eax,[eax]
+USER_UI:Update+3128: D9 80 A4 01 00 00  - fld dword ptr [eax+000001A4]
+USER_UI:Update+312e: 8B 85 B4 E6 FF FF  - mov eax,[ebp-0000194C]
+USER_UI:Update+3134: D9 80 AC 07 00 00  - fld dword ptr [eax+000007AC]
+USER_UI:Update+313a: D9 05 10 45 3C 55  - fld dword ptr [553C4510]
+USER_UI:Update+3140: DE C9              - fmulp st(1),st(0)
+USER_UI:Update+3142: DE E9              - fsubp st(1),st(0)
 // ---------- INJECTING HERE ----------
-TERRA:StatsRefresh+cf3: D9 9F 8C 01 00 00  - fstp dword ptr [edi+0000018C]
+USER_UI:Update+3144: D9 9A 90 01 00 00  - fstp dword ptr [edx+00000190]
 // ---------- DONE INJECTING  ----------
-TERRA:StatsRefresh+cf9: 8B 45 AC           - mov eax,[ebp-54]
-TERRA:StatsRefresh+cfc: 8B 80 7C 02 00 00  - mov eax,[eax+0000027C]
-TERRA:StatsRefresh+d02: 85 C0              - test eax,eax
-TERRA:StatsRefresh+d04: 0F 8D 18 02 00 00  - jnl TERRA:StatsRefresh+f22
-TERRA:StatsRefresh+d0a: 8B 45 AC           - mov eax,[ebp-54]
-TERRA:StatsRefresh+d0d: 8B 88 7C 02 00 00  - mov ecx,[eax+0000027C]
-TERRA:StatsRefresh+d13: 51                 - push ecx
-TERRA:StatsRefresh+d14: DB 04 24           - fild dword ptr [esp]
-TERRA:StatsRefresh+d17: D9 1C 24           - fstp dword ptr [esp]
-TERRA:StatsRefresh+d1a: D9 04 24           - fld dword ptr [esp]
+USER_UI:Update+314a: 8B 80 3C 02 00 00  - mov eax,[eax+0000023C]
+USER_UI:Update+3150: 39 48 0C           - cmp [eax+0C],ecx
+USER_UI:Update+3153: 0F 86 43 F9 02 00  - jbe USER_UI:Update+32a9c
+USER_UI:Update+3159: 8D 44 88 10        - lea eax,[eax+ecx*4+10]
+USER_UI:Update+315d: 8B 00              - mov eax,[eax]
+USER_UI:Update+315f: D9 80 90 01 00 00  - fld dword ptr [eax+00000190]
+USER_UI:Update+3165: D9 05 18 45 3C 55  - fld dword ptr [553C4518]
+USER_UI:Update+316b: DF F1              - fcomip st(0),st(1)
+USER_UI:Update+316d: DD D8              - fstp st(0)
+USER_UI:Update+316f: 76 2A              - jna USER_UI:Update+319b
 }
 </AssemblerScript>
     </CheatEntry>
