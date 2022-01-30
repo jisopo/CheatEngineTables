@@ -466,7 +466,7 @@ unregisterSymbol(fastResearch)
       <AssemblerScript>{
   Game   : CliffEmpire.exe
   Version: 1.10e
-  Date   : 22.01.2022
+  Date   : 30.01.2022
   Author : jisopo
   Github:  github.com/jisopo/CheatEngineTables
   This script does blah blah blah
@@ -497,7 +497,6 @@ returnhere:
 
 registerSymbol(fastProduction)
 
-aobscan(workInNight, 8B 4D 08 8B 81 B8 01 00 00 8B 89 BC 01 00 00 3B C1)
 //code from here to '[DISABLE]' will be used to enable the cheat
 alloc(newmem1,2048)
 label(returnhere1)
@@ -506,25 +505,25 @@ label(exit1)
 
 newmem1: //this is allocated memory, you have read,write,execute access
 
-push ecx
-mov ecx, [ebp+08]
-mov [ecx+0000015B],#0 // not work in night
-pop ecx
+fld dword ptr [super]
+jmp returnhere1
 
 originalcode1:
-mov ecx,[ecx+000001BC]
+fld dword ptr [56B042E0]
 
 exit1:
 jmp returnhere1
 
-//BLD:Update+6a0:
-workInNight+9:
+super:
+dd (float)40
+
+//BLD:Update+5b2a:
+fastProduction+61:
 jmp newmem1
 nop
 returnhere1:
 
 
-registerSymbol(workInNight)
 [DISABLE]
 //code from here till the end of the code will be used to disable the cheat
 fastProduction+3:
@@ -560,38 +559,37 @@ BLD:Update+5af9: 7E 3E                 - jle BLD:Update+5b39
 BLD:Update+5afb: 8B 45 08              - mov eax,[ebp+08]
 }
 
-//BLD:Update+6a0:
-workInNight+9:
-mov ecx,[ecx+000001BC]
-//Alt: db 8B 89 BC 01 00 00
-unregisterSymbol(workInNight)
+//BLD:Update+5b2a:
+fastProduction+61:
+fld dword ptr [56B042E0]
+//Alt: db D9 05 E0 42 B0 56
 dealloc(newmem1)
 {
-// ORIGINAL CODE - INJECTION POINT: BLD:Update+6a0
+// ORIGINAL CODE - INJECTION POINT: BLD:Update+5b2a
 
-BLD:Update+66d: 3D 7E 00 00 00                 - cmp eax,0000007E
-BLD:Update+672: 75 14                          - jne BLD:Update+688
-BLD:Update+674: 8B 45 08                       - mov eax,[ebp+08]
-BLD:Update+677: C6 80 59 01 00 00 01           - mov byte ptr [eax+00000159],01
-BLD:Update+67e: C7 80 F0 01 00 00 98 00 00 00  - mov [eax+000001F0],00000098
-BLD:Update+688: 0F B6 05 E4 1F 26 4A           - movzx eax,byte ptr [4A261FE4]
-BLD:Update+68f: 85 C0                          - test eax,eax
-BLD:Update+691: 0F 84 A4 0F 00 00              - je BLD:Update+163b
-BLD:Update+697: 8B 4D 08                       - mov ecx,[ebp+08]
-BLD:Update+69a: 8B 81 B8 01 00 00              - mov eax,[ecx+000001B8]
+BLD:Update+5b04: 8B 40 20              - mov eax,[eax+20]
+BLD:Update+5b07: 83 78 0C 02           - cmp dword ptr [eax+0C],02
+BLD:Update+5b0b: 0F 86 4D 83 00 00     - jbe BLD:Update+de5e
+BLD:Update+5b11: 0F B6 40 12           - movzx eax,byte ptr [eax+12]
+BLD:Update+5b15: 85 C0                 - test eax,eax
+BLD:Update+5b17: 74 11                 - je BLD:Update+5b2a
+BLD:Update+5b19: D9 05 D8 42 B0 56     - fld dword ptr [56B042D8]
+BLD:Update+5b1f: 8B 45 08              - mov eax,[ebp+08]
+BLD:Update+5b22: D9 98 B0 01 00 00     - fstp dword ptr [eax+000001B0]
+BLD:Update+5b28: EB 0F                 - jmp BLD:Update+5b39
 // ---------- INJECTING HERE ----------
-BLD:Update+6a0: 8B 89 BC 01 00 00              - mov ecx,[ecx+000001BC]
+BLD:Update+5b2a: D9 05 E0 42 B0 56     - fld dword ptr [56B042E0]
 // ---------- DONE INJECTING  ----------
-BLD:Update+6a6: 3B C1                          - cmp eax,ecx
-BLD:Update+6a8: 7D 2D                          - jnl BLD:Update+6d7
-BLD:Update+6aa: 8B 4D 08                       - mov ecx,[ebp+08]
-BLD:Update+6ad: 8B 81 B8 01 00 00              - mov eax,[ecx+000001B8]
-BLD:Update+6b3: 05 05 00 00 00                 - add eax,00000005
-BLD:Update+6b8: 89 81 B8 01 00 00              - mov [ecx+000001B8],eax
-BLD:Update+6be: 8B 89 BC 01 00 00              - mov ecx,[ecx+000001BC]
-BLD:Update+6c4: 3B C1                          - cmp eax,ecx
-BLD:Update+6c6: 7E 0F                          - jle BLD:Update+6d7
-BLD:Update+6c8: 8B 45 08                       - mov eax,[ebp+08]
+BLD:Update+5b30: 8B 45 08              - mov eax,[ebp+08]
+BLD:Update+5b33: D9 98 B0 01 00 00     - fstp dword ptr [eax+000001B0]
+BLD:Update+5b39: 8B 45 08              - mov eax,[ebp+08]
+BLD:Update+5b3c: 0F B6 80 59 01 00 00  - movzx eax,byte ptr [eax+00000159]
+BLD:Update+5b43: 85 C0                 - test eax,eax
+BLD:Update+5b45: 0F 84 4C 00 00 00     - je BLD:Update+5b97
+BLD:Update+5b4b: 8B 45 08              - mov eax,[ebp+08]
+BLD:Update+5b4e: 8B 80 AC 02 00 00     - mov eax,[eax+000002AC]
+BLD:Update+5b54: 85 C0                 - test eax,eax
+BLD:Update+5b56: 75 1A                 - jne BLD:Update+5b72
 }
 </AssemblerScript>
     </CheatEntry>
