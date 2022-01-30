@@ -103,7 +103,6 @@ USER_UI:Update+2e1d9: 0F B6 05 50 77 DC 0E           - movzx eax,byte ptr [0EDC7
     <CheatEntry>
       <ID>149</ID>
       <Description>"Inf. natural resources"</Description>
-      <LastState Activated="1"/>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript>{
   Game   : CliffEmpire.exe
@@ -257,9 +256,95 @@ USER_UI:Update+316f: 76 2A              - jna USER_UI:Update+319b
 </AssemblerScript>
     </CheatEntry>
     <CheatEntry>
+      <ID>160</ID>
+      <Description>"Extra trade capacity"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : CliffEmpire.exe
+  Version: 1.10e
+  Date   : 30.01.2022
+  Author : jisopo
+  Github:  github.com/jisopo/CheatEngineTables
+  This script does blah blah blah
+}
+[ENABLE]
+aobscan(extraTradeCapacity, 8B 40 10 3D 14 00 00 00)
+
+//BLD:Update+3770:
+extraTradeCapacity+8:
+db 90 90 90 90 90 90
+
+extraTradeCapacity+1E:
+db 90 90 90 90 90 90
+
+extraTradeCapacity+2A:
+db 90 90
+
+extraTradeCapacity+54:
+mov [eax],#999
+
+extraTradeCapacity+255:
+db 90 90 90 90 90 90
+
+extraTradeCapacity+29C:
+mov [eax],#999
+
+registerSymbol(extraTradeCapacity)
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+//BLD:Update+3770:
+extraTradeCapacity+8:
+db 0F 85 62 00 00 00
+
+extraTradeCapacity+1E:
+db 0F 86 BE AB 00 00
+
+extraTradeCapacity+2A:
+db 74 44
+
+extraTradeCapacity+54:
+mov [eax],00000019
+
+extraTradeCapacity+255:
+db 0F 84 68 00 00 00
+
+extraTradeCapacity+29C:
+mov [eax],00000019
+
+unregisterSymbol(extraTradeCapacity)
+{
+// ORIGINAL CODE - INJECTION POINT: BLD:Update+3770
+
+BLD:Update+3741: 8B 45 08                       - mov eax,[ebp+08]
+BLD:Update+3744: 8B 80 B8 02 00 00              - mov eax,[eax+000002B8]
+BLD:Update+374a: 3D FF FF FF FF                 - cmp eax,FFFFFFFF
+BLD:Update+374f: 0F 85 83 00 00 00              - jne BLD:Update+37d8
+BLD:Update+3755: 8B 45 08                       - mov eax,[ebp+08]
+BLD:Update+3758: 8B 80 90 00 00 00              - mov eax,[eax+00000090]
+BLD:Update+375e: 83 78 0C 00                    - cmp dword ptr [eax+0C],00
+BLD:Update+3762: 0F 86 EC AB 00 00              - jbe BLD:Update+e354
+BLD:Update+3768: 8B 40 10                       - mov eax,[eax+10]
+BLD:Update+376b: 3D 14 00 00 00                 - cmp eax,00000014
+// ---------- INJECTING HERE ----------
+BLD:Update+3770: 0F 85 62 00 00 00              - jne BLD:Update+37d8
+// ---------- DONE INJECTING  ----------
+BLD:Update+3776: 8B 05 E8 1F E0 4A              - mov eax,[4AE01FE8]
+BLD:Update+377c: 8B 80 68 04 00 00              - mov eax,[eax+00000468]
+BLD:Update+3782: 83 78 0C 30                    - cmp dword ptr [eax+0C],30
+BLD:Update+3786: 0F 86 BE AB 00 00              - jbe BLD:Update+e34a
+BLD:Update+378c: 0F B6 40 40                    - movzx eax,byte ptr [eax+40]
+BLD:Update+3790: 85 C0                          - test eax,eax
+BLD:Update+3792: 74 44                          - je BLD:Update+37d8
+BLD:Update+3794: C7 85 54 F8 FF FF 00 00 00 00  - mov [ebp-000007AC],00000000
+BLD:Update+379e: EB 2F                          - jmp BLD:Update+37cf
+BLD:Update+37a0: 8B 45 08                       - mov eax,[ebp+08]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
       <ID>107</ID>
       <Description>"Increase drone limit"</Description>
-      <LastState/>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript>{
   Game   : CliffEmpire.exe
@@ -337,7 +422,6 @@ TERRA:Update+256: 0F 86 83 32 00 00              - jbe TERRA:Update+34df
     <CheatEntry>
       <ID>136</ID>
       <Description>"Drones fast delivery"</Description>
-      <LastState/>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript>{
   Game   : CliffEmpire.exe
@@ -411,7 +495,6 @@ TECH:Update+3c0: 0F 84 AE 6D 00 00              - je TECH:Update+7174
     <CheatEntry>
       <ID>142</ID>
       <Description>"Fast research"</Description>
-      <LastState/>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript>{
   Game   : CliffEmpire.exe
@@ -461,7 +544,6 @@ unregisterSymbol(fastResearch)
     <CheatEntry>
       <ID>147</ID>
       <Description>"Fast production"</Description>
-      <LastState/>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript>{
   Game   : CliffEmpire.exe
@@ -606,6 +688,127 @@ BLD:Update+5b56: 75 1A                 - jne BLD:Update+5b72
       <ShowAsSigned>0</ShowAsSigned>
       <VariableType>Byte</VariableType>
       <Address>infMoneyFlag</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>153</ID>
+      <Description>"Resolve USER_UI.PointsOfAuthority"</Description>
+      <Color>FF0000</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+label(classname)
+label(namespace)
+label(assemblyname)
+label(fieldname)
+label(status)
+label(domain)
+label(assembly)
+label(field)
+label(USER_UI.PointsOfAuthority)
+label(USER_UI.PointsOfAuthority.threadexit)
+alloc(USER_UI.PointsOfAuthority.threadstart, 2048)
+
+registersymbol(USER_UI.PointsOfAuthority)
+
+USER_UI.PointsOfAuthority.threadstart:
+mov [USER_UI.PointsOfAuthority],0
+
+call mono.mono_get_root_domain
+cmp eax,0
+je USER_UI.PointsOfAuthority.threadexit
+mov [domain],eax
+
+push [domain]
+call mono.mono_thread_attach
+add esp,4
+
+push status
+push assemblyname
+call mono.mono_assembly_load_with_partial_name
+add esp,8
+cmp eax,0
+je USER_UI.PointsOfAuthority.threadexit
+
+push eax
+call mono.mono_assembly_get_image
+add esp,4
+cmp eax,0
+je USER_UI.PointsOfAuthority.threadexit
+mov [assembly], eax
+
+push classname
+push namespace
+push eax
+call mono.mono_class_from_name_case
+add esp,C
+cmp eax,0
+je USER_UI.PointsOfAuthority.threadexit
+push fieldname
+push eax
+call mono.mono_class_get_field_from_name
+add esp,8
+cmp eax,0
+je USER_UI.PointsOfAuthority.threadexit
+mov [field], eax
+push eax
+call mono.mono_field_get_parent
+add esp,4
+cmp eax,0
+je USER_UI.PointsOfAuthority.threadexit
+push eax
+push [domain]
+call mono.mono_class_vtable
+add esp,8
+cmp eax,0
+je USER_UI.PointsOfAuthority.threadexit
+push eax
+call mono.mono_vtable_get_static_field_data
+add esp,4
+cmp eax,0
+je USER_UI.PointsOfAuthority.threadexit
+push eax // save data on stack
+push [field]
+call mono.mono_field_get_offset
+add esp,4
+pop ebx // restore data
+add eax,ebx
+mov [USER_UI.PointsOfAuthority],eax
+jmp USER_UI.PointsOfAuthority.threadexit
+///////////////////////////////////////////////////////
+// Data section
+USER_UI.PointsOfAuthority:
+dd 0
+assemblyname:
+db 'Assembly-CSharp',0
+namespace:
+db '',0
+classname:
+db 'USER_UI',0
+fieldname:
+db 'PointsOfAuthority',0
+status:
+dd 0
+domain:
+dd 0
+assembly:
+dd 0
+field:
+dd 0
+USER_UI.PointsOfAuthority.threadexit:
+ret
+createthread(USER_UI.PointsOfAuthority.threadstart)
+
+[DISABLE]
+unregistersymbol(USER_UI.PointsOfAuthority)
+dealloc(USER_UI.PointsOfAuthority.threadstart)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>154</ID>
+          <Description>"USER_UI.PointsOfAuthority"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[USER_UI.PointsOfAuthority]</Address>
+        </CheatEntry>
+      </CheatEntries>
     </CheatEntry>
   </CheatEntries>
   <UserdefinedSymbols/>
