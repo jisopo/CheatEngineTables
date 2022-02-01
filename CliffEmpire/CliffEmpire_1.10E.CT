@@ -113,7 +113,7 @@ USER_UI:Update+2e1d9: 0F B6 05 50 77 DC 0E           - movzx eax,byte ptr [0EDC7
   This script does blah blah blah
 }
 [ENABLE]
-aobscan(resources, D9 80 B4 07 00 00 D9 80 AC 07 00 00 DE E9 D9 98 B4 07 00 00 D9 80 B4 07 00 00)
+aobscan(resources, D9 80 B? 07 00 00 D9 80 ?? 07 00 00 DE E9 D9 98 B? 07 00 00 D9 80 B? 07 00 00)
 alloc(newmem,2048)
 label(returnhere)
 label(originalcode)
