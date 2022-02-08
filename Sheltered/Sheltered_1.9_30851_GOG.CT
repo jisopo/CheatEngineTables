@@ -1,0 +1,1600 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="42">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"inf. Water"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Sheltered.exe
+  Version: 1.9(30851)(GOG)
+  Date   : 05.02.2022
+  Author : jisopo
+  Github : github.com/jisopo/CheatEngineTables
+}
+[ENABLE]
+aobscan(infWater, D9 5F 2C 83 EC 0C 57 E8 ?? ?? ?? ?? 83 C4 10 8B 05 ?? ?? ?? ?? 3D 02 00 00 00 0F 94 C0 0F B6 C0 85 C0)
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+fstp dword ptr [edi+2C]
+
+fld dword ptr [edi+28] // max water
+fstp dword ptr [edi+2C]
+
+// m_Contamination
+// степень загрязненности воды
+mov [edi+30],(float)0
+
+sub esp,0C
+
+exit:
+jmp returnhere
+
+//WaterManager:UseWater+27:
+infWater:
+jmp newmem
+nop
+returnhere:
+
+
+registerSymbol(infWater)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+//WaterManager:UseWater+27:
+infWater:
+fstp dword ptr [edi+2C]
+sub esp,0C
+//Alt: db D9 5F 2C 83 EC 0C
+unregisterSymbol(infWater)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: WaterManager:UseWater+27
+
+WaterManager:UseWater+e: DE E9              - fsubp st(1),st(0)
+WaterManager:UseWater+10: D9 EE              - fldz
+WaterManager:UseWater+12: DF F1              - fcomip st(0),st(1)
+WaterManager:UseWater+14: DD D8              - fstp st(0)
+WaterManager:UseWater+16: 76 07              - jna WaterManager:UseWater+1f
+WaterManager:UseWater+18: 33 C0              - xor eax,eax
+WaterManager:UseWater+1a: E9 59 00 00 00     - jmp WaterManager:UseWater+78
+WaterManager:UseWater+1f: D9 47 2C           - fld dword ptr [edi+2C]
+WaterManager:UseWater+22: D9 45 0C           - fld dword ptr [ebp+0C]
+WaterManager:UseWater+25: DE E9              - fsubp st(1),st(0)
+// ---------- INJECTING HERE ----------
+WaterManager:UseWater+27: D9 5F 2C           - fstp dword ptr [edi+2C]
+// ---------- DONE INJECTING  ----------
+WaterManager:UseWater+2a: 83 EC 0C           - sub esp,0C
+WaterManager:UseWater+2d: 57                 - push edi
+WaterManager:UseWater+2e: E8 B1 04 FB FF     - call 371F5CD4
+WaterManager:UseWater+33: 83 C4 10           - add esp,10
+WaterManager:UseWater+36: 8B 05 10 3E DA 00  - mov eax,[00DA3E10]
+WaterManager:UseWater+3c: 3D 02 00 00 00     - cmp eax,00000002
+WaterManager:UseWater+41: 0F 94 C0           - sete al
+WaterManager:UseWater+44: 0F B6 C0           - movzx eax,al
+WaterManager:UseWater+47: 85 C0              - test eax,eax
+WaterManager:UseWater+49: 74 28              - je WaterManager:UseWater+73
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>3</ID>
+      <Description>"Inf. Food"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+aobscan(food,8B 4A 24 8B 52 28 03 CA 03 C1)
+registersymbol(food)
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+fild [edx+18]
+fistp [edx+1c]
+fild [edx+20]
+fistp [edx+24]
+originalcode:
+mov ecx,[edx+24]
+mov edx,[edx+28]
+
+jmp returnhere
+
+food://UI_GameTime:Update+1a5:
+jmp newmem
+nop
+returnhere:
+//8B 40 18 89 45 F4 8B 47 18 89 45 DC 8D 45 F4 83 EC 0C 50
+ 
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+dealloc(newmem)
+food://
+db 8B 4A 24 8B 52 28
+unregistersymbol(food)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>108</ID>
+      <Description>"Inf. Fuel"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Sheltered.exe
+  Version: 1.9(30851)(GOG)
+  Date   : 05.02.2022
+  Author : jisopo
+  Github : github.com/jisopo/CheatEngineTables
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(fuel, D9 87 F4 00 00 00 D9 5D F8 D9 45 F8 83 EC 04 83 EC 04 D9 1C 24 83 EC 04 D9 1C 24 83 EC 04 D9 1C 24)
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+fstp dword ptr [edi+000000F0]
+
+//
+fld dword ptr [edi+000000F4]
+fstp dword ptr [edi+000000F0]
+
+exit:
+jmp returnhere
+
+//Obj_Generator:set_Fuel+88:
+fuel+29:
+jmp newmem
+nop
+returnhere:
+
+
+registerSymbol(fuel)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+//Obj_Generator:set_Fuel+88:
+fuel+29:
+fstp dword ptr [edi+000000F0]
+//Alt: db D9 9F F0 00 00 00
+unregisterSymbol(fuel)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: Obj_Generator:set_Fuel+88
+
+Obj_Generator:set_Fuel+68: D9 45 F8           - fld dword ptr [ebp-08]
+Obj_Generator:set_Fuel+6b: 83 EC 04           - sub esp,04
+Obj_Generator:set_Fuel+6e: 83 EC 04           - sub esp,04
+Obj_Generator:set_Fuel+71: D9 1C 24           - fstp dword ptr [esp]
+Obj_Generator:set_Fuel+74: 83 EC 04           - sub esp,04
+Obj_Generator:set_Fuel+77: D9 1C 24           - fstp dword ptr [esp]
+Obj_Generator:set_Fuel+7a: 83 EC 04           - sub esp,04
+Obj_Generator:set_Fuel+7d: D9 1C 24           - fstp dword ptr [esp]
+Obj_Generator:set_Fuel+80: E8 33 77 F7 FF     - call UnityEngine.Mathf:Clamp
+Obj_Generator:set_Fuel+85: 83 C4 10           - add esp,10
+// ---------- INJECTING HERE ----------
+Obj_Generator:set_Fuel+88: D9 9F F0 00 00 00  - fstp dword ptr [edi+000000F0]
+// ---------- DONE INJECTING  ----------
+Obj_Generator:set_Fuel+8e: 8D 65 FC           - lea esp,[ebp-04]
+Obj_Generator:set_Fuel+91: 5F                 - pop edi
+Obj_Generator:set_Fuel+92: C9                 - leave
+Obj_Generator:set_Fuel+93: C3                 - ret
+04E5B3DC: 68 30 A7 C7 0B     - push 0BC7A730
+04E5B3E1: E9 42 4C 9A FF     - jmp 04800028
+04E5B3E6: 00 00              - add [eax],al
+04E5B3E8: 68 10 A7 C7 0B     - push 0BC7A710
+04E5B3ED: E9 36 4C 9A FF     - jmp 04800028
+04E5B3F2: 00 00              - add [eax],al
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>129</ID>
+      <Description>"inf. Stats"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[Enable]
+
+alloc(ps_1,32) //Perfect State
+aobscan(ps_aob1,D9 45 F4 D9 5E 0C 8D 65 FC 5E C9 C3)
+registersymbol(ps_aob1)
+label(returnhere_ps_1)
+
+//--------------------------------------------------//
+ps_1:
+fldz
+fstp dword ptr [esi+0C]
+jmp returnhere_ps_1
+//--------------------------------------------------// BehaviourStat:Update+116
+
+ps_aob1:
+jmp ps_1
+nop
+returnhere_ps_1:
+
+[Disable]
+
+ps_aob1:
+db D9 45 F4 D9 5E 0C
+unregistersymbol(ps_aob1)
+dealloc(ps_1)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>94</ID>
+      <Description>"Free Upgrade"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Sheltered.exe
+  Version: 
+  Date   : 2016-05-31
+  Author : omoe
+  UpgradePanel:UpdateSelection+14c
+  This script does blah blah blah
+}
+
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+ 
+ ////////////////////
+aobscan(freeupgrades,83 C4 10 8B 48 0C  89 4D E0  8B 45 08 8B 40 3C 39 78 0C 0F86 * * * *   8D 44 B8 10 8B 00 51  56  FF 75 E4 50  39 00  E8 * * * * 83 C4 10  0FB6 45 F3 85 C0 74 16) // should be unique
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+mov [eax+0C],0
+  mov ecx,[eax+0C]
+  mov [ebp-20],ecx
+  jmp return
+
+freeupgrades+03:
+  jmp code
+  nop
+return:
+registersymbol(freeupgrades)
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+freeupgrades+03:
+  db 8B 48 0C 89 4D E0
+
+unregistersymbol(freeupgrades)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 1FECAC64
+
+1FECAC46: E8 BD EB DD E5        -  call InventoryManager:GetNumItemsOfType
+1FECAC4B: 83 C4 10              -  add esp,10
+1FECAC4E: 8B F0                 -  mov esi,eax
+1FECAC50: 83 EC 08              -  sub esp,08
+1FECAC53: 57                    -  push edi
+1FECAC54: FF 75 E8              -  push [ebp-18]
+1FECAC57: 8B 45 E8              -  mov eax,[ebp-18]
+1FECAC5A: 39 00                 -  cmp [eax],eax
+1FECAC5C: E8 A7 0A D1 E5        -  call System.Collections.Generic:List`1:get_Item
+1FECAC61: 83 C4 10              -  add esp,10
+// ---------- INJECTING HERE ----------
+1FECAC64: 8B 48 0C              -  mov ecx,[eax+0C]
+1FECAC67: 89 4D E0              -  mov [ebp-20],ecx
+// ---------- DONE INJECTING  ----------
+1FECAC6A: 8B 45 08              -  mov eax,[ebp+08]
+1FECAC6D: 8B 40 3C              -  mov eax,[eax+3C]
+1FECAC70: 39 78 0C              -  cmp [eax+0C],edi
+1FECAC73: 0F 86 B3 01 00 00     -  jbe UpgradePanel:UpdateSelection+314
+1FECAC79: 8D 44 B8 10           -  lea eax,[eax+edi*4+10]
+1FECAC7D: 8B 00                 -  mov eax,[eax]
+1FECAC7F: 51                    -  push ecx
+1FECAC80: 56                    -  push esi
+1FECAC81: FF 75 E4              -  push [ebp-1C]
+1FECAC84: 50                    -  push eax
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>99</ID>
+      <Description>"Free Crafting"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : Sheltered.exe
+  Version: 
+  Date   : 2016-05-31
+  Author : omoe
+  CraftingPanel:UpdateSelection+12f
+  This script does blah blah blah
+}
+
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+ 
+ 
+aobscan(freecrafting,8B 48 0C  89 4D E8 8B 45 08  8B 40 24  39 78 0C 0F86 * * * *   8D 44 B8 10  8B 00  51    FF 75 EC FF 75 F0  50  39 00  E8 * * * *   83 C4 10   85 F6 74 19) // should be unique
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+mov [eax+0C],0
+  mov ecx,[eax+0C]
+  mov [ebp-18],ecx
+  jmp return
+
+freecrafting:
+  jmp code
+  nop
+return:
+registersymbol(freecrafting)
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+freecrafting:
+  db 8B 48 0C 89 4D E8
+
+unregistersymbol(freecrafting)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: 1FED12CF
+
+1FED12AF: 50                    -  push eax
+1FED12B0: 39 00                 -  cmp [eax],eax
+1FED12B2: E8 51 85 DD E5        -  call InventoryManager:GetNumItemsOfType
+1FED12B7: 83 C4 10              -  add esp,10
+1FED12BA: 89 45 EC              -  mov [ebp-14],eax
+1FED12BD: 8B 43 0C              -  mov eax,[ebx+0C]
+1FED12C0: 39 78 0C              -  cmp [eax+0C],edi
+1FED12C3: 0F 86 26 03 00 00     -  jbe CraftingPanel:UpdateSelection+44f
+1FED12C9: 8D 44 B8 10           -  lea eax,[eax+edi*4+10]
+1FED12CD: 8B 00                 -  mov eax,[eax]
+// ---------- INJECTING HERE ----------
+1FED12CF: 8B 48 0C              -  mov ecx,[eax+0C]
+1FED12D2: 89 4D E8              -  mov [ebp-18],ecx
+// ---------- DONE INJECTING  ----------
+1FED12D5: 8B 45 08              -  mov eax,[ebp+08]
+1FED12D8: 8B 40 24              -  mov eax,[eax+24]
+1FED12DB: 39 78 0C              -  cmp [eax+0C],edi
+1FED12DE: 0F 86 04 03 00 00     -  jbe CraftingPanel:UpdateSelection+448
+1FED12E4: 8D 44 B8 10           -  lea eax,[eax+edi*4+10]
+1FED12E8: 8B 00                 -  mov eax,[eax]
+1FED12EA: 51                    -  push ecx
+1FED12EB: FF 75 EC              -  push [ebp-14]
+1FED12EE: FF 75 F0              -  push [ebp-10]
+1FED12F1: 50                    -  push eax
+}
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>102</ID>
+      <Description>"inf. Oxygen"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Sheltered.exe
+  Version: 1.9(30851)(GOG)
+  Date   : 05.02.2022
+  Author : jisopo
+  Github : github.com/jisopo/CheatEngineTables
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(oxygen, D9 45 DC 8B 45 08 D9 40 24 8B 45 CC 39 00 D9 80 D8 00 00 00 D9 5D C8 D9 45 C8 DE C9 DE C1 D9 5D DC EB 0E)
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+fstp dword ptr [eax+1C]
+
+mov [eax+1C],(float)999
+
+lea esp,[ebp-0C]
+
+exit:
+jmp returnhere
+
+//EnvironmentManager:UpdateOxygen+4a4:
+oxygen+F0:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(oxygen)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+//EnvironmentManager:UpdateOxygen+4a4:
+oxygen+F0:
+fstp dword ptr [eax+1C]
+lea esp,[ebp-0C]
+//Alt: db D9 58 1C 8D 65 F4
+unregisterSymbol(oxygen)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: EnvironmentManager:UpdateOxygen+4a4
+
+EnvironmentManager:UpdateOxygen+484: 83 EC 04        - sub esp,04
+EnvironmentManager:UpdateOxygen+487: 83 EC 04        - sub esp,04
+EnvironmentManager:UpdateOxygen+48a: D9 1C 24        - fstp dword ptr [esp]
+EnvironmentManager:UpdateOxygen+48d: 83 EC 04        - sub esp,04
+EnvironmentManager:UpdateOxygen+490: D9 1C 24        - fstp dword ptr [esp]
+EnvironmentManager:UpdateOxygen+493: 83 EC 04        - sub esp,04
+EnvironmentManager:UpdateOxygen+496: D9 1C 24        - fstp dword ptr [esp]
+EnvironmentManager:UpdateOxygen+499: E8 BA AC 03 CF  - call UnityEngine.Mathf:Clamp
+EnvironmentManager:UpdateOxygen+49e: 83 C4 10        - add esp,10
+EnvironmentManager:UpdateOxygen+4a1: 8B 45 08        - mov eax,[ebp+08]
+// ---------- INJECTING HERE ----------
+EnvironmentManager:UpdateOxygen+4a4: D9 58 1C        - fstp dword ptr [eax+1C]
+// ---------- DONE INJECTING  ----------
+EnvironmentManager:UpdateOxygen+4a7: 8D 65 F4        - lea esp,[ebp-0C]
+EnvironmentManager:UpdateOxygen+4aa: 5E              - pop esi
+EnvironmentManager:UpdateOxygen+4ab: 5F              - pop edi
+EnvironmentManager:UpdateOxygen+4ac: 5B              - pop ebx
+EnvironmentManager:UpdateOxygen+4ad: C9              - leave
+EnvironmentManager:UpdateOxygen+4ae: C3              - ret
+365E7E57: 00 68 58        - add [eax+58],ch
+365E7E5A: B5 3C           - mov ch,3C
+365E7E5C: 1E              - push ds
+365E7E5D: E9 C6 81 A8 CE  - jmp 05070028
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>103</ID>
+      <Description>"max integrity"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Sheltered.exe
+  Version: 1.9(30851)(GOG)
+  Date   : 04.02.2022
+  Author : jisopo
+  Github : github.com/jisopo/CheatEngineTables
+
+}
+[ENABLE]
+aobscan(integrity, D9 86 BC 00 00 00 DF F1 DD D8 72 0E 83 EC 08 6A 01 56 E8 ?? ?? ?? ?? 83 C4 10 8D 65 FC 5E C9 C3)
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+// integrity
+mov [esi+0000008C],#100
+
+// warning icon
+mov [esi+50],#0
+
+originalcode:
+fld dword ptr [esi+000000BC]
+
+exit:
+jmp returnhere
+
+//Obj_Integrity:Degrade+56:
+integrity:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(integrity)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+//Obj_Integrity:Degrade+56:
+integrity:
+fld dword ptr [esi+000000BC]
+//Alt: db D9 86 BC 00 00 00
+unregisterSymbol(integrity)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: Obj_Integrity:Degrade+56
+
+Obj_Integrity:Degrade+36: 83 C4 10           - add esp,10
+Obj_Integrity:Degrade+39: 8B 86 88 00 00 00  - mov eax,[esi+00000088]
+Obj_Integrity:Degrade+3f: 85 C0              - test eax,eax
+Obj_Integrity:Degrade+41: 74 2D              - je Obj_Integrity:Degrade+70
+Obj_Integrity:Degrade+43: 8B 86 8C 00 00 00  - mov eax,[esi+0000008C]
+Obj_Integrity:Degrade+49: 50                 - push eax
+Obj_Integrity:Degrade+4a: DB 04 24           - fild dword ptr [esp]
+Obj_Integrity:Degrade+4d: D9 1C 24           - fstp dword ptr [esp]
+Obj_Integrity:Degrade+50: D9 04 24           - fld dword ptr [esp]
+Obj_Integrity:Degrade+53: 83 C4 04           - add esp,04
+// ---------- INJECTING HERE ----------
+Obj_Integrity:Degrade+56: D9 86 BC 00 00 00  - fld dword ptr [esi+000000BC]
+// ---------- DONE INJECTING  ----------
+Obj_Integrity:Degrade+5c: DF F1              - fcomip st(0),st(1)
+Obj_Integrity:Degrade+5e: DD D8              - fstp st(0)
+Obj_Integrity:Degrade+60: 72 0E              - jb Obj_Integrity:Degrade+70
+Obj_Integrity:Degrade+62: 83 EC 08           - sub esp,08
+Obj_Integrity:Degrade+65: 6A 01              - push 01
+Obj_Integrity:Degrade+67: 56                 - push esi
+Obj_Integrity:Degrade+68: E8 0B 00 00 00     - call 0569D7E0
+Obj_Integrity:Degrade+6d: 83 C4 10           - add esp,10
+Obj_Integrity:Degrade+70: 8D 65 FC           - lea esp,[ebp-04]
+Obj_Integrity:Degrade+73: 5E                 - pop esi
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>104</ID>
+      <Description>"inf. Medicine"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+aobscan(getNum, 8B 45 FC 8B 40 08 83 EC 0C 50 39 00 E8 ?? ?? ?? ?? 83 C4 10 EB 02 33 C0 C9 C3)
+//aobscan(medicine,83 C4 10 89 45 FC 8D 45 FC 83 EC 0C 50 e8 * * * * 83)
+aobscan(medicine, 83 C4 10 89 45 FC 8D 45 FC 83 EC 0C 50 E8 ?? ?? ?? ?? 83 C4 10 8B C8 8B 45 94 83 EC 08 51 50 39 00 89 45 98)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+cmp [ebp+4],medicine-100
+jb originalcode
+cmp [ebp+4],medicine+500
+jg originalcode
+//mov [eax+0C],#999
+//mov eax,[eax+0C]
+mov [eax+0C],#9
+mov eax,[ebp-04]
+mov eax,[eax+08]
+
+
+jmp returnhere
+
+originalcode:
+mov eax,[ebp-04]
+mov eax,[eax+08]
+
+exit:
+jmp returnhere
+
+//InventoryManager:GetNumItemsOfType+4a:
+getNum:
+jmp newmem
+nop
+returnhere:
+
+
+registerSymbol(getNum)
+registerSymbol(medicine)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+//InventoryManager:GetNumItemsOfType+4a:
+getNum:
+mov eax,[ebp-04]
+mov eax,[eax+08]
+//Alt: db 8B 45 FC 8B 40 08
+unregisterSymbol(getNum)
+unregisterSymbol(medicine)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: InventoryManager:GetNumItemsOfType+4a
+
+InventoryManager:GetNumItemsOfType+31: 50              - push eax
+InventoryManager:GetNumItemsOfType+32: 39 00           - cmp [eax],eax
+InventoryManager:GetNumItemsOfType+34: E8 47 00 00 00  - call System.Collections.Generic.Dictionary`2[ItemManager+ItemType,InventoryManager+Items]:TryGetValue
+InventoryManager:GetNumItemsOfType+39: 83 C4 10        - add esp,10
+InventoryManager:GetNumItemsOfType+3c: 85 C0           - test eax,eax
+InventoryManager:GetNumItemsOfType+3e: 74 20           - je InventoryManager:GetNumItemsOfType+60
+InventoryManager:GetNumItemsOfType+40: 8B 45 FC        - mov eax,[ebp-04]
+InventoryManager:GetNumItemsOfType+43: 8B 40 08        - mov eax,[eax+08]
+InventoryManager:GetNumItemsOfType+46: 85 C0           - test eax,eax
+InventoryManager:GetNumItemsOfType+48: 74 16           - je InventoryManager:GetNumItemsOfType+60
+// ---------- INJECTING HERE ----------
+InventoryManager:GetNumItemsOfType+4a: 8B 45 FC        - mov eax,[ebp-04]
+// ---------- DONE INJECTING  ----------
+InventoryManager:GetNumItemsOfType+4d: 8B 40 08        - mov eax,[eax+08]
+InventoryManager:GetNumItemsOfType+50: 83 EC 0C        - sub esp,0C
+InventoryManager:GetNumItemsOfType+53: 50              - push eax
+InventoryManager:GetNumItemsOfType+54: 39 00           - cmp [eax],eax
+InventoryManager:GetNumItemsOfType+56: E8 45 F7 F3 FF  - call System.Collections.Generic.List`1[System.Object]:get_Count
+InventoryManager:GetNumItemsOfType+5b: 83 C4 10        - add esp,10
+InventoryManager:GetNumItemsOfType+5e: EB 02           - jmp InventoryManager:GetNumItemsOfType+62
+InventoryManager:GetNumItemsOfType+60: 33 C0           - xor eax,eax
+InventoryManager:GetNumItemsOfType+62: C9              - leave
+InventoryManager:GetNumItemsOfType+63: C3              - ret
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>109</ID>
+      <Description>"Forbid outdoor sabotage"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Sheltered.exe
+  Version: 1.9(30851)(GOG)
+  Date   : 05.02.2022
+  Author : jisopo
+  Github : github.com/jisopo/CheatEngineTables
+
+  Отключаем порчу кислородного и/или воздушного фильтра вымогателями
+}
+[ENABLE]
+aobscan(disablePunish, 83 C4 10 89 87 B0 01 00 00 83 EC 08 6A 00 57)
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+disablePunish-32:
+db 90 90
+ 
+registerSymbol(disablePunish)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+disablePunish-32:
+db 7F 11
+unregisterSymbol(disablePunish)
+{
+// ORIGINAL CODE - INJECTION POINT: NpcVisitor:UpdateIntercom_StartPunish+7d
+
+NpcVisitor:UpdateIntercom_StartPunish+64: 83 C4 10        - add esp,10
+NpcVisitor:UpdateIntercom_StartPunish+67: 83 EC 08        - sub esp,08
+NpcVisitor:UpdateIntercom_StartPunish+6a: 50              - push eax
+NpcVisitor:UpdateIntercom_StartPunish+6b: 56              - push esi
+NpcVisitor:UpdateIntercom_StartPunish+6c: 39 36           - cmp [esi],esi
+NpcVisitor:UpdateIntercom_StartPunish+6e: E8 39 DD 0B CF  - call 04E6DAF4
+NpcVisitor:UpdateIntercom_StartPunish+73: 83 C4 10        - add esp,10
+NpcVisitor:UpdateIntercom_StartPunish+76: 39 36           - cmp [esi],esi
+NpcVisitor:UpdateIntercom_StartPunish+78: 8B 46 0C        - mov eax,[esi+0C]
+NpcVisitor:UpdateIntercom_StartPunish+7b: 85 C0           - test eax,eax
+// ---------- INJECTING HERE ----------
+NpcVisitor:UpdateIntercom_StartPunish+7d: 7F 11           - jg NpcVisitor:UpdateIntercom_StartPunish+90
+// ---------- DONE INJECTING  ----------
+NpcVisitor:UpdateIntercom_StartPunish+7f: 83 EC 0C        - sub esp,0C
+NpcVisitor:UpdateIntercom_StartPunish+82: 57              - push edi
+NpcVisitor:UpdateIntercom_StartPunish+83: E8 88 00 00 00  - call 35DAFE58
+NpcVisitor:UpdateIntercom_StartPunish+88: 83 C4 10        - add esp,10
+NpcVisitor:UpdateIntercom_StartPunish+8b: E9 79 00 00 00  - jmp NpcVisitor:UpdateIntercom_StartPunish+109
+NpcVisitor:UpdateIntercom_StartPunish+90: 39 36           - cmp [esi],esi
+NpcVisitor:UpdateIntercom_StartPunish+92: 8B 46 0C        - mov eax,[esi+0C]
+NpcVisitor:UpdateIntercom_StartPunish+95: 83 EC 08        - sub esp,08
+NpcVisitor:UpdateIntercom_StartPunish+98: 50              - push eax
+NpcVisitor:UpdateIntercom_StartPunish+99: 6A 00           - push 00
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>112</ID>
+      <Description>"Disable hints"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Sheltered.exe
+  Version: 1.9(30851)(GOG)
+  Date   : 06.02.2022
+  Author : jisopo
+  Github : github.com/jisopo/CheatEngineTables
+
+  Отключаем бесящие сообщения что можно улучшить систему или давно не выходили на поверхность
+}
+[ENABLE]
+aobscan(disableHints, 55 8B EC 53 57 56 83 EC 0C 8B 75 08 83 EC 08 FF 75 0C 56 E8 ?? ?? ?? ?? 83 C4 10 8B F8 8B C7 85 C0)
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+//code from here to '[DISABLE]' will be used to enable the cheat
+
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+mov edi,eax
+//mov eax,edi
+mov eax,0
+test eax,eax
+
+exit:
+jmp returnhere
+
+//ShelterHintManager:ShowHint+1b:
+disableHints+1B:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(disableHints)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+// ShelterHintManager:ShowHint+1b
+disableHints+1B:
+db 8B F8 8B C7 85 C0
+unregisterSymbol(disableHints)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: ShelterHintManager:ShowHint+21
+
+ShelterHintManager:ShowHint+6: 83 EC 0C           - sub esp,0C
+ShelterHintManager:ShowHint+9: 8B 75 08           - mov esi,[ebp+08]
+ShelterHintManager:ShowHint+c: 83 EC 08           - sub esp,08
+ShelterHintManager:ShowHint+f: FF 75 0C           - push [ebp+0C]
+ShelterHintManager:ShowHint+12: 56                 - push esi
+ShelterHintManager:ShowHint+13: E8 38 01 00 00     - call 1ED57D60
+ShelterHintManager:ShowHint+18: 83 C4 10           - add esp,10
+ShelterHintManager:ShowHint+1b: 8B F8              - mov edi,eax
+ShelterHintManager:ShowHint+1d: 8B C7              - mov eax,edi
+ShelterHintManager:ShowHint+1f: 85 C0              - test eax,eax
+ShelterHintManager:ShowHint+21: 0F 84 20 01 00 00  - je ShelterHintManager:ShowHint+147
+ShelterHintManager:ShowHint+27: 33 DB              - xor ebx,ebx
+ShelterHintManager:ShowHint+29: 8B 47 08           - mov eax,[edi+08]
+ShelterHintManager:ShowHint+2c: 85 C0              - test eax,eax
+ShelterHintManager:ShowHint+2e: 0F 84 44 00 00 00  - je ShelterHintManager:ShowHint+78
+ShelterHintManager:ShowHint+34: 8B 47 08           - mov eax,[edi+08]
+ShelterHintManager:ShowHint+37: 8B C8              - mov ecx,eax
+ShelterHintManager:ShowHint+39: 39 09              - cmp [ecx],ecx
+ShelterHintManager:ShowHint+3b: 8B 40 0C           - mov eax,[eax+0C]
+ShelterHintManager:ShowHint+3e: 85 C0              - test eax,eax
+ShelterHintManager:ShowHint+40: 7E 36              - jle ShelterHintManager:ShowHint+78
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>119</ID>
+      <Description>"Extra craft stack"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Sheltered.exe
+  Version: 1.9(30851)(GOG)
+  Date   : 07.02.2022
+  Author : jisopo
+  Github : github.com/jisopo/CheatEngineTables
+}
+[ENABLE]
+aobscan(extraCraft, 89 45 B0 8B 45 B0 83 EC 08 6A 00 50)
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+mov [ebp-50],eax
+mov eax,[ebp-50]
+
+// m_CraftStackSize
+push ebx
+mov ebx, [craftSize]
+mov [eax+44],ebx
+pop ebx
+
+exit:
+jmp returnhere
+
+craftSize:
+dd #25
+
+//CraftingManager:FinishCraft+c6:
+extraCraft:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(extraCraft)
+registerSymbol(craftSize)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+//CraftingManager:FinishCraft+c6:
+extraCraft:
+mov [ebp-50],eax
+mov eax,[ebp-50]
+//Alt: db 89 45 B0 8B 45 B0
+unregisterSymbol(extraCraft)
+unregisterSymbol(craftSize)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: CraftingManager:FinishCraft+c6
+
+CraftingManager:FinishCraft+a6: 85 C0              - test eax,eax
+CraftingManager:FinishCraft+a8: 0F 84 89 01 00 00  - je CraftingManager:FinishCraft+237
+CraftingManager:FinishCraft+ae: 8B 05 F8 B6 F5 04  - mov eax,[04F5B6F8]
+CraftingManager:FinishCraft+b4: 8B 4B 1C           - mov ecx,[ebx+1C]
+CraftingManager:FinishCraft+b7: 83 EC 08           - sub esp,08
+CraftingManager:FinishCraft+ba: 51                 - push ecx
+CraftingManager:FinishCraft+bb: 50                 - push eax
+CraftingManager:FinishCraft+bc: 39 00              - cmp [eax],eax
+CraftingManager:FinishCraft+be: E8 CD 6E 08 CF     - call ItemManager:GetItemDefinition
+CraftingManager:FinishCraft+c3: 83 C4 10           - add esp,10
+// ---------- INJECTING HERE ----------
+CraftingManager:FinishCraft+c6: 89 45 B0           - mov [ebp-50],eax
+// ---------- DONE INJECTING  ----------
+CraftingManager:FinishCraft+c9: 8B 45 B0           - mov eax,[ebp-50]
+CraftingManager:FinishCraft+cc: 83 EC 08           - sub esp,08
+CraftingManager:FinishCraft+cf: 6A 00              - push 00
+CraftingManager:FinishCraft+d1: 50                 - push eax
+CraftingManager:FinishCraft+d2: E8 21 8A FD CE     - call UnityEngine.Object:op_Inequality
+CraftingManager:FinishCraft+d7: 83 C4 10           - add esp,10
+CraftingManager:FinishCraft+da: 85 C0              - test eax,eax
+CraftingManager:FinishCraft+dc: 0F 84 4E 01 00 00  - je CraftingManager:FinishCraft+230
+CraftingManager:FinishCraft+e2: 8B 05 E0 B6 F5 04  - mov eax,[04F5B6E0]
+CraftingManager:FinishCraft+e8: 8B 4B 1C           - mov ecx,[ebx+1C]
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>132</ID>
+          <Description>"Craft items count"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>craftSize</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>117</ID>
+      <Description>"extra training (PunchBag)"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Sheltered.exe
+  Version: 1.9(30851)(GOG)
+  Date   : 07.02.2022
+  Author : jisopo
+  Github : github.com/jisopo/CheatEngineTables
+
+  This script does blah blah blah
+}
+[ENABLE]
+aobscan(extraPunchBagTraining, 55 8B EC 57 83 EC 04 8B 7D 08 0F B6 47 64 85 C0 0F 84 ?? 00 00 00 8B 47 1C 83 EC 08 6A 00 50 E8 ?? ?? ?? ?? 83 C4 10 85 C0 74 13 8B 47 1C 83 EC 08 6A 00 50 39 00)
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+mov eax,[edi+50]
+mov ecx,[edi+4C]
+
+// exp reward
+mov [ecx+28],#2500
+
+exit:
+jmp returnhere
+
+//InteractionInstance_TrainOnPunchBag:OnInteractionComplete+53:
+extraPunchBagTraining+53:
+jmp newmem
+nop
+returnhere:
+
+
+registerSymbol(extraPunchBagTraining)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+//InteractionInstance_TrainOnPunchBag:OnInteractionComplete+53:
+extraPunchBagTraining+53:
+mov eax,[edi+50]
+mov ecx,[edi+4C]
+//Alt: db 8B 47 50 8B 4F 4C
+unregisterSymbol(extraPunchBagTraining)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: InteractionInstance_TrainOnPunchBag:OnInteractionComplete+53
+
+InteractionInstance_TrainOnPunchBag:OnInteractionComplete+36: E8 4D 00 00 00  - call 3663C698
+InteractionInstance_TrainOnPunchBag:OnInteractionComplete+3b: 83 C4 10        - add esp,10
+InteractionInstance_TrainOnPunchBag:OnInteractionComplete+3e: 8B 47 50        - mov eax,[edi+50]
+InteractionInstance_TrainOnPunchBag:OnInteractionComplete+41: 83 EC 08        - sub esp,08
+InteractionInstance_TrainOnPunchBag:OnInteractionComplete+44: 6A 00           - push 00
+InteractionInstance_TrainOnPunchBag:OnInteractionComplete+46: 50              - push eax
+InteractionInstance_TrainOnPunchBag:OnInteractionComplete+47: E8 F8 9D FA CE  - call 055E6454
+InteractionInstance_TrainOnPunchBag:OnInteractionComplete+4c: 83 C4 10        - add esp,10
+InteractionInstance_TrainOnPunchBag:OnInteractionComplete+4f: 85 C0           - test eax,eax
+InteractionInstance_TrainOnPunchBag:OnInteractionComplete+51: 74 2A           - je InteractionInstance_TrainOnPunchBag:OnInteractionComplete+7d
+// ---------- INJECTING HERE ----------
+InteractionInstance_TrainOnPunchBag:OnInteractionComplete+53: 8B 47 50        - mov eax,[edi+50]
+// ---------- DONE INJECTING  ----------
+InteractionInstance_TrainOnPunchBag:OnInteractionComplete+56: 8B 4F 4C        - mov ecx,[edi+4C]
+InteractionInstance_TrainOnPunchBag:OnInteractionComplete+59: 8B D1           - mov edx,ecx
+InteractionInstance_TrainOnPunchBag:OnInteractionComplete+5b: 39 12           - cmp [edx],edx
+InteractionInstance_TrainOnPunchBag:OnInteractionComplete+5d: 8B 49 30        - mov ecx,[ecx+30]
+InteractionInstance_TrainOnPunchBag:OnInteractionComplete+60: 83 EC 08        - sub esp,08
+InteractionInstance_TrainOnPunchBag:OnInteractionComplete+63: 51              - push ecx
+InteractionInstance_TrainOnPunchBag:OnInteractionComplete+64: 50              - push eax
+InteractionInstance_TrainOnPunchBag:OnInteractionComplete+65: 39 00           - cmp [eax],eax
+InteractionInstance_TrainOnPunchBag:OnInteractionComplete+67: E8 18 DC 05 CF  - call 0569A294
+InteractionInstance_TrainOnPunchBag:OnInteractionComplete+6c: 83 C4 10        - add esp,10
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>120</ID>
+      <Description>"extra training (read)"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Sheltered.exe
+  Version: 1.9(30851)(GOG)
+  Date   : 07.02.2022
+  Author : jisopo
+  Github : github.com/jisopo/CheatEngineTables
+
+  This script does blah blah blah
+}
+[ENABLE]
+aobscan(extraReadTraining, 55 8B EC 53 57 83 EC 20 D9 EE D9 5D F4 8B 45 08 0F B6 40 40 85 C0 0F 85 ?? ?? ?? ?? 8B 05 ?? ?? ?? ?? 8B 4D 08 8B 49 1C 83 EC 08 51 50 39 00)
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+fstp dword ptr [ebp-0C]
+mov eax,[ebp+08]
+
+push ecx
+mov ecx, [eax+4C]
+mov [ecx+30],#1500
+pop ecx
+
+
+exit:
+jmp returnhere
+
+//InteractionInstance_Read:OnInteractionComplete+44:
+extraReadTraining+44:
+jmp newmem
+nop
+returnhere:
+
+
+registerSymbol(extraReadTraining)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+//InteractionInstance_Read:OnInteractionComplete+44:
+extraReadTraining+44:
+fstp dword ptr [ebp-0C]
+mov eax,[ebp+08]
+//Alt: db D9 5D F4 8B 45 08
+unregisterSymbol(extraReadTraining)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: InteractionInstance_Read:OnInteractionComplete+44
+
+InteractionInstance_Read:OnInteractionComplete+2b: 51                 - push ecx
+InteractionInstance_Read:OnInteractionComplete+2c: 50                 - push eax
+InteractionInstance_Read:OnInteractionComplete+2d: 39 00              - cmp [eax],eax
+InteractionInstance_Read:OnInteractionComplete+2f: E8 54 01 00 00     - call 3663C830
+InteractionInstance_Read:OnInteractionComplete+34: 83 C4 10           - add esp,10
+InteractionInstance_Read:OnInteractionComplete+37: 50                 - push eax
+InteractionInstance_Read:OnInteractionComplete+38: DB 04 24           - fild dword ptr [esp]
+InteractionInstance_Read:OnInteractionComplete+3b: D9 1C 24           - fstp dword ptr [esp]
+InteractionInstance_Read:OnInteractionComplete+3e: D9 04 24           - fld dword ptr [esp]
+InteractionInstance_Read:OnInteractionComplete+41: 83 C4 04           - add esp,04
+// ---------- INJECTING HERE ----------
+InteractionInstance_Read:OnInteractionComplete+44: D9 5D F4           - fstp dword ptr [ebp-0C]
+// ---------- DONE INJECTING  ----------
+InteractionInstance_Read:OnInteractionComplete+47: 8B 45 08           - mov eax,[ebp+08]
+InteractionInstance_Read:OnInteractionComplete+4a: 8B 40 1C           - mov eax,[eax+1C]
+InteractionInstance_Read:OnInteractionComplete+4d: 8B 80 C0 01 00 00  - mov eax,[eax+000001C0]
+InteractionInstance_Read:OnInteractionComplete+53: 8B 40 1C           - mov eax,[eax+1C]
+InteractionInstance_Read:OnInteractionComplete+56: D9 45 F4           - fld dword ptr [ebp-0C]
+InteractionInstance_Read:OnInteractionComplete+59: D9 E0              - fchs
+InteractionInstance_Read:OnInteractionComplete+5b: 83 EC 08           - sub esp,08
+InteractionInstance_Read:OnInteractionComplete+5e: 83 EC 04           - sub esp,04
+InteractionInstance_Read:OnInteractionComplete+61: D9 1C 24           - fstp dword ptr [esp]
+InteractionInstance_Read:OnInteractionComplete+64: 50                 - push eax
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>121</ID>
+      <Description>"Unlock defibrillator"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Sheltered.exe
+  Version: 1.9(30851)(GOG)
+  Date   : 06.02.2022
+  Author : jisopo
+  Github : github.com/jisopo/CheatEngineTables
+
+  Открываем доступ к дефибрилятору и другим заблокированным рецептам
+}
+[ENABLE]
+aobscan(defibUnlock, 55 8B EC 53 57 56 83 EC 0C 8B 75 08 8B 7D 0C 83 EC 0C 68 ?? ?? ?? ?? E8 ?? ?? ?? ?? 83 C4 10 C7 40 08 ?? ?? ?? ?? 89 45 F0 33 DB E9 ?? ?? ?? ?? 8B 05 ?? ?? ?? ?? 89 45 E8 83 EC 08 53 57 39 3F E8 ?? ?? ?? ?? 83 C4 10 8B C8 8B 45 E8 8B 49 1C 83 EC 08 51 50 39 00 E8 ?? ?? ?? ?? 83 C4 10 89 45 EC 8B 45 EC 83 EC 08)
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+mov eax,0
+test eax,eax
+jmp returnhere
+
+originalcode:
+movzx eax,byte ptr [eax+19]
+test eax,eax
+
+exit:
+jmp returnhere
+
+//CraftingManager:RemoveUnavailableRecipes+c8:
+defibUnlock+c8:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(defibUnlock)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+//CraftingManager:RemoveUnavailableRecipes+c8:
+defibUnlock+c8:
+movzx eax,byte ptr [eax+19]
+test eax,eax
+//Alt: db 0F B6 40 19 85 C0
+unregisterSymbol(defibUnlock)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: CraftingManager:RemoveUnavailableRecipes+c8
+
+CraftingManager:RemoveUnavailableRecipes+ac: 39 09              - cmp [ecx],ecx
+CraftingManager:RemoveUnavailableRecipes+ae: 8B 40 0C           - mov eax,[eax+0C]
+CraftingManager:RemoveUnavailableRecipes+b1: 85 C0              - test eax,eax
+CraftingManager:RemoveUnavailableRecipes+b3: 0F 8F 1A 02 00 00  - jg CraftingManager:RemoveUnavailableRecipes+2d3
+CraftingManager:RemoveUnavailableRecipes+b9: 83 EC 08           - sub esp,08
+CraftingManager:RemoveUnavailableRecipes+bc: 53                 - push ebx
+CraftingManager:RemoveUnavailableRecipes+bd: 57                 - push edi
+CraftingManager:RemoveUnavailableRecipes+be: 39 3F              - cmp [edi],edi
+CraftingManager:RemoveUnavailableRecipes+c0: E8 A7 DB 2F CE     - call 0553244C
+CraftingManager:RemoveUnavailableRecipes+c5: 83 C4 10           - add esp,10
+// ---------- INJECTING HERE ----------
+CraftingManager:RemoveUnavailableRecipes+c8: 0F B6 40 19        - movzx eax,byte ptr [eax+19]
+// ---------- DONE INJECTING  ----------
+CraftingManager:RemoveUnavailableRecipes+cc: 85 C0              - test eax,eax
+CraftingManager:RemoveUnavailableRecipes+ce: 0F 84 95 01 00 00  - je CraftingManager:RemoveUnavailableRecipes+269
+CraftingManager:RemoveUnavailableRecipes+d4: 83 EC 08           - sub esp,08
+CraftingManager:RemoveUnavailableRecipes+d7: 53                 - push ebx
+CraftingManager:RemoveUnavailableRecipes+d8: 57                 - push edi
+CraftingManager:RemoveUnavailableRecipes+d9: 39 3F              - cmp [edi],edi
+CraftingManager:RemoveUnavailableRecipes+db: E8 8C DB 2F CE     - call 0553244C
+CraftingManager:RemoveUnavailableRecipes+e0: 83 C4 10           - add esp,10
+CraftingManager:RemoveUnavailableRecipes+e3: 8B 40 1C           - mov eax,[eax+1C]
+CraftingManager:RemoveUnavailableRecipes+e6: 3D 78 01 00 00     - cmp eax,00000178
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>123</ID>
+      <Description>"Childs can read books"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Sheltered.exe
+  Version: 1.9(30851)(GOG)
+  Author : jisopo
+  Github : github.com/jisopo/CheatEngineTables
+
+  Дети могут читать книги
+}
+[ENABLE]
+aobscan(childCanRead, 8B 47 1C 8B C8 39 09 0F B6 80 B6 00 00 00 85 C0 0F94 C0 0F B6 C0 85 C0)
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov eax,1
+jmp returnhere
+
+originalcode:
+sete al
+movzx eax,al
+
+exit:
+jmp returnhere
+
+//InteractionInstance_Read:OnInteractionStarted+89:
+childCanRead+10:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(childCanRead)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+//InteractionInstance_Read:OnInteractionStarted+89:
+childCanRead+10:
+sete al
+movzx eax,al
+//Alt: db 0F 94 C0 0F B6 C0
+unregisterSymbol(childCanRead)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: InteractionInstance_Read:OnInteractionStarted+89
+
+InteractionInstance_Read:OnInteractionStarted+68: 50                    - push eax
+InteractionInstance_Read:OnInteractionStarted+69: E8 CA 20 FB E5        - call UnityEngine.Object:op_Inequality
+InteractionInstance_Read:OnInteractionStarted+6e: 83 C4 10              - add esp,10
+InteractionInstance_Read:OnInteractionStarted+71: 85 C0                 - test eax,eax
+InteractionInstance_Read:OnInteractionStarted+73: 0F 84 E4 00 00 00     - je InteractionInstance_Read:OnInteractionStarted+15d
+InteractionInstance_Read:OnInteractionStarted+79: 8B 47 1C              - mov eax,[edi+1C]
+InteractionInstance_Read:OnInteractionStarted+7c: 8B C8                 - mov ecx,eax
+InteractionInstance_Read:OnInteractionStarted+7e: 39 09                 - cmp [ecx],ecx
+InteractionInstance_Read:OnInteractionStarted+80: 0F B6 80 B6 00 00 00  - movzx eax,byte ptr [eax+000000B6]
+InteractionInstance_Read:OnInteractionStarted+87: 85 C0                 - test eax,eax
+// ---------- INJECTING HERE ----------
+InteractionInstance_Read:OnInteractionStarted+89: 0F 94 C0              - sete al
+// ---------- DONE INJECTING  ----------
+InteractionInstance_Read:OnInteractionStarted+8c: 0F B6 C0              - movzx eax,al
+InteractionInstance_Read:OnInteractionStarted+8f: 85 C0                 - test eax,eax
+InteractionInstance_Read:OnInteractionStarted+91: 0F 84 7B 00 00 00     - je InteractionInstance_Read:OnInteractionStarted+112
+InteractionInstance_Read:OnInteractionStarted+97: 8B 05 40 B6 45 05     - mov eax,[0545B640]
+InteractionInstance_Read:OnInteractionStarted+9d: 8B C8                 - mov ecx,eax
+InteractionInstance_Read:OnInteractionStarted+9f: 39 09                 - cmp [ecx],ecx
+InteractionInstance_Read:OnInteractionStarted+a1: 8B 40 38              - mov eax,[eax+38]
+InteractionInstance_Read:OnInteractionStarted+a4: 85 C0                 - test eax,eax
+InteractionInstance_Read:OnInteractionStarted+a6: 7F 07                 - jg InteractionInstance_Read:OnInteractionStarted+af
+InteractionInstance_Read:OnInteractionStarted+a8: 33 C0                 - xor eax,eax
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>124</ID>
+      <Description>"Disable litter"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Sheltered.exe
+  Version: 1.9(30851)(GOG)
+  Date   : 06.02.2022
+  Author : jisopo
+  Github : github.com/jisopo/CheatEngineTables
+
+  Убежище не засоряется
+}
+[ENABLE]
+aobscan(dropLitter, 55 8B EC 53 57 56 83 EC 7C 8B 75 08 C7 45 94 00 00 00 00 8B 46 14 83 EC 08 6A 00 50 E8 ?? ?? ?? ?? 83 C4 10 85 C0 74 07 33 C0 E9 ?? ?? ?? ?? 8B 45 0C 89 45 A4 8B 45 10 89 45 A8 8B 45 14 89 45 AC 8D 45 B0 83 EC 0C 50)
+//code from here to '[DISABLE]' will be used to enable the cheat
+//LitterManager:DropLitter+26:
+dropLitter+26:
+db 90 90
+
+registerSymbol(dropLitter)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+//LitterManager:DropLitter+26:
+dropLitter+26:
+db 74 07
+unregisterSymbol(dropLitter)
+
+{
+// ORIGINAL CODE - INJECTION POINT: LitterManager:DropLitter+26
+
+LitterManager:DropLitter+6: 83 EC 7C              - sub esp,7C
+LitterManager:DropLitter+9: 8B 75 08              - mov esi,[ebp+08]
+LitterManager:DropLitter+c: C7 45 94 00 00 00 00  - mov [ebp-6C],00000000
+LitterManager:DropLitter+13: 8B 46 14              - mov eax,[esi+14]
+LitterManager:DropLitter+16: 83 EC 08              - sub esp,08
+LitterManager:DropLitter+19: 6A 00                 - push 00
+LitterManager:DropLitter+1b: 50                    - push eax
+LitterManager:DropLitter+1c: E8 93 DA 5E CE        - call 05CB646C
+LitterManager:DropLitter+21: 83 C4 10              - add esp,10
+LitterManager:DropLitter+24: 85 C0                 - test eax,eax
+// ----------                 ----------
+LitterManager:DropLitter+26: 74 07                 - je LitterManager:DropLitter+2f
+// ----------                 ----------
+LitterManager:DropLitter+28: 33 C0                 - xor eax,eax
+LitterManager:DropLitter+2a: E9 A9 02 00 00        - jmp LitterManager:DropLitter+2d8
+LitterManager:DropLitter+2f: 8B 45 0C              - mov eax,[ebp+0C]
+LitterManager:DropLitter+32: 89 45 A4              - mov [ebp-5C],eax
+LitterManager:DropLitter+35: 8B 45 10              - mov eax,[ebp+10]
+LitterManager:DropLitter+38: 89 45 A8              - mov [ebp-58],eax
+LitterManager:DropLitter+3b: 8B 45 14              - mov eax,[ebp+14]
+LitterManager:DropLitter+3e: 89 45 AC              - mov [ebp-54],eax
+LitterManager:DropLitter+41: 8D 45 B0              - lea eax,[ebp-50]
+LitterManager:DropLitter+44: 83 EC 0C              - sub esp,0C
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>125</ID>
+      <Description>"Combar runner"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Sheltered.exe
+  Version: 1.9(30851)(GOG)
+  Date   : 05.02.2022
+  Author : jisopo
+  Github : github.com/jisopo/CheatEngineTables
+
+  Враг не может сбежать из боя. Догоняем со 100% вероятность.
+}
+[ENABLE]
+aobscan(encounter, 55 8B EC 53 57 56 83 EC 2C 8B 75 08 8B 7D 0C C7 45 D4 00 00 00 00 C7 45 D0 00 00 00 00 C7 45 CC 00 00 00 00 E9 ?? ?? ?? ?? 8D A4 24 00 00 00 00 83 EC 08 FF 75 CC 57 39 3F E8 ?? ?? ?? ?? 83 C4 10 8B C8 39 09 8B 80 E8 00 00 00 85 C0 0F9F C0 0F B6 C0 85 C0 0F 94 C0 0F B6 C0 85 C0 0F 85 ?? ?? ?? ?? 83 EC 08 FF 75 CC 57 39 3F E8 ?? ?? ?? ?? 83 C4 10 8B C8 39 09 0F B6 80 F2 00 00 00 85 C0 75 2F 83 45 D4 01 83 EC 08 FF 75 CC 57 39 3F)
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov eax,0
+lea esp,[ebp-0C]
+jmp returnhere
+
+originalcode:
+cmovl eax,ecx
+lea esp,[ebp-0C]
+
+exit:
+jmp returnhere
+
+//EncounterLogic:EscapeRoll+1ec:
+encounter+1ec:
+jmp newmem
+nop
+returnhere:
+
+
+registerSymbol(encounter)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+//EncounterLogic:EscapeRoll+1ec:
+encounter+1ec:
+cmovl eax,ecx
+lea esp,[ebp-0C]
+//Alt: db 0F 4C C1 8D 65 F4
+unregisterSymbol(encounter)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: EncounterLogic:EscapeRoll+1ec
+
+EncounterLogic:EscapeRoll+1c9: 89 45 E0        - mov [ebp-20],eax
+EncounterLogic:EscapeRoll+1cc: B8 64 00 00 00  - mov eax,00000064
+EncounterLogic:EscapeRoll+1d1: 2B 45 E0        - sub eax,[ebp-20]
+EncounterLogic:EscapeRoll+1d4: 89 45 DC        - mov [ebp-24],eax
+EncounterLogic:EscapeRoll+1d7: E8 1C 00 00 00  - call 36636D00
+EncounterLogic:EscapeRoll+1dc: 89 45 D8        - mov [ebp-28],eax
+EncounterLogic:EscapeRoll+1df: 8B 55 D8        - mov edx,[ebp-28]
+EncounterLogic:EscapeRoll+1e2: 33 C9           - xor ecx,ecx
+EncounterLogic:EscapeRoll+1e4: B8 01 00 00 00  - mov eax,00000001
+EncounterLogic:EscapeRoll+1e9: 3B 55 DC        - cmp edx,[ebp-24]
+// ---------- INJECTING HERE ----------
+EncounterLogic:EscapeRoll+1ec: 0F 4C C1        - cmovl eax,ecx
+// ---------- DONE INJECTING  ----------
+EncounterLogic:EscapeRoll+1ef: 8D 65 F4        - lea esp,[ebp-0C]
+EncounterLogic:EscapeRoll+1f2: 5E              - pop esi
+EncounterLogic:EscapeRoll+1f3: 5F              - pop edi
+EncounterLogic:EscapeRoll+1f4: 5B              - pop ebx
+EncounterLogic:EscapeRoll+1f5: C9              - leave
+EncounterLogic:EscapeRoll+1f6: C3              - ret
+36636CFF: 00 68 98        - add [eax-68],ch
+36636D02: D1 5B 1E        - rcr [ebx+1E],1
+36636D05: E9 1E 93 A3 CE  - jmp 05070028
+36636D0A: 00 00           - add [eax],al
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>122</ID>
+      <Description>"no pet hunger (script 1)"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Sheltered.exe
+  Version: 1.9(30851)(GOG)
+  Date   : 06.02.2022
+  Author : jisopo
+  Github : github.com/jisopo/CheatEngineTables
+
+  This script does blah blah blah
+}
+[ENABLE]
+aobscan(pet1, 55 8B EC 53 57 83 EC 50 8B 7D 08 D9 EE D9 5D EC 83 EC 0C 57)
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+sub esp,50
+mov edi,[ebp+08]
+
+// m_dirtiness
+mov [edi+150],#0
+
+// m_hunger
+mov [edi+FC],(float)0
+
+// m_starving
+mov byte ptr [edi+100],0
+
+// m_poisoned
+mov byte ptr [edi+E5],0
+
+
+// m_immune
+mov byte ptr [edi+E4],1
+
+
+fld dword ptr [edi+BC] // m_maxHealth
+fstp dword ptr [edi+D0] // m_health
+
+exit:
+jmp returnhere
+
+//Obj_Pet:Update+5:
+pet1+5:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(pet1)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+//Obj_Pet:Update+5:
+pet1+5:
+sub esp,50
+mov edi,[ebp+08]
+//Alt: db 83 EC 50 8B 7D 08
+unregisterSymbol(pet1)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: Obj_Pet:Update+5
+
+Obj_Horse:get_isMoving+36: 8D 65 FC              - lea esp,[ebp-04]
+Obj_Horse:get_isMoving+39: 5E                    - pop esi
+Obj_Horse:get_isMoving+3a: C9                    - leave
+Obj_Horse:get_isMoving+3b: C3                    - ret
+365DB6A4: 00 00                 - add [eax],al
+365DB6A6: 00 00                 - add [eax],al
+Obj_Pet:Update: 55                    - push ebp
+Obj_Pet:Update+1: 8B EC                 - mov ebp,esp
+Obj_Pet:Update+3: 53                    - push ebx
+Obj_Pet:Update+4: 57                    - push edi
+// ---------- INJECTING HERE ----------
+Obj_Pet:Update+5: 83 EC 50              - sub esp,50
+// ---------- DONE INJECTING  ----------
+Obj_Pet:Update+8: 8B 7D 08              - mov edi,[ebp+08]
+Obj_Pet:Update+b: D9 EE                 - fldz
+Obj_Pet:Update+d: D9 5D EC              - fstp dword ptr [ebp-14]
+Obj_Pet:Update+10: 83 EC 0C              - sub esp,0C
+Obj_Pet:Update+13: 57                    - push edi
+Obj_Pet:Update+14: E8 D7 60 0C CF        - call Obj_Base:Update
+Obj_Pet:Update+19: 83 C4 10              - add esp,10
+Obj_Pet:Update+1c: 0F B6 87 CC 00 00 00  - movzx eax,byte ptr [edi+000000CC]
+Obj_Pet:Update+23: 85 C0                 - test eax,eax
+Obj_Pet:Update+25: 0F 85 5A 05 00 00     - jne Obj_Pet:Update+585
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>128</ID>
+      <Description>"no pet hunger (script 2)"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Sheltered.exe
+  Version: 1.9(30851)(GOG)
+  Date   : 06.02.2022
+  Author : jisopo
+  Github : github.com/jisopo/CheatEngineTables
+
+  This script does blah blah blah
+}
+[ENABLE]
+aobscan(pet2, 7A 11 77 0F C6 87 14 01 00 00 01 D9 EE D9 9F 0C 01 00 00 D9 87 44 01 00 00 D9 EE DF F1 DD D8 7A 32 73 30 D9 87 44 01 00 00 DD 5D E0 E8)
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+
+mov byte ptr [edi+148],1 // m_immune
+mov [edi+110],(float)0   // m_hunger
+mov byte ptr [edi+114],0 // m_starving
+
+fld dword ptr [edi+E0]   // m_maxHealth
+fstp dword ptr [edi+DC]  // m_health
+
+
+originalcode:
+fld dword ptr [edi+00000110]
+
+exit:
+jmp returnhere
+
+//CompanionAnimal:UpdateStats+a:
+pet2-F7:
+jmp newmem
+nop
+returnhere:
+
+
+registerSymbol(pet2)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+//CompanionAnimal:UpdateStats+a:
+pet2-F7:
+fld dword ptr [edi+00000110]
+//Alt: db D9 87 10 01 00 00
+unregisterSymbol(pet2)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: CompanionAnimal:UpdateStats+a
+
+Job:UpdateJob+8a: 5F                 - pop edi
+Job:UpdateJob+8b: C9                 - leave
+Job:UpdateJob+8c: C3                 - ret
+36622A2D: 00 00              - add [eax],al
+36622A2F: 00 55 8B           - add [ebp-75],dl
+CompanionAnimal:UpdateStats+2: EC                 - in al,dx
+CompanionAnimal:UpdateStats+3: 57                 - push edi
+CompanionAnimal:UpdateStats+4: 83 EC 34           - sub esp,34
+CompanionAnimal:UpdateStats+7: 8B 7D 08           - mov edi,[ebp+08]
+CompanionAnimal:UpdateStats+a: D9 87 10 01 00 00  - fld dword ptr [edi+00000110]
+// ---------- INJECTING HERE ----------
+CompanionAnimal:UpdateStats+10: DD 5D E0           - fstp qword ptr [ebp-20]
+// ---------- DONE INJECTING  ----------
+CompanionAnimal:UpdateStats+13: D9 E8              - fld1
+CompanionAnimal:UpdateStats+15: D9 87 FC 00 00 00  - fld dword ptr [edi+000000FC]
+CompanionAnimal:UpdateStats+1b: DE F9              - fdivp st(1),st(0)
+CompanionAnimal:UpdateStats+1d: DD 5D D8           - fstp qword ptr [ebp-28]
+CompanionAnimal:UpdateStats+20: E8 0F 89 02 CF     - call 0564B364
+CompanionAnimal:UpdateStats+25: DD 45 E0           - fld qword ptr [ebp-20]
+CompanionAnimal:UpdateStats+28: DD 45 D8           - fld qword ptr [ebp-28]
+CompanionAnimal:UpdateStats+2b: D9 C9              - fxch st(1)
+CompanionAnimal:UpdateStats+2d: D9 CA              - fxch st(2)
+CompanionAnimal:UpdateStats+2f: DE C9              - fmulp st(1),st(0)
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>126</ID>
+      <Description>"Expedition settings"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Sheltered.exe
+  Version: 1.9(30851)(GOG)
+  Date   : 07.02.2022
+  Author : jisopo
+  Github : github.com/jisopo/CheatEngineTables
+}
+[ENABLE]
+aobscan(explorationParty, 55 8B EC 53 57 56 83 EC 1C C6 45 EF 00 33 FF E9 ?? 00 00 00 8D 64 24 00 8B 45 08 8B 40 14 83 EC 08 57 50 39 00 E8 ?? ?? ?? ?? 83 C4 10 83 EC 08 6A 00 50 E8 ?? ?? ?? ?? 83 C4 10 85 C0 0F 84 ?? ?? ?? ?? 8B 45 08 8B 40 14 83 EC 08 57 50 39 00 E8 ?? ?? ?? ?? 83 C4 10 83 EC 0C 50 39 00 E8 ?? ?? ?? ?? 83 C4 10 8B F0 8B C6 85 C0)
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+fld qword ptr [ebp-20]
+fstp dword ptr [edi+5C]
+
+//mov [eax+54],(float)99
+fld dword ptr [SightRange]
+fstp dword ptr [eax+54] // m_defaultSightRange
+
+//mov [eax+5C],(float)99
+fld dword ptr [SightRange]
+fstp dword ptr [eax+5C] // m_sightRange
+
+//mov [eax+80],(float)5
+fld dword ptr [travelSpeed]
+fstp dword ptr [eax+80] // m_travelSpeed
+
+exit:
+jmp returnhere
+
+travelSpeed:
+dd (float)1.5
+
+SightRange:
+dd (float)5
+
+//ExplorationParty:UpdateSightRangeValue+de:
+explorationParty+de:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(travelSpeed)
+registerSymbol(SightRange)
+registerSymbol(explorationParty)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+//ExplorationParty:UpdateSightRangeValue+de:
+explorationParty+de:
+fld qword ptr [ebp-20]
+fstp dword ptr [edi+5C]
+//Alt: db DD 45 E0 D9 5F 5C
+unregisterSymbol(travelSpeed)
+unregisterSymbol(SightRange)
+unregisterSymbol(explorationParty)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: ExplorationParty:UpdateSightRangeValue+de
+
+ExplorationParty:UpdateSightRangeValue+c2: 0F B6 45 EF     - movzx eax,byte ptr [ebp-11]
+ExplorationParty:UpdateSightRangeValue+c6: 85 C0           - test eax,eax
+ExplorationParty:UpdateSightRangeValue+c8: 74 0B           - je ExplorationParty:UpdateSightRangeValue+d5
+ExplorationParty:UpdateSightRangeValue+ca: 8B 45 08        - mov eax,[ebp+08]
+ExplorationParty:UpdateSightRangeValue+cd: D9 40 58        - fld dword ptr [eax+58]
+ExplorationParty:UpdateSightRangeValue+d0: DD 5D E0        - fstp qword ptr [ebp-20]
+ExplorationParty:UpdateSightRangeValue+d3: EB 09           - jmp ExplorationParty:UpdateSightRangeValue+de
+ExplorationParty:UpdateSightRangeValue+d5: 8B 45 08        - mov eax,[ebp+08]
+ExplorationParty:UpdateSightRangeValue+d8: D9 40 54        - fld dword ptr [eax+54]
+ExplorationParty:UpdateSightRangeValue+db: DD 5D E0        - fstp qword ptr [ebp-20]
+// ---------- INJECTING HERE ----------
+ExplorationParty:UpdateSightRangeValue+de: DD 45 E0        - fld qword ptr [ebp-20]
+// ---------- DONE INJECTING  ----------
+ExplorationParty:UpdateSightRangeValue+e1: D9 5F 5C        - fstp dword ptr [edi+5C]
+ExplorationParty:UpdateSightRangeValue+e4: 8D 65 F4        - lea esp,[ebp-0C]
+ExplorationParty:UpdateSightRangeValue+e7: 5E              - pop esi
+ExplorationParty:UpdateSightRangeValue+e8: 5F              - pop edi
+ExplorationParty:UpdateSightRangeValue+e9: 5B              - pop ebx
+ExplorationParty:UpdateSightRangeValue+ea: C9              - leave
+ExplorationParty:UpdateSightRangeValue+eb: C3              - ret
+36655B5C: 68 B0 3B 0A 0D  - push 0D0A3BB0
+36655B61: E9 C2 A4 A1 CE  - jmp 05070028
+36655B66: 00 00           - add [eax],al
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>130</ID>
+          <Description>"Expedition Sight Range"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>SightRange</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>131</ID>
+          <Description>"Expedition Travel Speed"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>travelSpeed</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
