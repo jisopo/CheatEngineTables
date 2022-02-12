@@ -1170,7 +1170,7 @@ CraftingManager:RemoveUnavailableRecipes+e6: 3D 78 01 00 00     - cmp eax,000001
   Дети могут читать книги
 }
 [ENABLE]
-aobscan(childCanRead, 8B 47 1C 8B C8 39 09 0F B6 80 B6 00 00 00 85 C0 0F94 C0 0F B6 C0 85 C0)
+aobscan(childsCanRead, 55 8B EC 53 57 83 EC 10 8B 7D 08 89 7D F4 8B 5F 10 89 5D F0 85 DB)
 //code from here to '[DISABLE]' will be used to enable the cheat
 alloc(newmem,2048)
 label(returnhere)
@@ -1190,20 +1190,20 @@ exit:
 jmp returnhere
 
 //InteractionInstance_Read:OnInteractionStarted+89:
-childCanRead+10:
+childsCanRead+89:
 jmp newmem
 nop
 returnhere:
 
-registerSymbol(childCanRead)
+registerSymbol(childsCanRead)
 [DISABLE]
 //code from here till the end of the code will be used to disable the cheat
 //InteractionInstance_Read:OnInteractionStarted+89:
-childCanRead+10:
+childsCanRead+89:
 sete al
 movzx eax,al
 //Alt: db 0F 94 C0 0F B6 C0
-unregisterSymbol(childCanRead)
+unregisterSymbol(childsCanRead)
 dealloc(newmem)
 {
 // ORIGINAL CODE - INJECTION POINT: InteractionInstance_Read:OnInteractionStarted+89
@@ -1220,8 +1220,8 @@ InteractionInstance_Read:OnInteractionStarted+80: 0F B6 80 B6 00 00 00  - movzx 
 InteractionInstance_Read:OnInteractionStarted+87: 85 C0                 - test eax,eax
 // ---------- INJECTING HERE ----------
 InteractionInstance_Read:OnInteractionStarted+89: 0F 94 C0              - sete al
-// ---------- DONE INJECTING  ----------
 InteractionInstance_Read:OnInteractionStarted+8c: 0F B6 C0              - movzx eax,al
+// ---------- DONE INJECTING  ----------
 InteractionInstance_Read:OnInteractionStarted+8f: 85 C0                 - test eax,eax
 InteractionInstance_Read:OnInteractionStarted+91: 0F 84 7B 00 00 00     - je InteractionInstance_Read:OnInteractionStarted+112
 InteractionInstance_Read:OnInteractionStarted+97: 8B 05 40 B6 45 05     - mov eax,[0545B640]
