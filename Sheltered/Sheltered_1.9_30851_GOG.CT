@@ -384,6 +384,74 @@ dealloc(newmem)
 </AssemblerScript>
     </CheatEntry>
     <CheatEntry>
+      <ID>124500</ID>
+      <Description>"Fast Craft"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+label(CalculateCraftTime_return)
+
+{
+CraftingManager:CalculateCraftTime - 55                    - push ebp
+CraftingManager:CalculateCraftTime+1- 8B EC                 - mov ebp,esp
+CraftingManager:CalculateCraftTime+3- 83 EC 08              - sub esp,08
+CraftingManager:CalculateCraftTime+6- 8B 05 98B9BC05        - mov eax,[05BCB998]
+CraftingManager:CalculateCraftTime+c- 83 EC 08              - sub esp,08
+CraftingManager:CalculateCraftTime+f- 6A 00                 - push 00
+CraftingManager:CalculateCraftTime+11- 50                    - push eax
+CraftingManager:CalculateCraftTime+12- E8 A1272AD2           - call UnityEngine:Object:op_Inequality
+//
+CraftingManager:CalculateCraftTime+17- 83 C4 10              - add esp,10
+CraftingManager:CalculateCraftTime+1a- 85 C0                 - test eax,eax
+//
+CraftingManager:CalculateCraftTime+1c- 74 30                 - je CraftingManager:CalculateCraftTime+4e
+CraftingManager:CalculateCraftTime+1e- 8B 05 B03CBC05        - mov eax,[05BC3CB0]
+CraftingManager:CalculateCraftTime+24- 8B 0D 98B9BC05        - mov ecx,[05BCB998]
+CraftingManager:CalculateCraftTime+2a- 8B D1                 - mov edx,ecx
+CraftingManager:CalculateCraftTime+2c- 39 12                 - cmp [edx],edx
+CraftingManager:CalculateCraftTime+2e- 8B 49 20              - mov ecx,[ecx+20]
+CraftingManager:CalculateCraftTime+31- 8B D1                 - mov edx,ecx
+CraftingManager:CalculateCraftTime+33- 39 12                 - cmp [edx],edx
+CraftingManager:CalculateCraftTime+35- 8B 49 0C              - mov ecx,[ecx+0C]
+CraftingManager:CalculateCraftTime+38- 39 48 0C              - cmp [eax+0C],ecx
+CraftingManager:CalculateCraftTime+3b- 0F86 12000000         - jbe CraftingManager:CalculateCraftTime+53
+CraftingManager:CalculateCraftTime+41- 8D 44 88 10           - lea eax,[eax+ecx*4+10]
+CraftingManager:CalculateCraftTime+45- D9 00                 - fld dword ptr [eax]
+CraftingManager:CalculateCraftTime+47- D9 45 08              - fld dword ptr [ebp+08]
+CraftingManager:CalculateCraftTime+4a- DEC9                  - fmulp st(1),st(0)
+CraftingManager:CalculateCraftTime+4c- EB 03                 - jmp CraftingManager:CalculateCraftTime+51
+CraftingManager:CalculateCraftTime+4e- D9 45 08              - fld dword ptr [ebp+08]
+CraftingManager:CalculateCraftTime+51- C9                    - leave
+CraftingManager:CalculateCraftTime+52- C3                    - ret
+CraftingManager:CalculateCraftTime+53- 6A 24                 - push 24
+CraftingManager:CalculateCraftTime+55- 68 78060000           - push 00000678
+CraftingManager:CalculateCraftTime+5a- E8 41D2E1D1           - call 05D00F38
+}
+
+  aobscan(CalculateCraftTime_searchedAOB, 83 C4 10 85 C0 74 30 8B 05 ? ? ? ? 8B 0D)
+  alloc(CalculateCraftTime_newmem, 2048)
+
+CalculateCraftTime_newmem:
+  mov [ebp+08], (float)0.1
+  add esp,10
+  test eax,eax
+  jmp CalculateCraftTime_return
+
+CalculateCraftTime_searchedAOB:
+  jmp CalculateCraftTime_newmem
+
+CalculateCraftTime_return:
+  registersymbol(CalculateCraftTime_searchedAOB)
+
+[DISABLE]
+  CalculateCraftTime_searchedAOB:
+  db 83 C4 10 85 C0
+
+  unregistersymbol(CalculateCraftTime_searchedAOB)
+  dealloc(CalculateCraftTime_newmem)
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
       <ID>102</ID>
       <Description>"inf. Oxygen"</Description>
       <VariableType>Auto Assembler Script</VariableType>
