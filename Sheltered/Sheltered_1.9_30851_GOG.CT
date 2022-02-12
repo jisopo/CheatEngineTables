@@ -834,7 +834,7 @@ ShelterHintManager:ShowHint+40: 7E 36              - jle ShelterHintManager:Show
   Github : github.com/jisopo/CheatEngineTables
 }
 [ENABLE]
-aobscan(extraCraft, 89 45 B0 8B 45 B0 83 EC 08 6A 00 50)
+aobscan(extraCraft, 55 8B EC 53 57 56 83 EC 7C 8B 5D 08 8B 75 0C 8B 7D 10 C7 45 B4 00 00 00 00 C7 45 B8 00 00 00 00 C7 45 BC 00 00 00 00 C7 45 C0 00 00 00 00 C7 45 C4 00 00 00 00 C7 45 C8 00 00 00 00 C7 45 CC 00 00 00 00 C7 45 D0 00 00 00 00 8B 05)
 //code from here to '[DISABLE]' will be used to enable the cheat
 alloc(newmem,2048)
 label(returnhere)
@@ -861,7 +861,7 @@ craftSize:
 dd #25
 
 //CraftingManager:FinishCraft+c6:
-extraCraft:
+extraCraft+c6:
 jmp newmem
 nop
 returnhere:
@@ -871,7 +871,7 @@ registerSymbol(craftSize)
 [DISABLE]
 //code from here till the end of the code will be used to disable the cheat
 //CraftingManager:FinishCraft+c6:
-extraCraft:
+extraCraft+c6:
 mov [ebp-50],eax
 mov eax,[ebp-50]
 //Alt: db 89 45 B0 8B 45 B0
