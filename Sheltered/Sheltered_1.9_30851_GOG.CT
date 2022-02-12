@@ -1230,11 +1230,11 @@ LitterManager:DropLitter+44: 83 EC 0C              - sub esp,0C
       <AssemblerScript>{
   Game   : Sheltered.exe
   Version: 1.9(30851)(GOG)
-  Date   : 05.02.2022
+  Date   : 12.02.2022
   Author : jisopo
   Github : github.com/jisopo/CheatEngineTables
 
-  Враг не может сбежать из боя. Догоняем со 100% вероятность.
+  100% шанс убежать из боя. Догоняем врага со 100% вероятностью.
 }
 [ENABLE]
 aobscan(encounter, 55 8B EC 53 57 56 83 EC 2C 8B 75 08 8B 7D 0C C7 45 D4 00 00 00 00 C7 45 D0 00 00 00 00 C7 45 CC 00 00 00 00 E9 ?? ?? ?? ?? 8D A4 24 00 00 00 00 83 EC 08 FF 75 CC 57 39 3F E8 ?? ?? ?? ?? 83 C4 10 8B C8 39 09 8B 80 E8 00 00 00 85 C0 0F9F C0 0F B6 C0 85 C0 0F 94 C0 0F B6 C0 85 C0 0F 85 ?? ?? ?? ?? 83 EC 08 FF 75 CC 57 39 3F E8 ?? ?? ?? ?? 83 C4 10 8B C8 39 09 0F B6 80 F2 00 00 00 85 C0 75 2F 83 45 D4 01 83 EC 08 FF 75 CC 57 39 3F)
@@ -1246,60 +1246,82 @@ label(exit)
 
 newmem: //this is allocated memory, you have read,write,execute access
 //place your code here
-mov eax,0
-lea esp,[ebp-0C]
-jmp returnhere
+
+// enemies m_team
+cmp [eax+F8],#0 // 0 - player team
+jne RunAway
+je StayInBattle
 
 originalcode:
-cmovl eax,ecx
+cmp [ecx],ecx
+mov eax,[eax+000000E8]
+
+StayInBattle:
+xor ecx,ecx
+mov eax,0
 lea esp,[ebp-0C]
+pop esi
+pop edi
+pop ebx
+leave
+ret
+
+RunAway:
+xor ecx,ecx
+mov eax,1
+lea esp,[ebp-0C]
+pop esi
+pop edi
+pop ebx
+leave
+ret
 
 exit:
 jmp returnhere
 
-//EncounterLogic:EscapeRoll+1ec:
-encounter+1ec:
+//EncounterLogic:EscapeRoll+43:
+encounter+43:
 jmp newmem
-nop
+nop 3
 returnhere:
 
 
 registerSymbol(encounter)
 [DISABLE]
 //code from here till the end of the code will be used to disable the cheat
-//EncounterLogic:EscapeRoll+1ec:
-encounter+1ec:
-cmovl eax,ecx
-lea esp,[ebp-0C]
-//Alt: db 0F 4C C1 8D 65 F4
+//EncounterLogic:EscapeRoll+43:
+encounter+43:
+cmp [ecx],ecx
+mov eax,[eax+000000E8]
+//Alt: db 39 09 8B 80 E8 00 00 00
 unregisterSymbol(encounter)
 dealloc(newmem)
 {
-// ORIGINAL CODE - INJECTION POINT: EncounterLogic:EscapeRoll+1ec
+// ORIGINAL CODE - INJECTION POINT: EncounterLogic:EscapeRoll+43
 
-EncounterLogic:EscapeRoll+1c9: 89 45 E0        - mov [ebp-20],eax
-EncounterLogic:EscapeRoll+1cc: B8 64 00 00 00  - mov eax,00000064
-EncounterLogic:EscapeRoll+1d1: 2B 45 E0        - sub eax,[ebp-20]
-EncounterLogic:EscapeRoll+1d4: 89 45 DC        - mov [ebp-24],eax
-EncounterLogic:EscapeRoll+1d7: E8 1C 00 00 00  - call 36636D00
-EncounterLogic:EscapeRoll+1dc: 89 45 D8        - mov [ebp-28],eax
-EncounterLogic:EscapeRoll+1df: 8B 55 D8        - mov edx,[ebp-28]
-EncounterLogic:EscapeRoll+1e2: 33 C9           - xor ecx,ecx
-EncounterLogic:EscapeRoll+1e4: B8 01 00 00 00  - mov eax,00000001
-EncounterLogic:EscapeRoll+1e9: 3B 55 DC        - cmp edx,[ebp-24]
+EncounterLogic:EscapeRoll+1d: C7 45 CC 00 00 00 00  - mov [ebp-34],00000000
+EncounterLogic:EscapeRoll+24: E9 8D 00 00 00        - jmp EncounterLogic:EscapeRoll+b6
+EncounterLogic:EscapeRoll+29: 8D A4 24 00 00 00 00  - lea esp,[esp+00000000]
+EncounterLogic:EscapeRoll+30: 83 EC 08              - sub esp,08
+EncounterLogic:EscapeRoll+33: FF 75 CC              - push [ebp-34]
+EncounterLogic:EscapeRoll+36: 57                    - push edi
+EncounterLogic:EscapeRoll+37: 39 3F                 - cmp [edi],edi
+EncounterLogic:EscapeRoll+39: E8 72 CE CB E3        - call System.Collections.Generic.List`1[System.Object]:get_Item
+EncounterLogic:EscapeRoll+3e: 83 C4 10              - add esp,10
+EncounterLogic:EscapeRoll+41: 8B C8                 - mov ecx,eax
 // ---------- INJECTING HERE ----------
-EncounterLogic:EscapeRoll+1ec: 0F 4C C1        - cmovl eax,ecx
+EncounterLogic:EscapeRoll+43: 39 09                 - cmp [ecx],ecx
+EncounterLogic:EscapeRoll+45: 8B 80 E8 00 00 00     - mov eax,[eax+000000E8]
 // ---------- DONE INJECTING  ----------
-EncounterLogic:EscapeRoll+1ef: 8D 65 F4        - lea esp,[ebp-0C]
-EncounterLogic:EscapeRoll+1f2: 5E              - pop esi
-EncounterLogic:EscapeRoll+1f3: 5F              - pop edi
-EncounterLogic:EscapeRoll+1f4: 5B              - pop ebx
-EncounterLogic:EscapeRoll+1f5: C9              - leave
-EncounterLogic:EscapeRoll+1f6: C3              - ret
-36636CFF: 00 68 98        - add [eax-68],ch
-36636D02: D1 5B 1E        - rcr [ebx+1E],1
-36636D05: E9 1E 93 A3 CE  - jmp 05070028
-36636D0A: 00 00           - add [eax],al
+EncounterLogic:EscapeRoll+4b: 85 C0                 - test eax,eax
+EncounterLogic:EscapeRoll+4d: 0F 9F C0              - setg al
+EncounterLogic:EscapeRoll+50: 0F B6 C0              - movzx eax,al
+EncounterLogic:EscapeRoll+53: 85 C0                 - test eax,eax
+EncounterLogic:EscapeRoll+55: 0F 94 C0              - sete al
+EncounterLogic:EscapeRoll+58: 0F B6 C0              - movzx eax,al
+EncounterLogic:EscapeRoll+5b: 85 C0                 - test eax,eax
+EncounterLogic:EscapeRoll+5d: 0F 85 4F 00 00 00     - jne EncounterLogic:EscapeRoll+b2
+EncounterLogic:EscapeRoll+63: 83 EC 08              - sub esp,08
 }
 </AssemblerScript>
     </CheatEntry>
