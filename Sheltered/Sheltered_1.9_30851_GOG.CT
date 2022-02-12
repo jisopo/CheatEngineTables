@@ -1292,6 +1292,86 @@ LitterManager:DropLitter+44: 83 EC 0C              - sub esp,0C
 </AssemblerScript>
     </CheatEntry>
     <CheatEntry>
+      <ID>124503</ID>
+      <Description>"Shower fix"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : Sheltered.exe
+  Version: 1.9(30851)(GOG)
+  Date   : 12.02.2022
+  Author : jisopo
+  Github : github.com/jisopo/CheatEngineTables
+
+  Душ по какой-то причине требует питания от генератора, хотя санузел - нет.
+  Скрипт исправляет эту проблему. В душ можно ходить без питания генератора.
+}
+[ENABLE]
+aobscan(objAvailable, 55 8B EC 56 83 EC 04 8B 45 08 8B 40 14 83 EC 0C 50 8B 00 90 90 90 FF 90 80 00 00 00 83 C4 10 85 C0)
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+add esp,10
+
+mov eax,1
+
+test eax,eax
+
+exit:
+jmp returnhere
+
+//Int_Base:IsAvailable+34:
+objAvailable+34:
+jmp newmem
+returnhere:
+
+
+registerSymbol(objAvailable)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+//Int_Base:IsAvailable+34:
+objAvailable+34:
+add esp,10
+test eax,eax
+//Alt: db 83 C4 10 85 C0
+unregisterSymbol(objAvailable)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: Int_Base:IsAvailable+34
+
+Int_Base:IsAvailable+16: FF 90 80 00 00 00  - call dword ptr [eax+00000080]
+Int_Base:IsAvailable+1c: 83 C4 10           - add esp,10
+Int_Base:IsAvailable+1f: 85 C0              - test eax,eax
+Int_Base:IsAvailable+21: 74 38              - je Int_Base:IsAvailable+5b
+Int_Base:IsAvailable+23: 8B 45 08           - mov eax,[ebp+08]
+Int_Base:IsAvailable+26: 8B 40 14           - mov eax,[eax+14]
+Int_Base:IsAvailable+29: 83 EC 0C           - sub esp,0C
+Int_Base:IsAvailable+2c: 50                 - push eax
+Int_Base:IsAvailable+2d: 39 00              - cmp [eax],eax
+Int_Base:IsAvailable+2f: E8 AC 56 06 CE     - call Obj_Base:HasEnoughPower
+// ---------- INJECTING HERE ----------
+Int_Base:IsAvailable+34: 83 C4 10           - add esp,10
+Int_Base:IsAvailable+37: 85 C0              - test eax,eax
+// ---------- DONE INJECTING  ----------
+Int_Base:IsAvailable+39: 74 20              - je Int_Base:IsAvailable+5b
+Int_Base:IsAvailable+3b: 8B 45 08           - mov eax,[ebp+08]
+Int_Base:IsAvailable+3e: 8B 40 14           - mov eax,[eax+14]
+Int_Base:IsAvailable+41: 83 EC 0C           - sub esp,0C
+Int_Base:IsAvailable+44: 50                 - push eax
+Int_Base:IsAvailable+45: 39 00              - cmp [eax],eax
+Int_Base:IsAvailable+47: E8 A4 36 06 CE     - call Obj_Base:get_isBurntOut
+Int_Base:IsAvailable+4c: 83 C4 10           - add esp,10
+Int_Base:IsAvailable+4f: 85 C0              - test eax,eax
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
       <ID>125</ID>
       <Description>"Combar runner"</Description>
       <VariableType>Auto Assembler Script</VariableType>
