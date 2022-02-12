@@ -1382,7 +1382,7 @@ Int_Base:IsAvailable+4f: 85 C0              - test eax,eax
   Author : jisopo
   Github : github.com/jisopo/CheatEngineTables
 
-  100% шанс убежать из боя. Догоняем врага со 100% вероятностью.
+  100% шанс убежать из боя. Догоняем со 100% вероятностью.
 }
 [ENABLE]
 aobscan(encounter, 55 8B EC 53 57 56 83 EC 2C 8B 75 08 8B 7D 0C C7 45 D4 00 00 00 00 C7 45 D0 00 00 00 00 C7 45 CC 00 00 00 00 E9 ?? ?? ?? ?? 8D A4 24 00 00 00 00 83 EC 08 FF 75 CC 57 39 3F E8 ?? ?? ?? ?? 83 C4 10 8B C8 39 09 8B 80 E8 00 00 00 85 C0 0F9F C0 0F B6 C0 85 C0 0F 94 C0 0F B6 C0 85 C0 0F 85 ?? ?? ?? ?? 83 EC 08 FF 75 CC 57 39 3F E8 ?? ?? ?? ?? 83 C4 10 8B C8 39 09 0F B6 80 F2 00 00 00 85 C0 75 2F 83 45 D4 01 83 EC 08 FF 75 CC 57 39 3F)
@@ -1397,8 +1397,19 @@ newmem: //this is allocated memory, you have read,write,execute access
 
 // enemies m_team
 cmp [eax+F8],#0 // 0 - player team
-jne RunAway
+je PlayerLogic
+jne EnemyLogic
+
+PlayerLogic:
+// escaping
+cmp byte ptr [eax+F5],#1
+je RunAway
+jne StayInBattle
+
+EnemyLogic:
+cmp byte ptr [eax+F5],#1
 je StayInBattle
+jne RunAway
 
 originalcode:
 cmp [ecx],ecx
