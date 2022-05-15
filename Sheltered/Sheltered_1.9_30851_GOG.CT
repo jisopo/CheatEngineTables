@@ -618,15 +618,14 @@ label(returnhere)
 label(originalcode)
 label(exit)
 aobscan(getNum, 8B 45 FC 8B 40 08 83 EC 0C 50 39 00 E8 ?? ?? ?? ?? 83 C4 10 EB 02 33 C0 C9 C3)
-//aobscan(medicine,83 C4 10 89 45 FC 8D 45 FC 83 EC 0C 50 e8 * * * * 83)
-aobscan(medicine, 83 C4 10 89 45 FC 8D 45 FC 83 EC 0C 50 E8 ?? ?? ?? ?? 83 C4 10 8B C8 8B 45 94 83 EC 08 51 50 39 00 89 45 98)
+aobscan(medicine, EC 83 EC 78 C7 45 FC 00 00 00 00 C7 45 F8 00 00 00 00 C7 45 F4 00 00 00 00 C7 45 F0 00 00 00 00 C7 45 EC 00 00 00 00 C7 45 E8 00 00 00 00 C7 45 E4 00 00 00 00 C7 45 E0 00 00 00 00 C7 45 DC 00 00 00 00 83 EC 0C)
 
 newmem: //this is allocated memory, you have read,write,execute access
 //place your code here
 
-cmp [ebp+4],medicine-100
+cmp [ebp+4],medicine-65
 jb originalcode
-cmp [ebp+4],medicine+500
+cmp [ebp+4],medicine+465
 jg originalcode
 //mov [eax+0C],#999
 //mov eax,[eax+0C]
@@ -706,16 +705,16 @@ InventoryManager:GetNumItemsOfType+63: C3              - ret
   Отключаем порчу кислородного и/или воздушного фильтра вымогателями
 }
 [ENABLE]
-aobscan(disablePunish, 83 C4 10 89 87 B0 01 00 00 83 EC 08 6A 00 57)
+aobscan(disablePunish, 55 8B EC 57 56 83 EC 10 8B 7D 08 83 EC 0C 68 ?? ?? ?? ?? E8 ?? ?? ?? ?? 83 C4 10 C7 40 08 ?? ?? ?? ?? 8B F0 89 45 E8 8B 05 ?? ?? ?? ?? 83 EC 08 6A 0C 50 39 00 E8 ?? ?? ?? ?? 83 C4 10 8B C8 8B 45 E8 83 EC 08 51 50 39 00 E8 ?? ?? ?? ?? 83 C4 10 8B 05 ?? ?? ?? ?? 83 EC 08 6A 16 50 39 00 E8 ?? ?? ?? ?? 83 C4 10 83 EC 08 50 56 39 36 E8 ?? ?? ?? ?? 83 C4 10 39 36 8B 46 0C 85 C0 7F 11 83 EC 0C 57 E8 ?? ?? ?? ?? 83 C4 10 E9 ?? ?? ?? ?? 39 36 8B 46 0C 83 EC 08 50 6A 00 E8 ?? ?? ?? ?? 83 C4 10 83 EC 08 50 56 39 36)
 //code from here to '[DISABLE]' will be used to enable the cheat
 
-disablePunish-32:
+disablePunish+7D:
 db 90 90
  
 registerSymbol(disablePunish)
 [DISABLE]
 //code from here till the end of the code will be used to disable the cheat
-disablePunish-32:
+disablePunish+7D:
 db 7F 11
 unregisterSymbol(disablePunish)
 {
