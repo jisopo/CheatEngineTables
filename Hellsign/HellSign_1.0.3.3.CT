@@ -871,7 +871,7 @@ PlayerController:SearchAreaForSign+131: 8B 8D 28 FF FF FF              - mov ecx
 [ENABLE]
 //code from here to '[DISABLE]' will be used to enable the cheat
 aobscan(pickupDistance, D9 80 BC 01 00 00 DF F1 DD D8 76 ?? E9 ?? ?? ?? ?? 33 F6 83 EC 08 6A 08 57)
-aobscan(pickupDistanceIterator, FF 6A 84 B6 83 C4 20 DD 9D A8 FE FF FF)
+aobscan(pickupDistanceIterator, EC 53 57 56 81 EC 6C 01 00 00 8B 7D 08)
 alloc(newmem, 2048)
 alloc(newmem1, 2048)
 
@@ -909,8 +909,8 @@ jmp returnhere1
 distance1:
 dd (float)99999
 
-//PlayerController:SearchAreaForSign+23c:
-pickupDistanceIterator+1D:
+//PlayerController+&lt;SearchAreaForSignCo&gt;c__Iterator1:MoveNext+262:
+pickupDistanceIterator+260:
 jmp newmem1
 nop
 returnhere1:
@@ -956,7 +956,7 @@ PlayerController:SearchAreaForSign+25a: 83 C4 10           - add esp,10
 }
 
 //PlayerController+&lt;SearchAreaForSignCo&gt;c__Iterator1:MoveNext+262:
-pickupDistanceIterator+1D:
+pickupDistanceIterator++260:
 fld dword ptr [eax+000001BC]
 //Alt: db D9 80 BC 01 00 00
 unregisterSymbol(pickupDistanceIterator)
