@@ -367,7 +367,7 @@ GunItem:ApplySpreadToDirection+151: DD 45 A0              - fld qword ptr [ebp-6
 }
 [ENABLE]
 //code from here to '[DISABLE]' will be used to enable the cheat
-aobscan(noReload, 49 89 48 1C 8B 46 0C)
+aobscan(noReload, 49 89 48 1C 8B 46 0C D9 80 F8 00 00 00 D9 EE DF F1 DD D8)
 
 //GunItem:Fire+44a:
 noReload:
