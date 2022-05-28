@@ -1,0 +1,996 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="42">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>80</ID>
+      <Description>"Change money(open trade shop once before activation)"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : HellSign.exe
+  Version: v1.0.3.3
+  Date   : 25.05.2022
+  Author : jisopo
+  Github : github.com/jisopo/CheatEngineTables
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(money, 8B 40 40 89 45 E4 83 EC 0C)
+alloc(newmem, 2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov [playerMoneyPtr], eax
+
+originalcode:
+mov eax,[eax+40]
+mov [ebp-1C],eax
+
+exit:
+jmp returnhere
+
+playerMoneyPtr:
+dd 0
+
+//BlueprintShopController:Show+e3:
+money:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(playerMoneyPtr)
+registerSymbol(money)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+//BlueprintShopController:Show+e3:
+money:
+mov eax,[eax+40]
+mov [ebp-1C],eax
+//Alt: db 8B 40 40 89 45 E4
+unregisterSymbol(playerMoneyPtr)
+unregisterSymbol(money)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: BlueprintShopController:Show+e3
+
+BlueprintShopController:Show+c2: 83 EC 0C        - sub esp,0C
+BlueprintShopController:Show+c5: 50              - push eax
+BlueprintShopController:Show+c6: 39 00           - cmp [eax],eax
+BlueprintShopController:Show+c8: E8 2B 77 50 FD  - call 053908E0
+BlueprintShopController:Show+cd: 83 C4 10        - add esp,10
+BlueprintShopController:Show+d0: 89 45 E8        - mov [ebp-18],eax
+BlueprintShopController:Show+d3: BA 60 75 4E 1E  - mov edx,1E4E7560
+BlueprintShopController:Show+d8: E8 E7 B6 4C FD  - call 053548AC
+BlueprintShopController:Show+dd: 8B 40 1C        - mov eax,[eax+1C]
+BlueprintShopController:Show+e0: 8B 40 08        - mov eax,[eax+08]
+// ---------- INJECTING HERE ----------
+BlueprintShopController:Show+e3: 8B 40 40        - mov eax,[eax+40]
+// ---------- DONE INJECTING  ----------
+BlueprintShopController:Show+e6: 89 45 E4        - mov [ebp-1C],eax
+BlueprintShopController:Show+e9: 83 EC 0C        - sub esp,0C
+BlueprintShopController:Show+ec: 68 5C 43 86 11  - push 1186435C
+BlueprintShopController:Show+f1: E8 B2 83 47 FD  - call System.Object:__icall_wrapper_mono_object_new_ptrfree_box
+BlueprintShopController:Show+f6: 83 C4 10        - add esp,10
+BlueprintShopController:Show+f9: 8B C8           - mov ecx,eax
+BlueprintShopController:Show+fb: 8B 45 E8        - mov eax,[ebp-18]
+BlueprintShopController:Show+fe: 8B 55 E4        - mov edx,[ebp-1C]
+BlueprintShopController:Show+101: 89 51 08        - mov [ecx+08],edx
+BlueprintShopController:Show+104: 83 EC 04        - sub esp,04
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>77</ID>
+          <Description>"Money"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>playerMoneyPtr</Address>
+          <Offsets>
+            <Offset>40</Offset>
+          </Offsets>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>82</ID>
+      <Description>"Change skill points(open skill points table before activation once)"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : HellSign.exe
+  Version: v1.0.3.3
+  Date   : 25.05.2022
+  Author : jisopo
+  Github : github.com/jisopo/CheatEngineTables
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(skillPoints, 8B 40 3C 89 45 E8 83 EC 0C)
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+mov [skillPointsPtr], eax
+
+originalcode:
+mov eax,[eax+3C]
+mov [ebp-18],eax
+
+exit:
+jmp returnhere
+
+skillPointsPtr:
+dd 0
+
+//SkillUpgradeTable:RefreshPlayerStats+2fb:
+skillPoints:
+jmp newmem
+nop
+returnhere:
+
+
+registerSymbol(skillPointsPtr)
+registerSymbol(skillPoints)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+//SkillUpgradeTable:RefreshPlayerStats+2fb:
+skillPoints:
+mov eax,[eax+3C]
+mov [ebp-18],eax
+//Alt: db 8B 40 3C 89 45 E8
+unregisterSymbol(skillPoints)
+unregisterSymbol(skillPointsPtr)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: SkillUpgradeTable:RefreshPlayerStats+2fb
+
+SkillUpgradeTable:RefreshPlayerStats+2da: 83 EC 0C        - sub esp,0C
+SkillUpgradeTable:RefreshPlayerStats+2dd: 50              - push eax
+SkillUpgradeTable:RefreshPlayerStats+2de: 39 00           - cmp [eax],eax
+SkillUpgradeTable:RefreshPlayerStats+2e0: E8 83 00 00 00  - call LocalizationSkillUpgradeTableConfig:get_skillPoints_localized
+SkillUpgradeTable:RefreshPlayerStats+2e5: 83 C4 10        - add esp,10
+SkillUpgradeTable:RefreshPlayerStats+2e8: 89 45 EC        - mov [ebp-14],eax
+SkillUpgradeTable:RefreshPlayerStats+2eb: BA 60 75 4E 1E  - mov edx,1E4E7560
+SkillUpgradeTable:RefreshPlayerStats+2f0: E8 B3 70 4F FD  - call Singleton`1[System.Object]:get_instance
+SkillUpgradeTable:RefreshPlayerStats+2f5: 8B 40 1C        - mov eax,[eax+1C]
+SkillUpgradeTable:RefreshPlayerStats+2f8: 8B 40 08        - mov eax,[eax+08]
+// ---------- INJECTING HERE ----------
+SkillUpgradeTable:RefreshPlayerStats+2fb: 8B 40 3C        - mov eax,[eax+3C]
+// ---------- DONE INJECTING  ----------
+SkillUpgradeTable:RefreshPlayerStats+2fe: 89 45 E8        - mov [ebp-18],eax
+SkillUpgradeTable:RefreshPlayerStats+301: 83 EC 0C        - sub esp,0C
+SkillUpgradeTable:RefreshPlayerStats+304: 68 5C 43 86 11  - push 1186435C
+SkillUpgradeTable:RefreshPlayerStats+309: E8 22 A1 47 FD  - call System.Object:__icall_wrapper_mono_object_new_ptrfree_box
+SkillUpgradeTable:RefreshPlayerStats+30e: 83 C4 10        - add esp,10
+SkillUpgradeTable:RefreshPlayerStats+311: 8B C8           - mov ecx,eax
+SkillUpgradeTable:RefreshPlayerStats+313: 8B 45 EC        - mov eax,[ebp-14]
+SkillUpgradeTable:RefreshPlayerStats+316: 8B 55 E8        - mov edx,[ebp-18]
+SkillUpgradeTable:RefreshPlayerStats+319: 89 51 08        - mov [ecx+08],edx
+SkillUpgradeTable:RefreshPlayerStats+31c: 83 EC 04        - sub esp,04
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>83</ID>
+          <Description>"Skill Points"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>skillPointsPtr</Address>
+          <Offsets>
+            <Offset>3C</Offset>
+          </Offsets>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>90</ID>
+      <Description>"Godmode(take damage once before activation)"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : HellSign.exe
+  Version: v1.0.3.3
+  Date   : 25.05.2022
+  Author : jisopo
+  Github : github.com/jisopo/CheatEngineTables
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(gm, D9 47 40 D9 45 0C DE C1)
+alloc(newmem, 2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+fld dword ptr [edi+44]
+fstp dword ptr [edi+40]
+lea esp,[ebp-04]
+pop edi
+leave
+ret
+
+
+originalcode:
+fld dword ptr [edi+40]
+fld dword ptr [ebp+0C]
+
+exit:
+jmp returnhere
+
+//PlayerStats:AddToCurrentHealth+a:
+gm:
+jmp newmem
+nop
+returnhere:
+
+
+registerSymbol(gm)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+//PlayerStats:AddToCurrentHealth+a:
+gm:
+fld dword ptr [edi+40]
+fld dword ptr [ebp+0C]
+//Alt: db D9 47 40 D9 45 0C
+unregisterSymbol(gm)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: PlayerStats:AddToCurrentHealth+a
+
+RewindTimeParanormalHazard:Update+4e: C6 47 40 01     - mov byte ptr [edi+40],01
+RewindTimeParanormalHazard:Update+52: 8D 65 FC        - lea esp,[ebp-04]
+RewindTimeParanormalHazard:Update+55: 5F              - pop edi
+RewindTimeParanormalHazard:Update+56: C9              - leave
+RewindTimeParanormalHazard:Update+57: C3              - ret
+PlayerStats:AddToCurrentHealth: 55              - push ebp
+PlayerStats:AddToCurrentHealth+1: 8B EC           - mov ebp,esp
+PlayerStats:AddToCurrentHealth+3: 57              - push edi
+PlayerStats:AddToCurrentHealth+4: 83 EC 14        - sub esp,14
+PlayerStats:AddToCurrentHealth+7: 8B 7D 08        - mov edi,[ebp+08]
+// ---------- INJECTING HERE ----------
+PlayerStats:AddToCurrentHealth+a: D9 47 40        - fld dword ptr [edi+40]
+// ---------- DONE INJECTING  ----------
+PlayerStats:AddToCurrentHealth+d: D9 45 0C        - fld dword ptr [ebp+0C]
+PlayerStats:AddToCurrentHealth+10: DE C1           - faddp
+PlayerStats:AddToCurrentHealth+12: D9 5F 40        - fstp dword ptr [edi+40]
+PlayerStats:AddToCurrentHealth+15: D9 47 40        - fld dword ptr [edi+40]
+PlayerStats:AddToCurrentHealth+18: DD 5D F0        - fstp qword ptr [ebp-10]
+PlayerStats:AddToCurrentHealth+1b: D9 EE           - fldz
+PlayerStats:AddToCurrentHealth+1d: DD 5D E8        - fstp qword ptr [ebp-18]
+PlayerStats:AddToCurrentHealth+20: 83 EC 0C        - sub esp,0C
+PlayerStats:AddToCurrentHealth+23: 57              - push edi
+PlayerStats:AddToCurrentHealth+24: E8 DB 9F B1 B2  - call 22CA2684
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>109</ID>
+      <Description>"High accuracy(shoot once before activation)"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : HellSign.exe
+  Version: v1.0.3.3
+  Date   : 25.05.2022
+  Author : jisopo
+  Github : github.com/jisopo/CheatEngineTables
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(noSpread, D9 5D A8 D9 EE DD 5D 90)
+alloc(newmem, 2048)
+label(returnhere)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+fstp dword ptr [ebp-58]
+fldz
+
+mov [ebp-54],(float)0
+mov [ebp-58],(float)0
+
+exit:
+jmp returnhere
+
+//GunItem:ApplySpreadToDirection+12e:
+noSpread:
+jmp newmem
+returnhere:
+
+
+registerSymbol(noSpread)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+//GunItem:ApplySpreadToDirection+12e:
+noSpread:
+fstp dword ptr [ebp-58]
+fldz 
+//Alt: db D9 5D A8 D9 EE
+unregisterSymbol(noSpread)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: GunItem:ApplySpreadToDirection+12e
+
+GunItem:ApplySpreadToDirection+10e: D9 5D AC              - fstp dword ptr [ebp-54]
+GunItem:ApplySpreadToDirection+111: BA E0 6A D2 1E        - mov edx,1ED26AE0
+GunItem:ApplySpreadToDirection+116: E8 45 FF 04 95        - call Singleton`1[System.Object]:get_instance
+GunItem:ApplySpreadToDirection+11b: 83 EC 04              - sub esp,04
+GunItem:ApplySpreadToDirection+11e: 6A 00                 - push 00
+GunItem:ApplySpreadToDirection+120: FF 75 10              - push [ebp+10]
+GunItem:ApplySpreadToDirection+123: 50                    - push eax
+GunItem:ApplySpreadToDirection+124: 39 00                 - cmp [eax],eax
+GunItem:ApplySpreadToDirection+126: E8 E5 00 00 00        - call PlayerStats:GetGunAccuracy
+GunItem:ApplySpreadToDirection+12b: 83 C4 10              - add esp,10
+// ---------- INJECTING HERE ----------
+GunItem:ApplySpreadToDirection+12e: D9 5D A8              - fstp dword ptr [ebp-58]
+// ---------- DONE INJECTING  ----------
+GunItem:ApplySpreadToDirection+131: D9 EE                 - fldz
+GunItem:ApplySpreadToDirection+133: DD 5D 90              - fstp qword ptr [ebp-70]
+GunItem:ApplySpreadToDirection+136: BA B0 FB FD 1E        - mov edx,1EFDFBB0
+GunItem:ApplySpreadToDirection+13b: E8 20 FF 04 95        - call Singleton`1[System.Object]:get_instance
+GunItem:ApplySpreadToDirection+140: DD 45 90              - fld qword ptr [ebp-70]
+GunItem:ApplySpreadToDirection+143: 0F B6 80 CD 00 00 00  - movzx eax,byte ptr [eax+000000CD]
+GunItem:ApplySpreadToDirection+14a: DD 5D A0              - fstp qword ptr [ebp-60]
+GunItem:ApplySpreadToDirection+14d: 85 C0                 - test eax,eax
+GunItem:ApplySpreadToDirection+14f: 74 10                 - je GunItem:ApplySpreadToDirection+161
+GunItem:ApplySpreadToDirection+151: DD 45 A0              - fld qword ptr [ebp-60]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>85</ID>
+      <Description>"No reload(shoot once before activation)"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : HellSign.exe
+  Version: v1.0.3.3
+  Date   : 25.05.2022
+  Author : jisopo
+  Github : github.com/jisopo/CheatEngineTables
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(noReload, 49 89 48 1C 8B 46 0C)
+
+//GunItem:Fire+44a:
+noReload:
+nop
+
+registerSymbol(noReload)
+[DISABLE]
+//GunItem:Fire+44a:
+noReload:
+dec ecx
+
+unregisterSymbol(noReload)
+//Alt: db 49
+
+{
+// ORIGINAL CODE - INJECTION POINT: GunItem:Fire+449
+
+GunItem:Fire+427: 50                 - push eax
+GunItem:Fire+428: FF 75 08           - push [ebp+08]
+GunItem:Fire+42b: E8 98 0E 00 00     - call GunItem:CheckBulletRaycast
+GunItem:Fire+430: 83 C4 10           - add esp,10
+GunItem:Fire+433: 8B 46 0C           - mov eax,[esi+0C]
+GunItem:Fire+436: 8B 80 B8 00 00 00  - mov eax,[eax+000000B8]
+GunItem:Fire+43c: 3D 03 00 00 00     - cmp eax,00000003
+GunItem:Fire+441: 74 0A              - je GunItem:Fire+44d
+GunItem:Fire+443: 8B 46 08           - mov eax,[esi+08]
+GunItem:Fire+446: 8B 48 1C           - mov ecx,[eax+1C]
+// ---------- INJECTING HERE ----------
+GunItem:Fire+449: 49                 - dec ecx
+// ---------- DONE INJECTING  ----------
+GunItem:Fire+44a: 89 48 1C           - mov [eax+1C],ecx
+GunItem:Fire+44d: 8B 46 0C           - mov eax,[esi+0C]
+GunItem:Fire+450: D9 80 F8 00 00 00  - fld dword ptr [eax+000000F8]
+GunItem:Fire+456: D9 EE              - fldz
+GunItem:Fire+458: DF F1              - fcomip st(0),st(1)
+GunItem:Fire+45a: DD D8              - fstp st(0)
+GunItem:Fire+45c: 7A 38              - jp GunItem:Fire+496
+GunItem:Fire+45e: 73 36              - jae GunItem:Fire+496
+GunItem:Fire+460: 8B 46 08           - mov eax,[esi+08]
+GunItem:Fire+463: B9 B4 0E AF 04     - mov ecx,04AF0EB4
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>99</ID>
+      <Description>"Always critical hit(shoot enemy once before activation)"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : HellSign.exe
+  Version: v1.0.3.3
+  Date   : 25.05.2022
+  Author : jisopo
+  Github : github.com/jisopo/CheatEngineTables
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(alwaysCriticalHit, FF B5 14 FF FF FF 83 EC 04 D9 1C 24)
+alloc(newmem, 2048)
+label(returnhere)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+push 1
+
+exit:
+jmp returnhere
+
+//Enemy:TakeDamage+3d0:
+alwaysCriticalHit:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(alwaysCriticalHit)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+//Enemy:TakeDamage+3d0:
+alwaysCriticalHit:
+push [ebp-000000EC]
+unregisterSymbol(alwaysCriticalHit)
+dealloc(newmem)
+//Alt: db FF B5 14 FF FF FF
+{
+// ORIGINAL CODE - INJECTION POINT: Enemy:TakeDamage+3d0
+
+Enemy:TakeDamage+3ac: 83 EC 10           - sub esp,10
+Enemy:TakeDamage+3af: 8B 45 54           - mov eax,[ebp+54]
+Enemy:TakeDamage+3b2: 89 04 24           - mov [esp],eax
+Enemy:TakeDamage+3b5: 8B 45 58           - mov eax,[ebp+58]
+Enemy:TakeDamage+3b8: 89 44 24 04        - mov [esp+04],eax
+Enemy:TakeDamage+3bc: 8B 45 5C           - mov eax,[ebp+5C]
+Enemy:TakeDamage+3bf: 89 44 24 08        - mov [esp+08],eax
+Enemy:TakeDamage+3c3: 8B 45 60           - mov eax,[ebp+60]
+Enemy:TakeDamage+3c6: 89 44 24 0C        - mov [esp+0C],eax
+Enemy:TakeDamage+3ca: FF B5 10 FF FF FF  - push [ebp-000000F0]
+// ---------- INJECTING HERE ----------
+Enemy:TakeDamage+3d0: FF B5 14 FF FF FF  - push [ebp-000000EC]
+// ---------- DONE INJECTING  ----------
+Enemy:TakeDamage+3d6: 83 EC 04           - sub esp,04
+Enemy:TakeDamage+3d9: D9 1C 24           - fstp dword ptr [esp]
+Enemy:TakeDamage+3dc: FF B5 20 FF FF FF  - push [ebp-000000E0]
+Enemy:TakeDamage+3e2: E8 A9 02 00 00     - call Enemy:RemoveHealth
+Enemy:TakeDamage+3e7: 83 C4 20           - add esp,20
+Enemy:TakeDamage+3ea: D9 83 9C 00 00 00  - fld dword ptr [ebx+0000009C]
+Enemy:TakeDamage+3f0: D9 43 74           - fld dword ptr [ebx+74]
+Enemy:TakeDamage+3f3: D9 9D 24 FF FF FF  - fstp dword ptr [ebp-000000DC]
+Enemy:TakeDamage+3f9: D9 85 24 FF FF FF  - fld dword ptr [ebp-000000DC]
+Enemy:TakeDamage+3ff: DE F9              - fdivp st(1),st(0)
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>113</ID>
+      <Description>"Weapon damage multiplier(shoot enemy before activation)"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : HellSign.exe
+  Version: v1.0.3.3
+  Date   : 25.05.2022
+  Author : jisopo
+  Github : github.com/jisopo/CheatEngineTables
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(damageMultiplier, D9 80 A8 01 00 00 DE C9 DD 9D A0 F6 FF FF)
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+mov [damageMultiplierPtr], eax
+originalcode:
+fld dword ptr [eax+000001A8]
+
+exit:
+jmp returnhere
+
+damageMultiplierPtr:
+dd 0
+
+//GunItem:CheckBulletRaycast+1bfe:
+damageMultiplier:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(damageMultiplierPtr)
+registerSymbol(damageMultiplier)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+//GunItem:CheckBulletRaycast+1bfe:
+damageMultiplier:
+fld dword ptr [eax+000001A8]
+//Alt: db D9 80 A8 01 00 00
+unregisterSymbol(damageMultiplierPtr)
+unregisterSymbol(damageMultiplier)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: GunItem:CheckBulletRaycast+1bfe
+
+GunItem:CheckBulletRaycast+1bcc: D9 C9              - fxch st(1)
+GunItem:CheckBulletRaycast+1bce: DE C9              - fmulp st(1),st(0)
+GunItem:CheckBulletRaycast+1bd0: D9 9D F0 F6 FF FF  - fstp dword ptr [ebp-00000910]
+GunItem:CheckBulletRaycast+1bd6: 8B 83 9C 00 00 00  - mov eax,[ebx+0000009C]
+GunItem:CheckBulletRaycast+1bdc: 89 85 BC F6 FF FF  - mov [ebp-00000944],eax
+GunItem:CheckBulletRaycast+1be2: D9 85 F0 F6 FF FF  - fld dword ptr [ebp-00000910]
+GunItem:CheckBulletRaycast+1be8: DD 9D 90 F6 FF FF  - fstp qword ptr [ebp-00000970]
+GunItem:CheckBulletRaycast+1bee: BA 70 61 D2 1E     - mov edx,1ED26170
+GunItem:CheckBulletRaycast+1bf3: E8 B8 0B 05 95     - call Singleton`1[System.Object]:get_instance
+GunItem:CheckBulletRaycast+1bf8: DD 85 90 F6 FF FF  - fld qword ptr [ebp-00000970]
+// ---------- INJECTING HERE ----------
+GunItem:CheckBulletRaycast+1bfe: D9 80 A8 01 00 00  - fld dword ptr [eax+000001A8]
+// ---------- DONE INJECTING  ----------
+GunItem:CheckBulletRaycast+1c04: DE C9              - fmulp st(1),st(0)
+GunItem:CheckBulletRaycast+1c06: DD 9D A0 F6 FF FF  - fstp qword ptr [ebp-00000960]
+GunItem:CheckBulletRaycast+1c0c: 8B 45 10           - mov eax,[ebp+10]
+GunItem:CheckBulletRaycast+1c0f: D9 80 FC 00 00 00  - fld dword ptr [eax+000000FC]
+GunItem:CheckBulletRaycast+1c15: DD 9D 98 F6 FF FF  - fstp qword ptr [ebp-00000968]
+GunItem:CheckBulletRaycast+1c1b: 8D 4B 44           - lea ecx,[ebx+44]
+GunItem:CheckBulletRaycast+1c1e: 8D 85 CC FD FF FF  - lea eax,[ebp-00000234]
+GunItem:CheckBulletRaycast+1c24: 83 EC 04           - sub esp,04
+GunItem:CheckBulletRaycast+1c27: 6A 2C              - push 2C
+GunItem:CheckBulletRaycast+1c29: 51                 - push ecx
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>115</ID>
+          <Description>"Damage multiplier"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>damageMultiplierPtr</Address>
+          <Offsets>
+            <Offset>1A8</Offset>
+          </Offsets>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>122</ID>
+      <Description>"Switch weapon fire mode to auto(shoot once before activation)"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : HellSign.exe
+  Version: v1.0.3.3
+  Date   : 25.05.2022
+  Author : jisopo
+  Github : github.com/jisopo/CheatEngineTables
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(gunMode, 8B 80 B8 00 00 00 3D 01 00 00 00)
+alloc(newmem, 2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+mov [eax+000000B8],2
+originalcode:
+mov eax,[eax+000000B8]
+
+exit:
+jmp returnhere
+
+//GunItem:Update+8f:
+gunMode:
+jmp newmem
+nop
+returnhere:
+
+
+registerSymbol(gunMode)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+//GunItem:Update+8f:
+gunMode:
+mov eax,[eax+000000B8]
+//Alt: db 8B 80 B8 00 00 00
+unregisterSymbol(gunMode)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: GunItem:Update+8f
+
+GunItem:Update+6e: 0F 85 4D 00 00 00  - jne GunItem:Update+c1
+GunItem:Update+74: 8B 05 B0 0E AF 04  - mov eax,[04AF0EB0]
+GunItem:Update+7a: 8B 4F 0C           - mov ecx,[edi+0C]
+GunItem:Update+7d: 83 EC 08           - sub esp,08
+GunItem:Update+80: 51                 - push ecx
+GunItem:Update+81: 50                 - push eax
+GunItem:Update+82: 39 00              - cmp [eax],eax
+GunItem:Update+84: E8 9F D7 01 95     - call System.Collections.Generic.Dictionary`2[System.Object,System.Object]:get_Item
+GunItem:Update+89: 83 C4 10           - add esp,10
+GunItem:Update+8c: 8B 40 08           - mov eax,[eax+08]
+// ---------- INJECTING HERE ----------
+GunItem:Update+8f: 8B 80 B8 00 00 00  - mov eax,[eax+000000B8]
+// ---------- DONE INJECTING  ----------
+GunItem:Update+95: 3D 01 00 00 00     - cmp eax,00000001
+GunItem:Update+9a: 74 25              - je GunItem:Update+c1
+GunItem:Update+9c: 8B 05 B0 0E AF 04  - mov eax,[04AF0EB0]
+GunItem:Update+a2: 8B 4F 0C           - mov ecx,[edi+0C]
+GunItem:Update+a5: 83 EC 08           - sub esp,08
+GunItem:Update+a8: 51                 - push ecx
+GunItem:Update+a9: 50                 - push eax
+GunItem:Update+aa: 39 00              - cmp [eax],eax
+GunItem:Update+ac: E8 77 D7 01 95     - call System.Collections.Generic.Dictionary`2[System.Object,System.Object]:get_Item
+GunItem:Update+b1: 83 C4 10           - add esp,10
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>126</ID>
+      <Description>"Rapid fire(shoot once before activation)"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : HellSign.exe
+  Version: v1.0.3.3
+  Date   : 25.05.2022
+  Author : jisopo
+  Github : github.com/jisopo/CheatEngineTables
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(rapidFire, D9 80 D0 00 00 00 D9 C9 DD 5D C0 DD 5D B8 DD 45 C0 DD 45 B8)
+alloc(newmem,2048)
+label(returnhere)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+fld dword ptr [rapid]
+jmp returnhere
+
+rapid:
+dd (float)0
+
+//GunItem:Fire+4c9:
+rapidFire:
+jmp newmem
+nop
+returnhere:
+
+registerSymbol(rapidFire)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+//GunItem:Fire+4c9:
+rapidFire:
+fld dword ptr [eax+000000D0]
+//Alt: db D9 80 D0 00 00 00
+unregisterSymbol(rapidFire)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: GunItem:Fire+4c9
+
+GunItem:Fire+4b0: 85 C0              - test eax,eax
+GunItem:Fire+4b2: 74 0F              - je GunItem:Fire+4c3
+GunItem:Fire+4b4: DD 45 C0           - fld qword ptr [ebp-40]
+GunItem:Fire+4b7: D9 EE              - fldz
+GunItem:Fire+4b9: D9 C9              - fxch st(1)
+GunItem:Fire+4bb: DD 5D C0           - fstp qword ptr [ebp-40]
+GunItem:Fire+4be: DD 5D B8           - fstp qword ptr [ebp-48]
+GunItem:Fire+4c1: EB 14              - jmp GunItem:Fire+4d7
+GunItem:Fire+4c3: DD 45 C0           - fld qword ptr [ebp-40]
+GunItem:Fire+4c6: 8B 46 0C           - mov eax,[esi+0C]
+// ---------- INJECTING HERE ----------
+GunItem:Fire+4c9: D9 80 D0 00 00 00  - fld dword ptr [eax+000000D0]
+// ---------- DONE INJECTING  ----------
+GunItem:Fire+4cf: D9 C9              - fxch st(1)
+GunItem:Fire+4d1: DD 5D C0           - fstp qword ptr [ebp-40]
+GunItem:Fire+4d4: DD 5D B8           - fstp qword ptr [ebp-48]
+GunItem:Fire+4d7: DD 45 C0           - fld qword ptr [ebp-40]
+GunItem:Fire+4da: DD 45 B8           - fld qword ptr [ebp-48]
+GunItem:Fire+4dd: DE C1              - faddp
+GunItem:Fire+4df: 8B 45 D0           - mov eax,[ebp-30]
+GunItem:Fire+4e2: D9 58 34           - fstp dword ptr [eax+34]
+GunItem:Fire+4e5: 8B 46 0C           - mov eax,[esi+0C]
+GunItem:Fire+4e8: 83 EC 08           - sub esp,08
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>114</ID>
+      <Description>"Open chained door without key(try to open any door before activation)"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : HellSign.exe
+  Version: v1.0.3.3
+  Date   : 25.05.2022
+  Author : jisopo
+  Github : github.com/jisopo/CheatEngineTables
+
+  This script does blah blah blah
+}
+[ENABLE]
+aobscan(noKeyRequired, 83 C4 10 C6 46 71)
+
+noKeyRequired-62:
+db 90 90 90 90 90 90
+ 
+registerSymbol(noKeyRequired)
+[DISABLE]
+noKeyRequired-62:
+db 0F 84 01 01 00 00
+unregisterSymbol(noKeyRequired)
+//Alt: db 0F 84 01 01 00 00
+{
+// ORIGINAL CODE - INJECTION POINT: DoorObject:Open+132
+
+DoorObject:Open+10c: C7 41 14 28 FD 56 18  - mov [ecx+14],1856FD28
+DoorObject:Open+113: C7 41 1C F8 48 0B 3C  - mov [ecx+1C],3C0B48F8
+DoorObject:Open+11a: C7 41 0C A8 2F 15 70  - mov [ecx+0C],70152FA8
+DoorObject:Open+121: 83 EC 08              - sub esp,08
+DoorObject:Open+124: 51                    - push ecx
+DoorObject:Open+125: 50                    - push eax
+DoorObject:Open+126: 39 00                 - cmp [eax],eax
+DoorObject:Open+128: E8 53 C6 07 95        - call System.Collections.Generic.List`1[System.Object]:Exists
+DoorObject:Open+12d: 83 C4 10              - add esp,10
+DoorObject:Open+130: 85 C0                 - test eax,eax
+// ---------- INJECTING HERE ----------
+DoorObject:Open+132: 0F 84 01 01 00 00     - je DoorObject:Open+239
+// ---------- DONE INJECTING  ----------
+DoorObject:Open+138: BA B0 FB FD 1E        - mov edx,1EFDFBB0
+DoorObject:Open+13d: E8 46 80 08 95        - call 051DB140
+DoorObject:Open+142: 8B C8                 - mov ecx,eax
+DoorObject:Open+144: 39 09                 - cmp [ecx],ecx
+DoorObject:Open+146: 8B 40 50              - mov eax,[eax+50]
+DoorObject:Open+149: 8B C8                 - mov ecx,eax
+DoorObject:Open+14b: 39 09                 - cmp [ecx],ecx
+DoorObject:Open+14d: 8B 40 50              - mov eax,[eax+50]
+DoorObject:Open+150: 89 45 B0              - mov [ebp-50],eax
+DoorObject:Open+153: 85 F6                 - test esi,esi
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>117</ID>
+      <Description>"Fast evidence pick up(try pick up evidence once before activation)"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : HellSign.exe
+  Version: v1.0.3.3
+  Date   : 25.05.2022
+  Author : jisopo
+  Github : github.com/jisopo/CheatEngineTables
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(instantPickup, D9 80 C0 01 00 00 D9 9D 20 FF FF FF C6 85 13 FF FF FF 01) // should be unique
+alloc(newmem, $1000)
+
+label(code)
+label(return)
+
+newmem:
+
+fld dword ptr [instant]
+jmp return
+
+code:
+
+fld dword ptr [eax+000001C0]
+jmp return
+
+instant:
+dd (float)0
+
+instantPickup:
+  jmp newmem
+  nop
+
+return:
+
+registersymbol(instantPickup)
+
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+instantPickup:
+  db D9 80 C0 01 00 00
+
+unregistersymbol(instantPickup)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: PlayerController:SearchAreaForSign+ea
+
+PlayerController:SearchAreaForSign+c2: 6A 00                          - push 00
+PlayerController:SearchAreaForSign+c4: 57                             - push edi
+PlayerController:SearchAreaForSign+c5: E8 CE 04 00 00                 - call PlayerController:CanControl
+PlayerController:SearchAreaForSign+ca: 83 C4 10                       - add esp,10
+PlayerController:SearchAreaForSign+cd: BA 50 55 3F 1B                 - mov edx,1B3F5550
+PlayerController:SearchAreaForSign+d2: E8 C1 C7 10 E4                 - call Singleton`1[System.Object]:get_instance
+PlayerController:SearchAreaForSign+d7: 8B 40 64                       - mov eax,[eax+64]
+PlayerController:SearchAreaForSign+da: 89 85 14 FF FF FF              - mov [ebp-000000EC],eax
+PlayerController:SearchAreaForSign+e0: BA 50 55 3F 1B                 - mov edx,1B3F5550
+PlayerController:SearchAreaForSign+e5: E8 AE C7 10 E4                 - call Singleton`1[System.Object]:get_instance
+// ---------- INJECTING HERE ----------
+PlayerController:SearchAreaForSign+ea: D9 80 C0 01 00 00              - fld dword ptr [eax+000001C0]
+// ---------- DONE INJECTING  ----------
+PlayerController:SearchAreaForSign+f0: D9 9D 20 FF FF FF              - fstp dword ptr [ebp-000000E0]
+PlayerController:SearchAreaForSign+f6: C6 85 13 FF FF FF 01           - mov byte ptr [ebp-000000ED],01
+PlayerController:SearchAreaForSign+fd: BA F0 D4 E7 3E                 - mov edx,3EE7D4F0
+PlayerController:SearchAreaForSign+102: E8 91 C7 10 E4                 - call Singleton`1[System.Object]:get_instance
+PlayerController:SearchAreaForSign+107: C7 85 24 FF FF FF 00 00 00 00  - mov [ebp-000000DC],00000000
+PlayerController:SearchAreaForSign+111: C7 85 28 FF FF FF 00 00 00 00  - mov [ebp-000000D8],00000000
+PlayerController:SearchAreaForSign+11b: C7 85 2C FF FF FF 00 00 00 00  - mov [ebp-000000D4],00000000
+PlayerController:SearchAreaForSign+125: 8B 8D 24 FF FF FF              - mov ecx,[ebp-000000DC]
+PlayerController:SearchAreaForSign+12b: 89 8D 64 FF FF FF              - mov [ebp-0000009C],ecx
+PlayerController:SearchAreaForSign+131: 8B 8D 28 FF FF FF              - mov ecx,[ebp-000000D8]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>120</ID>
+      <Description>"Extra evidence pick up distance(try pick up evidence once before activation)"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : HellSign.exe
+  Version: v1.0.3.3
+  Date   : 25.05.2022
+  Author : jisopo
+  Github : github.com/jisopo/CheatEngineTables
+
+  This script does blah blah blah
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscan(pickupDistance, D9 80 BC 01 00 00 DF F1 DD D8 76 ?? E9 ?? ?? ?? ?? 33 F6 83 EC 08 6A 08 57)
+aobscan(pickupDistanceIterator, FF 6A 84 B6 83 C4 20 DD 9D A8 FE FF FF)
+alloc(newmem, 2048)
+alloc(newmem1, 2048)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+fld dword ptr [distance]
+jmp returnhere
+
+originalcode:
+fld dword ptr [eax+000001BC]
+
+exit:
+jmp returnhere
+
+distance:
+dd (float)99999
+
+//PlayerController:SearchAreaForSign+23c:
+pickupDistance:
+jmp newmem
+nop
+returnhere:
+
+newmem1: //this is allocated memory, you have read,write,execute access
+//place your code here
+fld dword ptr [distance1]
+jmp returnhere1
+
+originalcode1:
+fld dword ptr [eax+000001BC]
+
+exit1:
+jmp returnhere1
+
+distance1:
+dd (float)99999
+
+//PlayerController:SearchAreaForSign+23c:
+pickupDistanceIterator+1D:
+jmp newmem1
+nop
+returnhere1:
+
+
+registerSymbol(pickupDistance)
+registerSymbol(pickupDistanceIterator)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+//PlayerController:SearchAreaForSign+23c:
+pickupDistance:
+fld dword ptr [eax+000001BC]
+//Alt: db D9 80 BC 01 00 00
+unregisterSymbol(pickupDistance)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: PlayerController:SearchAreaForSign+23c
+
+PlayerController:SearchAreaForSign+21f: 5D                 - pop ebp
+PlayerController:SearchAreaForSign+220: 87 F9              - xchg ecx,edi
+PlayerController:SearchAreaForSign+222: FF 83 C4 20 DD 9D  - inc [ebx-6222DF3C]
+PlayerController:SearchAreaForSign+228: F8                 - clc
+PlayerController:SearchAreaForSign+229: FE                 - db -02
+PlayerController:SearchAreaForSign+22a: FF                 - db -01
+PlayerController:SearchAreaForSign+22b: FF                 - db -01
+PlayerController:SearchAreaForSign+22c: BA 70 61 D2 1E     - mov edx,1ED26170
+PlayerController:SearchAreaForSign+231: E8 6A D1 46 E2     - call Singleton`1[System.Object]:get_instance
+PlayerController:SearchAreaForSign+236: DD 85 F8 FE FF FF  - fld qword ptr [ebp-00000108]
+// ---------- INJECTING HERE ----------
+PlayerController:SearchAreaForSign+23c: D9 80 BC 01 00 00  - fld dword ptr [eax+000001BC]
+// ---------- DONE INJECTING  ----------
+PlayerController:SearchAreaForSign+242: DF F1              - fcomip st(0),st(1)
+PlayerController:SearchAreaForSign+244: DD D8              - fstp st(0)
+PlayerController:SearchAreaForSign+246: 76 05              - jna PlayerController:SearchAreaForSign+24d
+PlayerController:SearchAreaForSign+248: E9 B4 02 00 00     - jmp PlayerController:SearchAreaForSign+501
+PlayerController:SearchAreaForSign+24d: 33 F6              - xor esi,esi
+PlayerController:SearchAreaForSign+24f: 83 EC 08           - sub esp,08
+PlayerController:SearchAreaForSign+252: 6A 08              - push 08
+PlayerController:SearchAreaForSign+254: 57                 - push edi
+PlayerController:SearchAreaForSign+255: E8 3E 03 00 00     - call PlayerController:HasGadgetInPlayerInventory
+PlayerController:SearchAreaForSign+25a: 83 C4 10           - add esp,10
+}
+
+//PlayerController+&lt;SearchAreaForSignCo&gt;c__Iterator1:MoveNext+262:
+pickupDistanceIterator+1D:
+fld dword ptr [eax+000001BC]
+//Alt: db D9 80 BC 01 00 00
+unregisterSymbol(pickupDistanceIterator)
+dealloc(newmem1)
+
+{
+// ORIGINAL CODE - INJECTION POINT: PlayerController+&lt;SearchAreaForSignCo&gt;c__Iterator1:MoveNext+262
+
+PlayerController+&lt;SearchAreaForSignCo&gt;c__Iterator1:MoveNext+23f: FF 89 44 24 08 E8  - dec [ecx-17F7DBBC]
+PlayerController+&lt;SearchAreaForSignCo&gt;c__Iterator1:MoveNext+245: 6F                 - outsd
+PlayerController+&lt;SearchAreaForSignCo&gt;c__Iterator1:MoveNext+246: 7A F9              - jp PlayerController+&lt;SearchAreaForSignCo&gt;c__Iterator1:MoveNext+241
+PlayerController+&lt;SearchAreaForSignCo&gt;c__Iterator1:MoveNext+248: FF 83 C4 20 DD 9D  - inc [ebx-6222DF3C]
+PlayerController+&lt;SearchAreaForSignCo&gt;c__Iterator1:MoveNext+24e: A8 FE              - test al,-02
+PlayerController+&lt;SearchAreaForSignCo&gt;c__Iterator1:MoveNext+250: FF                 - db -01
+PlayerController+&lt;SearchAreaForSignCo&gt;c__Iterator1:MoveNext+251: FF                 - db -01
+PlayerController+&lt;SearchAreaForSignCo&gt;c__Iterator1:MoveNext+252: BA 70 61 D2 1E     - mov edx,1ED26170
+PlayerController+&lt;SearchAreaForSignCo&gt;c__Iterator1:MoveNext+257: E8 7C C4 46 E2     - call Singleton`1[System.Object]:get_instance
+PlayerController+&lt;SearchAreaForSignCo&gt;c__Iterator1:MoveNext+25c: DD 85 A8 FE FF FF  - fld qword ptr [ebp-00000158]
+// ---------- INJECTING HERE ----------
+PlayerController+&lt;SearchAreaForSignCo&gt;c__Iterator1:MoveNext+262: D9 80 BC 01 00 00  - fld dword ptr [eax+000001BC]
+// ---------- DONE INJECTING  ----------
+PlayerController+&lt;SearchAreaForSignCo&gt;c__Iterator1:MoveNext+268: DF F1              - fcomip st(0),st(1)
+PlayerController+&lt;SearchAreaForSignCo&gt;c__Iterator1:MoveNext+26a: DD D8              - fstp st(0)
+PlayerController+&lt;SearchAreaForSignCo&gt;c__Iterator1:MoveNext+26c: 0F 86 CC 00 00 00  - jbe PlayerController+&lt;SearchAreaForSignCo&gt;c__Iterator1:MoveNext+33e
+PlayerController+&lt;SearchAreaForSignCo&gt;c__Iterator1:MoveNext+272: BA 98 BC A5 3B     - mov edx,3BA5BC98
+PlayerController+&lt;SearchAreaForSignCo&gt;c__Iterator1:MoveNext+277: E8 3C 53 F4 FF     - call 22C97520
+PlayerController+&lt;SearchAreaForSignCo&gt;c__Iterator1:MoveNext+27c: 8B C8              - mov ecx,eax
+PlayerController+&lt;SearchAreaForSignCo&gt;c__Iterator1:MoveNext+27e: 39 09              - cmp [ecx],ecx
+PlayerController+&lt;SearchAreaForSignCo&gt;c__Iterator1:MoveNext+280: 8B 70 68           - mov esi,[eax+68]
+PlayerController+&lt;SearchAreaForSignCo&gt;c__Iterator1:MoveNext+283: 39 36              - cmp [esi],esi
+PlayerController+&lt;SearchAreaForSignCo&gt;c__Iterator1:MoveNext+285: 8B 46 0C           - mov eax,[esi+0C]
+}
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
