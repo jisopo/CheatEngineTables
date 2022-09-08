@@ -94,7 +94,7 @@ dealloc(newmem4)
     </CheatEntry>
     <CheatEntry>
       <ID>16</ID>
-      <Description>"godmode"</Description>
+      <Description>"Godmode(Jack)"</Description>
       <LastState/>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript>{
