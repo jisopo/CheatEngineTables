@@ -3,7 +3,7 @@
   <CheatEntries>
     <CheatEntry>
       <ID>15</ID>
-      <Description>"infinity ammo"</Description>
+      <Description>"No reload"</Description>
       <LastState/>
       <VariableType>Auto Assembler Script</VariableType>
       <AssemblerScript>{
