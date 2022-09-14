@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<CheatTable CheatEngineTableVersion="27">
+<CheatTable CheatEngineTableVersion="42">
   <CheatEntries>
     <CheatEntry>
-      <ID>15</ID>
-      <Description>"No reload"</Description>
-      <LastState/>
-      <VariableType>Auto Assembler Script</VariableType>
-      <AssemblerScript>{
+      <ID>17</ID>
+      <Description>"KingKong8.exe"</Description>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>15</ID>
+          <Description>"No reload"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{
   Game   : KingKong8.exe
   Version:
   Date   : 2018-12-30
@@ -91,13 +95,12 @@ dealloc(newmem2)
 dealloc(newmem3)
 dealloc(newmem4)
 </AssemblerScript>
-    </CheatEntry>
-    <CheatEntry>
-      <ID>16</ID>
-      <Description>"Godmode(Jack)"</Description>
-      <LastState/>
-      <VariableType>Auto Assembler Script</VariableType>
-      <AssemblerScript>{
+        </CheatEntry>
+        <CheatEntry>
+          <ID>16</ID>
+          <Description>"Godmode(Jack)"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{
   Game   : KingKong8.exe
   Version:
   Date   : 2018-12-30
@@ -138,8 +141,8 @@ unregisterSymbol(gm2)
 unregisterSymbol(gm3)
 unregisterSymbol(gm4)
 </AssemblerScript>
-    </CheatEntry>
-            <CheatEntry>
+        </CheatEntry>
+        <CheatEntry>
           <ID>24</ID>
           <Description>"infinite ammo"</Description>
           <VariableType>Auto Assembler Script</VariableType>
@@ -185,6 +188,224 @@ unregisterSymbol(ammo)
 dealloc(newmem)
 </AssemblerScript>
         </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>18</ID>
+      <Description>"KingKong9D.exe"</Description>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>19</ID>
+          <Description>"No reload"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{
+  Game   : KingKong8.exe
+  Version:
+  Date   : 2018-12-30
+  Author : AJlex
+  Updated: 2019-01-01
+
+  This script does blah blah blah
+}
+[ENABLE]
+aobscanmodule(ammo1,KingKong9D.exe,89 8C 82 74340000 8B 85 24FEFFFF 8B 48 18 8B 51 04 8B 42 40 8B 8D 98FBFFFF) // should be unique
+aobscanmodule(ammo2,KingKong9D.exe,89 8C 82 04350000 8B 85 24FEFFFF 8B 48 18 8B 51 04 8B 42 40 8B 8D 98FBFFFF) // should be unique
+aobscanmodule(ammo3,KingKong9D.exe,89 8C 82 4C350000 8B 85 24FEFFFF 8B 48 18 8B 51 04 8B 42 40 8B 8D 98FBFFFF) // should be unique
+aobscanmodule(ammo4,KingKong9D.exe,89 94 88 BC340000 8B 8D 98FBFFFF 8B 51 04) // should be unique
+alloc(newmem,256)
+alloc(newmem2,256)
+alloc(newmem3,256)
+alloc(newmem4,256)
+
+newmem:
+mov [edx+eax*4+00003474],#99
+jmp exitnewmem
+
+ammo1:
+jmp newmem
+nop
+nop
+
+exitnewmem:
+
+newmem2:
+mov [edx+eax*4+00003504],#99
+jmp exitnewmem2
+
+ammo2:
+jmp newmem2
+nop
+nop
+
+exitnewmem2:
+
+newmem3:
+mov [edx+eax*4+0000354C],#99
+jmp exitnewmem3
+
+ammo3:
+jmp newmem3
+nop
+nop
+
+exitnewmem3:
+
+newmem4:
+mov [eax+ecx*4+000034BC],#99
+jmp Exitnewmem4
+
+ammo4:
+jmp newmem4
+nop
+nop
+
+Exitnewmem4:
+
+registerSymbol(ammo1)
+registerSymbol(ammo2)
+registerSymbol(ammo3)
+registerSymbol(ammo4)
+[DISABLE]
+ammo1:
+mov [edx+eax*4+00003474],ecx
+ammo2:
+mov [edx+eax*4+00003504],ecx
+ammo3:
+mov [edx+eax*4+0000354C],ecx
+ammo4:
+mov [eax+ecx*4+000034BC],edx
+unregisterSymbol(ammo1)
+unregisterSymbol(ammo2)
+unregisterSymbol(ammo3)
+unregisterSymbol(ammo4)
+dealloc(newmem)
+dealloc(newmem2)
+dealloc(newmem3)
+dealloc(newmem4)
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>20</ID>
+          <Description>"Godmode(Jack)"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{
+  Game   : KingKong8.exe
+  Version:
+  Date   : 2018-12-30
+  Author : AJlex
+  Updated: 2019-01-01
+
+  This script does blah blah blah
+}
+[ENABLE]
+aobscanmodule(gm1,KingKong9D.exe,C7 84 81 B41B0000 0000803F8B 55 E0 8B 82 840C0000 83 E0 04 0F84) // should be unique
+aobscanmodule(gm2,KingKong9D.exe,C7 84 81 B41B0000 0000803F8B 55 E0 8B 82 840C0000 83 E0 40 0F84) // should be unique
+aobscanmodule(gm3,KingKong9D.exe,C7 84 90 B41B0000 00004040 EB ** 8B 4D E0 8B 91 840C0000 81 E2 00010000 74) // should be unique
+aobscanmodule(gm4,KingKong9D.exe,C7 84 81 B41B0000 00004040 EB ** 8D 95 84FEFFFF 52 8D 85 70FFFFFF 50 8D 4D FC) // should be unique
+gm1:
+mov [ecx+eax*4+00001BB4],(float)0
+gm2:
+mov [ecx+eax*4+00001BB4],(float)0
+gm3:
+mov [eax+edx*4+00001BB4],(float)0
+gm4:
+mov [ecx+eax*4+00001BB4],(float)0
+
+registerSymbol(gm1)
+registerSymbol(gm2)
+registerSymbol(gm3)
+registerSymbol(gm4)
+[DISABLE]
+gm1:
+mov [ecx+eax*4+00001BB4],3F800000
+gm2:
+mov [ecx+eax*4+00001BB4],3F800000
+gm3:
+mov [eax+edx*4+00001BB4],40400000
+gm4:
+mov [ecx+eax*4+00001BB4],40400000
+unregisterSymbol(gm1)
+unregisterSymbol(gm2)
+unregisterSymbol(gm3)
+unregisterSymbol(gm4)
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>23</ID>
+          <Description>"infinite ammo"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{
+  Game   : KingKong
+  Version:
+  Date   : 14.09.2022
+  Author : jisopo
+}
+[ENABLE]
+aobscanmodule(ammo, KingKong9D.exe, 8B 14 8A 89 55 F0 8B 45 D8 83 B8 CC 41 00 00 00) // should be unique
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,256)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov [edx+ecx*4],#999
+
+originalcode:
+mov edx,[edx+ecx*4]
+mov [ebp-10],edx
+
+exit:
+jmp returnhere
+
+ammo:
+jmp newmem
+nop
+returnhere:
+
+
+registerSymbol(ammo)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+ammo:
+mov edx,[edx+ecx*4]
+mov [ebp-10],edx
+//Alt: db 8B 14 8A 89 55 F0
+unregisterSymbol(ammo)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: KingKong9D.exe+29A512
+
+KingKong9D.exe+29A4ED: 8B 55 C0              - mov edx,[ebp-40]
+KingKong9D.exe+29A4F0: 52                    - push edx
+KingKong9D.exe+29A4F1: E8 5A C1 2F 00        - call KingKong9D.exe+596650
+KingKong9D.exe+29A4F6: 83 C4 14              - add esp,14
+KingKong9D.exe+29A4F9: 8B 45 F8              - mov eax,[ebp-08]
+KingKong9D.exe+29A4FC: 6B C0 48              - imul eax,eax,48
+KingKong9D.exe+29A4FF: 8B 0D AC D3 B2 00     - mov ecx,[KingKong9D.exe+72D3AC]
+KingKong9D.exe+29A505: 8D 94 01 D4 39 00 00  - lea edx,[ecx+eax+000039D4]
+KingKong9D.exe+29A50C: 8B 45 D8              - mov eax,[ebp-28]
+KingKong9D.exe+29A50F: 8B 48 04              - mov ecx,[eax+04]
+// ---------- INJECTING HERE ----------
+KingKong9D.exe+29A512: 8B 14 8A              - mov edx,[edx+ecx*4]
+// ---------- DONE INJECTING  ----------
+KingKong9D.exe+29A515: 89 55 F0              - mov [ebp-10],edx
+KingKong9D.exe+29A518: 8B 45 D8              - mov eax,[ebp-28]
+KingKong9D.exe+29A51B: 83 B8 CC 41 00 00 00  - cmp dword ptr [eax+000041CC],00
+KingKong9D.exe+29A522: 74 09                 - je KingKong9D.exe+29A52D
+KingKong9D.exe+29A524: 8B 4D F0              - mov ecx,[ebp-10]
+KingKong9D.exe+29A527: 83 E9 01              - sub ecx,01
+KingKong9D.exe+29A52A: 89 4D F0              - mov [ebp-10],ecx
+KingKong9D.exe+29A52D: 8B 55 F0              - mov edx,[ebp-10]
+KingKong9D.exe+29A530: 52                    - push edx
+KingKong9D.exe+29A531: 6A FF                 - push -01
+}
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
   </CheatEntries>
   <UserdefinedSymbols/>
 </CheatTable>
