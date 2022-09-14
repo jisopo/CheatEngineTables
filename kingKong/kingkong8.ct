@@ -139,6 +139,52 @@ unregisterSymbol(gm3)
 unregisterSymbol(gm4)
 </AssemblerScript>
     </CheatEntry>
+            <CheatEntry>
+          <ID>24</ID>
+          <Description>"infinite ammo"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{
+  Game   : KingKong
+  Version:
+  Date   : 14.09.2022
+  Author : jisopo
+}
+[ENABLE]
+aobscanmodule(ammo, KingKong8.exe, 8B 14 8A 89 55 F0 8B 45 D8 83 B8 CC 41 00 00 00) // should be unique
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,256)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+mov [edx+ecx*4],#999
+
+originalcode:
+mov edx,[edx+ecx*4]
+mov [ebp-10],edx
+
+exit:
+jmp returnhere
+
+ammo:
+jmp newmem
+nop
+returnhere:
+
+
+registerSymbol(ammo)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+ammo:
+mov edx,[edx+ecx*4]
+mov [ebp-10],edx
+//Alt: db 8B 14 8A 89 55 F0
+unregisterSymbol(ammo)
+dealloc(newmem)
+</AssemblerScript>
+        </CheatEntry>
   </CheatEntries>
   <UserdefinedSymbols/>
 </CheatTable>
