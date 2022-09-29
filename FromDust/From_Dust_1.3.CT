@@ -356,5 +356,82 @@ dealloc(newmem)
 }
 </AssemblerScript>
     </CheatEntry>
+    <CheatEntry>
+      <ID>232</ID>
+      <Description>"amplity the breath"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{
+  Game   : From_Dust.exe
+  Version: 1.3
+  Date   : 30.09.2022
+  Author : jisopo
+  Github : github.com/jisopo/CheatEngineTables
+
+  This script does blah blah blah
+}
+[ENABLE]
+aobscanmodule(superPower, dustai.win32.f.dll, 8B 11 8B 52 5C 83 C4 04 8D 44 24 64 50 FF D2)
+//code from here to '[DISABLE]' will be used to enable the cheat
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+originalcode:
+mov byte ptr [ecx+68C],1
+mov edx,[ecx]
+mov edx,[edx+5C]
+
+exit:
+jmp returnhere
+
+//"dustai.win32.f.dll"+DA6AF:
+superPower:
+jmp newmem
+returnhere:
+
+
+registerSymbol(superPower)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+//"dustai.win32.f.dll"+DA6AF:
+superPower:
+mov edx,[ecx]
+mov edx,[edx+5C]
+//Alt: db 8B 11 8B 52 5C
+unregisterSymbol(superPower)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: dustai.win32.f.dll+DA6AF
+
+dustai.win32.f.dll+DA683: 50                 - push eax
+dustai.win32.f.dll+DA684: E8 07 9A 06 00     - call dustai.win32.f.dll+144090
+dustai.win32.f.dll+DA689: D9 5C 24 70        - fstp dword ptr [esp+70]
+dustai.win32.f.dll+DA68D: 8B 87 7C 02 00 00  - mov eax,[edi+0000027C]
+dustai.win32.f.dll+DA693: F3 0F 7E 44 24 68  - movq xmm0,[esp+68]
+dustai.win32.f.dll+DA699: 05 D8 06 00 00     - add eax,000006D8
+dustai.win32.f.dll+DA69E: 66 0F D6 00        - movq [eax],xmm0
+dustai.win32.f.dll+DA6A2: 8B 4C 24 70        - mov ecx,[esp+70]
+dustai.win32.f.dll+DA6A6: 89 48 08           - mov [eax+08],ecx
+dustai.win32.f.dll+DA6A9: 8B 8F 7C 02 00 00  - mov ecx,[edi+0000027C]
+// ---------- INJECTING HERE ----------
+dustai.win32.f.dll+DA6AF: 8B 11              - mov edx,[ecx]
+// ---------- DONE INJECTING  ----------
+dustai.win32.f.dll+DA6B1: 8B 52 5C           - mov edx,[edx+5C]
+dustai.win32.f.dll+DA6B4: 83 C4 04           - add esp,04
+dustai.win32.f.dll+DA6B7: 8D 44 24 64        - lea eax,[esp+64]
+dustai.win32.f.dll+DA6BB: 50                 - push eax
+dustai.win32.f.dll+DA6BC: FF D2              - call edx
+dustai.win32.f.dll+DA6BE: D9 45 08           - fld dword ptr [ebp+08]
+dustai.win32.f.dll+DA6C1: 51                 - push ecx
+dustai.win32.f.dll+DA6C2: 8B 8F 7C 02 00 00  - mov ecx,[edi+0000027C]
+dustai.win32.f.dll+DA6C8: D9 1C 24           - fstp dword ptr [esp]
+dustai.win32.f.dll+DA6CB: E8 10 C4 FA FF     - call dustai.win32.f.dll+86AE0
+}
+</AssemblerScript>
+    </CheatEntry>
   </CheatEntries>
 </CheatTable>
