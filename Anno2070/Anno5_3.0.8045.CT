@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="42">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>124504</ID>
+      <Description>"Attach to process(Anno5.exe)"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+
+{$lua}
+OpenProcess("Anno5.exe")
+{$asm}
+
+[DISABLE]
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>124534</ID>
+          <Description>"No Cooldown for Rockets (combine with instant prepare rockets)"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{
+  Game: Anno5.exe x64
+  Game version: 3.0.8045.0
+  Author: mnomic
+  Updated: jisopo
+  Update date: 15.08.2023
+  Github: github.com/jisopo/CheatEngineTables
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(rockets, Anno5.exe, 41 8B 48 10 2B 88 90 02 00 00 03 CA 45 84 D2)
+alloc(newmem, 2048, rockets)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+mov [r8+10],0
+originalcode:
+mov ecx,[r8+10]
+sub ecx,[rax+00000290]
+
+exit:
+jmp returnhere
+
+rockets:
+jmp newmem
+nop 5
+returnhere:
+
+registerSymbol(rockets)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+rockets:
+db 41 8B 48 10 2B 88 90 02 00 00
+unregisterSymbol(rockets)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: Anno5.exe+602B76
+
+Anno5.exe+602B57: 48 85 C0              - test rax,rax
+Anno5.exe+602B5A: 74 41                 - je Anno5.exe+602B9D
+Anno5.exe+602B5C: 80 78 40 00           - cmp byte ptr [rax+40],00
+Anno5.exe+602B60: 74 06                 - je Anno5.exe+602B68
+Anno5.exe+602B62: 41 8B 50 18           - mov edx,[r8+18]
+Anno5.exe+602B66: EB 03                 - jmp Anno5.exe+602B6B
+Anno5.exe+602B68: 8B 50 18              - mov edx,[rax+18]
+Anno5.exe+602B6B: 85 D2                 - test edx,edx
+Anno5.exe+602B6D: 74 2E                 - je Anno5.exe+602B9D
+Anno5.exe+602B6F: 48 8B 05 BA A9 59 01  - mov rax,[Anno5.exe+1B9D530]
+// ---------- INJECTING HERE ----------
+Anno5.exe+602B76: 41 8B 48 10           - mov ecx,[r8+10]
+// ---------- DONE INJECTING  ----------
+Anno5.exe+602B7A: 2B 88 90 02 00 00     - sub ecx,[rax+00000290]
+Anno5.exe+602B80: 03 CA                 - add ecx,edx
+Anno5.exe+602B82: 45 84 D2              - test r10l,r10l
+Anno5.exe+602B85: 74 13                 - je Anno5.exe+602B9A
+Anno5.exe+602B87: 48 63 C1              - movsxd  rax,ecx
+Anno5.exe+602B8A: 48 69 C0 00 40 06 00  - imul rax,rax,00064000
+Anno5.exe+602B91: 48 63 CA              - movsxd  rcx,edx
+Anno5.exe+602B94: 48 99                 - cqo
+Anno5.exe+602B96: 48 F7 F9              - idiv rcx
+Anno5.exe+602B99: C3                    - ret
+}
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>3</ID>
+          <Description>"No Cooldown for buying island shares"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{
+  Game: Anno5.exe x64
+  Game version: 3.0.8045.0
+  Author: mnomic
+  Updated: jisopo
+  Update date: 13.08.2023
+  Github: github.com/jisopo/CheatEngineTables
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(COOLDOWN2, Anno5.exe, 48 83 FA FF 74 ?? 8B 87 ?? ?? 00 00) // should be unique
+alloc(newmem, 2048)
+label(returnhere)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+cdqe
+
+mov [rdi+rax*8+000007D0],0
+
+mov rdx, [rdi+rax*8+000007D0]
+
+exit:
+jmp returnhere
+
+COOLDOWN2-A:
+jmp newmem
+returnhere:
+
+registerSymbol(COOLDOWN2)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+COOLDOWN2-A:
+db 48 98 48 8B 94 C7 D0 07 00 00 48 83 FA FF 74 30 8B 87 90 02
+unregisterSymbol(COOLDOWN2)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: Anno5.exe+251761
+
+Anno5.exe+25173A: 49 8B D5                 - mov rdx,r13
+Anno5.exe+25173D: 48 8D 8D 48 04 00 00     - lea rcx,[rbp+00000448]
+Anno5.exe+251744: E8 37 25 78 00           - call Anno5.exe+9D3C80
+Anno5.exe+251749: 8D 04 9D 00 00 00 00     - lea eax,[rbx*4+00000000]
+Anno5.exe+251750: 8B 8D 48 04 00 00        - mov ecx,[rbp+00000448]
+Anno5.exe+251756: 85 C9                    - test ecx,ecx
+Anno5.exe+251758: 74 45                    - je Anno5.exe+25179F
+Anno5.exe+25175A: 83 FB 07                 - cmp ebx,07
+Anno5.exe+25175D: 77 40                    - ja Anno5.exe+25179F
+Anno5.exe+25175F: 48 98                    - cdqe
+// ---------- INJECTING HERE ----------
+Anno5.exe+251761: 48 8B 94 C7 D0 07 00 00  - mov rdx,[rdi+rax*8+000007D0]
+// ---------- DONE INJECTING  ----------
+Anno5.exe+251769: 48 83 FA FF              - cmp rdx,-01
+Anno5.exe+25176D: 74 30                    - je Anno5.exe+25179F
+Anno5.exe+25176F: 8B 87 90 02 00 00        - mov eax,[rdi+00000290]
+Anno5.exe+251775: 2B C2                    - sub eax,edx
+Anno5.exe+251777: 78 26                    - js Anno5.exe+25179F
+Anno5.exe+251779: 3B C1                    - cmp eax,ecx
+Anno5.exe+25177B: 7F 22                    - jg Anno5.exe+25179F
+Anno5.exe+25177D: 6B C0 64                 - imul eax,eax,64
+Anno5.exe+251780: 99                       - cdq
+Anno5.exe+251781: F7 F9                    - idiv ecx
+}
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>124507</ID>
+          <Description>"Fast production"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{
+  Game: Anno5.exe x64
+  Game version: 3.0.8045.0
+  Author: Baracuda
+  Updated: jisopo
+  Update date: 13.08.2023
+  Github: github.com/jisopo/CheatEngineTables
+}
+[ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(fast_production, Anno5.exe, 8B 43 18 48 8B 5C 24 30 48 83 C4 20 5F C3)
+alloc(newmem, 2048)
+label(originalcode)
+
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
+
+mov [rbx+18], #9999
+
+// fast production for combining factory(Iron Smelter, Health Food Factory, Chip Factory etc.)
+// + fast monument build
+// comment line below to disable it
+mov [rbx+34], #999
+//
+originalcode:
+mov eax,[rbx+18]
+mov rbx,[rsp+30]
+add rsp,20
+pop rdi
+ret
+
+fast_production:
+jmp newmem
+
+registerSymbol(fast_production)
+[DISABLE]
+//code from here till the end of the code will be used to disable the cheat
+fast_production:
+db 8B 43 18 48 8B 5C 24 30 48 83 C4 20 5F C3 CC
+unregisterSymbol(fast_production)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: Anno5.exe+606EEB
+
+Anno5.exe+606ED0: E8 DB 94 3C 00  - call Anno5.exe+9D03B0
+Anno5.exe+606ED5: EB 02           - jmp Anno5.exe+606ED9
+Anno5.exe+606ED7: 33 C0           - xor eax,eax
+Anno5.exe+606ED9: 39 43 14        - cmp [rbx+14],eax
+Anno5.exe+606EDC: 7C 0D           - jl Anno5.exe+606EEB
+Anno5.exe+606EDE: 33 C0           - xor eax,eax
+Anno5.exe+606EE0: 48 8B 5C 24 30  - mov rbx,[rsp+30]
+Anno5.exe+606EE5: 48 83 C4 20     - add rsp,20
+Anno5.exe+606EE9: 5F              - pop rdi
+Anno5.exe+606EEA: C3              - ret
+// ---------- INJECTING HERE ----------
+Anno5.exe+606EEB: 8B 43 18        - mov eax,[rbx+18]
+// ---------- DONE INJECTING  ----------
+Anno5.exe+606EEE: 48 8B 5C 24 30  - mov rbx,[rsp+30]
+Anno5.exe+606EF3: 48 83 C4 20     - add rsp,20
+Anno5.exe+606EF7: 5F              - pop rdi
+Anno5.exe+606EF8: C3              - ret
+Anno5.exe+606EF9: CC              - int 3
+Anno5.exe+606EFA: CC              - int 3
+Anno5.exe+606EFB: CC              - int 3
+Anno5.exe+606EFC: CC              - int 3
+Anno5.exe+606EFD: CC              - int 3
+Anno5.exe+606EFE: CC              - int 3
+}
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>2</ID>
+          <Description>"increase Ship/Aircraft speed (and some other vehicles)"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>{
+  Game: Anno5.exe x64
+  Game version: 3.0.8045.0
+  Author: mnomic
+  Updated: jisopo
+  Update date: 14.08.2023
+  Github: github.com/jisopo/CheatEngineTables
+}
+
+[ENABLE]
+
+aobscanmodule(SHIPSPEED, Anno5.exe, 2B C1 49 8B 8F 10 01 00 00 48 85 C9) // should be unique
+alloc(newmem, 1024, SHIPSPEED)
+
+label(code)
+label(doit)
+label(return)
+
+newmem:
+mov rcx, [r15+8]
+test rcx,rcx
+jz code
+
+cmp dword ptr [rcx+48],0
+jne code
+
+cmp dword ptr [rcx+2C],#40000109
+je doit
+
+cmp dword ptr [rcx+2C],#40000110
+je doit
+
+cmp dword ptr [rcx+2C],#7210000
+je doit
+
+cmp dword ptr [rcx+2C],#20000
+jl code
+
+cmp dword ptr [rcx+2C],#29999
+ja code
+
+doit:
+mov rcx,#250000
+mov [r15+00000110],rcx
+code:
+mov rcx,[r15+00000110]
+jmp return
+
+SHIPSPEED+2:
+jmp newmem
+nop 2
+return:
+registersymbol(SHIPSPEED)
+
+[DISABLE]
+
+SHIPSPEED+2:
+db 49 8B 8F 10 01 00 00
+
+unregistersymbol(SHIPSPEED)
+dealloc(newmem)
+{
+// ORIGINAL CODE - INJECTION POINT: Anno5.exe+628B67
+
+Anno5.exe+628B45: 41 8B 8F 1C 01 00 00     - mov ecx,[r15+0000011C]
+Anno5.exe+628B4C: 85 C9                    - test ecx,ecx
+Anno5.exe+628B4E: 78 39                    - js Anno5.exe+628B89
+Anno5.exe+628B50: 49 8B 47 10              - mov rax,[r15+10]
+Anno5.exe+628B54: 48 81 78 30 00 00 00 08  - cmp qword ptr [rax+30],08000000
+Anno5.exe+628B5C: 74 2B                    - je Anno5.exe+628B89
+Anno5.exe+628B5E: 8B 40 20                 - mov eax,[rax+20]
+Anno5.exe+628B61: 3B C8                    - cmp ecx,eax
+Anno5.exe+628B63: 7F 24                    - jg Anno5.exe+628B89
+Anno5.exe+628B65: 2B C1                    - sub eax,ecx
+// ---------- INJECTING HERE ----------
+Anno5.exe+628B67: 49 8B 8F 10 01 00 00     - mov rcx,[r15+00000110]
+// ---------- DONE INJECTING  ----------
+Anno5.exe+628B6E: 48 85 C9                 - test rcx,rcx
+Anno5.exe+628B71: 7E 16                    - jle Anno5.exe+628B89
+Anno5.exe+628B73: 48 98                    - cdqe
+Anno5.exe+628B75: 48 C1 E0 18              - shl rax,18
+Anno5.exe+628B79: 48 99                    - cqo
+Anno5.exe+628B7B: 48 F7 F9                 - idiv rcx
+Anno5.exe+628B7E: 48 C1 F8 0C              - sar rax,0C
+Anno5.exe+628B82: 3D E8 03 00 00           - cmp eax,000003E8
+Anno5.exe+628B87: 7D 0E                    - jnl Anno5.exe+628B97
+Anno5.exe+628B89: 41 83 BF 90 00 00 00 00  - cmp dword ptr [r15+00000090],00
+}
+</AssemblerScript>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
