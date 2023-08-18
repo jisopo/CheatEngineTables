@@ -16,7 +16,7 @@ OpenProcess("Anno5.exe")
       <CheatEntries>
         <CheatEntry>
           <ID>124534</ID>
-          <Description>"No Cooldown for Rockets (combine with instant prepare rockets)"</Description>
+          <Description>"No Cooldown for Rockets"</Description>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>{
   Game: Anno5.exe x64
@@ -232,98 +232,118 @@ Anno5.exe+606EFE: CC              - int 3
 </AssemblerScript>
         </CheatEntry>
         <CheatEntry>
-          <ID>2</ID>
-          <Description>"increase Ship/Aircraft speed (and some other vehicles)"</Description>
+          <ID>124536</ID>
+          <Description>"Super speed"</Description>
           <VariableType>Auto Assembler Script</VariableType>
           <AssemblerScript>{
   Game: Anno5.exe x64
   Game version: 3.0.8045.0
-  Author: mnomic
-  Updated: jisopo
-  Update date: 14.08.2023
-  Github: github.com/jisopo/CheatEngineTables
+  Author: www.homeofgamehacking.de
 }
-
 [ENABLE]
+//code from here to '[DISABLE]' will be used to enable the cheat
+aobscanmodule(superSpeed, Anno5.exe, FF C8 41 89 87 84 01 00 00 0F 57 C0 F3 0F7F 45 E7 4C 89 6D F7) // +0x15
+// aobscanmodule(superSpeed, Anno5.exe, 49 6B 9F 10 01 00 00 64) // + 0x0
+alloc(newmem, 2048, superSpeed)
+label(returnhere)
+label(originalcode)
+label(freeze_other_ships)
+label(exit)
 
-aobscanmodule(SHIPSPEED, Anno5.exe, 2B C1 49 8B 8F 10 01 00 00 48 85 C9) // should be unique
-alloc(newmem, 1024, SHIPSPEED)
+newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
 
-label(code)
-label(doit)
-label(return)
+originalcode:
+imul rbx,[r15+00000110],64
+cmp rcx,r10
+jne exit
+cmp dword ptr [r15+000000E8],00
+je freeze_other_ships
+cmp byte ptr [super_speed_flag],1
+jne exit
+imul rbx,[r15+00000110],#5600
+jmp exit
+freeze_other_ships:
+cmp dword ptr [freeze_other_ships_flag],1
+jne exit
+imul rbx,[r15+00000110],00
+exit:
+jmp returnhere
 
-newmem:
-mov rcx, [r15+8]
-test rcx,rcx
-jz code
+super_speed_flag:
+db 1
 
-cmp dword ptr [rcx+48],0
-jne code
+freeze_other_ships_flag:
+db 0
 
-cmp dword ptr [rcx+2C],#40000109
-je doit
-
-cmp dword ptr [rcx+2C],#40000110
-je doit
-
-cmp dword ptr [rcx+2C],#7210000
-je doit
-
-cmp dword ptr [rcx+2C],#20000
-jl code
-
-cmp dword ptr [rcx+2C],#29999
-ja code
-
-doit:
-mov rcx,#250000
-mov [r15+00000110],rcx
-code:
-mov rcx,[r15+00000110]
-jmp return
-
-SHIPSPEED+2:
+superSpeed+15:
 jmp newmem
-nop 2
-return:
-registersymbol(SHIPSPEED)
+nop
+nop
+nop
+returnhere:
 
+registerSymbol(superSpeed)
+registerSymbol(super_speed_flag)
+registerSymbol(freeze_other_ships_flag)
 [DISABLE]
-
-SHIPSPEED+2:
-db 49 8B 8F 10 01 00 00
-
-unregistersymbol(SHIPSPEED)
+//code from here till the end of the code will be used to disable the cheat
+superSpeed+15:
+db 49 6B 9F 10 01 00 00 64
+unregisterSymbol(superSpeed)
+unregisterSymbol(super_speed_flag)
+unregisterSymbol(freeze_other_ships_flag)
 dealloc(newmem)
 {
-// ORIGINAL CODE - INJECTION POINT: Anno5.exe+628B67
+// ORIGINAL CODE - INJECTION POINT: Anno5.exe+628108
 
-Anno5.exe+628B45: 41 8B 8F 1C 01 00 00     - mov ecx,[r15+0000011C]
-Anno5.exe+628B4C: 85 C9                    - test ecx,ecx
-Anno5.exe+628B4E: 78 39                    - js Anno5.exe+628B89
-Anno5.exe+628B50: 49 8B 47 10              - mov rax,[r15+10]
-Anno5.exe+628B54: 48 81 78 30 00 00 00 08  - cmp qword ptr [rax+30],08000000
-Anno5.exe+628B5C: 74 2B                    - je Anno5.exe+628B89
-Anno5.exe+628B5E: 8B 40 20                 - mov eax,[rax+20]
-Anno5.exe+628B61: 3B C8                    - cmp ecx,eax
-Anno5.exe+628B63: 7F 24                    - jg Anno5.exe+628B89
-Anno5.exe+628B65: 2B C1                    - sub eax,ecx
+Anno5.exe+6280E3: 90                          - nop
+Anno5.exe+6280E4: 48 8D 4D 97                 - lea rcx,[rbp-69]
+Anno5.exe+6280E8: E8 A3 8D A5 FF              - call Anno5.CGUIEventScriptingSlot::GetContext+1FF0
+Anno5.exe+6280ED: 49 8B 4F 08                 - mov rcx,[r15+08]
+Anno5.exe+6280F1: EB 09                       - jmp Anno5.exe+6280FC
+Anno5.exe+6280F3: FF C8                       - dec eax
+Anno5.exe+6280F5: 41 89 87 84 01 00 00        - mov [r15+00000184],eax
+Anno5.exe+6280FC: 0F 57 C0                    - xorps xmm0,xmm0
+Anno5.exe+6280FF: F3 0F 7F 45 E7              - movdqu [rbp-19],xmm0
+Anno5.exe+628104: 4C 89 6D F7                 - mov [rbp-09],r13
 // ---------- INJECTING HERE ----------
-Anno5.exe+628B67: 49 8B 8F 10 01 00 00     - mov rcx,[r15+00000110]
+Anno5.exe+628108: 49 6B 9F 10 01 00 00 64     - imul rbx,[r15+00000110],64
 // ---------- DONE INJECTING  ----------
-Anno5.exe+628B6E: 48 85 C9                 - test rcx,rcx
-Anno5.exe+628B71: 7E 16                    - jle Anno5.exe+628B89
-Anno5.exe+628B73: 48 98                    - cdqe
-Anno5.exe+628B75: 48 C1 E0 18              - shl rax,18
-Anno5.exe+628B79: 48 99                    - cqo
-Anno5.exe+628B7B: 48 F7 F9                 - idiv rcx
-Anno5.exe+628B7E: 48 C1 F8 0C              - sar rax,0C
-Anno5.exe+628B82: 3D E8 03 00 00           - cmp eax,000003E8
-Anno5.exe+628B87: 7D 0E                    - jnl Anno5.exe+628B97
-Anno5.exe+628B89: 41 83 BF 90 00 00 00 00  - cmp dword ptr [r15+00000090],00
+Anno5.exe+628110: 48 C1 FB 0C                 - sar rbx,0C
+Anno5.exe+628114: 41 8B 97 1C 01 00 00        - mov edx,[r15+0000011C]
+Anno5.exe+62811B: 03 DA                       - add ebx,edx
+Anno5.exe+62811D: 41 80 BC 24 88 00 00 00 00  - cmp byte ptr [r12+00000088],00
+Anno5.exe+628126: 0F 84 C8 00 00 00           - je Anno5.exe+6281F4
+Anno5.exe+62812C: B8 F1 19 76 05              - mov eax,057619F1
+Anno5.exe+628131: F7 EA                       - imul edx
+Anno5.exe+628133: 44 8B CA                    - mov r9d,edx
+Anno5.exe+628136: 41 C1 F9 05                 - sar r9d,05
+Anno5.exe+62813A: 45 8B C1                    - mov r8d,r9d
 }
 </AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>124537</ID>
+              <Description>"Super speed"</Description>
+              <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:Off/No/Disabled
+1:Yes/On/Enabled
+</DropDownList>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>Byte</VariableType>
+              <Address>super_speed_flag</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>124538</ID>
+              <Description>"Freeze other ships"</Description>
+              <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:Off/No/Disabled
+1:Yes/On/Enabled
+</DropDownList>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>Byte</VariableType>
+              <Address>freeze_other_ships_flag</Address>
+            </CheatEntry>
+          </CheatEntries>
         </CheatEntry>
       </CheatEntries>
     </CheatEntry>
